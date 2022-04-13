@@ -1,7 +1,5 @@
 
 # User Admin
-![userAdmin2](https://user-images.githubusercontent.com/34860262/163232526-c543d9e1-bf7b-4c42-872a-96cf65e2b838.png)
-
 
 
 ## Admin Home
