@@ -57,6 +57,54 @@
 ![parent_history](./parent/purchase_history.png)
 
 ***
+# Seller User
+
+## Seller Landing
+
+![seller_landing](https://user-images.githubusercontent.com/34860262/163250225-90eabdc5-b203-4421-8b0b-625bfd9a9d3a.png)
+
+## Seller Home Page
+
+![seller_home_page](https://user-images.githubusercontent.com/34860262/163250330-3bf195ff-6656-4e89-840c-e267a4c18c54.png)
+
+## Activities List
+
+![seller_activities_list](https://user-images.githubusercontent.com/34860262/163251831-d669398e-e3eb-48bc-b266-bc30a0a03794.png)
+
+## Activity Page
+
+![seller_activity_page](https://user-images.githubusercontent.com/34860262/163251870-a8511ce2-13bc-4d0c-8b94-57f3844b24d9.png)
+
+## Activity Reviews
+
+![seller_activity_reviews](https://user-images.githubusercontent.com/34860262/163252876-08449b96-2217-457b-8924-d55a59e022b3.png)
+
+## Facilities List
+
+![seller_facilities_list](https://user-images.githubusercontent.com/34860262/163251544-fe7cfe26-4a7b-4a48-82ae-22d64c6dd7ca.png)
+
+## New Activity
+
+![seller_new_activity](https://user-images.githubusercontent.com/34860262/163252136-b7c34091-df0b-4716-913e-d310a3f868c1.png)
+
+## New Facility
+
+![seller_new_facility](https://user-images.githubusercontent.com/34860262/163252238-37718314-527e-44c9-8ae1-6e9c55b753cf.png)
+
+## Stats Page
+
+![seller_stats](https://user-images.githubusercontent.com/34860262/163252426-7bd65ed3-4907-4e72-a1e1-2d0e7d7d9c15.png)
+
+## Seller Profile 
+
+![seller_profile](https://user-images.githubusercontent.com/34860262/163252509-abb7f478-abf0-4058-b8b6-3ae7e277e1aa.png)
+
+## Add Bank Account
+
+![seller_add_bank_acount](https://user-images.githubusercontent.com/34860262/163252680-ecb116e1-513f-48b7-beb0-96ecd82c2f59.png)
+
+
+***
 
 # Admin User
 
