@@ -61,7 +61,7 @@
 
 ## Seller Landing
 
-![seller_landing](https://user-images.githubusercontent.com/34860262/163250225-90eabdc5-b203-4421-8b0b-625bfd9a9d3a.png)
+![seller_landing](./seller/seller_landing.png)
 
 ## Seller Home Page
 
@@ -73,7 +73,7 @@
 
 ## Activity Page
 
-![seller_activity_page](https://user-images.githubusercontent.com/34860262/163251870-a8511ce2-13bc-4d0c-8b94-57f3844b24d9.png)
+![seller_activity_page](./seller/activity_page.png)
 
 ## Activity Reviews
 
@@ -85,7 +85,7 @@
 
 ## New Activity
 
-![seller_new_activity](https://user-images.githubusercontent.com/34860262/163252136-b7c34091-df0b-4716-913e-d310a3f868c1.png)
+![seller_new_activity](./seller/new_activity.png)
 
 ## New Facility
 
