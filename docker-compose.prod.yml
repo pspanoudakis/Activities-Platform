@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  parent-app:
+    build:
+      context: ./parent-app
+      dockerfile: Dockerfile.prod
+    container_name: parent-app-prod
+    ports:
+      - '82:82'
+
+  provider-app:
+    build:
+      context: ./provider-app
+      dockerfile: Dockerfile.prod
+    container_name: provider-app-prod
+    ports:
+      - '81:81'
