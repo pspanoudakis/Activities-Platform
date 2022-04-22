@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  parent-app:
+    build:
+      context: ./parent-app
+      dockerfile: Dockerfile.dev
+    container_name: parent-app-dev
+    stdin_open: true
+    volumes:
+      - ./parent-app:/app/parent-app
+      - /app/parent-app/node_modules
+    ports:
+      - '3000:3000'
+
+  provider-app:
+    build:
+      context: ./provider-app
+      dockerfile: Dockerfile.dev
+    container_name: provider-app-dev
+    stdin_open: true
+    volumes:
+      - ./provider-app:/app/provider-app
+      - /app/provider-app/node_modules
+    ports:
+      - '3001:3001'
