@@ -21,13 +21,14 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      - name: Setup Working Dir
-        working-directory: ./common-components-lib
       - name: Install Deps
+        working-directory: ./common-components-lib
         run: npm ci
       - name: Build Dist
+        working-directory: ./common-components-lib
         run: npm run build-lib
       - name: Publish
+        working-directory: ./common-components-lib
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_PUBLISH_TOKEN}}
