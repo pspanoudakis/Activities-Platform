@@ -1,0 +1,65 @@
+/users:
+	GET(): Return all users.
+	POST(User): Create new User, return User or ErrorMessage.
+	/user_id:
+		GET(): Return user.
+		Put(User): Update User, return User or ErrorMessage.
+		Delete(): Delete user, retrun User or ErrorMessage.
+		/role:
+			GET(): Return user's role.
+	
+/activities:
+	GET(): Return all activities.
+	POST(Activity): Create activity, return Activity or ErrorMessage.
+	/activity_id:
+		GET(): Return activity.
+		PUT(Activity): Update Activity, return Activity or ErrorMessage.
+		DELETE(): Delete activity, retrun Activity or ErrorMessage.
+
+/sellers:
+	GET(): Return all sellers.
+	POST(Seller): Create new User, return Seller or ErrorMessage.
+	/seller_id:
+		GET(): Return seller.
+		PUT(Seller): Update Seller, return Seller or ErrorMessage.
+		DELETE(): Delete Seller, retrun Seller or ErrorMessage.
+		/reservations:
+			GET(): Return all reservations for seller's activities
+			/reservation_id:
+				GET(): Return reservation of seller's activity.
+		/account:
+			GET(): Return seller's accounts.
+			POST(Account): Create account for seller, return Account or ErrorMessage.
+			/account_id:
+				PUT(Account): Update account, return Account or ErrorMessage.
+				Delete(): Delete acount, return Account or ErrorMessage.
+		/activities:
+			GET(): Return seller's activities.
+			POST(Activity): Create new seller's activity, return Activity or ErrorMessage.
+			/activity_id:
+				GET(): Return seller's activity.
+				PUT(): Update Activity, return Activity or ErrorMessage.
+
+/parents:
+	GET(): Return all parents.
+	Post(Parent): Create new User, return Seller or ErrorMessage.
+	/parent_id    
+		Put(Parent): Update Parent, return Parent or ErrorMessage.
+    		Delete(): Delete parent, return Parent or ErrorMessage.
+		GET(): Return parent.
+    		/card:
+       			GET(): Return user's card.
+        		Post(Card): Create card for user, return Card or ErrorMessage.
+        		/card_id
+				Put(Card): Update card, return card or ErrorMessage.
+        			Delete(): Delete card, return card or ErrorMessage.
+		/reservations:
+			GET(): Return all reservations for parent's activities
+			/reservation_id:
+				GET(): Return reservation of parent's activity.
+		/activities:
+			GET(): Return seller's activities.
+			POST(Activity): Create new seller's activity, return Activity or ErrorMessage.
+			/activity_id:
+				GET(): Return seller's activity.
+				PUT(): Update Activity, return Activity or ErrorMessage.
