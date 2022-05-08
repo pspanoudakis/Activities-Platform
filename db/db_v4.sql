@@ -5,7 +5,7 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.2
 
--- Started on 2022-05-06 11:56:12
+-- Started on 2022-05-08 13:14:30
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,7 +20,7 @@ SET row_security = off;
 
 DROP DATABASE "activitiesDB";
 --
--- TOC entry 3438 (class 1262 OID 24583)
+-- TOC entry 3448 (class 1262 OID 24583)
 -- Name: activitiesDB; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -42,31 +42,12 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- TOC entry 3 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO postgres;
-
---
--- TOC entry 3439 (class 0 OID 0)
--- Dependencies: 3
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- TOC entry 224 (class 1259 OID 24693)
+-- TOC entry 223 (class 1259 OID 24693)
 -- Name: activities; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -78,15 +59,15 @@ CREATE TABLE public.activities (
     capacity integer NOT NULL,
     facility_id integer NOT NULL,
     description text NOT NULL,
-    image character varying,
-    price integer NOT NULL
+    price integer NOT NULL,
+    approved boolean DEFAULT false NOT NULL
 );
 
 
 ALTER TABLE public.activities OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 24692)
+-- TOC entry 222 (class 1259 OID 24692)
 -- Name: activities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -102,8 +83,8 @@ CREATE SEQUENCE public.activities_id_seq
 ALTER TABLE public.activities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3440 (class 0 OID 0)
--- Dependencies: 223
+-- TOC entry 3449 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: activities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -111,7 +92,7 @@ ALTER SEQUENCE public.activities_id_seq OWNED BY public.activities.id;
 
 
 --
--- TOC entry 228 (class 1259 OID 24765)
+-- TOC entry 227 (class 1259 OID 24765)
 -- Name: activity_at_day; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -126,7 +107,7 @@ CREATE TABLE public.activity_at_day (
 ALTER TABLE public.activity_at_day OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 24764)
+-- TOC entry 226 (class 1259 OID 24764)
 -- Name: activity_at_day_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -142,8 +123,8 @@ CREATE SEQUENCE public.activity_at_day_id_seq
 ALTER TABLE public.activity_at_day_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3441 (class 0 OID 0)
--- Dependencies: 227
+-- TOC entry 3450 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: activity_at_day_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -151,7 +132,46 @@ ALTER SEQUENCE public.activity_at_day_id_seq OWNED BY public.activity_at_day.id;
 
 
 --
--- TOC entry 232 (class 1259 OID 24820)
+-- TOC entry 232 (class 1259 OID 24901)
+-- Name: activity_has_photo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.activity_has_photo (
+    id integer NOT NULL,
+    url text NOT NULL,
+    activity_id integer NOT NULL
+);
+
+
+ALTER TABLE public.activity_has_photo OWNER TO postgres;
+
+--
+-- TOC entry 233 (class 1259 OID 24904)
+-- Name: activity_has_photo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.activity_has_photo_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.activity_has_photo_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3451 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: activity_has_photo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.activity_has_photo_id_seq OWNED BY public.activity_has_photo.id;
+
+
+--
+-- TOC entry 231 (class 1259 OID 24820)
 -- Name: age_categories; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -164,7 +184,7 @@ CREATE TABLE public.age_categories (
 ALTER TABLE public.age_categories OWNER TO postgres;
 
 --
--- TOC entry 231 (class 1259 OID 24819)
+-- TOC entry 230 (class 1259 OID 24819)
 -- Name: age_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -180,8 +200,8 @@ CREATE SEQUENCE public.age_categories_id_seq
 ALTER TABLE public.age_categories_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3442 (class 0 OID 0)
--- Dependencies: 231
+-- TOC entry 3452 (class 0 OID 0)
+-- Dependencies: 230
 -- Name: age_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -189,7 +209,7 @@ ALTER SEQUENCE public.age_categories_id_seq OWNED BY public.age_categories.id;
 
 
 --
--- TOC entry 218 (class 1259 OID 24651)
+-- TOC entry 217 (class 1259 OID 24651)
 -- Name: bank_accounts; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -205,7 +225,7 @@ CREATE TABLE public.bank_accounts (
 ALTER TABLE public.bank_accounts OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 24650)
+-- TOC entry 216 (class 1259 OID 24650)
 -- Name: bank_accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -221,8 +241,8 @@ CREATE SEQUENCE public.bank_accounts_id_seq
 ALTER TABLE public.bank_accounts_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3443 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 3453 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: bank_accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -230,7 +250,7 @@ ALTER SEQUENCE public.bank_accounts_id_seq OWNED BY public.bank_accounts.id;
 
 
 --
--- TOC entry 216 (class 1259 OID 24637)
+-- TOC entry 215 (class 1259 OID 24637)
 -- Name: bank_cards; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -247,7 +267,7 @@ CREATE TABLE public.bank_cards (
 ALTER TABLE public.bank_cards OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 24636)
+-- TOC entry 214 (class 1259 OID 24636)
 -- Name: bank_cards_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -263,8 +283,8 @@ CREATE SEQUENCE public.bank_cards_id_seq
 ALTER TABLE public.bank_cards_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3444 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3454 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: bank_cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -272,7 +292,7 @@ ALTER SEQUENCE public.bank_cards_id_seq OWNED BY public.bank_cards.id;
 
 
 --
--- TOC entry 220 (class 1259 OID 24665)
+-- TOC entry 219 (class 1259 OID 24665)
 -- Name: categories; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -286,7 +306,7 @@ CREATE TABLE public.categories (
 ALTER TABLE public.categories OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 24664)
+-- TOC entry 218 (class 1259 OID 24664)
 -- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -302,8 +322,8 @@ CREATE SEQUENCE public.categories_id_seq
 ALTER TABLE public.categories_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3445 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 3455 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -311,7 +331,7 @@ ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
 
 
 --
--- TOC entry 226 (class 1259 OID 24746)
+-- TOC entry 225 (class 1259 OID 24746)
 -- Name: evaluations; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -327,7 +347,7 @@ CREATE TABLE public.evaluations (
 ALTER TABLE public.evaluations OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 24745)
+-- TOC entry 224 (class 1259 OID 24745)
 -- Name: evaluations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -343,8 +363,8 @@ CREATE SEQUENCE public.evaluations_id_seq
 ALTER TABLE public.evaluations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3446 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 3456 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: evaluations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -352,7 +372,7 @@ ALTER SEQUENCE public.evaluations_id_seq OWNED BY public.evaluations.id;
 
 
 --
--- TOC entry 222 (class 1259 OID 24679)
+-- TOC entry 221 (class 1259 OID 24679)
 -- Name: facilities; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -363,15 +383,16 @@ CREATE TABLE public.facilities (
     address character varying NOT NULL,
     district character varying,
     longitude double precision NOT NULL,
-    latitude double precision NOT NULL
+    latitude double precision NOT NULL,
+    approved boolean DEFAULT false NOT NULL
 );
 
 
 ALTER TABLE public.facilities OWNER TO postgres;
 
 --
--- TOC entry 3447 (class 0 OID 0)
--- Dependencies: 222
+-- TOC entry 3457 (class 0 OID 0)
+-- Dependencies: 221
 -- Name: COLUMN facilities.district; Type: COMMENT; Schema: public; Owner: postgres
 --
 
@@ -379,7 +400,7 @@ COMMENT ON COLUMN public.facilities.district IS 'η περιοχή';
 
 
 --
--- TOC entry 221 (class 1259 OID 24678)
+-- TOC entry 220 (class 1259 OID 24678)
 -- Name: facilities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -395,8 +416,8 @@ CREATE SEQUENCE public.facilities_id_seq
 ALTER TABLE public.facilities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3448 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 3458 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: facilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -404,23 +425,23 @@ ALTER SEQUENCE public.facilities_id_seq OWNED BY public.facilities.id;
 
 
 --
--- TOC entry 214 (class 1259 OID 24625)
+-- TOC entry 213 (class 1259 OID 24625)
 -- Name: parents; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.parents (
     id integer NOT NULL,
-    user_id integer NOT NULL,
     longitude double precision NOT NULL,
     latitude double precision NOT NULL,
-    address character varying NOT NULL
+    address character varying NOT NULL,
+    user_username character varying NOT NULL
 );
 
 
 ALTER TABLE public.parents OWNER TO postgres;
 
 --
--- TOC entry 213 (class 1259 OID 24624)
+-- TOC entry 212 (class 1259 OID 24624)
 -- Name: parents_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -436,8 +457,8 @@ CREATE SEQUENCE public.parents_id_seq
 ALTER TABLE public.parents_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3449 (class 0 OID 0)
--- Dependencies: 213
+-- TOC entry 3459 (class 0 OID 0)
+-- Dependencies: 212
 -- Name: parents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -445,7 +466,7 @@ ALTER SEQUENCE public.parents_id_seq OWNED BY public.parents.id;
 
 
 --
--- TOC entry 230 (class 1259 OID 24803)
+-- TOC entry 229 (class 1259 OID 24803)
 -- Name: reservations; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -462,7 +483,7 @@ CREATE TABLE public.reservations (
 ALTER TABLE public.reservations OWNER TO postgres;
 
 --
--- TOC entry 229 (class 1259 OID 24802)
+-- TOC entry 228 (class 1259 OID 24802)
 -- Name: reservations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -478,8 +499,8 @@ CREATE SEQUENCE public.reservations_id_seq
 ALTER TABLE public.reservations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3450 (class 0 OID 0)
--- Dependencies: 229
+-- TOC entry 3460 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: reservations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -487,21 +508,21 @@ ALTER SEQUENCE public.reservations_id_seq OWNED BY public.reservations.id;
 
 
 --
--- TOC entry 212 (class 1259 OID 24611)
+-- TOC entry 211 (class 1259 OID 24611)
 -- Name: sellers; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.sellers (
     id integer NOT NULL,
-    user_id integer NOT NULL,
-    watermark character varying NOT NULL
+    watermark character varying NOT NULL,
+    user_username character varying NOT NULL
 );
 
 
 ALTER TABLE public.sellers OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 24610)
+-- TOC entry 210 (class 1259 OID 24610)
 -- Name: sellers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -517,8 +538,8 @@ CREATE SEQUENCE public.sellers_id_seq
 ALTER TABLE public.sellers_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3451 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 3461 (class 0 OID 0)
+-- Dependencies: 210
 -- Name: sellers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -531,8 +552,7 @@ ALTER SEQUENCE public.sellers_id_seq OWNED BY public.sellers.id;
 --
 
 CREATE TABLE public.users (
-    id integer NOT NULL,
-    user_name character varying NOT NULL,
+    username character varying NOT NULL,
     password text NOT NULL,
     email character varying NOT NULL,
     "isAdmin" boolean DEFAULT false NOT NULL,
@@ -545,7 +565,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 3452 (class 0 OID 0)
+-- TOC entry 3462 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: TABLE users; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -554,32 +574,7 @@ COMMENT ON TABLE public.users IS 'Table for common info about user, regardless o
 
 
 --
--- TOC entry 210 (class 1259 OID 24587)
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.users_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.users_id_seq OWNER TO postgres;
-
---
--- TOC entry 3453 (class 0 OID 0)
--- Dependencies: 210
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
-
-
---
--- TOC entry 3227 (class 2604 OID 24696)
+-- TOC entry 3231 (class 2604 OID 24696)
 -- Name: activities id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -587,7 +582,7 @@ ALTER TABLE ONLY public.activities ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
--- TOC entry 3229 (class 2604 OID 24768)
+-- TOC entry 3234 (class 2604 OID 24768)
 -- Name: activity_at_day id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -595,7 +590,15 @@ ALTER TABLE ONLY public.activity_at_day ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 3231 (class 2604 OID 24823)
+-- TOC entry 3237 (class 2604 OID 24905)
+-- Name: activity_has_photo id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_has_photo ALTER COLUMN id SET DEFAULT nextval('public.activity_has_photo_id_seq'::regclass);
+
+
+--
+-- TOC entry 3236 (class 2604 OID 24823)
 -- Name: age_categories id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -603,7 +606,7 @@ ALTER TABLE ONLY public.age_categories ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 3224 (class 2604 OID 24654)
+-- TOC entry 3227 (class 2604 OID 24654)
 -- Name: bank_accounts id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -611,7 +614,7 @@ ALTER TABLE ONLY public.bank_accounts ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3223 (class 2604 OID 24640)
+-- TOC entry 3226 (class 2604 OID 24640)
 -- Name: bank_cards id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -619,7 +622,7 @@ ALTER TABLE ONLY public.bank_cards ALTER COLUMN id SET DEFAULT nextval('public.b
 
 
 --
--- TOC entry 3225 (class 2604 OID 24668)
+-- TOC entry 3228 (class 2604 OID 24668)
 -- Name: categories id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -627,7 +630,7 @@ ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 3228 (class 2604 OID 24749)
+-- TOC entry 3233 (class 2604 OID 24749)
 -- Name: evaluations id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -635,7 +638,7 @@ ALTER TABLE ONLY public.evaluations ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 3226 (class 2604 OID 24682)
+-- TOC entry 3229 (class 2604 OID 24682)
 -- Name: facilities id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -643,7 +646,7 @@ ALTER TABLE ONLY public.facilities ALTER COLUMN id SET DEFAULT nextval('public.f
 
 
 --
--- TOC entry 3222 (class 2604 OID 24628)
+-- TOC entry 3225 (class 2604 OID 24628)
 -- Name: parents id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -651,7 +654,7 @@ ALTER TABLE ONLY public.parents ALTER COLUMN id SET DEFAULT nextval('public.pare
 
 
 --
--- TOC entry 3230 (class 2604 OID 24806)
+-- TOC entry 3235 (class 2604 OID 24806)
 -- Name: reservations id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -659,7 +662,7 @@ ALTER TABLE ONLY public.reservations ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- TOC entry 3221 (class 2604 OID 24614)
+-- TOC entry 3224 (class 2604 OID 24614)
 -- Name: sellers id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -667,30 +670,22 @@ ALTER TABLE ONLY public.sellers ALTER COLUMN id SET DEFAULT nextval('public.sell
 
 
 --
--- TOC entry 3219 (class 2604 OID 24588)
--- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
-
---
--- TOC entry 3424 (class 0 OID 24693)
--- Dependencies: 224
+-- TOC entry 3432 (class 0 OID 24693)
+-- Dependencies: 223
 -- Data for Name: activities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.activities VALUES (1, 'activity1', 1, 1, 100, 1, 'This is the 1st activity', NULL, 10);
-INSERT INTO public.activities VALUES (2, 'activity2', 2, 2, 100, 2, 'This is the 2nd activity', NULL, 10);
-INSERT INTO public.activities VALUES (3, 'activity3', 3, 3, 100, 3, 'This is the 3rd activity', NULL, 10);
-INSERT INTO public.activities VALUES (4, 'activity4', 4, 1, 100, 4, 'This is the 4th activity', NULL, 10);
-INSERT INTO public.activities VALUES (5, 'activity5', 5, 2, 100, 1, 'This is the 5th activity', NULL, 10);
-INSERT INTO public.activities VALUES (6, 'activity6', 6, 3, 100, 2, 'This is the 6th activity', NULL, 10);
+INSERT INTO public.activities VALUES (1, 'activity1', 1, 1, 100, 1, 'This is the 1st activity', 10, false);
+INSERT INTO public.activities VALUES (2, 'activity2', 2, 2, 100, 2, 'This is the 2nd activity', 10, false);
+INSERT INTO public.activities VALUES (3, 'activity3', 3, 3, 100, 3, 'This is the 3rd activity', 10, false);
+INSERT INTO public.activities VALUES (4, 'activity4', 4, 1, 100, 4, 'This is the 4th activity', 10, false);
+INSERT INTO public.activities VALUES (5, 'activity5', 5, 2, 100, 1, 'This is the 5th activity', 10, false);
+INSERT INTO public.activities VALUES (6, 'activity6', 6, 3, 100, 2, 'This is the 6th activity', 10, false);
 
 
 --
--- TOC entry 3428 (class 0 OID 24765)
--- Dependencies: 228
+-- TOC entry 3436 (class 0 OID 24765)
+-- Dependencies: 227
 -- Data for Name: activity_at_day; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -727,8 +722,16 @@ INSERT INTO public.activity_at_day VALUES (30, 6, '2022-07-05', '12:00');
 
 
 --
--- TOC entry 3432 (class 0 OID 24820)
+-- TOC entry 3441 (class 0 OID 24901)
 -- Dependencies: 232
+-- Data for Name: activity_has_photo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3440 (class 0 OID 24820)
+-- Dependencies: 231
 -- Data for Name: age_categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -738,8 +741,8 @@ INSERT INTO public.age_categories VALUES (3, 'Γυμνασίου');
 
 
 --
--- TOC entry 3418 (class 0 OID 24651)
--- Dependencies: 218
+-- TOC entry 3426 (class 0 OID 24651)
+-- Dependencies: 217
 -- Data for Name: bank_accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -750,8 +753,8 @@ INSERT INTO public.bank_accounts VALUES (4, 4, 'GR1122223333444455556666774', '1
 
 
 --
--- TOC entry 3416 (class 0 OID 24637)
--- Dependencies: 216
+-- TOC entry 3424 (class 0 OID 24637)
+-- Dependencies: 215
 -- Data for Name: bank_cards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -763,8 +766,8 @@ INSERT INTO public.bank_cards VALUES (5, 5, '1111222233334445', '05/23', '555', 
 
 
 --
--- TOC entry 3420 (class 0 OID 24665)
--- Dependencies: 220
+-- TOC entry 3428 (class 0 OID 24665)
+-- Dependencies: 219
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -777,8 +780,8 @@ INSERT INTO public.categories VALUES (6, 4, 'category2_level3');
 
 
 --
--- TOC entry 3426 (class 0 OID 24746)
--- Dependencies: 226
+-- TOC entry 3434 (class 0 OID 24746)
+-- Dependencies: 225
 -- Data for Name: evaluations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -790,33 +793,33 @@ INSERT INTO public.evaluations VALUES (5, 2, 2, 3, NULL);
 
 
 --
--- TOC entry 3422 (class 0 OID 24679)
--- Dependencies: 222
+-- TOC entry 3430 (class 0 OID 24679)
+-- Dependencies: 221
 -- Data for Name: facilities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.facilities VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1);
-INSERT INTO public.facilities VALUES (2, 2, 'facility2', 'address2', 'district2', 10.2, 10.2);
-INSERT INTO public.facilities VALUES (3, 3, 'facility3', 'address3', 'district3', 10.3, 10.3);
-INSERT INTO public.facilities VALUES (4, 4, 'facility4', 'address4', 'district4', 10.4, 10.4);
+INSERT INTO public.facilities VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1, false);
+INSERT INTO public.facilities VALUES (2, 2, 'facility2', 'address2', 'district2', 10.2, 10.2, false);
+INSERT INTO public.facilities VALUES (3, 3, 'facility3', 'address3', 'district3', 10.3, 10.3, false);
+INSERT INTO public.facilities VALUES (4, 4, 'facility4', 'address4', 'district4', 10.4, 10.4, false);
 
 
 --
--- TOC entry 3414 (class 0 OID 24625)
--- Dependencies: 214
+-- TOC entry 3422 (class 0 OID 24625)
+-- Dependencies: 213
 -- Data for Name: parents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.parents VALUES (1, 3, 10.1, 10.1, 'address1');
-INSERT INTO public.parents VALUES (2, 4, 10.1, 10.1, 'address2');
-INSERT INTO public.parents VALUES (3, 5, 10.1, 10.1, 'address3');
-INSERT INTO public.parents VALUES (4, 6, 10.1, 10.1, 'address4');
-INSERT INTO public.parents VALUES (5, 7, 10.1, 10.1, 'address5');
+INSERT INTO public.parents VALUES (1, 10.1, 10.1, 'address1', 'parent1');
+INSERT INTO public.parents VALUES (2, 10.1, 10.1, 'address2', 'parent2');
+INSERT INTO public.parents VALUES (3, 10.1, 10.1, 'address3', 'parent3');
+INSERT INTO public.parents VALUES (4, 10.1, 10.1, 'address4', 'parent4');
+INSERT INTO public.parents VALUES (5, 10.1, 10.1, 'address5', 'parent5');
 
 
 --
--- TOC entry 3430 (class 0 OID 24803)
--- Dependencies: 230
+-- TOC entry 3438 (class 0 OID 24803)
+-- Dependencies: 229
 -- Data for Name: reservations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -846,38 +849,38 @@ INSERT INTO public.reservations VALUES (24, 4, 4, '2022-07-11', '11:00:00', '202
 
 
 --
--- TOC entry 3412 (class 0 OID 24611)
--- Dependencies: 212
+-- TOC entry 3420 (class 0 OID 24611)
+-- Dependencies: 211
 -- Data for Name: sellers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.sellers VALUES (1, 2, 'watermark1');
-INSERT INTO public.sellers VALUES (2, 8, 'watermark2');
-INSERT INTO public.sellers VALUES (3, 9, 'watermark3');
-INSERT INTO public.sellers VALUES (4, 10, 'watermark4');
+INSERT INTO public.sellers VALUES (1, 'watermark1', 'seller1');
+INSERT INTO public.sellers VALUES (2, 'watermark2', 'seller2');
+INSERT INTO public.sellers VALUES (3, 'watermark3', 'seller3');
+INSERT INTO public.sellers VALUES (4, 'watermark4', 'seller4');
 
 
 --
--- TOC entry 3409 (class 0 OID 24584)
+-- TOC entry 3418 (class 0 OID 24584)
 -- Dependencies: 209
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users VALUES (1, 'admin', 'admin', 'admin@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (2, 'seller1', 'seller1', 'seller1@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (3, 'parent1', 'parent1', 'parent1@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (4, 'parent2', 'parent2', 'parent2@mail.com', true, false, 'www.google.com', 10);
-INSERT INTO public.users VALUES (5, 'parent3', 'parent3', 'parent3@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (6, 'parent4', 'parent4', 'parent4@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (7, 'parent5', 'parent5', 'parent5@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (8, 'seller2', 'seller2', 'seller2@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (9, 'seller3', 'seller3', 'seller3@mail.com', true, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES (10, 'seller4', 'seller4', 'seller4@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('admin', 'admin', 'admin@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('seller1', 'seller1', 'seller1@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('parent1', 'parent1', 'parent1@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('parent2', 'parent2', 'parent2@mail.com', true, false, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('parent3', 'parent3', 'parent3@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('parent4', 'parent4', 'parent4@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('parent5', 'parent5', 'parent5@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('seller2', 'seller2', 'seller2@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('seller3', 'seller3', 'seller3@mail.com', true, true, 'www.google.com', 10);
+INSERT INTO public.users VALUES ('seller4', 'seller4', 'seller4@mail.com', true, true, 'www.google.com', 10);
 
 
 --
--- TOC entry 3454 (class 0 OID 0)
--- Dependencies: 223
+-- TOC entry 3463 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: activities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -885,8 +888,8 @@ SELECT pg_catalog.setval('public.activities_id_seq', 6, true);
 
 
 --
--- TOC entry 3455 (class 0 OID 0)
--- Dependencies: 227
+-- TOC entry 3464 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: activity_at_day_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -894,8 +897,17 @@ SELECT pg_catalog.setval('public.activity_at_day_id_seq', 30, true);
 
 
 --
--- TOC entry 3456 (class 0 OID 0)
--- Dependencies: 231
+-- TOC entry 3465 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: activity_has_photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.activity_has_photo_id_seq', 1, false);
+
+
+--
+-- TOC entry 3466 (class 0 OID 0)
+-- Dependencies: 230
 -- Name: age_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -903,8 +915,8 @@ SELECT pg_catalog.setval('public.age_categories_id_seq', 3, true);
 
 
 --
--- TOC entry 3457 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 3467 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: bank_accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -912,8 +924,8 @@ SELECT pg_catalog.setval('public.bank_accounts_id_seq', 4, true);
 
 
 --
--- TOC entry 3458 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3468 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: bank_cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -921,8 +933,8 @@ SELECT pg_catalog.setval('public.bank_cards_id_seq', 5, true);
 
 
 --
--- TOC entry 3459 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 3469 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -930,8 +942,8 @@ SELECT pg_catalog.setval('public.categories_id_seq', 6, true);
 
 
 --
--- TOC entry 3460 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 3470 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: evaluations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -939,8 +951,8 @@ SELECT pg_catalog.setval('public.evaluations_id_seq', 5, true);
 
 
 --
--- TOC entry 3461 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 3471 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: facilities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -948,8 +960,8 @@ SELECT pg_catalog.setval('public.facilities_id_seq', 4, true);
 
 
 --
--- TOC entry 3462 (class 0 OID 0)
--- Dependencies: 213
+-- TOC entry 3472 (class 0 OID 0)
+-- Dependencies: 212
 -- Name: parents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -957,8 +969,8 @@ SELECT pg_catalog.setval('public.parents_id_seq', 8, true);
 
 
 --
--- TOC entry 3463 (class 0 OID 0)
--- Dependencies: 229
+-- TOC entry 3473 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: reservations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -966,8 +978,8 @@ SELECT pg_catalog.setval('public.reservations_id_seq', 24, true);
 
 
 --
--- TOC entry 3464 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 3474 (class 0 OID 0)
+-- Dependencies: 210
 -- Name: sellers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -975,16 +987,7 @@ SELECT pg_catalog.setval('public.sellers_id_seq', 4, true);
 
 
 --
--- TOC entry 3465 (class 0 OID 0)
--- Dependencies: 210
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.users_id_seq', 10, true);
-
-
---
--- TOC entry 3247 (class 2606 OID 24700)
+-- TOC entry 3253 (class 2606 OID 24700)
 -- Name: activities activities_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -993,7 +996,7 @@ ALTER TABLE ONLY public.activities
 
 
 --
--- TOC entry 3251 (class 2606 OID 24770)
+-- TOC entry 3257 (class 2606 OID 24770)
 -- Name: activity_at_day activity_at_day_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1002,7 +1005,16 @@ ALTER TABLE ONLY public.activity_at_day
 
 
 --
--- TOC entry 3255 (class 2606 OID 24827)
+-- TOC entry 3263 (class 2606 OID 24912)
+-- Name: activity_has_photo activity_has_photo_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_has_photo
+    ADD CONSTRAINT activity_has_photo_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3261 (class 2606 OID 24827)
 -- Name: age_categories age_categories_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1011,7 +1023,7 @@ ALTER TABLE ONLY public.age_categories
 
 
 --
--- TOC entry 3241 (class 2606 OID 24658)
+-- TOC entry 3247 (class 2606 OID 24658)
 -- Name: bank_accounts bank_accounts_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1020,7 +1032,7 @@ ALTER TABLE ONLY public.bank_accounts
 
 
 --
--- TOC entry 3239 (class 2606 OID 24644)
+-- TOC entry 3245 (class 2606 OID 24644)
 -- Name: bank_cards bank_cards_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1029,7 +1041,7 @@ ALTER TABLE ONLY public.bank_cards
 
 
 --
--- TOC entry 3243 (class 2606 OID 24672)
+-- TOC entry 3249 (class 2606 OID 24672)
 -- Name: categories categories_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1038,7 +1050,7 @@ ALTER TABLE ONLY public.categories
 
 
 --
--- TOC entry 3249 (class 2606 OID 24753)
+-- TOC entry 3255 (class 2606 OID 24753)
 -- Name: evaluations evaluations_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1047,7 +1059,7 @@ ALTER TABLE ONLY public.evaluations
 
 
 --
--- TOC entry 3245 (class 2606 OID 24686)
+-- TOC entry 3251 (class 2606 OID 24686)
 -- Name: facilities facilities_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1056,7 +1068,7 @@ ALTER TABLE ONLY public.facilities
 
 
 --
--- TOC entry 3237 (class 2606 OID 24630)
+-- TOC entry 3243 (class 2606 OID 24630)
 -- Name: parents parents_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1065,7 +1077,7 @@ ALTER TABLE ONLY public.parents
 
 
 --
--- TOC entry 3253 (class 2606 OID 24808)
+-- TOC entry 3259 (class 2606 OID 24808)
 -- Name: reservations reservations_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1074,7 +1086,7 @@ ALTER TABLE ONLY public.reservations
 
 
 --
--- TOC entry 3235 (class 2606 OID 24618)
+-- TOC entry 3241 (class 2606 OID 24618)
 -- Name: sellers sellers_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1083,16 +1095,16 @@ ALTER TABLE ONLY public.sellers
 
 
 --
--- TOC entry 3233 (class 2606 OID 24593)
+-- TOC entry 3239 (class 2606 OID 24888)
 -- Name: users users_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pk PRIMARY KEY (id);
+    ADD CONSTRAINT users_pk PRIMARY KEY (username);
 
 
 --
--- TOC entry 3262 (class 2606 OID 24706)
+-- TOC entry 3270 (class 2606 OID 24706)
 -- Name: activities activities_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1101,7 +1113,7 @@ ALTER TABLE ONLY public.activities
 
 
 --
--- TOC entry 3263 (class 2606 OID 24711)
+-- TOC entry 3271 (class 2606 OID 24711)
 -- Name: activities activities_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1110,7 +1122,7 @@ ALTER TABLE ONLY public.activities
 
 
 --
--- TOC entry 3264 (class 2606 OID 24828)
+-- TOC entry 3272 (class 2606 OID 24828)
 -- Name: activities activities_fk_4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1119,7 +1131,7 @@ ALTER TABLE ONLY public.activities
 
 
 --
--- TOC entry 3267 (class 2606 OID 24771)
+-- TOC entry 3275 (class 2606 OID 24771)
 -- Name: activity_at_day activity_at_day_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1128,7 +1140,16 @@ ALTER TABLE ONLY public.activity_at_day
 
 
 --
--- TOC entry 3259 (class 2606 OID 24659)
+-- TOC entry 3278 (class 2606 OID 24913)
+-- Name: activity_has_photo activity_has_photo_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_has_photo
+    ADD CONSTRAINT activity_has_photo_fk FOREIGN KEY (activity_id) REFERENCES public.activities(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3267 (class 2606 OID 24659)
 -- Name: bank_accounts bank_accounts_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1137,7 +1158,7 @@ ALTER TABLE ONLY public.bank_accounts
 
 
 --
--- TOC entry 3258 (class 2606 OID 24645)
+-- TOC entry 3266 (class 2606 OID 24645)
 -- Name: bank_cards bank_cards_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1146,7 +1167,7 @@ ALTER TABLE ONLY public.bank_cards
 
 
 --
--- TOC entry 3260 (class 2606 OID 24673)
+-- TOC entry 3268 (class 2606 OID 24673)
 -- Name: categories categories_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1155,7 +1176,7 @@ ALTER TABLE ONLY public.categories
 
 
 --
--- TOC entry 3265 (class 2606 OID 24754)
+-- TOC entry 3273 (class 2606 OID 24754)
 -- Name: evaluations evaluations_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1164,7 +1185,7 @@ ALTER TABLE ONLY public.evaluations
 
 
 --
--- TOC entry 3266 (class 2606 OID 24759)
+-- TOC entry 3274 (class 2606 OID 24759)
 -- Name: evaluations evaluations_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1173,7 +1194,7 @@ ALTER TABLE ONLY public.evaluations
 
 
 --
--- TOC entry 3261 (class 2606 OID 24687)
+-- TOC entry 3269 (class 2606 OID 24687)
 -- Name: facilities facilities_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1182,16 +1203,16 @@ ALTER TABLE ONLY public.facilities
 
 
 --
--- TOC entry 3257 (class 2606 OID 24631)
+-- TOC entry 3265 (class 2606 OID 24894)
 -- Name: parents parents_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.parents
-    ADD CONSTRAINT parents_fk FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT parents_fk FOREIGN KEY (user_username) REFERENCES public.users(username) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- TOC entry 3268 (class 2606 OID 24809)
+-- TOC entry 3276 (class 2606 OID 24809)
 -- Name: reservations reservations_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1200,7 +1221,7 @@ ALTER TABLE ONLY public.reservations
 
 
 --
--- TOC entry 3269 (class 2606 OID 24814)
+-- TOC entry 3277 (class 2606 OID 24814)
 -- Name: reservations reservations_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1209,15 +1230,15 @@ ALTER TABLE ONLY public.reservations
 
 
 --
--- TOC entry 3256 (class 2606 OID 24619)
+-- TOC entry 3264 (class 2606 OID 24889)
 -- Name: sellers sellers_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.sellers
-    ADD CONSTRAINT sellers_fk FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT sellers_fk FOREIGN KEY (user_username) REFERENCES public.users(username) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2022-05-06 11:56:13
+-- Completed on 2022-05-08 13:14:30
 
 --
 -- PostgreSQL database dump complete
