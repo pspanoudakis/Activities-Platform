@@ -1,11 +1,61 @@
 /users:
 	GET(): Return all users.
+	Response Body:
+	[
+  		{
+			"username": "admin",
+			"password": "admin",
+			"email": "admin@mail.com",
+			"image": "www.google.com",
+			"balance": 10,
+			"active": true,
+			"admin": true
+		}, ...
+  	]
 	POST(User): Create new User if user.username doesn't exist or isn't given, else Update User. Return User or ErrorMessage.
+	Request Body (to create new user - isActive default true, isAdmin default false):
+	{
+		"username": "testNewUser",
+		"password": "admin",
+		"email": "admin@mail.com",
+		"image": "www.updatedImage.com",
+		"balance": 10
+	}
+
+	Request Body (to update existing user):
+	{
+		"username": "admin",
+		"password": "admin",
+		"email": "admin@mail.com",
+		"image": "www.updatedImage.com",
+		"balance": 10,
+		"active": true,
+		"admin": true
+	}
+
 	/user_username:
 		GET(): Return user.
+		Response Body (for GET at {{home}}/users/testNewUser):
+		{
+			"username": "testNewUser",
+			"password": "admin",
+			"email": "admin@mail.com",
+			"image": "www.updatedImage.com",
+			"balance": 10,
+			"active": true,
+			"admin": false
+		}
 		Delete(): Delete user, retrun User or ErrorMessage.
-		/role:
-			GET(): Return user's role.
+		Response Body (for DELETE at {{home}}/users/testNewUser):
+		{
+			"username": "testNewUser",
+			"password": "admin",
+			"email": "admin@mail.com",
+			"image": "www.updatedImage.com",
+			"balance": 10,
+			"active": true,
+			"admin": false
+		}
 	
 /activities:
 	GET(): Return all activities.

@@ -1,0 +1,1 @@
+{{url}} : environment variable set to localhost:8060 (if server.port = 8060 in application.properties)
