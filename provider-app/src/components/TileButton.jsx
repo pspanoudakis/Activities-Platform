@@ -10,11 +10,19 @@ export function TileButton(props) {
     return (
         <button
             type="button"
-            className={`${props.bgColor} rounded-xl p-2 ${props.stretch ? "flex-1" : "w-max h-max"} shadow-md`}
+            className={`
+                ${props.bgColor}
+                ${props.hoverColor}
+                duration-200
+                ${props.fontColor}
+                rounded-3xl
+                ${props.padding}
+                ${props.stretch ? "flex-1" : "w-max h-max"}
+                shadow-md`}
             style={buttonStyle}
             onClick={props.callback}
         >
-            { props.content }
+            { props.children }
         </button>
     )
 }

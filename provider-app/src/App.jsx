@@ -16,14 +16,19 @@ function App() {
       {
         width: "100%",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        height: 'max-content'
       }
     }>
       <div style={
         {
           width: "100%",
-          maxWidth: "55rem",
-          minWidth: "20rem"
+          maxWidth: "60rem",
+          minWidth: "20rem",
+          height: 'max-content',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }
       }>
         <AppContext.Provider value={{
