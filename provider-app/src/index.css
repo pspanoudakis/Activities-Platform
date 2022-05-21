@@ -2,8 +2,7 @@ html, body, #root {
   font-family: 'open-sans', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  margin-left: .5rem;
-  margin-right: .5rem;
+  width: 100vw;
   height: max-content;
 }
 

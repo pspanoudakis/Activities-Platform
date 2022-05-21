@@ -13,15 +13,7 @@ export function Navbar() {
     const context = useContext(AppContext);
     return (
         <div className='flex w-full justify-center p-1'>
-            <div style={
-                {
-                    display: "flex",
-                    flexDirection: "row",
-                    color: "white",
-                    justifyContent: "space-between",
-                    width: "100%"
-                }
-            }>
+            <div className='flex flex-row text-white justify-between w-full'>
                 <AdminNavbarButton icon={houseIcon} callback={() => context.state.navigate("/")}/>
                 <AdminNavbarButton icon={exitIcon} callback={() => context.state.navigate("/users")}/>
             </div>
