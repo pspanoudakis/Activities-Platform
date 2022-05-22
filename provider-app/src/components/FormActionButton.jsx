@@ -1,5 +1,7 @@
+import React from 'react'
+
 export function FormActionButton(props) {
-    const color = 'bg-cyan'
+    const color = 'bg-cyan hover:bg-dark-cyan'
     return (
         <button
             style={{maxWidth: '90vw'}}

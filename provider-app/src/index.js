@@ -6,21 +6,31 @@ import './index.css';
 
 import App from './App';
 import { Index } from './pages/Index';
-import { Users } from './pages/Users';
+import { UserSearch } from './pages/UserSearch';
+import { UserPage } from './pages/UserPage';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <BrowserRouter>
-          <Routes>
-              <Route path="/" element={<App />}>
-                  <Route path="/" element={<Index />}/>
-                  <Route path="users" element={<Users />}/>    
-              </Route>
-          </Routes>
-      </BrowserRouter>
-  </React.StrictMode>
+    <React.StrictMode>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />}>
+                    <Route index element={<Index />}/>
+                    <Route path="users">
+                        <Route index element={<UserSearch />}/>
+                        <Route path=":userId" element={<UserPage />}/>
+                    </Route>
+                    {/* <Route path="activities">
+                        <Route index element={<PendingActivities />}/>
+                        <Route path=":activityId" element={<ActivityPage />}/>
+                    </Route>
+                    <Route path="newUser" element={<NewUser />}/>
+                    <Route path="stats"/> */}
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
