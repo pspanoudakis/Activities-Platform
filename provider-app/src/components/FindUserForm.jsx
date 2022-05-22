@@ -15,7 +15,7 @@ export function FindUserForm() {
             modalContent: null
         })
         // This might be risky...
-        context.state.navigate('/users')
+        context.state.navigate(dest)
     }
 
     return (
@@ -27,11 +27,11 @@ export function FindUserForm() {
             />
             <FormActionButton
                 text='Αναζήτηση με Όνομα Χρήστη'
-                action={() => closeModalAndNavigate('/users')}
+                action={() => closeModalAndNavigate(`/users?searchBy=name&key=${inputText}`)}
             />
             <FormActionButton
                 text='Αναζήτηση με ID Χρήστη'
-                action={() => closeModalAndNavigate('/users')}
+                action={() => closeModalAndNavigate(`/users?searchBy=id&key=${inputText}`)}
             />
         </div>
     )

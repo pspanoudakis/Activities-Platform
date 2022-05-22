@@ -2,6 +2,8 @@ import React from 'react'
 
 export function UserResultRow(props) {
     return (
-        <span>{props.item},</span>
+        <div className='flex flex-col'>
+            <span>{props.item.username}</span>
+        </div>
     )
 }
