@@ -1,6 +1,7 @@
-export const __users__ = {
+const dummyUsers = {
     0: {
         username: 'nick_pap',
+        role: 'parent',
         isLocked: false,
         latestBookings: [
             {
@@ -25,6 +26,7 @@ export const __users__ = {
     },
     1: {
         username: 'ben_pap',
+        role: 'parent',
         isLocked: false,
         latestBookings: [
             {
@@ -43,6 +45,7 @@ export const __users__ = {
     },
     2: {
         username: 'mike_pap',
+        role: 'parent',
         isLocked: true,
         latestBookings: [
             {
@@ -72,3 +75,12 @@ export const __users__ = {
         ]
     }
 }
+
+export const __users__ = [...Array(50).keys()].map((_, i) => {
+    return {
+        username: `${dummyUsers[0].username}_${i}`,
+        role: i % 2 === 0 ? 'seller' : (i % 3 === 0 ? 'admin' : 'parent'),
+        isLocked: i % 2 === 0,
+        latestBookings: []
+    }
+})
