@@ -15,7 +15,8 @@ export function FindUserForm() {
             modalContent: null
         })
         // This might be risky...
-        context.state.navigate(dest)
+        //context.state.navigate(dest)
+        window.location.href = dest
     }
 
     return (

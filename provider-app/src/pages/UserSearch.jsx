@@ -19,12 +19,11 @@ export function UserSearch() {
     const [loading, setLoading] = useState(false)
     const [results, setResults] = useState([])
     const fetchIdRef = useRef(0)
-    //const [tableKey, setTableKey] = useState(0)
 
     const isSearchValid = () => (searchBy === SEARCH_BY_ID || searchBy === SEARCH_BY_NAME)
 
     const updateResults = (newPage, newPageSize) => {
-        console.log('table requests update')
+        //console.log('table requests update')
         setPaginationState({
             ...paginationState,
             currentPage: newPage,
@@ -49,8 +48,7 @@ export function UserSearch() {
 
     useEffect(() => {
         if (loading) {
-            //console.log('loading effect');
-            if (isSearchValid() && searchKey) {
+            if (isSearchValid()) {
                 fetchPageAndRerender()
             }
             else {
@@ -64,20 +62,8 @@ export function UserSearch() {
         setLoading(true)
     }, [searchParams, paginationState.currentPage, paginationState.pageSize])
 
-    /* useEffect(() => {
-        setLoading(true)
-    }, [paginationState.currentPage, paginationState.pageSize])
-
-
-    useEffect(() => {
-        setPaginationState(defaultPaginationState)
-        // Force table to re-mount
-        //setTableKey(tableKey + 1)
-    }, [searchBy, searchKey]) */
-
     return (
         <UserResultsTable
-            //tableKey={tableKey}
             results={results}
             updateResults={updateResults}
             pageSize={paginationState.pageSize}

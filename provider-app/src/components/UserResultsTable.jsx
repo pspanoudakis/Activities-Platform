@@ -53,12 +53,9 @@ export function UserResultsTable(
         pageSize,
         totalPages,
         currentPage,
-        loading,
-        //tableKey
+        loading
     }
 ) {
-
-    //console.log('remounting ' + tableKey)
 
     const columns = useMemo(() => [
         {
@@ -77,7 +74,6 @@ export function UserResultsTable(
 
     return (
         <PaginatedTable
-            //key={tableKey}
             columns={columns}
             data={results}
             fetchData={updateResults}

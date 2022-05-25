@@ -90,8 +90,6 @@ export function PaginatedTable({
     loading
 }) {
 
-    console.log('remounting')
-
     const {
         getTableProps,
         getTableBodyProps,
