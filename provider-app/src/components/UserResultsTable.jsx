@@ -2,30 +2,46 @@ import React, { useMemo } from 'react'
 import { PaginatedTable } from './PageableTable';
 
 
-function renderHeader(headerGroup) {
+function renderUserHeaders(headerGroup) {
     return (
-        <tr {...headerGroup.getHeaderGroupProps()}>
-            {
-                headerGroup.headers.map(column => (
-                    <th {...column.getHeaderProps()}>
-                        {column.render('Header')}
-                    </th>
-                ))
-            }
-        </tr>
+        <thead>            
+            <tr {...headerGroup.getHeaderGroupProps()}>
+                <th className='bg-cyan rounded-l-3xl p-1'>
+                    Όνομα Χρήστη
+                </th>
+                <th className='bg-cyan p-1'>
+                    Ρόλος
+                </th>
+                <th className='bg-cyan rounded-r-3xl p-1'>
+                    Κατάσταση
+                </th>
+            </tr>
+        </thead>
     )
 }
 
-function renderRow(row) {
+function renderUserRow(row) {
+
+    const roleText = {
+        'parent': <div>Γονέας</div>,
+        'seller': <div>Πάροχος</div>,
+        'admin': <div className='text-blue-700 font-semibold'>Διαχειριστής</div>
+    }
+
+    const isLockedText = {
+        false: <div className='text-green-700 font-semibold'>Ενεργός</div>,
+        true: <div className='text-red-700 font-semibold'>Ανεσταλμένος</div>
+    }
+
     return (
-        <tr style={{cursor: 'pointer'}} onClick={() => console.log(row)} {...row.getRowProps()}>
-            {
-                row.cells.map(cell =>
-                    <td {...cell.getCellProps()}>
-                        {cell.render('Cell')}
-                    </td>
-                )
-            }
+        <tr className='result-table-row hover:bg-light-cyan duration-200' style={{cursor: 'pointer'}} onClick={() => console.log(row)} {...row.getRowProps()}>
+            <td>
+                <div className='font-medium'>
+                    {row.original.username}
+                </div>
+            </td>
+            <td className=''>{roleText[row.original.role]}</td>
+            <td>{isLockedText[row.original.isLocked]}</td>
         </tr>
     )
 }
@@ -37,9 +53,12 @@ export function UserResultsTable(
         pageSize,
         totalPages,
         currentPage,
-        loading
+        loading,
+        //tableKey
     }
 ) {
+
+    //console.log('remounting ' + tableKey)
 
     const columns = useMemo(() => [
         {
@@ -58,15 +77,16 @@ export function UserResultsTable(
 
     return (
         <PaginatedTable
+            //key={tableKey}
             columns={columns}
             data={results}
             fetchData={updateResults}
             initialPageSize={pageSize}
             totalPages={totalPages}
             initialPage={currentPage}
-            renderRow={renderRow}
-            renderHeaderGroup={renderHeader}
-            availablePageSizes={[4, 8, 12]}
+            renderRow={renderUserRow}
+            renderHeaders={renderUserHeaders}
+            availablePageSizes={[8, 12, 24]}
             loading={loading}
         />
       )

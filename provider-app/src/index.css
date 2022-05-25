@@ -14,3 +14,31 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.result-table-row:first-child > td:first-child {
+  @apply rounded-tl-3xl
+}
+
+.result-table-row:first-child > td:last-child {
+  @apply rounded-tr-3xl
+}
+
+.result-table-row:last-child > td:first-child {
+  @apply rounded-bl-3xl
+}
+
+.result-table-row:last-child > td:last-child {
+  @apply rounded-br-3xl
+}
+
+.result-table-row:nth-child(odd) {
+  @apply bg-gray-200
+}
+
+.result-table-row > * div {
+  @apply
+    w-full
+    flex
+    justify-center
+    p-2
+}

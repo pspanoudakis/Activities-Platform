@@ -65,5 +65,5 @@ export function fetchUserResultsPage(searchBy, key, requestedPage, pageSize, cal
     else {
         callback(response)
     }
-    console.log(response);
+    //console.log(response);
 }
