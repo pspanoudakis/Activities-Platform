@@ -15,14 +15,6 @@ code {
 @tailwind components;
 @tailwind utilities;
 
-.result-table-row:first-child > td:first-child {
-  @apply rounded-tl-3xl
-}
-
-.result-table-row:first-child > td:last-child {
-  @apply rounded-tr-3xl
-}
-
 .result-table-row:last-child > td:first-child {
   @apply rounded-bl-3xl
 }
@@ -41,4 +33,10 @@ code {
     flex
     justify-center
     p-2
+}
+
+.pagination-options > * button {
+  @apply
+    py-1 px-3
+    rounded-lg
 }

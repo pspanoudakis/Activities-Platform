@@ -6,13 +6,13 @@ function renderUserHeaders(headerGroup) {
     return (
         <thead>            
             <tr {...headerGroup.getHeaderGroupProps()}>
-                <th className='bg-cyan rounded-l-3xl p-1'>
+                <th className='bg-cyan rounded-tl-3xl p-1'>
                     Όνομα Χρήστη
                 </th>
                 <th className='bg-cyan p-1'>
                     Ρόλος
                 </th>
-                <th className='bg-cyan rounded-r-3xl p-1'>
+                <th className='bg-cyan rounded-tr-3xl p-1'>
                     Κατάσταση
                 </th>
             </tr>
