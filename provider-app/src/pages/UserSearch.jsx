@@ -52,6 +52,7 @@ export function UserSearch() {
                 fetchPageAndRerender()
             }
             else {
+                // Should display an indication message here
                 setResults([])
                 setLoading(false)
             }

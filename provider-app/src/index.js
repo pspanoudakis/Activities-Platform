@@ -9,6 +9,7 @@ import { Index } from './pages/Index';
 import { UserSearch } from './pages/UserSearch';
 import { UserPage } from './pages/UserPage';
 import reportWebVitals from './reportWebVitals';
+import { PlatformStats } from './pages/PlatformStats';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,8 +26,8 @@ root.render(
                         <Route index element={<PendingActivities />}/>
                         <Route path=":activityId" element={<ActivityPage />}/>
                     </Route>
-                    <Route path="newUser" element={<NewUser />}/>
-                    <Route path="stats"/> */}
+                    <Route path="newUser" element={<NewUser />}/>*/}
+                    <Route path="platformStats" element={<PlatformStats />}/>
                 </Route>
             </Routes>
         </BrowserRouter>
