@@ -67,3 +67,22 @@ export function fetchUserResultsPage(searchBy, key, requestedPage, pageSize, cal
     }
     //console.log(response);
 }
+
+export function fetchPlatformStats(callback) {
+    const stats = {
+        parents: 1124,
+        providers: 321,
+        bookings: 520,
+        activities: 404,
+        facilities: 316,
+        pendingActivities: 68
+    }
+    if (ADD_DELAY) {
+        delay(DELAY_DURATION).then(() => {
+            callback(stats)
+        })
+    }
+    else {
+        callback(stats)
+    }
+}

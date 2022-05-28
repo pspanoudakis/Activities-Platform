@@ -1,25 +1,8 @@
 import React, { useEffect } from "react";
 import { useTable, usePagination } from 'react-table'
-import { SpinnerCircular } from 'spinners-react';
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-function LoadingIndicator({ stretchParent }) {
-    return (
-        <div
-            className={ stretchParent ?
-                "absolute top-0 right-0 w-full h-full flex justify-center items-center flex-col gap-2 bg-white/80"
-                :
-                "flex justify-center items-center flex-col gap-3 p-4"
-            }
-        >
-            <SpinnerCircular size={60} thickness={200} color="#D1E8E8" secondaryColor="rgba(205,205,205)"/>
-            <span className="text-2xl font-thin">
-                Φόρτωση...
-            </span>
-        </div>
-    )
-}
+import { LoadingIndicator } from "./LoadingIndicator";
 
 function PaginationOptions({
     canPreviousPage,
