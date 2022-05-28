@@ -24,7 +24,7 @@ export function Navbar() {
                         showModal: true,
                         modalContent: <FindUserForm />
                 })}/>
-                <AdminNavbarButton icon={exitIcon} callback={() => context.state.navigate("/users")}/>
+                <AdminNavbarButton icon={exitIcon} callback={() => context.state.navigate("/logout")}/>
             </div>
         </div>
     );

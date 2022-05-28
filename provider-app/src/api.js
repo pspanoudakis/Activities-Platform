@@ -1,4 +1,4 @@
-import { __users__ } from "./fixedData";
+import { PENDING_ACTIVITY, __activities__, __users__ } from "./fixedData";
 
 export function delay(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -25,6 +25,10 @@ function getUsersData(searchBy, key) {
         }
     }
     return results
+}
+
+function getPendingActivitiesData() {
+    return __activities__.filter(a => a.status == PENDING_ACTIVITY)
 }
 
 function getDataPage(data, requestedPage, pageSize) {
@@ -85,4 +89,18 @@ export function fetchPlatformStats(callback) {
     else {
         callback(stats)
     }
+}
+
+export function fetchPendingActivitiesPage(requestedPage, pageSize, callback) {
+    console.log(arguments)
+    const response = getDataPage(getPendingActivitiesData(), requestedPage, pageSize)
+    if (ADD_DELAY) {
+        delay(DELAY_DURATION).then(() => {
+            callback(response)
+        })
+    }
+    else {
+        callback(response)
+    }
+    //console.log(response);
 }

@@ -76,11 +76,27 @@ const dummyUsers = {
     }
 }
 
+const dummyActivity = {
+    name: 'Ποδόσφαιρο 5x5',
+    providerName: 'chris_pap'
+}
+
 export const __users__ = [...Array(50).keys()].map((_, i) => {
     return {
         username: `${dummyUsers[0].username}_${i}`,
         role: i % 2 === 0 ? 'seller' : (i % 3 === 0 ? 'admin' : 'parent'),
         isLocked: i % 2 === 0,
         latestBookings: []
+    }
+})
+
+export const PENDING_ACTIVITY = 'pending_activity'
+export const APPROVED_ACTIVITY = 'approved_activity'
+export const __activities__ = [...Array(15).keys()].map((_, i) => {
+    return {
+        id: i,
+        name: `${dummyActivity.name}_${i}`,
+        providerName: `${dummyActivity.providerName}_${i}`,
+        status: PENDING_ACTIVITY
     }
 })

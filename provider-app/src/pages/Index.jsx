@@ -28,7 +28,7 @@ export function Index() {
                 />
                 <AdminPageButton title="Εισαγωγή Χρήστη" icon={addUserIcon} callback={() => null}/>
                 <AdminPageButton title="Στατιστικά Πλατφόρμας" icon={statsIcon} callback={() => context.state.navigate("/platformStats")}/>
-                <AdminPageButton title="Έγκριση Δραστηριοτήτων" icon={approveIcon} callback={() => null}/>
+                <AdminPageButton title="Έγκριση Δραστηριοτήτων" icon={approveIcon} callback={() => context.state.navigate("/pendingActivities")}/>
             </div>
         </>
     )

@@ -10,6 +10,9 @@ import { UserSearch } from './pages/UserSearch';
 import { UserPage } from './pages/UserPage';
 import reportWebVitals from './reportWebVitals';
 import { PlatformStats } from './pages/PlatformStats';
+import { Logout } from './pages/Logout';
+import { ActivityPage } from './pages/ActivityPage';
+import { PendingActivities } from './pages/PendingActivities';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,12 +25,13 @@ root.render(
                         <Route index element={<UserSearch />}/>
                         <Route path=":userId" element={<UserPage />}/>
                     </Route>
-                    {/* <Route path="activities">
+                    <Route path="pendingActivities">
                         <Route index element={<PendingActivities />}/>
                         <Route path=":activityId" element={<ActivityPage />}/>
                     </Route>
-                    <Route path="newUser" element={<NewUser />}/>*/}
+                    {/*<Route path="newUser" element={<NewUser />}/>*/}
                     <Route path="platformStats" element={<PlatformStats />}/>
+                    <Route path="logout" element={<Logout />}/>
                 </Route>
             </Routes>
         </BrowserRouter>
