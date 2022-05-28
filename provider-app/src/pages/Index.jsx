@@ -26,7 +26,7 @@ export function Index() {
                         modalContent: <FindUserForm/>
                     })}
                 />
-                <AdminPageButton title="Εισαγωγή Χρήστη" icon={addUserIcon} callback={() => null}/>
+                <AdminPageButton title="Δημιουργία Χρήστη" icon={addUserIcon} callback={() => context.state.navigate("newUser")}/>
                 <AdminPageButton title="Στατιστικά Πλατφόρμας" icon={statsIcon} callback={() => context.state.navigate("/platformStats")}/>
                 <AdminPageButton title="Έγκριση Δραστηριοτήτων" icon={approveIcon} callback={() => context.state.navigate("/pendingActivities")}/>
             </div>
