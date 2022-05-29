@@ -55,7 +55,7 @@ export function ActivityResultsTable(
             Header: 'Πάροχος',
             accessor: 'providerName'
         }
-    ])
+    ], [])
 
     return (
         <PaginatedTable

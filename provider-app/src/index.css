@@ -3,7 +3,7 @@ html, body, #root {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   width: 100vw;
-  height: max-content;
+  min-height: 100vh;
 }
 
 code {
@@ -15,6 +15,10 @@ code {
 @tailwind components;
 @tailwind utilities;
 
+#root {
+  @apply bg-xlight-cyan
+}
+
 .result-table-row:last-child > td:first-child {
   @apply rounded-bl-3xl
 }
@@ -25,6 +29,10 @@ code {
 
 .result-table-row:nth-child(odd) {
   @apply bg-gray-200
+}
+
+.result-table-row:nth-child(even) {
+  @apply bg-white
 }
 
 .result-table-row > * div {

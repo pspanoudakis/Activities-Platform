@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import { AppContext } from "../AppContext"
 import { FormActionButton } from "./FormActionButton"
-import { FormInputField } from "./FormInputField"
+import { SearchInputField } from "./SearchInputField"
 
 export function FindUserForm() {
 
@@ -21,7 +21,7 @@ export function FindUserForm() {
 
     return (
         <div className="flex flex-col gap-2 text-2xl">
-            <FormInputField
+            <SearchInputField
                 value={inputText}
                 setValue={setInputText}
                 classExtra="bg-gray-200 font-thin"

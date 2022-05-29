@@ -28,7 +28,7 @@ function getUsersData(searchBy, key) {
 }
 
 function getPendingActivitiesData() {
-    return __activities__.filter(a => a.status == PENDING_ACTIVITY)
+    return __activities__.filter(a => a.status === PENDING_ACTIVITY)
 }
 
 function getDataPage(data, requestedPage, pageSize) {

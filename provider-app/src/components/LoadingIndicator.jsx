@@ -6,7 +6,7 @@ export function LoadingIndicator({ stretchParent }) {
     return (
         <div
             className={ stretchParent ?
-                "absolute top-0 right-0 w-full h-full flex justify-center items-center flex-col gap-2 bg-white/80"
+                "absolute top-0 right-0 w-full h-full flex justify-center items-center flex-col gap-2 bg-xlight-cyan/80"
                 :
                 "flex justify-center items-center flex-col gap-3 p-4"
             }

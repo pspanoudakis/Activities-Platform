@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FormInputField } from "../components/FormInputField";
+import React, { useMemo, useState } from "react";
+import { FormFieldHint, FormInputField } from "../components/FormUtils";
 
 export function NewUser() {
 
@@ -15,31 +15,58 @@ export function NewUser() {
         console.log({
             uname: uname,
             email: email,
-            pwd: uname
+            pwd: pwd,
+            role: role
         })
     }
 
-    const canSubmitForm = () => {
-        return (pwd === verifyPwd && uname.length > 0 && email.length > 0)
-    }
+    const usernameOk = useMemo(() => {
+        return uname.length > 0
+    }, [uname])
 
-    const checkUsername = () => {
-        return uname.length >= 0
-    }
+    const emailOk = useMemo(() => {
+        return email.length > 0
+    }, [email])
 
-    const checkPassword = () => {
-        return pwd.length >= 8 && pwd === verifyPwd
-    }
+    const pwdOk = useMemo(() => {
+        return pwd.length >= 8
+    }, [pwd])
+
+    const verifyPwdOk = useMemo(() => {
+        return pwd === verifyPwd
+    }, [pwd, verifyPwd])
+
+    const canSubmitForm = useMemo(() => {
+        return (usernameOk && emailOk && pwdOk && verifyPwdOk)
+    }, [usernameOk, emailOk, pwdOk, verifyPwdOk])
 
     const fieldClassExtra = "shadow-md p-4"
 
+    /* useEffect(() => {
+        console.log({
+            usernameOk,
+            emailOk,
+            pwdOk,
+            canSubmitForm
+        })
+    })
+ */
     return (
         <div className="pt-6 w-full flex flex-col items-center gap-7 text-lg">
-            <span className="font-light text-4xl">
+            <span className="font-light text-4xl text-center px-2">
                 Δημιουργία Νέου Χρήστη
             </span>
             <form onSubmit={submitForm}>
-                <div className="grid grid-cols-2 grid-rows-3 gap-x-20 gap-y-5 rounded-lg bg-xlight-cyan px-20 py-8">
+                <div
+                    className="
+                        grid
+                        md:grid-cols-2 md:grid-rows-3
+                        sm:grid-cols-1 sm:grid-rows-6
+                        gap-x-20 gap-y-5
+                        rounded-lg
+                        px-20 py-8
+                    "
+                >
                     <div className="flex flex-col gap-1">
                         <label htmlFor="uname">Όνομα Χρήστη</label>
                         <FormInputField
@@ -48,15 +75,18 @@ export function NewUser() {
                             classExtra={fieldClassExtra}
                             placeholder="Όνομα Χρήστη"
                         />
+                        <FormFieldHint skipHint={usernameOk} text="Απαιτείται τουλάχιστον 1 χαρακτήρας." />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label htmlFor="email">Email</label>
                         <FormInputField
+                            type="email"
                             value={email}
                             setValue={setEmail}
                             classExtra={fieldClassExtra}
                             placeholder="Email"
                         />
+                        <FormFieldHint skipHint={emailOk} text="Απαιτείται μια έγκυρη διεύθυνση email." />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label htmlFor="pwd">Κωδικός Πρόσβασης</label>
@@ -67,6 +97,7 @@ export function NewUser() {
                             classExtra={fieldClassExtra}
                             placeholder="Κωδικός"
                         />
+                        <FormFieldHint skipHint={pwdOk} text="Απαιτούνται τουλάχιστον 8 χαρακτήρες." />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label htmlFor="verifyPwd">Επιβεβαίωση Κωδικού</label>
@@ -77,10 +108,34 @@ export function NewUser() {
                             classExtra={fieldClassExtra}
                             placeholder="Επιβεβαίωση Κωδικού"
                         />
+                        <FormFieldHint skipHint={verifyPwdOk} text="Οι κωδικοί πρόσβασης δεν ταιριάζουν." />
                     </div>
-                    <div className="flex justify-center col-span-2">
+                    <div className="md:col-span-2 sm:col-span-1 flex flex-col gap-1 md:items-center sm:items-start">
+                        <span>Επιλογή Ρόλου</span>
+                        <div className="flex flex-col gap-1 items-start">
+                            <div className="flex flex-row gap-2 items-center">
+                                <input type="radio" name="parent" checked={role === 'parent'} onChange={() => setRole('parent')}/>
+                                <label htmlFor="parent" onClick={() => setRole('parent')}>
+                                    Γονέας
+                                </label>
+                            </div>
+                            <div className="flex flex-row gap-2 items-center">
+                                <input type="radio" name="provider" checked={role === 'provider'} onChange={() => setRole('provider')}/>
+                                <label htmlFor="provider" onClick={() => setRole('provider')}>
+                                    Πάροχος
+                                </label>
+                            </div>
+                            <div className="flex flex-row gap-2 items-center">
+                                <input type="radio" name="admin" checked={role === 'admin'} onChange={() => setRole('admin')}/>
+                                <label htmlFor="admin"  onClick={() => setRole('admin')}>
+                                    Διαχειριστής
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-center md:col-span-2 sm:col-span-1">
                         {
-                            canSubmitForm() ?
+                            canSubmitForm ?
                             <button
                                 type="submit"
                                 className={`
@@ -90,7 +145,7 @@ export function NewUser() {
                                     h-max
                                     px-5 py-2
                                     rounded-xl
-                                    border-dark-cyan border-4
+                                    border-dark-cyan border-2
                                 `}>
                                 Δημιουργία Χρήστη
                             </button>
@@ -102,7 +157,7 @@ export function NewUser() {
                                     h-max
                                     px-5 py-2
                                     rounded-xl 
-                                    border-dark-cyanborder-4
+                                    border-dark-cyan border-2   
                                 `}
                                 disabled>
                                 Δημιουργία Χρήστη

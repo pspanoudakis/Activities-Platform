@@ -29,7 +29,7 @@ function App() {
         })}>
           { appContext.modalContent }
         </AdminModal>
-        <div className='w-full, flex justify-center h-max'>
+        <div className='w-full, flex justify-center h-full'>
           <div
             className='w-full h-max flex flex-col gap-2 items-center'
             style={{ maxWidth: "60rem", minWidth: "20rem"}}
