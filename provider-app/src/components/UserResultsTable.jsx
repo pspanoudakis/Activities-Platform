@@ -24,7 +24,7 @@ function renderUserRow(row) {
 
     const roleText = {
         'parent': <div>Γονέας</div>,
-        'seller': <div>Πάροχος</div>,
+        'provider': <div>Πάροχος</div>,
         'admin': <div className='text-blue-700 font-semibold'>Διαχειριστής</div>
     }
 

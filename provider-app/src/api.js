@@ -1,4 +1,4 @@
-import { PENDING_ACTIVITY, __activities__, __users__ } from "./fixedData";
+import { PENDING_ACTIVITY, __activities__ } from "./fixedData";
 
 export function delay(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -11,6 +11,7 @@ export const SEARCH_BY_ID = 'id'
 export const SEARCH_BY_NAME = 'name'
 
 function getUsersData(searchBy, key) {
+    const __users__ = JSON.parse(localStorage.getItem("__users__"))
     let results = []
     if (searchBy === SEARCH_BY_ID) {
         if (__users__[key]) {
@@ -28,6 +29,7 @@ function getUsersData(searchBy, key) {
 }
 
 function getPendingActivitiesData() {
+    const __activities__ = JSON.parse(localStorage.getItem("__activities__"))
     return __activities__.filter(a => a.status === PENDING_ACTIVITY)
 }
 
@@ -69,7 +71,7 @@ export function fetchUserResultsPage(searchBy, key, requestedPage, pageSize, cal
     else {
         callback(response)
     }
-    //console.log(response);
+    console.log(response);
 }
 
 export function fetchPlatformStats(callback) {
@@ -103,4 +105,24 @@ export function fetchPendingActivitiesPage(requestedPage, pageSize, callback) {
         callback(response)
     }
     //console.log(response);
+}
+
+export function addNewUser(userInfo, callback) {
+    console.log(arguments)
+    const __users__ = JSON.parse(localStorage.getItem("__users__"))
+    __users__.push({
+        username: userInfo.username,
+        isLocked: false,
+        latestBookings: [],
+        role: userInfo.role
+    })
+    localStorage.setItem("__users__", JSON.stringify(__users__))
+    if (ADD_DELAY) {
+        delay(DELAY_DURATION).then(() => {
+            callback({ok: true})
+        })
+    }
+    else {
+        callback({ok: true})
+    }
 }

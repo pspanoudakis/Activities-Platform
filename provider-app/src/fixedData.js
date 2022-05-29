@@ -81,14 +81,18 @@ const dummyActivity = {
     providerName: 'chris_pap'
 }
 
-export const __users__ = [...Array(50).keys()].map((_, i) => {
+export const __users__ = [...Array(35).keys()].map((_, i) => {
     return {
         username: `${dummyUsers[0].username}_${i}`,
-        role: i % 2 === 0 ? 'seller' : (i % 3 === 0 ? 'admin' : 'parent'),
+        role: i % 2 === 0 ? 'provider' : (i % 3 === 0 ? 'admin' : 'parent'),
         isLocked: i % 2 === 0,
         latestBookings: []
     }
 })
+
+if (!localStorage.getItem("__users__")) {
+    localStorage.setItem("__users__", JSON.stringify(__users__))
+}
 
 export const PENDING_ACTIVITY = 'pending_activity'
 export const APPROVED_ACTIVITY = 'approved_activity'
@@ -100,3 +104,7 @@ export const __activities__ = [...Array(15).keys()].map((_, i) => {
         status: PENDING_ACTIVITY
     }
 })
+
+if (!localStorage.getItem("__activities__")) {
+    localStorage.setItem("__activities__", JSON.stringify(__activities__))
+}

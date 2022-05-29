@@ -1,7 +1,13 @@
-import React, { useMemo, useState } from "react";
+import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useContext, useMemo, useState } from "react";
+import { addNewUser } from "../api";
+import { AppContext } from '../AppContext';
 import { FormFieldHint, FormInputField } from "../components/FormUtils";
 
 export function NewUser() {
+
+    const context = useContext(AppContext)
 
     const [uname, setUname] = useState('')
     const [email, setEmail] = useState('')
@@ -18,6 +24,34 @@ export function NewUser() {
             pwd: pwd,
             role: role
         })
+
+        addNewUser(
+            {
+                username: uname,
+                role: role
+            },
+            (response) => {
+                // Maybe navigate to New User page here
+                context.state.navigate("/")
+                
+                context.setState({
+                    ...context.state,
+                    showModal: true,
+                    modalContent: (
+                        response.ok ?
+                        <div className="flex flex-col gap-4 px-4 pb-4 text-2xl font-light">
+                            <FontAwesomeIcon icon={faCircleCheck} color="green" size="3x"/>
+                            {`Ο χρήστης '${uname}' δημιουργήθηκε επιτυχώς.`}
+                        </div>
+                        :
+                        <div className="flex flex-col gap-4 px-4 pb-4 text-2xl font-light">
+                            <FontAwesomeIcon icon={faCircleXmark} color="red" size="3x"/>
+                            {`Σφάλμα δημιουργίας νέου χρήστη.`}
+                        </div>
+                    )
+                })
+            }
+        )
     }
 
     const usernameOk = useMemo(() => {
