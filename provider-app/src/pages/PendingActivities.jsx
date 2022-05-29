@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { fetchPendingActivitiesPage } from '../api'
 import { ActivityResultsTable } from '../components/ActivityResultsTable'
+import { PageTitle } from '../components/PageTitle'
 
 const defaultPaginationState = {
     currentPage: 0,
@@ -51,7 +52,9 @@ export function PendingActivities() {
 
     return (
         <div className="pt-6 w-full flex flex-col items-center gap-7">
-            <span className="font-light text-4xl">Δραστηριότητες προς έγκριση</span>
+            <PageTitle>
+                Δραστηριότητες προς έγκριση
+            </PageTitle>
             <ActivityResultsTable
                 results={results}
                 updateResults={updateResults}

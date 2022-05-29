@@ -4,6 +4,7 @@ import React, { useContext, useMemo, useState } from "react";
 import { addNewUser } from "../api";
 import { AppContext } from '../AppContext';
 import { FormFieldHint, FormInputField } from "../components/FormUtils";
+import { PageTitle } from "../components/PageTitle";
 
 export function NewUser() {
 
@@ -33,7 +34,7 @@ export function NewUser() {
             (response) => {
                 // Maybe navigate to New User page here
                 context.state.navigate("/")
-                
+
                 context.setState({
                     ...context.state,
                     showModal: true,
@@ -87,9 +88,9 @@ export function NewUser() {
  */
     return (
         <div className="pt-6 w-full flex flex-col items-center gap-7 text-lg">
-            <span className="font-light text-4xl text-center px-2">
+            <PageTitle>
                 Δημιουργία Νέου Χρήστη
-            </span>
+            </PageTitle>
             <form onSubmit={submitForm}>
                 <div
                     className="
