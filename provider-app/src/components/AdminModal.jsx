@@ -23,7 +23,7 @@ export function AdminModal(props) {
                 <div className="flex justify-end">
                     <CloseModalButton onClick={() => props.closeCallback()}/>
                 </div>
-                <div className={`w-max flex justify-center`}>
+                <div className={`w-fit flex justify-center`}>
                     { props.children }
                 </div>
             </div>
