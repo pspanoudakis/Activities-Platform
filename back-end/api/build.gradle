@@ -16,6 +16,9 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven{
+		url "https://mvnrepository.com/artifact/com.auth0/java-jwt"
+	}
 }
 
 dependencies {
@@ -26,6 +29,10 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.security:spring-security-core:5.7.1'
+	implementation 'org.springframework.security:spring-security-web:5.7.1'
+	implementation 'org.springframework.security:spring-security-config:5.7.1'
+	implementation 'com.auth0:java-jwt:3.19.2'
 }
 
 tasks.named('test') {
