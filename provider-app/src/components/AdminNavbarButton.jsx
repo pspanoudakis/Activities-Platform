@@ -7,12 +7,13 @@ export function AdminNavbarButton(props) {
     const hoverColor = 'hover:bg-dark-cyan';
     return (
         <TileButton
+            path={props.path}
             stretch={false}
             bgColor={color}
             hoverColor={hoverColor}
             fontColor="text-white"
             padding="py-2 px-4"
-            isLink={true}
+            isLink={props.isLink}
             callback={props.callback}
         >
             <div className="flex flex-col white">

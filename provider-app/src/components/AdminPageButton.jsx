@@ -7,17 +7,18 @@ export function AdminPageButton(props) {
     const hoverColor = 'hover:bg-dark-cyan';
     return (
         <TileButton
+            path={props.path}
             stretch={true}
             bgColor={color}
             hoverColor={hoverColor}
             fontColor="text-white"
             padding="py-8 px-4"
-            isLink={true}
+            isLink={props.isLink}
             callback={props.callback}
         >
             <div className="flex flex-col white gap-2">
                 <FontAwesomeIcon icon={props.icon} size="6x"/>
-                <span className='text-black whitespace-nowrap text-2xl font-light'>
+                <span className='text-black whitespace-nowrap text-2xl font-light text-center'>
                     { props.title }
                 </span>
             </div>

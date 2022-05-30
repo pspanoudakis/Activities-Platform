@@ -16,15 +16,16 @@ export function Navbar() {
     return (
         <div className='flex w-full justify-center p-1'>
             <div className='flex flex-row text-white justify-between w-full'>
-                <AdminNavbarButton icon={houseIcon} callback={() => context.state.navigate("/")}/>
+                <AdminNavbarButton icon={houseIcon} isLink={true} path="/" />
                 <AdminNavbarButton
                     icon={searchIcon}
+                    isLink={false}
                     callback={() => context.setState({
                         ...context.state,
                         showModal: true,
                         modalContent: <FindUserForm />
                 })}/>
-                <AdminNavbarButton icon={exitIcon} callback={() => context.state.navigate("/logout")}/>
+                <AdminNavbarButton icon={exitIcon} isLink={true} path="/logout" />
             </div>
         </div>
     );

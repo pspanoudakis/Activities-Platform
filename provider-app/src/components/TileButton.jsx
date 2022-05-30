@@ -1,15 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export function TileButton(props) {
 
-    const buttonStyle = {}
-    if (props.isLink) {
-        buttonStyle.cursor = "pointer"
-    }
-
     return (
-        <button
-            type="button"
+        props.isLink ?
+        <Link
+            to={props.path}
             className={`
                 ${props.bgColor}
                 ${props.hoverColor}
@@ -18,8 +15,25 @@ export function TileButton(props) {
                 rounded-3xl
                 ${props.padding}
                 ${props.stretch ? "flex-1" : "w-max h-max"}
-                shadow-md`}
-            style={buttonStyle}
+                shadow-md
+            `}
+        >
+            { props.children }
+        </Link>
+        :
+        <button
+            type="button"
+            style={{cursor: "pointer"}}
+            className={`
+                ${props.bgColor}
+                ${props.hoverColor}
+                duration-200
+                ${props.fontColor}
+                rounded-3xl
+                ${props.padding}
+                ${props.stretch ? "flex-1" : "w-max h-max"}
+                shadow-md
+            `}
             onClick={props.callback}
         >
             { props.children }

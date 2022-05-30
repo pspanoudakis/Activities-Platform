@@ -18,6 +18,7 @@ export function Index() {
         <>
             <div className='md:w-8/12 sm:w-10/12 h-full flex flex-wrap content-center basis-2/5 gap-4'>
                 <AdminPageButton
+                    isLink={false}
                     title="Αναζήτηση Χρήστη"
                     icon={searchIcon}
                     callback={() => context.setState({
@@ -26,9 +27,24 @@ export function Index() {
                         modalContent: <FindUserForm/>
                     })}
                 />
-                <AdminPageButton title="Δημιουργία Χρήστη" icon={addUserIcon} callback={() => context.state.navigate("newUser")}/>
-                <AdminPageButton title="Στατιστικά Πλατφόρμας" icon={statsIcon} callback={() => context.state.navigate("/platformStats")}/>
-                <AdminPageButton title="Έγκριση Δραστηριοτήτων" icon={approveIcon} callback={() => context.state.navigate("/pendingActivities")}/>
+                <AdminPageButton
+                    isLink={true}
+                    title="Δημιουργία Χρήστη"
+                    icon={addUserIcon}
+                    path="/newUser"
+                />
+                <AdminPageButton
+                    isLink={true}
+                    title="Στατιστικά Πλατφόρμας"
+                    icon={statsIcon}
+                    path="/platformStats"
+                />
+                <AdminPageButton
+                    isLink={true}
+                    title="Έγκριση Δραστηριοτήτων"
+                    icon={approveIcon}
+                    path="/pendingActivities"
+                />
             </div>
         </>
     )
