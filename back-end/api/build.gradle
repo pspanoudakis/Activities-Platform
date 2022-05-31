@@ -18,6 +18,7 @@ repositories {
 	mavenCentral()
 	maven{
 		url "https://mvnrepository.com/artifact/com.auth0/java-jwt"
+		url "https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt"
 	}
 }
 
@@ -33,6 +34,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-web:5.7.1'
 	implementation 'org.springframework.security:spring-security-config:5.7.1'
 	implementation 'com.auth0:java-jwt:3.19.2'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 tasks.named('test') {
