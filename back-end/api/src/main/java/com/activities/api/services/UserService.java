@@ -8,6 +8,7 @@ import com.activities.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class UserService {
 
@@ -15,6 +16,10 @@ public class UserService {
 
     public List<User> getAllUsers(){
         return userRepo.findAll();
+    }
+
+    public User getUserByUN(String username){
+        return userRepo.findByUsername(username);
     }
 
     public User createOrUpdateUser(User user){

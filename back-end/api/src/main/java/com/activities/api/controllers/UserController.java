@@ -25,8 +25,16 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<List<User>> getAllUsers(){
-        return new ResponseEntity<List<User>>(userService.getAllUsers(), HttpStatus.OK);
+        List<User> users = userService.getAllUsers();
+        System.out.println(users.get(0).getAuthorities().toString());
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
+
+    @GetMapping("/byun/{username}")
+    public ResponseEntity<User> getUserByUN(@PathVariable String username){
+        return ResponseEntity.ok().body(userService.getUserByUN(username));
+    }
+
 
     @PostMapping("")
     public ResponseEntity<User> createOrUpdateUser(@RequestBody User user){
