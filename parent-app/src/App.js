@@ -1,8 +1,20 @@
-import './App.css';
-import {TestComponent} from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+import { Routes, Route } from "react-router-dom";
+
+import Logobar from './components/Logobar';
+import Home from './components/Home';
+import Footer from './components/Footer';
 
 function App() {
-    return <TestComponent/>;
+  return (
+    <div class="text-center">
+      <Logobar />
+      <Routes>
+        <Route exact path='/' element={<Home />}/>
+      </Routes>
+      <br/><br/>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;
