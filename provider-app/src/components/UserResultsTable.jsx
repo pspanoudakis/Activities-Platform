@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { PaginatedTable } from './PageableTable';
+import { AppContext } from '../AppContext'
 
-
-function renderUserHeaders(headerGroup) {
+function UserHeaders(headerGroup) {
     return (
         <thead>            
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -20,7 +20,7 @@ function renderUserHeaders(headerGroup) {
     )
 }
 
-function renderUserRow(row) {
+function UserRow(row, navigate) {
 
     const roleText = {
         'parent': <div>Γονέας</div>,
@@ -34,14 +34,23 @@ function renderUserRow(row) {
     }
 
     return (
-        <tr className='result-table-row hover:bg-light-cyan duration-200' style={{cursor: 'pointer'}} onClick={() => console.log(row)} {...row.getRowProps()}>
+        <tr
+            className='result-table-row hover:bg-light-cyan duration-200'
+            style={{cursor: 'pointer'}}
+            onClick={() => navigate(`/users/${row.original.username}`)}
+            {...row.getRowProps()}
+        >
             <td>
                 <div className='font-medium'>
                     {row.original.username}
                 </div>
             </td>
-            <td className=''>{roleText[row.original.role]}</td>
-            <td>{isLockedText[row.original.isLocked]}</td>
+            <td className=''>
+                {roleText[row.original.role]}
+            </td>
+            <td>
+                {isLockedText[row.original.isLocked]}
+            </td>
         </tr>
     )
 }
@@ -56,6 +65,8 @@ export function UserResultsTable(
         loading
     }
 ) {
+
+    const context = useContext(AppContext)
 
     const columns = useMemo(() => [
         {
@@ -80,10 +91,11 @@ export function UserResultsTable(
             initialPageSize={pageSize}
             totalPages={totalPages}
             initialPage={currentPage}
-            renderRow={renderUserRow}
-            renderHeaders={renderUserHeaders}
+            renderRow={(row) => UserRow(row, context.state.navigate)}
+            renderHeaders={UserHeaders}
             availablePageSizes={[8, 12, 24]}
             loading={loading}
+            doublePageSelector={true}
         />
       )
 }

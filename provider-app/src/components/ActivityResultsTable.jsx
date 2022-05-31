@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
+import { AppContext } from '../AppContext';
 import { PaginatedTable } from './PageableTable';
 
 
-function renderActivityHeaders(headerGroup) {
+function ActivityHeaders(headerGroup) {
     return (
         <thead>            
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -17,10 +18,14 @@ function renderActivityHeaders(headerGroup) {
     )
 }
 
-function renderActivityRow(row) {
+function ActivityRow(row, navigate) {
 
     return (
-        <tr className='result-table-row hover:bg-light-cyan duration-200' style={{cursor: 'pointer'}} onClick={() => console.log(row)} {...row.getRowProps()}>
+        <tr
+            className='result-table-row hover:bg-light-cyan duration-200'
+            style={{cursor: 'pointer'}}
+            onClick={() => navigate(`/pendingActivities/${row.original.id}`)}
+            {...row.getRowProps()}>
             <td>
                 <div className='font-medium'>
                     {row.original.name}
@@ -46,6 +51,8 @@ export function ActivityResultsTable(
     }
 ) {
 
+    const context = useContext(AppContext)
+
     const columns = useMemo(() => [
         {
             Header: 'Όνομα',
@@ -65,10 +72,11 @@ export function ActivityResultsTable(
             initialPageSize={pageSize}
             totalPages={totalPages}
             initialPage={currentPage}
-            renderRow={renderActivityRow}
-            renderHeaders={renderActivityHeaders}
+            renderRow={(row) => ActivityRow(row, context.state.navigate)}
+            renderHeaders={ActivityHeaders}
             availablePageSizes={[8, 12, 24]}
             loading={loading}
+            doublePageSelector={true}
         />
       )
 }
