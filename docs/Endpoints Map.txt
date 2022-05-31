@@ -1,4 +1,14 @@
 /users:
+	/login:
+		POST():
+		Request Body:
+		{
+			"username": "parent1",
+			"password": "parent1"
+		}
+		Response Header:
+		Authorization <JWT>  (To access endpoints that need Authorization JWT must have Bearer prefix)
+
 	GET(): Return all users.
 	Response Body:
 	[
