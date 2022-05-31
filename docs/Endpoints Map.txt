@@ -81,6 +81,74 @@
 		GET(): Return activity.
 		DELETE(): Delete activity, retrun Activity or ErrorMessage.
 
+/admin:
+GET("/admin/getPendingActivitiesPage") 
+authority = "ROLE_ADMIN"
+RequestBody{
+    "pageSize": 10,
+    "pageNumber": 2
+}
+ResponseBody
+{   
+    "results": [
+        {activity_data},
+        {activity_data},
+        .
+        .
+        .
+        {activity_data}
+    ],
+    "totalPages": 10    
+}
+
+GET("/admin/getUsersPage") 
+authority = "ROLE_ADMIN"
+RequestBody{
+    "pageSize": 10,
+    "pageNumber": 2
+}
+ResponseBody
+{   
+    "results": [
+        {user_data},
+        {user_data},
+        .
+        .
+        .
+        {user_data}
+    ],
+    "totalPages": 10    
+}
+
+GET("/admin/getStatistics")'
+authority = "ROLE_ADMIN"
+ResponseBody{
+    "parents": 1124,
+    "providers": 321,
+    "bookings": 520,
+    "activities": 404,  //all activities
+    "facilities": 316,
+    "pendingActivities": 68
+}
+
+POST("/admin/addUser")
+RequestBody{
+    "username": "user123",
+    "password": "asdfasdf",
+    "email": "email@mail.com",
+    "role": "ROLE_PARENT"
+}
+
+POST("/admin/approveActivity/{activity_id}")
+ResponseBody{
+    <activity_data>
+}
+
+DELETE("/admin/rejectActivity/{activity_id}")
+ResponseBody{
+    <activity_data>
+}	
+
 /sellers:
 	GET(): Return all sellers.
 	POST(Seller): Create new User if seller.id doesn't exist or isn't given, else Update Seller. Return Seller or ErrorMessage.

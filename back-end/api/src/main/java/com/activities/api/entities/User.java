@@ -3,6 +3,7 @@ package com.activities.api.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -32,16 +33,14 @@ public class User implements UserDetails{
     private boolean isActive = true;
     private int balance;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Authority> authorities = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Collection<Authority> authorities;
 
     public void addRole(Authority authority){ this.authorities.add(authority); }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new Authority((long) 1, "ROLE_STUDENT"));
-        return roles;
+        return this.authorities;
     }
 
 
