@@ -1,4 +1,4 @@
-import { PENDING_ACTIVITY, __activities__ } from "./fixedData";
+import { PENDING_ACTIVITY } from "./fixedData";
 
 export function delay(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -10,22 +10,9 @@ const DELAY_DURATION = 1500
 export const SEARCH_BY_ID = 'id'
 export const SEARCH_BY_NAME = 'name'
 
-function getUsersData(searchBy, key) {
+function getUsersData(key) {
     const __users__ = JSON.parse(localStorage.getItem("__users__"))
-    let results = []
-    if (searchBy === SEARCH_BY_ID) {
-        if (__users__[key]) {
-            results.push(__users__[key])
-        }
-    }
-    else if (searchBy === SEARCH_BY_NAME) {
-        for (const user of __users__) {
-            if (user.username.includes(key)) {
-                results.push(user)
-            }
-        }
-    }
-    return results
+    return __users__.filter(u => u.username.includes(key))
 }
 
 function getPendingActivitiesData() {
@@ -48,21 +35,21 @@ function getDataPage(data, requestedPage, pageSize) {
     }
 }
 
-export function fetchUserResults(searchBy, key, callback) {
+export function fetchUserResults(key, callback) {
 
     if (ADD_DELAY) {
         delay(DELAY_DURATION).then(() => {
-            callback(getUsersData(searchBy, key))
+            callback(getUsersData(key))
         })
     }
     else {
-        callback(getUsersData(searchBy, key))
+        callback(getUsersData(key))
     }
 }
 
-export function fetchUserResultsPage(searchBy, key, requestedPage, pageSize, callback) {
+export function fetchUserResultsPage(key, requestedPage, pageSize, callback) {
     console.log(arguments)
-    const response = getDataPage(getUsersData(searchBy, key), requestedPage, pageSize)
+    const response = getDataPage(getUsersData(key), requestedPage, pageSize)
     if (ADD_DELAY) {
         delay(DELAY_DURATION).then(() => {
             callback(response)

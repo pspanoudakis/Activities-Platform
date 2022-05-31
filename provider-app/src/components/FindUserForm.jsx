@@ -27,16 +27,8 @@ export function FindUserForm() {
                 classExtra="bg-gray-200 font-thin"
             />
             <FormActionButton
-                text='Αναζήτηση με Όνομα Χρήστη'
-                /* isLink={true}
-                path={`/users?searchBy=name&key=${inputText}`} */
-                action={() => closeModalAndNavigate(`/users?searchBy=name&key=${inputText}`)}
-            />
-            <FormActionButton
-                text='Αναζήτηση με ID Χρήστη'
-                /* isLink={true}
-                path={`/users?searchBy=id&key=${inputText}`} */
-                action={() => closeModalAndNavigate(`/users?searchBy=id&key=${inputText}`)}
+                text='Αναζήτηση Χρήστη'
+                action={() => closeModalAndNavigate(`/users?searchKey=${inputText}`)}
             />
         </div>
     )

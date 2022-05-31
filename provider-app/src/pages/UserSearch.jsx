@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { fetchUserResultsPage, SEARCH_BY_ID, SEARCH_BY_NAME } from '../api';
+import { fetchUserResultsPage } from '../api';
+import { PageTitle } from '../components/PageTitle';
 import { UserResultsTable } from '../components/UserResultsTable';
 
 const defaultPaginationState = {
@@ -12,15 +13,12 @@ const defaultPaginationState = {
 export function UserSearch() {
 
     const [searchParams] = useSearchParams();
-    const searchBy = searchParams.get('searchBy')
-    const searchKey = searchParams.get('key')
+    const searchKey = searchParams.get('searchKey')
 
     const [paginationState, setPaginationState] = useState(defaultPaginationState)
     const [loading, setLoading] = useState(false)
     const [results, setResults] = useState([])
     const fetchIdRef = useRef(0)
-
-    const isSearchValid = () => (searchBy === SEARCH_BY_ID || searchBy === SEARCH_BY_NAME)
 
     const updateResults = (newPage, newPageSize) => {
         //console.log('table requests update')
@@ -34,7 +32,7 @@ export function UserSearch() {
     const fetchPageAndRerender = () => {
         const fetchId = ++fetchIdRef.current
 
-        fetchUserResultsPage(searchBy, searchKey, paginationState.currentPage, paginationState.pageSize, (response) => {
+        fetchUserResultsPage(searchKey, paginationState.currentPage, paginationState.pageSize, (response) => {
             if (fetchId === fetchIdRef.current) {
                 setResults(response.results)
                 setPaginationState({
@@ -48,14 +46,7 @@ export function UserSearch() {
 
     useEffect(() => {
         if (loading) {
-            if (isSearchValid()) {
-                fetchPageAndRerender()
-            }
-            else {
-                // Should display an indication message here
-                setResults([])
-                setLoading(false)
-            }
+            fetchPageAndRerender()
         }
     }, [loading])
 
@@ -64,13 +55,18 @@ export function UserSearch() {
     }, [searchParams, paginationState.currentPage, paginationState.pageSize])
 
     return (
-        <UserResultsTable
-            results={results}
-            updateResults={updateResults}
-            pageSize={paginationState.pageSize}
-            currentPage={paginationState.currentPage}
-            totalPages={paginationState.totalPages}
-            loading={loading}
-        />
+        <div className="pt-6 w-full flex flex-col items-center gap-7 pb-7">
+            <PageTitle>
+                {`Αναζήτηση χρήστη: '${searchKey}'`}
+            </PageTitle>
+            <UserResultsTable
+                results={results}
+                updateResults={updateResults}
+                pageSize={paginationState.pageSize}
+                currentPage={paginationState.currentPage}
+                totalPages={paginationState.totalPages}
+                loading={loading}
+            />
+        </div>
     )
 }

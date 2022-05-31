@@ -24,7 +24,7 @@ root.render(
                     <Route index element={<Index />}/>
                     <Route path="users">
                         <Route index element={<UserSearch />}/>
-                        <Route path=":userId" element={<UserPage />}/>
+                        <Route path=":username" element={<UserPage />}/>
                     </Route>
                     <Route path="pendingActivities">
                         <Route index element={<PendingActivities />}/>

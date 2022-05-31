@@ -6,6 +6,6 @@ export function UserPage(props) {
     const params = useParams()
 
     return (
-        <div>User {params.userId}</div>
+        <div>User {params.username}</div>
     )
 }
