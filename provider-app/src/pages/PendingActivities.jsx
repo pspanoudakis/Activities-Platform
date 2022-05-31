@@ -51,7 +51,7 @@ export function PendingActivities() {
     }, [paginationState.currentPage, paginationState.pageSize])
 
     return (
-        <div className="pt-6 w-full flex flex-col items-center gap-7">
+        <div className="pt-6 w-full flex flex-col items-center gap-7 pb-7">
             <PageTitle>
                 Δραστηριότητες προς έγκριση
             </PageTitle>

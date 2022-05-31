@@ -4,17 +4,35 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LoadingIndicator } from "./LoadingIndicator";
 
-function PaginationOptions({
+function PageSizeSelector({
+    pageSize,
+    availablePageSizes,
+    setPageSize
+}) {
+    return (
+        <select
+            value={pageSize}
+            onChange={e => {
+                setPageSize(Number(e.target.value))
+            }}
+            >
+            {availablePageSizes.map(pageSize => (
+                <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                </option>
+            ))}
+        </select>
+    )
+}
+
+function PageSelector({
     canPreviousPage,
     canNextPage,
     gotoPage,
     nextPage,
     previousPage,
     currentPage,
-    totalPages,
-    pageSize,
-    availablePageSizes,
-    setPageSize
+    totalPages
 }) {
     return (
         <div className="pagination-options">
@@ -63,7 +81,7 @@ function PaginationOptions({
                     </>
                 }
             </div>
-            <span>
+            {/* <span>
             | Go to page:{' '}
             <input
                 type="number"
@@ -74,19 +92,7 @@ function PaginationOptions({
                 }}
                 style={{ width: '100px' }}
             />
-            </span>{' '}
-            <select
-            value={pageSize}
-            onChange={e => {
-                setPageSize(Number(e.target.value))
-            }}
-            >
-            {availablePageSizes.map(pageSize => (
-                <option key={pageSize} value={pageSize}>
-                    Show {pageSize}
-                </option>
-            ))}
-            </select>
+            </span>{' '} */}
         </div>
     )
 }
@@ -101,7 +107,8 @@ export function PaginatedTable({
     initialPage,
     initialPageSize,
     availablePageSizes,
-    loading
+    loading,
+    doublePageSelector
 }) {
 
     const {
@@ -112,8 +119,6 @@ export function PaginatedTable({
         page,
         canPreviousPage,
         canNextPage,
-        //pageOptions,
-        //pageCount,
         gotoPage,
         nextPage,
         previousPage,
@@ -134,6 +139,18 @@ export function PaginatedTable({
         fetchData(pageIndex, pageSize)
     }, [pageIndex, pageSize])
 
+    const pageSelector = (
+        <PageSelector
+            canPreviousPage={canPreviousPage}
+            canNextPage={canNextPage}
+            gotoPage={gotoPage}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            currentPage={pageIndex}
+            totalPages={totalPages}
+        />
+    )
+
     return (
         <div className="relative w-full">
             {
@@ -142,6 +159,16 @@ export function PaginatedTable({
                 :
                 <>
                 <div className="flex items-center flex-col w-full gap-3">
+                    <div className="flex md:w-9/12 md:gap-0 w-11/12 gap-3 flex-col items-end">
+                        <PageSizeSelector
+                            availablePageSizes={availablePageSizes}
+                            pageSize={pageSize}
+                            setPageSize={setPageSize}
+                        />
+                        <div className="w-full flex justify-center">
+                            {doublePageSelector ? pageSelector : null}
+                        </div>
+                    </div>
                     <table {...getTableProps()} className='md:w-9/12 sm:w-11/12'>
                         { renderHeaders(headerGroups[0]) }
                         <tbody {...getTableBodyProps()}>
@@ -159,18 +186,7 @@ export function PaginatedTable({
                         results
                     </div> */}
 
-                    <PaginationOptions
-                        canPreviousPage={canPreviousPage}
-                        canNextPage={canNextPage}
-                        gotoPage={gotoPage}
-                        previousPage={previousPage}
-                        nextPage={nextPage}
-                        currentPage={pageIndex}
-                        totalPages={totalPages}
-                        pageSize={pageSize}
-                        availablePageSizes={availablePageSizes}
-                        setPageSize={setPageSize}
-                    />
+                    {pageSelector}
                 </div>
                 {
                     loading ?
