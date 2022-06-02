@@ -1,0 +1,2 @@
+Τα ερωτήματα στο Requests.json αξιοποιούν το περιβάλλον στο Environment.json
+Τα token που αποθηκεύονται ως environment variables seller_token, parent_token και admin_token έχουν διάρκεια 1 εβδομάδα. Για ανανέωση των τιμών των μεταβλητών χρειάζεται login με τα αντίστοιχα credentials.
