@@ -3,6 +3,7 @@ package com.activities.api.controllers;
 import java.util.List;
 
 import com.activities.api.entities.Activity;
+import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.BanckAccount;
 import com.activities.api.entities.BankCard;
@@ -10,6 +11,7 @@ import com.activities.api.entities.Category;
 import com.activities.api.entities.Facility;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Seller;
+import com.activities.api.services.ActivityAtDayService;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AgeCategoryService;
 import com.activities.api.services.BankAccountService;
@@ -37,6 +39,7 @@ public class TestController {
     @Autowired private ParentService parentService;
     @Autowired private BankAccountService bankAccountService;
     @Autowired private BankCardService bankCardService;
+    @Autowired private ActivityAtDayService activityAtDayService;
 
     @GetMapping("/agecats")
     public ResponseEntity<List<AgeCategory>> getAgeCategories(){
@@ -78,4 +81,8 @@ public class TestController {
         return ResponseEntity.ok().body(bankCardService.getBankCards());
     }
 
+    @GetMapping("/daysofacts")
+    public ResponseEntity<List<ActivityAtDay>> getDaysOfActivities(){
+        return ResponseEntity.ok().body(activityAtDayService.getDaysOfActivities());
+    }
 }
