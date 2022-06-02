@@ -12,6 +12,7 @@ import com.activities.api.entities.Category;
 import com.activities.api.entities.Evaluation;
 import com.activities.api.entities.Facility;
 import com.activities.api.entities.Parent;
+import com.activities.api.entities.Reservation;
 import com.activities.api.entities.Seller;
 import com.activities.api.services.ActivityAtDayService;
 import com.activities.api.services.ActivityPhotoService;
@@ -23,6 +24,7 @@ import com.activities.api.services.CategoryService;
 import com.activities.api.services.EvaluationService;
 import com.activities.api.services.FacilityService;
 import com.activities.api.services.ParentService;
+import com.activities.api.services.ReservationService;
 import com.activities.api.services.SellerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,7 @@ public class TestController {
     @Autowired private ActivityAtDayService activityAtDayService;
     @Autowired private ActivityPhotoService activityPhotoService;
     @Autowired private EvaluationService evaluationService;
+    @Autowired private ReservationService reservationService;
 
     @GetMapping("/agecats")
     public ResponseEntity<List<AgeCategory>> getAgeCategories(){
@@ -100,5 +103,10 @@ public class TestController {
     @GetMapping("/evaluations")
     public ResponseEntity<List<Evaluation>> getEvaluations(){
         return ResponseEntity.ok().body(evaluationService.getEvaluations());
+    }
+
+    @GetMapping("/reservations")
+    public ResponseEntity<List<Reservation>> getReservations(){
+        return ResponseEntity.ok().body(reservationService.getReservations());
     }
 }
