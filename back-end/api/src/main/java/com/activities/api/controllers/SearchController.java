@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
+import com.activities.api.dto.PagingResponse;
 import com.activities.api.entities.Activity;
 import com.activities.api.services.ActivityService;
 import com.activities.api.utils.MyUtil;
@@ -22,21 +23,19 @@ public class SearchController {
     @Autowired private ActivityService activityService;
     
     @GetMapping("/activities")
-    public ResponseEntity<List<ActivityCompact>> getFilteredActivities(
+    public ResponseEntity<PagingResponse<List<ActivityCompact>>> getFilteredActivities(
         @RequestParam(required = false, defaultValue = "1") Integer page_number, 
         @RequestParam(required = false, defaultValue = "1") Integer page_size){
-            
-        List<Activity> activities = activityService.getActivities();
 
-        return ResponseEntity.ok().body(
-            MyUtil.getPage(
-                activities.stream().
-                map( a -> {
-                    ActivityCompact ac = new ActivityCompact(a, activityService);
-                    return ac;
-                }
-                ).collect(Collectors.toList()),    
-                page_number, page_size)
-        );
+        List<Activity> activities = activityService.getActivities();
+        List<ActivityCompact> compactActivities = activities
+                                                    .stream().map( a -> {
+                                                        ActivityCompact ac = new ActivityCompact(a, activityService);
+                                                        return ac;
+                                                    }).collect(Collectors.toList());
+        int total_pages = (int) Math.ceil((double) compactActivities.size() / (double) page_size);
+        PagingResponse<List<ActivityCompact>> res = new PagingResponse<List<ActivityCompact>>(MyUtil.getPage(compactActivities, page_number, page_size), total_pages);
+
+        return ResponseEntity.ok().body(res);
     }
 }
