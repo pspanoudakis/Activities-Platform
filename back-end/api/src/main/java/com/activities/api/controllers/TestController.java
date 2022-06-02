@@ -9,6 +9,7 @@ import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.BanckAccount;
 import com.activities.api.entities.BankCard;
 import com.activities.api.entities.Category;
+import com.activities.api.entities.Evaluation;
 import com.activities.api.entities.Facility;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Seller;
@@ -19,6 +20,7 @@ import com.activities.api.services.AgeCategoryService;
 import com.activities.api.services.BankAccountService;
 import com.activities.api.services.BankCardService;
 import com.activities.api.services.CategoryService;
+import com.activities.api.services.EvaluationService;
 import com.activities.api.services.FacilityService;
 import com.activities.api.services.ParentService;
 import com.activities.api.services.SellerService;
@@ -43,6 +45,7 @@ public class TestController {
     @Autowired private BankCardService bankCardService;
     @Autowired private ActivityAtDayService activityAtDayService;
     @Autowired private ActivityPhotoService activityPhotoService;
+    @Autowired private EvaluationService evaluationService;
 
     @GetMapping("/agecats")
     public ResponseEntity<List<AgeCategory>> getAgeCategories(){
@@ -92,5 +95,10 @@ public class TestController {
     @GetMapping("/accphotos")
     public ResponseEntity<List<ActivityPhoto>> getActivityPhotos(){
         return ResponseEntity.ok().body(activityPhotoService.getActivityPhotos());
+    }
+
+    @GetMapping("/evaluations")
+    public ResponseEntity<List<Evaluation>> getEvaluations(){
+        return ResponseEntity.ok().body(evaluationService.getEvaluations());
     }
 }
