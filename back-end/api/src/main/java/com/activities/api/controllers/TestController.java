@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.AgeCategory;
+import com.activities.api.entities.BanckAccount;
 import com.activities.api.entities.Category;
 import com.activities.api.entities.Facility;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Seller;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AgeCategoryService;
+import com.activities.api.services.BankAccountService;
 import com.activities.api.services.CategoryService;
 import com.activities.api.services.FacilityService;
 import com.activities.api.services.ParentService;
@@ -31,6 +33,7 @@ public class TestController {
     @Autowired private FacilityService facilityService;
     @Autowired private ActivityService activityService;
     @Autowired private ParentService parentService;
+    @Autowired private BankAccountService bankAccountService;
 
     @GetMapping("/agecats")
     public ResponseEntity<List<AgeCategory>> getAgeCategories(){
@@ -60,6 +63,11 @@ public class TestController {
     @GetMapping("/parents")
     public ResponseEntity<List<Parent>> getParents(){
         return ResponseEntity.ok().body(parentService.getParents());
+    }
+
+    @GetMapping("/bankaccs")
+    public ResponseEntity<List<BanckAccount>> getBankAccounts(){
+        return ResponseEntity.ok().body(bankAccountService.getBankAccounts());
     }
 
 }
