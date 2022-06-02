@@ -1,6 +1,5 @@
 package com.activities.api.entities;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
