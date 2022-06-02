@@ -1,7 +1,5 @@
 package com.activities.api.entities;
 
-import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,16 +12,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity @Table(name = "activity_at_day")
+@Entity @Table(name = "activity_has_photo")
 @Data @AllArgsConstructor @NoArgsConstructor
-public class ActivityAtDay {
-    
+public class ActivityPhoto {
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String time;
-    private LocalDate day;
-    
+    private String url;
+
     @ManyToOne
     @JoinColumn(name = "activity_id")
     private Activity activity;
