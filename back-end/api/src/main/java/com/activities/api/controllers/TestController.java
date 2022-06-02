@@ -2,10 +2,13 @@ package com.activities.api.controllers;
 
 import java.util.List;
 
+import com.activities.api.entities.Activity;
 import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.Category;
 import com.activities.api.entities.Facility;
 import com.activities.api.entities.Seller;
+import com.activities.api.repositories.ActivityRepository;
+import com.activities.api.services.ActivityService;
 import com.activities.api.services.AgeCategoryService;
 import com.activities.api.services.CategoryService;
 import com.activities.api.services.FacilityService;
@@ -25,6 +28,7 @@ public class TestController {
     @Autowired private CategoryService categoryService;
     @Autowired private SellerService sellerService;
     @Autowired private FacilityService facilityService;
+    @Autowired private ActivityService activityService;
 
     @GetMapping("/agecats")
     public ResponseEntity<List<AgeCategory>> getAgeCategories(){
@@ -44,5 +48,10 @@ public class TestController {
     @GetMapping("/facilities")
     public ResponseEntity<List<Facility>> getFacilities(){
         return ResponseEntity.ok().body(facilityService.getFacilities());
+    }
+
+    @GetMapping("/activities")
+    public ResponseEntity<List<Activity>> getActivities(){
+        return ResponseEntity.ok().body(activityService.getActivities());
     }
 }
