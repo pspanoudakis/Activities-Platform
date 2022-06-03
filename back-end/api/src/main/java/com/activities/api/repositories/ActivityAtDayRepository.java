@@ -13,5 +13,6 @@ import com.activities.api.entities.ActivityAtDay;
 public interface ActivityAtDayRepository extends JpaRepository<ActivityAtDay, Integer>{
 
     public List<ActivityAtDay> findByActivityAndDayAfterOrderByDayAsc(Activity activity, LocalDate strart_date);
+    public List<ActivityAtDay> findByActivity(Activity activity);
     
 }

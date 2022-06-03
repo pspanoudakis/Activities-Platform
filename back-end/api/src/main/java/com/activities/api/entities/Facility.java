@@ -1,6 +1,7 @@
 package com.activities.api.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Facility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.EAGER)
     @JoinColumn(name = "seller_id")
     private Seller seller;
 

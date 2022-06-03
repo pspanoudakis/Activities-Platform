@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
+import com.activities.api.dto.ActivityExtended;
 import com.activities.api.dto.Coordinates;
 import com.activities.api.dto.PagingResponse;
 import com.activities.api.entities.Activity;
@@ -93,4 +95,13 @@ public class SearchController {
         return ResponseEntity.ok().body(res);
     }
 
+    @GetMapping("activity/{activity_id}")
+    public ResponseEntity<ActivityExtended> getActivityPage(@PathVariable int activity_id) throws Exception{
+        
+        Activity activity = activityService.getActivity(activity_id);
+        if(activity == null)throw new Exception("Activity with id " + activity_id + " not found");
+        return ResponseEntity.ok().body(
+            new ActivityExtended(activity, activityService)
+        );
+    }
 }
