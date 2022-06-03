@@ -17,4 +17,8 @@ public class FacilityService {
     public List<Facility> getFacilities(){
         return facilityRepository.findAll();
     }
+
+    public List<Facility> getFacilitiesByDistrict(String district){
+        return facilityRepository.findByDistrict(district);
+    }
 }

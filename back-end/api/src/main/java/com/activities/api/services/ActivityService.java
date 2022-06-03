@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.activities.api.entities.Activity;
+import com.activities.api.entities.ActivityAtDay;
+import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.Evaluation;
+import com.activities.api.entities.Facility;
 import com.activities.api.repositories.ActivityAtDayRepository;
 import com.activities.api.repositories.ActivityRepository;
 import com.activities.api.repositories.EvaluationRepository;
@@ -28,8 +31,10 @@ public class ActivityService {
         return calculateRating(evaluations);
     }
 
-    public LocalDate getEarliestDate(Activity activity){
-        return activityAtDayRepository.findByActivityOrderByDayAsc(activity).get(0).getDay();
+
+    public LocalDate getEarliestDate(Activity activity, LocalDate start_date){
+        List<ActivityAtDay> days = activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, start_date.minusDays(1));
+        return (!days.isEmpty()) ? days.get(0).getDay() : LocalDate.parse("3000-01-02");
     }
 
     private int calculateRating(List<Evaluation> evaluations){
@@ -37,6 +42,15 @@ public class ActivityService {
         int total = 0;
         for(int i = 0; i < size; i++) total += evaluations.get(i).getRating();
         return (int) ((double) total/size + 0.5);
+    }
+
+    public List<Activity> findInPriceRangeAndOfCategoryAndInFacilities(
+        int max, int min, 
+        List<AgeCategory> ageCategories, 
+        List<Facility> facilities){
+
+        return activityRepository.findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityIn(
+            max, min, ageCategories, facilities);
     }
 }
 

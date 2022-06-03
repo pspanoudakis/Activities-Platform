@@ -16,4 +16,8 @@ public class AgeCategoryService {
     public List<AgeCategory> getAgeCategories(){
         return ageCategoryRepository.findAll();
     }
+
+    public AgeCategory getAgeCategory(int id){
+        return ageCategoryRepository.findById(id).orElse(null);
+    }
 }

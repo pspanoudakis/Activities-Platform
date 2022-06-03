@@ -1,5 +1,6 @@
 package com.activities.api.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,6 @@ import com.activities.api.entities.ActivityAtDay;
 @Repository
 public interface ActivityAtDayRepository extends JpaRepository<ActivityAtDay, Integer>{
 
-    public List<ActivityAtDay> findByActivityOrderByDayAsc(Activity activity);
+    public List<ActivityAtDay> findByActivityAndDayAfterOrderByDayAsc(Activity activity, LocalDate strart_date);
     
 }

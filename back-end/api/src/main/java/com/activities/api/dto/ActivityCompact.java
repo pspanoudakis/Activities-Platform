@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.activities.api.entities.Activity;
 import com.activities.api.services.ActivityService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,18 +13,23 @@ import lombok.Data;
 @AllArgsConstructor
 public class ActivityCompact {
     
+    private int activity_id;
     private String name;
     private int rating;
     private String address;
     private int price;
     private LocalDate nextAvailableDate;
+    @JsonIgnore
+    private Coordinates coordinates;
 
-    public ActivityCompact(Activity activity, ActivityService activityService){
+    public ActivityCompact(Activity activity, ActivityService activityService, LocalDate start_date){
+        this.activity_id = activity.getId();
         this.name = activity.getName();
         this.price = activity.getPrice();
         this.address = activity.getFacility().getAddress();
+        this.coordinates = new Coordinates(activity.getFacility().getLongitude(), activity.getFacility().getLatitude());
         this.rating = activityService.getActivityRating(activity);
-        this.nextAvailableDate = activityService.getEarliestDate(activity);
+        this.nextAvailableDate = activityService.getEarliestDate(activity, start_date);
     }
 
 }

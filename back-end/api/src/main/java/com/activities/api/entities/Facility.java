@@ -26,7 +26,7 @@ public class Facility {
 
     private String name;
     private String address;
-    private String distrinc;
+    private String district;
     private Double longitude;
     private Double latitude;
     private Boolean approved;

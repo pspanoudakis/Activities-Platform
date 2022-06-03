@@ -1,11 +1,15 @@
 package com.activities.api.repositories;
 
 import com.activities.api.entities.Activity;
+import com.activities.api.entities.AgeCategory;
+import com.activities.api.entities.Facility;
+
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer>{
-    
+    public List<Activity> findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityIn(int max, int min, List<AgeCategory> ageCategories, List<Facility> facilities);
 }
