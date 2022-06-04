@@ -27,13 +27,13 @@ export function SearchResultTile({
                 <div className="flex flex-row gap-3 items-center justify-around text-left">
                     <img src={imgSrc} alt={imgSrc} className="rounded-3xl w-44"/>
                     <div className="flex flex-col gap-2 justify-start">
-                        <span className="text-lg font-medium">{name}</span>
+                        <span className="text-xl font-medium">{name}</span>
                         <ActivityLocationIndicator locationName={locationName} />
                         <ActivityDateIndicator date={nextDate} text="Επόμενη Κράτηση: "/>
                     </div>
                     <div className="flex flex-col gap-2 justify-center">
                         <ActivityRatingIndicator ratingScore={rating} />
-                        <span className="font-semibold text-lg text-center">{price} Points</span>
+                        <span className="font-semibold text-lg text-center">{price} Πόντοι</span>
                     </div>
                 </div>
             </ContentTile>

@@ -12,8 +12,8 @@ module.exports = {
         'dark-cyan': '#BBDADA',
         'xdark-cyan': '#89bfbf',
         'light-cyan': '#deefef',
-        'xlight-cyan': '#eff7f7'
-
+        'xlight-cyan': '#eff7f7',
+        'navbar-cyan': '#83CBD2'
       }
     }
   },

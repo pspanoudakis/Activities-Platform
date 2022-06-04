@@ -28,6 +28,12 @@ code {
 @tailwind components;
 @tailwind utilities;
 
+@media screen and (max-width: 700px) {
+  html {
+    font-size: smaller;
+  }
+}
+
 #root {
   @apply bg-xlight-cyan
 }

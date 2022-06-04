@@ -29,7 +29,7 @@ export function RecommendedActivityTile({
                     <span className="text-lg font-medium">{name}</span>
                     <ActivityLocationIndicator locationName={locationName} />
                     <ActivityRatingIndicator ratingScore={rating} />
-                    <span className="font-semibold">{price} Points</span>
+                    <span className="font-semibold">{price} Πόντοι</span>
                 </div>
             </ContentTile>
         </Link>
