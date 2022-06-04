@@ -1,16 +1,15 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import { ContentTile } from "../shared/ContentTile";
+import { ActivityDateIndicator } from "./ActivityDateIndicator";
 import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
-import { ActivityRatingIndicator } from "./ActivityRatingIndicator";
 
-export function RecommendedActivityTile({
+export function UpcomingActivityTile({
     activityInfo: {
         imgSrc,
         name,
-        rating,
         locationName,
-        price,
+        nextDate
         // needed for url
         //activityId
     }
@@ -28,8 +27,7 @@ export function RecommendedActivityTile({
                     <img src={imgSrc} alt={imgSrc} className="rounded-3xl"/>
                     <span className="text-lg font-medium">{name}</span>
                     <ActivityLocationIndicator locationName={locationName} />
-                    <ActivityRatingIndicator ratingScore={rating} />
-                    <span className="font-semibold">{price} Points</span>
+                    <ActivityDateIndicator date={nextDate} />
                 </div>
             </ContentTile>
         </Link>
