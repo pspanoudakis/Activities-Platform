@@ -2,8 +2,7 @@ import React, { useContext } from "react"
 
 import {TestComponent} from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { AppContext } from "../AppContext";
-import { PaginatedTable } from "../shared/PaginatedTable";
-import { LoadingIndicator } from "../shared/LoadingIndicator";
+import { ActivitiesSection } from "../components/ActivitiesSection";
 
 export function Index() {
 
@@ -21,7 +20,7 @@ export function Index() {
                 Open Modal
             </button>
             <TestComponent/>
-            <LoadingIndicator stretchParent={false}/>
+            <ActivitiesSection title="Κλείστε Ξανά" />
             <h2>Parent Index</h2>
         </div>
     )
