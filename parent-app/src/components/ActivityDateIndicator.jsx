@@ -2,12 +2,13 @@ import { faCalendar, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function ActivityDateIndicator({
-    date
+    date,
+    text
 }) {
     return (
-        <span className="font-light text-center">
+        <span className="font-light">
             <FontAwesomeIcon icon={faCalendar} size="xl" style={{paddingRight: ".5rem"}}/>
-            {date}
+            {text ? text : null}{date}
         </span>
     )
 }

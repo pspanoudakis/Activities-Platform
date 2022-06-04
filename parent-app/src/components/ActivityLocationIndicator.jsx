@@ -5,7 +5,7 @@ export function ActivityLocationIndicator({
     locationName
 }) {
     return (
-        <span className="font-light text-center">
+        <span className="font-light">
             <FontAwesomeIcon icon={faLocationDot} size="xl" style={{paddingRight: ".5rem"}}/>
             {locationName}
         </span>
