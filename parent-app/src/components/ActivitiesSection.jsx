@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Media from "react-media";
+import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SectionTitle } from "../shared/SectionTitle";
 import { ActivitySectionPageButton } from "./ActivitySectionPageButton";
 
-const TOTAL_ACTIVITIES = 9
+const TOTAL_ACTIVITIES = 12
 const PAGE_SIZE = 3
 const SMDEVICE_PAGE_SIZE = 2
 const SMALL_DEVICE_PXLIMIT = 800
+const XSDEVICE_PAGE_SIZE = 1
+const XS_DEVICE_PXLIMIT = 450
 
 export function ActivitiesSection({
     showBg,
@@ -20,6 +23,8 @@ export function ActivitiesSection({
     const [activities, setActivities] = useState([])
     const [page, setPage] = useState(0)
     const [loading, setLoading] = useState(true)
+
+    const isSmall = useHasMaxWidth(800)
 
     useEffect(() => {
         fetchData(TOTAL_ACTIVITIES, (response) => {
