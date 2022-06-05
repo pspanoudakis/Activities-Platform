@@ -10,6 +10,12 @@ function App() {
   const navigate = useNavigate()
   const [appContext, setAppContext] = useState({
     navigate: navigate,
+    userInfo: {
+      username: 'parentUser',
+      userId: 16,
+      balance: 126
+    },
+    //userInfo: null,
     showModal: false,
     modalContent: null
   })

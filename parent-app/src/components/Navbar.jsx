@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faBars, faCreditCard, faRunning, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import Media from "react-media";
+import { AppContext } from "../AppContext";
+import { NavbarUserOption } from "./NavbarUserOption";
 
 function NavbarButton({
     title,
@@ -17,7 +19,44 @@ function NavbarButton({
     )
 }
 
+function NavbarUserOptionsMenu({
+    userInfo,
+    showBalance,
+    showIcons
+}) {
+    return (
+        <>
+            <NavbarUserOption hoverColor="hover:bg-navbar-cyan" padding="py-2" url="/">
+                <span>Το Προφίλ μου</span>
+                {showIcons && <FontAwesomeIcon icon={faUser} size="lg"/>}
+            </NavbarUserOption>
+            {
+                showBalance ?
+                <NavbarUserOption hoverColor="hover:bg-navbar-cyan" padding="py-2" url="/">
+                    <span className="w-max">Υπόλοιπο Πόντων:</span>
+                    <span className="text-lg font-medium">{userInfo.balance}</span>
+                    {showIcons && <FontAwesomeIcon icon={faCreditCard} size="lg"/>}
+                </NavbarUserOption>
+                :
+                null
+            }
+            <NavbarUserOption hoverColor="hover:bg-navbar-cyan" padding="py-2" url="/">
+                <span>Οι Δραστηριότητές μου</span>
+                {showIcons && <FontAwesomeIcon icon={faRunning} size="lg"/>}
+            </NavbarUserOption>
+            <NavbarUserOption hoverColor="hover:bg-navbar-cyan" padding="py-2" url="/">
+                <span>Αποσύνδεση</span>
+                <FontAwesomeIcon icon={faArrowRightFromBracket} size="lg"/>
+            </NavbarUserOption>
+        </>
+    )
+}
+
+const SMALL_DEVICE_PXLIMIT = 800
+
 export function Navbar() {
+
+    const context = useContext(AppContext)
 
     const [showOptionsMenu, setShowOptionsMenu] = useState(false)
 
@@ -33,17 +72,40 @@ export function Navbar() {
                         </button>
                     </form>
                 </div>
-                <Media queries={{ small: { maxWidth: 800 } }}>
+                <Media queries={{ small: { maxWidth: SMALL_DEVICE_PXLIMIT } }}>
                     {matches =>
                         matches.small ? (
-                            <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-2 duration-200 hover:bg-xdark-cyan/80">
+                            <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-2 duration-200 hover:bg-navbar-dark-cyan/80">
                                 <FontAwesomeIcon icon={faBars} className="duration-200" size="lg" rotation={showOptionsMenu ? 90 : 0}/>
                             </button>
                         ) : (
+                            context.state.userInfo ?
+                            <div className="flex flex-row items-center">
+                                <NavbarUserOption hoverColor="hover:bg-navbar-dark-cyan" url="/">
+                                    <FontAwesomeIcon icon={faCreditCard} size="lg"/>
+                                    <span className="w-max">Υπόλοιπο Πόντων:</span>
+                                    <span className="text-lg font-medium">{context.state.userInfo.balance}</span>
+                                </NavbarUserOption>
+                                <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-3 duration-200 hover:bg-navbar-dark-cyan/80">
+                                    <FontAwesomeIcon icon={faUser} className="duration-200" size="lg"/>
+                                </button>
+                            </div>
+                            :
                             <div className="flex flex-row gap-2 items-center">
+                            {
+                                context.state.userInfo ?
+                                <>
                                 <a href="/" className="font-light hover:underline">Συνεργάτης</a>
                                 <NavbarButton bgColor="bg-light-cyan" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
                                 <NavbarButton bgColor="bg-white" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
+                                </>
+                                :
+                                <>
+                                <a href="/" className="font-light hover:underline">Συνεργάτης</a>
+                                <NavbarButton bgColor="bg-light-cyan" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
+                                <NavbarButton bgColor="bg-white" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
+                                </>
+                            }
                             </div>
                         )
                     }
@@ -51,14 +113,37 @@ export function Navbar() {
                 
             </div>
             <div
-                className="bg-dark-cyan w-full flex flex-col items-center justify-center py-3 divide-gray-400 divide-y px-16"
+                className="bg-navbar-light-cyan w-full flex flex-col items-center justify-center py-3 font-light"
                 style={showOptionsMenu ? {} : {display: 'none'}}
             >
-                <a href="/" className="font-light hover:underline pb-2">Για Συνεργάτες</a>
-                <div className="flex flex-row gap-2 items-center pt-2 w-full justify-center">
-                    <NavbarButton bgColor="bg-light-cyan" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
-                    <NavbarButton bgColor="bg-white" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
-                </div>
+            {
+                context.state.userInfo ?
+                <Media queries={{ small: { maxWidth: SMALL_DEVICE_PXLIMIT } }}>
+                    {matches =>
+                        matches.small ? (
+                            <NavbarUserOptionsMenu
+                                userInfo={context.state.userInfo}
+                                showBalance={true}
+                                showIcons={true}
+                            />
+                        ) : (        
+                            <NavbarUserOptionsMenu
+                                userInfo={context.state.userInfo}
+                                showBalance={false}
+                                showIcons={false}
+                            />
+                        )
+                    }
+                </Media>
+                :
+                <>
+                    <a href="/" className="font-light hover:underline pb-2">Για Συνεργάτες</a>
+                    <div className="flex flex-row gap-2 items-center pt-2 w-5/12 justify-center">
+                        <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
+                        <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
+                    </div>
+                </>
+            }
             </div>
         </nav>
     )

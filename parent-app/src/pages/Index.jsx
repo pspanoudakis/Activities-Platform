@@ -40,7 +40,7 @@ export function Index() {
             <TestComponent/>
             <h2>Parent Index</h2> */}
 
-            {/* <ActivitiesSection
+            <ActivitiesSection
                 showBg={true}
                 title="Κλείστε Ξανά"
                 fetchData={fetchRebookActivities}
@@ -51,7 +51,7 @@ export function Index() {
                 title="Επερχόμενες Δραστηριότητες"
                 fetchData={fetchUpcomingActivities}
                 TileRenderer={UpcomingActivityTile}
-            /> */}
+            />
             <div className="w-10/12 flex flex-col gap-2">
                 {
                     activities.map((a, i) => <SearchResultTile key={i} activityInfo={a}/>)
