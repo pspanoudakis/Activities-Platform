@@ -6,7 +6,7 @@ export function ActivityRatingIndicator({
     ratingScore
 }) {
     return (
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 flex-wrap items-center justify-center">
             <div className="flex flex-row gap-1 text-xl text-xdark-cyan">
                 {
                     [...Array(5).keys()].map((_, i) => {
@@ -20,7 +20,9 @@ export function ActivityRatingIndicator({
                     })
                 }
             </div>
-            {ratingScore} / 5
+            <span className="text-sm">
+                {ratingScore} / 5
+            </span>
         </div>
     )
 }

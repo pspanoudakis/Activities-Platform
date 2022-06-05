@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Media from "react-media";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SectionTitle } from "../shared/SectionTitle";
@@ -6,6 +7,8 @@ import { ActivitySectionPageButton } from "./ActivitySectionPageButton";
 
 const TOTAL_ACTIVITIES = 9
 const PAGE_SIZE = 3
+const SMDEVICE_PAGE_SIZE = 2
+const SMALL_DEVICE_PXLIMIT = 800
 
 export function ActivitiesSection({
     showBg,
@@ -51,15 +54,35 @@ export function ActivitiesSection({
                             disabled={page === 0}
                             switchPage={() => setPage(page - 1)}
                         />
-                        {
-                            activities.slice(page*PAGE_SIZE, Math.min(page*PAGE_SIZE + PAGE_SIZE, activities.length))
-                                        .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
-                        }
-                        <ActivitySectionPageButton
-                            direction="right"
-                            disabled={page === (TOTAL_ACTIVITIES / PAGE_SIZE) - 1}
-                            switchPage={() => setPage(page + 1)}
-                        />
+                        <Media queries={{ small: { maxWidth: SMALL_DEVICE_PXLIMIT } }}>
+                            {matches =>
+                                matches.small ? (
+                                    <>
+                                        {
+                                            activities.slice(page*SMDEVICE_PAGE_SIZE, Math.min(page*SMDEVICE_PAGE_SIZE + SMDEVICE_PAGE_SIZE, activities.length))
+                                                    .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
+                                        }
+                                        <ActivitySectionPageButton
+                                            direction="right"
+                                            disabled={page === (TOTAL_ACTIVITIES / SMDEVICE_PAGE_SIZE) - 1}
+                                            switchPage={() => setPage(page + 1)}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        {
+                                            activities.slice(page*PAGE_SIZE, Math.min(page*PAGE_SIZE + PAGE_SIZE, activities.length))
+                                                    .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
+                                        }
+                                        <ActivitySectionPageButton
+                                            direction="right"
+                                            disabled={page === (TOTAL_ACTIVITIES / PAGE_SIZE) - 1}
+                                            switchPage={() => setPage(page + 1)}
+                                        />
+                                    </>
+                                )
+                            }
+                        </Media>
                         {/* {
                             loading ?
                             <LoadingIndicator stretchParent={true}/>

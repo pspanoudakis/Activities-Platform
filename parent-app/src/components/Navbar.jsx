@@ -92,20 +92,9 @@ export function Navbar() {
                             </div>
                             :
                             <div className="flex flex-row gap-2 items-center">
-                            {
-                                context.state.userInfo ?
-                                <>
                                 <a href="/" className="font-light hover:underline">Συνεργάτης</a>
-                                <NavbarButton bgColor="bg-light-cyan" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
-                                <NavbarButton bgColor="bg-white" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
-                                </>
-                                :
-                                <>
-                                <a href="/" className="font-light hover:underline">Συνεργάτης</a>
-                                <NavbarButton bgColor="bg-light-cyan" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
-                                <NavbarButton bgColor="bg-white" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
-                                </>
-                            }
+                                <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
+                                <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
                             </div>
                         )
                     }
