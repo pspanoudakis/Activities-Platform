@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faBars, faCreditCard, faRunning, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faBars, faCreditCard, faPersonSwimming, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../AppContext";
 import { NavbarUserOption } from "./NavbarUserOption";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
@@ -43,7 +43,7 @@ function NavbarUserOptionsMenu({
             }
             <NavbarUserOption hoverColor="hover:bg-navbar-cyan" padding="py-2" url="/">
                 <span>Οι Δραστηριότητές μου</span>
-                {showIcons && <FontAwesomeIcon icon={faRunning} size="lg"/>}
+                {showIcons && <FontAwesomeIcon icon={faPersonSwimming} size="lg"/>}
             </NavbarUserOption>
             <NavbarUserOption hoverColor="hover:bg-navbar-cyan" padding="py-2" url="/">
                 <span>Αποσύνδεση</span>
@@ -72,7 +72,7 @@ export function Navbar() {
             <div className='w-full py-3 flex justify-between gap-4 px-3' style={{ maxWidth: "60rem", minWidth: "20rem"}}>
                 <div className="flex-1 flex flex-row justify-start gap-5">
                     <Link to="/" className="font-bold text-2xl">Logo</Link>
-                    <form method="GET" className="bg-white rounded-3xl pl-3 flex-1 flex flex-row gap-3 items-center max-w-xl">
+                    <form method="GET" className="bg-white rounded-3xl pl-3 flex-1 flex flex-row gap-3 items-center">
                         <input type="text" className="focus:outline-none placeholder:italic flex-1" placeholder="Αναζητήστε μια δραστηριότητα..."/>
                         <button type="submit" className="hover:bg-light-cyan duration-200 rounded-full px-3 py-1">
                             <FontAwesomeIcon icon={faSearch} color="gray"/>                        
@@ -81,29 +81,29 @@ export function Navbar() {
                 </div>
                 {
                     mdDevice ?
-                        <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-2 duration-200 hover:bg-navbar-dark-cyan/80">
-                            <FontAwesomeIcon icon={faBars} className="duration-200" size="lg" rotation={showOptionsMenu ? 90 : 0}/>
-                        </button>
+                    <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-2 duration-200 hover:bg-navbar-dark-cyan/80">
+                        <FontAwesomeIcon icon={faBars} className="duration-200" size="lg" rotation={showOptionsMenu ? 90 : 0}/>
+                    </button>
+                    :
+                    (
+                        context.state.userInfo ?
+                        <div className="flex flex-row items-center">
+                            <NavbarUserOption hoverColor="hover:bg-navbar-dark-cyan" url="/">
+                                <FontAwesomeIcon icon={faCreditCard} size="lg"/>
+                                <span className="w-max text-sm">Υπόλοιπο Πόντων:</span>
+                                <span className="text-lg font-medium">{context.state.userInfo.balance}</span>
+                            </NavbarUserOption>
+                            <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full h-full px-3 duration-200 hover:bg-navbar-dark-cyan/80">
+                                <FontAwesomeIcon icon={faUser} className="duration-200" size="lg"/>
+                            </button>
+                        </div>
                         :
-                        (
-                            context.state.userInfo ?
-                            <div className="flex flex-row items-center">
-                                <NavbarUserOption hoverColor="hover:bg-navbar-dark-cyan" url="/">
-                                    <FontAwesomeIcon icon={faCreditCard} size="lg"/>
-                                    <span className="w-max">Υπόλοιπο Πόντων:</span>
-                                    <span className="text-lg font-medium">{context.state.userInfo.balance}</span>
-                                </NavbarUserOption>
-                                <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-3 duration-200 hover:bg-navbar-dark-cyan/80">
-                                    <FontAwesomeIcon icon={faUser} className="duration-200" size="lg"/>
-                                </button>
-                            </div>
-                            :
-                            <div className="flex flex-row gap-2 items-center">
-                                <a href="/" className="font-light hover:underline">Συνεργάτης</a>
-                                <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
-                                <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
-                            </div>
-                        )
+                        <div className="flex flex-row gap-2 items-center">
+                            <a href="/" className="font-light hover:underline">Συνεργάτης</a>
+                            <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
+                            <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
+                        </div>
+                    )
                 }
             </div>
             <div
