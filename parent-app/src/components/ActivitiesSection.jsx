@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Media from "react-media";
+import { MD_PXLIMIT, SM_PXLIMIT } from "../deviceConstants";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
@@ -8,10 +8,8 @@ import { ActivitySectionPageButton } from "./ActivitySectionPageButton";
 
 const TOTAL_ACTIVITIES = 12
 const PAGE_SIZE = 3
-const SMDEVICE_PAGE_SIZE = 2
-const SMALL_DEVICE_PXLIMIT = 800
-const XSDEVICE_PAGE_SIZE = 1
-const XS_DEVICE_PXLIMIT = 450
+const MD_PAGE_SIZE = 2
+const SM_PAGE_SIZE = 1
 
 export function ActivitiesSection({
     showBg,
@@ -21,10 +19,24 @@ export function ActivitiesSection({
 }) {
 
     const [activities, setActivities] = useState([])
-    const [page, setPage] = useState(0)
     const [loading, setLoading] = useState(true)
 
-    const isSmall = useHasMaxWidth(800)
+    const smDevice = useHasMaxWidth(SM_PXLIMIT)
+    const mdDevice = useHasMaxWidth(MD_PXLIMIT)
+
+    const [{page, pageSize}, setPageInfo] = useState({
+        page: 0,
+        pageSize: smDevice ? SM_PAGE_SIZE : mdDevice ? MD_PAGE_SIZE : PAGE_SIZE
+    })
+
+
+    useEffect(() => {
+        setPageInfo({
+            page: 0,
+            pageSize: smDevice ? SM_PAGE_SIZE : mdDevice ? MD_PAGE_SIZE : PAGE_SIZE
+        })
+
+    }, [smDevice, mdDevice])
 
     useEffect(() => {
         fetchData(TOTAL_ACTIVITIES, (response) => {
@@ -57,37 +69,17 @@ export function ActivitiesSection({
                         <ActivitySectionPageButton
                             direction="left"
                             disabled={page === 0}
-                            switchPage={() => setPage(page - 1)}
+                            switchPage={() => setPageInfo({page: page - 1, pageSize})}
                         />
-                        <Media queries={{ small: { maxWidth: SMALL_DEVICE_PXLIMIT } }}>
-                            {matches =>
-                                matches.small ? (
-                                    <>
-                                        {
-                                            activities.slice(page*SMDEVICE_PAGE_SIZE, Math.min(page*SMDEVICE_PAGE_SIZE + SMDEVICE_PAGE_SIZE, activities.length))
-                                                    .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
-                                        }
-                                        <ActivitySectionPageButton
-                                            direction="right"
-                                            disabled={page === (TOTAL_ACTIVITIES / SMDEVICE_PAGE_SIZE) - 1}
-                                            switchPage={() => setPage(page + 1)}
-                                        />
-                                    </>
-                                ) : (
-                                    <>
-                                        {
-                                            activities.slice(page*PAGE_SIZE, Math.min(page*PAGE_SIZE + PAGE_SIZE, activities.length))
-                                                    .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
-                                        }
-                                        <ActivitySectionPageButton
-                                            direction="right"
-                                            disabled={page === (TOTAL_ACTIVITIES / PAGE_SIZE) - 1}
-                                            switchPage={() => setPage(page + 1)}
-                                        />
-                                    </>
-                                )
-                            }
-                        </Media>
+                        {
+                            activities.slice(page*pageSize, Math.min(page*pageSize + pageSize, activities.length))
+                                    .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
+                        }
+                        <ActivitySectionPageButton
+                            direction="right"
+                            disabled={page === (TOTAL_ACTIVITIES / pageSize) - 1}
+                            switchPage={() => setPageInfo({page: page + 1, pageSize})}
+                        />
                         {/* {
                             loading ?
                             <LoadingIndicator stretchParent={true}/>

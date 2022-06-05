@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket, faBars, faCreditCard, faRunning, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
-import Media from "react-media";
 import { AppContext } from "../AppContext";
 import { NavbarUserOption } from "./NavbarUserOption";
+import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
+import { MD_PXLIMIT } from "../deviceConstants";
 
 function NavbarButton({
     title,
@@ -52,13 +53,19 @@ function NavbarUserOptionsMenu({
     )
 }
 
-const SMALL_DEVICE_PXLIMIT = 800
-
 export function Navbar() {
 
     const context = useContext(AppContext)
 
     const [showOptionsMenu, setShowOptionsMenu] = useState(false)
+
+    const mdDevice = useHasMaxWidth(MD_PXLIMIT)
+
+    useEffect(() => {
+        if (showOptionsMenu && !context.state.userInfo) {
+            setShowOptionsMenu(false)
+        }
+    }, [mdDevice])
 
     return (
         <nav className='w-full bg-navbar-cyan flex flex-col justify-center items-center h-max'>
@@ -72,13 +79,13 @@ export function Navbar() {
                         </button>
                     </form>
                 </div>
-                <Media queries={{ small: { maxWidth: SMALL_DEVICE_PXLIMIT } }}>
-                    {matches =>
-                        matches.small ? (
-                            <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-2 duration-200 hover:bg-navbar-dark-cyan/80">
-                                <FontAwesomeIcon icon={faBars} className="duration-200" size="lg" rotation={showOptionsMenu ? 90 : 0}/>
-                            </button>
-                        ) : (
+                {
+                    mdDevice ?
+                        <button onClick={() => setShowOptionsMenu(!showOptionsMenu)} className="rounded-full px-2 duration-200 hover:bg-navbar-dark-cyan/80">
+                            <FontAwesomeIcon icon={faBars} className="duration-200" size="lg" rotation={showOptionsMenu ? 90 : 0}/>
+                        </button>
+                        :
+                        (
                             context.state.userInfo ?
                             <div className="flex flex-row items-center">
                                 <NavbarUserOption hoverColor="hover:bg-navbar-dark-cyan" url="/">
@@ -97,41 +104,35 @@ export function Navbar() {
                                 <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
                             </div>
                         )
-                    }
-                </Media>
-                
+                }
             </div>
             <div
                 className="bg-navbar-light-cyan w-full flex flex-col items-center justify-center py-3 font-light"
                 style={showOptionsMenu ? {} : {display: 'none'}}
             >
             {
-                context.state.userInfo ?
-                <Media queries={{ small: { maxWidth: SMALL_DEVICE_PXLIMIT } }}>
-                    {matches =>
-                        matches.small ? (
-                            <NavbarUserOptionsMenu
-                                userInfo={context.state.userInfo}
-                                showBalance={true}
-                                showIcons={true}
-                            />
-                        ) : (        
-                            <NavbarUserOptionsMenu
-                                userInfo={context.state.userInfo}
-                                showBalance={false}
-                                showIcons={false}
-                            />
-                        )
-                    }
-                </Media>
-                :
-                <>
-                    <a href="/" className="font-light hover:underline pb-2">Για Συνεργάτες</a>
-                    <div className="flex flex-row gap-2 items-center pt-2 w-5/12 justify-center">
-                        <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
-                        <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
-                    </div>
-                </>
+                context.state.userInfo ? (
+                    mdDevice ?
+                    <NavbarUserOptionsMenu
+                        userInfo={context.state.userInfo}
+                        showBalance={true}
+                        showIcons={true}
+                    />
+                    :
+                    <NavbarUserOptionsMenu
+                        userInfo={context.state.userInfo}
+                        showBalance={false}
+                        showIcons={false}
+                    />
+                ) : (
+                    <>
+                        <a href="/" className="font-light hover:underline pb-2">Για Συνεργάτες</a>
+                        <div className="flex flex-row gap-2 items-center pt-2 w-5/12 justify-center">
+                            <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΕΓΓΡΑΦΗ" callback={() => console.log('sign up')} />
+                            <NavbarButton bgColor="bg-white hover:bg-light-cyan duration-200" title="ΣΥΝΔΕΣΗ" callback={() => console.log('sign in')} />
+                        </div>
+                    </>
+                )
             }
             </div>
         </nav>

@@ -21,7 +21,7 @@ export function RecommendedActivityTile({
                 padding="p-4"
                 bgColor="bg-white"
                 stretch={false}
-                dimensions=""
+                dimensions="max-w-xs"
                 classExtra="hover:bg-xlight-cyan shadow-md hover:shadow-lg duration-200"
             >
                 <div className="flex flex-col gap-3 items-center text-center">
