@@ -16,17 +16,19 @@
     }
 }
 
-- GET(/search/subcategories/{parent_category_id})
-Περιγραφή:
-Λίστα με τις υποκατηγορίες μίας γονικής κατηγορίας με category.id = parent_category_id. Για τις αρχικές κατηγορίες (που δεν έχουν κάποια γονική), parent_category_id = 0
-ResponseBody{
-    [
-        <category_data>,
-        .
-        .
-        .,
-        <category_data>
-    ]
++ {
+    GET(/search/subcategories/{parent_category_id})
+    Περιγραφή:
+    Λίστα με τις υποκατηγορίες μίας γονικής κατηγορίας με category.id = parent_category_id. Για τις αρχικές κατηγορίες (που δεν έχουν κάποια γονική), parent_category_id = 0
+    ResponseBody{
+        [
+            <category_data>,
+            .
+            .
+            .,
+            <category_data>
+        ]
+    }
 }
 
 ActivityCompactDTO{

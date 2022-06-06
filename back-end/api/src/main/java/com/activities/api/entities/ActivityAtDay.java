@@ -23,6 +23,7 @@ public class ActivityAtDay {
     private int id;
     private String time;
     private LocalDate day;
+    private int capacity;
     
     @ManyToOne
     @JoinColumn(name = "activity_id")

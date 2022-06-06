@@ -29,6 +29,8 @@ public class User implements UserDetails{
     private String password;
     private String email;
     private String image;
+    private String name;
+    private String surname;
     private boolean isAdmin = false;
     private boolean isActive = true;
     private int balance = 0;

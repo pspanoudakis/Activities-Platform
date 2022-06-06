@@ -5,7 +5,7 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.2
 
--- Started on 2022-05-31 08:12:13
+-- Started on 2022-06-06 21:05:38
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -75,7 +75,6 @@ CREATE TABLE public.activities (
     name character varying NOT NULL,
     category_id integer NOT NULL,
     age_category_id integer NOT NULL,
-    capacity integer NOT NULL,
     facility_id integer NOT NULL,
     description text NOT NULL,
     price integer NOT NULL,
@@ -119,7 +118,8 @@ CREATE TABLE public.activity_at_day (
     id integer NOT NULL,
     activity_id integer NOT NULL,
     day date NOT NULL,
-    "time" character varying NOT NULL
+    "time" character varying NOT NULL,
+    capacity integer NOT NULL
 );
 
 
@@ -478,9 +478,9 @@ ALTER SEQUENCE public.facilities_id_seq OWNED BY public.facilities.id;
 
 CREATE TABLE public.parents (
     id integer NOT NULL,
-    longitude double precision NOT NULL,
-    latitude double precision NOT NULL,
-    address character varying NOT NULL,
+    longitude double precision,
+    latitude double precision,
+    address character varying,
     user_username character varying NOT NULL
 );
 
@@ -520,10 +520,8 @@ ALTER SEQUENCE public.parents_id_seq OWNED BY public.parents.id;
 CREATE TABLE public.reservations (
     id integer NOT NULL,
     parent_id integer NOT NULL,
-    activity_id integer NOT NULL,
-    day date NOT NULL,
-    "time" character varying NOT NULL,
-    date_of_reservation date NOT NULL
+    date date NOT NULL,
+    activity_at_day_id integer
 );
 
 
@@ -605,7 +603,9 @@ CREATE TABLE public.users (
     is_admin boolean DEFAULT false NOT NULL,
     is_active boolean NOT NULL,
     image character varying,
-    balance integer NOT NULL
+    balance integer NOT NULL,
+    name character varying,
+    surname character varying
 );
 
 
@@ -735,12 +735,12 @@ ALTER TABLE ONLY public.sellers ALTER COLUMN id SET DEFAULT nextval('public.sell
 -- Data for Name: activities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.activities VALUES (1, 'activity1', 1, 1, 100, 1, 'This is the 1st activity', 10, false);
-INSERT INTO public.activities VALUES (2, 'activity2', 2, 2, 100, 2, 'This is the 2nd activity', 10, false);
-INSERT INTO public.activities VALUES (3, 'activity3', 3, 3, 100, 3, 'This is the 3rd activity', 10, false);
-INSERT INTO public.activities VALUES (4, 'activity4', 4, 1, 100, 4, 'This is the 4th activity', 10, false);
-INSERT INTO public.activities VALUES (5, 'activity5', 5, 2, 100, 1, 'This is the 5th activity', 10, false);
-INSERT INTO public.activities VALUES (6, 'activity6', 6, 3, 100, 2, 'This is the 6th activity', 10, false);
+INSERT INTO public.activities (id, name, category_id, age_category_id, facility_id, description, price, approved) VALUES (1, 'activity1', 1, 1, 1, 'This is the 1st activity', 10, false);
+INSERT INTO public.activities (id, name, category_id, age_category_id, facility_id, description, price, approved) VALUES (3, 'activity3', 3, 3, 3, 'This is the 3rd activity', 10, false);
+INSERT INTO public.activities (id, name, category_id, age_category_id, facility_id, description, price, approved) VALUES (2, 'activity2', 2, 2, 2, 'This is the 2nd activity', 50, false);
+INSERT INTO public.activities (id, name, category_id, age_category_id, facility_id, description, price, approved) VALUES (4, 'activity4', 4, 1, 4, 'This is the 4th activity', 200, false);
+INSERT INTO public.activities (id, name, category_id, age_category_id, facility_id, description, price, approved) VALUES (6, 'activity6', 6, 3, 2, 'This is the 6th activity', 500, false);
+INSERT INTO public.activities (id, name, category_id, age_category_id, facility_id, description, price, approved) VALUES (5, 'activity5', 5, 2, 1, 'This is the 5th activity', 5, false);
 
 
 --
@@ -749,36 +749,36 @@ INSERT INTO public.activities VALUES (6, 'activity6', 6, 3, 100, 2, 'This is the
 -- Data for Name: activity_at_day; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.activity_at_day VALUES (1, 1, '2022-07-01', '10:00');
-INSERT INTO public.activity_at_day VALUES (2, 1, '2022-07-02', '10:00');
-INSERT INTO public.activity_at_day VALUES (3, 1, '2022-07-03', '10:00');
-INSERT INTO public.activity_at_day VALUES (4, 1, '2022-07-04', '10:00');
-INSERT INTO public.activity_at_day VALUES (5, 1, '2022-07-05', '10:00');
-INSERT INTO public.activity_at_day VALUES (6, 2, '2022-07-01', '10:00');
-INSERT INTO public.activity_at_day VALUES (7, 2, '2022-07-03', '10:00');
-INSERT INTO public.activity_at_day VALUES (8, 2, '2022-07-05', '10:00');
-INSERT INTO public.activity_at_day VALUES (9, 2, '2022-07-07', '10:00');
-INSERT INTO public.activity_at_day VALUES (10, 2, '2022-07-09', '10:00');
-INSERT INTO public.activity_at_day VALUES (11, 3, '2022-07-01', '10:00');
-INSERT INTO public.activity_at_day VALUES (12, 3, '2022-07-02', '10:00');
-INSERT INTO public.activity_at_day VALUES (13, 3, '2022-07-03', '10:00');
-INSERT INTO public.activity_at_day VALUES (14, 3, '2022-07-04', '10:00');
-INSERT INTO public.activity_at_day VALUES (15, 3, '2022-07-05', '10:00');
-INSERT INTO public.activity_at_day VALUES (16, 3, '2022-07-06', '10:00');
-INSERT INTO public.activity_at_day VALUES (17, 4, '2022-07-10', '10:00');
-INSERT INTO public.activity_at_day VALUES (18, 4, '2022-07-10', '11:00');
-INSERT INTO public.activity_at_day VALUES (19, 4, '2022-07-10', '12:00');
-INSERT INTO public.activity_at_day VALUES (20, 4, '2022-07-10', '13:00');
-INSERT INTO public.activity_at_day VALUES (21, 4, '2022-07-10', '14:00');
-INSERT INTO public.activity_at_day VALUES (22, 4, '2022-07-11', '10:00');
-INSERT INTO public.activity_at_day VALUES (23, 4, '2022-07-11', '11:00');
-INSERT INTO public.activity_at_day VALUES (24, 4, '2022-07-11', '12:00');
-INSERT INTO public.activity_at_day VALUES (25, 4, '2022-07-11', '13:00');
-INSERT INTO public.activity_at_day VALUES (26, 4, '2022-07-11', '14:00');
-INSERT INTO public.activity_at_day VALUES (27, 5, '2022-07-01', '10:00');
-INSERT INTO public.activity_at_day VALUES (28, 6, '2022-07-05', '10:00');
-INSERT INTO public.activity_at_day VALUES (29, 6, '2022-07-05', '11:00');
-INSERT INTO public.activity_at_day VALUES (30, 6, '2022-07-05', '12:00');
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (4, 1, '2022-07-04', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (14, 3, '2022-07-04', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (15, 3, '2022-07-05', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (16, 3, '2022-07-06', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (17, 4, '2022-07-10', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (18, 4, '2022-07-10', '11:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (19, 4, '2022-07-10', '12:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (20, 4, '2022-07-10', '13:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (21, 4, '2022-07-10', '14:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (22, 4, '2022-07-11', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (23, 4, '2022-07-11', '11:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (24, 4, '2022-07-11', '12:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (25, 4, '2022-07-11', '13:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (26, 4, '2022-07-11', '14:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (27, 5, '2022-07-01', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (28, 6, '2022-07-05', '10:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (29, 6, '2022-07-05', '11:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (30, 6, '2022-07-05', '12:00', 100);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (1, 1, '2022-07-01', '10:00', 98);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (2, 1, '2022-07-02', '10:00', 99);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (3, 1, '2022-07-03', '10:00', 99);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (5, 1, '2022-07-05', '10:00', 98);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (6, 2, '2022-07-01', '10:00', 98);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (7, 2, '2022-07-03', '10:00', 98);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (8, 2, '2022-07-05', '10:00', 99);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (9, 2, '2022-07-07', '10:00', 99);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (10, 2, '2022-07-09', '10:00', 98);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (11, 3, '2022-07-01', '10:00', 99);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (12, 3, '2022-07-02', '10:00', 99);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (13, 3, '2022-07-03', '10:00', 90);
 
 
 --
@@ -787,6 +787,7 @@ INSERT INTO public.activity_at_day VALUES (30, 6, '2022-07-05', '12:00');
 -- Data for Name: activity_has_photo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.activity_has_photo (id, url, activity_id) VALUES (1, 'test.com', 1);
 
 
 --
@@ -795,9 +796,9 @@ INSERT INTO public.activity_at_day VALUES (30, 6, '2022-07-05', '12:00');
 -- Data for Name: age_categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.age_categories VALUES (1, 'Προσχολική');
-INSERT INTO public.age_categories VALUES (2, 'Δημοτικού');
-INSERT INTO public.age_categories VALUES (3, 'Γυμνασίου');
+INSERT INTO public.age_categories (id, name) VALUES (1, 'Προσχολική');
+INSERT INTO public.age_categories (id, name) VALUES (2, 'Δημοτικού');
+INSERT INTO public.age_categories (id, name) VALUES (3, 'Γυμνασίου');
 
 
 --
@@ -806,9 +807,9 @@ INSERT INTO public.age_categories VALUES (3, 'Γυμνασίου');
 -- Data for Name: authority; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.authority VALUES (1, 'ROLE_PARENT');
-INSERT INTO public.authority VALUES (2, 'ROLE_SELLER');
-INSERT INTO public.authority VALUES (3, 'ROLE_ADMIN');
+INSERT INTO public.authority (id, authority) VALUES (1, 'ROLE_PARENT');
+INSERT INTO public.authority (id, authority) VALUES (2, 'ROLE_SELLER');
+INSERT INTO public.authority (id, authority) VALUES (3, 'ROLE_ADMIN');
 
 
 --
@@ -817,10 +818,10 @@ INSERT INTO public.authority VALUES (3, 'ROLE_ADMIN');
 -- Data for Name: bank_accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.bank_accounts VALUES (1, 1, 'GR1122223333444455556666771', '1111222222331EUR', 'sellerName1');
-INSERT INTO public.bank_accounts VALUES (2, 2, 'GR1122223333444455556666772', '1111222222332EUR', 'sellerName2');
-INSERT INTO public.bank_accounts VALUES (3, 3, 'GR1122223333444455556666773', '1111222222333EUR', 'sellerName3');
-INSERT INTO public.bank_accounts VALUES (4, 4, 'GR1122223333444455556666774', '1111222222334EUR', 'sellerName4');
+INSERT INTO public.bank_accounts (id, seller_id, iban, account_number, owner_name) VALUES (1, 1, 'GR1122223333444455556666771', '1111222222331EUR', 'sellerName1');
+INSERT INTO public.bank_accounts (id, seller_id, iban, account_number, owner_name) VALUES (2, 2, 'GR1122223333444455556666772', '1111222222332EUR', 'sellerName2');
+INSERT INTO public.bank_accounts (id, seller_id, iban, account_number, owner_name) VALUES (3, 3, 'GR1122223333444455556666773', '1111222222333EUR', 'sellerName3');
+INSERT INTO public.bank_accounts (id, seller_id, iban, account_number, owner_name) VALUES (4, 4, 'GR1122223333444455556666774', '1111222222334EUR', 'sellerName4');
 
 
 --
@@ -829,11 +830,11 @@ INSERT INTO public.bank_accounts VALUES (4, 4, 'GR1122223333444455556666774', '1
 -- Data for Name: bank_cards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.bank_cards VALUES (1, 1, '1111222233334441', '01/23', '111', 'parentName1');
-INSERT INTO public.bank_cards VALUES (2, 2, '1111222233334442', '02/23', '222', 'parentName2');
-INSERT INTO public.bank_cards VALUES (3, 3, '1111222233334443', '03/23', '333', 'parentName3');
-INSERT INTO public.bank_cards VALUES (4, 4, '1111222233334444', '04/23', '444', 'parentName4');
-INSERT INTO public.bank_cards VALUES (5, 5, '1111222233334445', '05/23', '555', 'parentName5');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (1, 1, '1111222233334441', '01/23', '111', 'parentName1');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (2, 2, '1111222233334442', '02/23', '222', 'parentName2');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (3, 3, '1111222233334443', '03/23', '333', 'parentName3');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (4, 4, '1111222233334444', '04/23', '444', 'parentName4');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (5, 5, '1111222233334445', '05/23', '555', 'parentName5');
 
 
 --
@@ -842,12 +843,12 @@ INSERT INTO public.bank_cards VALUES (5, 5, '1111222233334445', '05/23', '555', 
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.categories VALUES (3, 1, 'category1_level2');
-INSERT INTO public.categories VALUES (4, 2, 'category2_level2');
-INSERT INTO public.categories VALUES (1, NULL, 'category1_level1');
-INSERT INTO public.categories VALUES (2, NULL, 'category2_level1');
-INSERT INTO public.categories VALUES (5, 3, 'category1_level3');
-INSERT INTO public.categories VALUES (6, 4, 'category2_level3');
+INSERT INTO public.categories (id, parent_category_id, name) VALUES (3, 1, 'category1_level2');
+INSERT INTO public.categories (id, parent_category_id, name) VALUES (4, 2, 'category2_level2');
+INSERT INTO public.categories (id, parent_category_id, name) VALUES (1, NULL, 'category1_level1');
+INSERT INTO public.categories (id, parent_category_id, name) VALUES (2, NULL, 'category2_level1');
+INSERT INTO public.categories (id, parent_category_id, name) VALUES (5, 3, 'category1_level3');
+INSERT INTO public.categories (id, parent_category_id, name) VALUES (6, 4, 'category2_level3');
 
 
 --
@@ -856,11 +857,11 @@ INSERT INTO public.categories VALUES (6, 4, 'category2_level3');
 -- Data for Name: evaluations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.evaluations VALUES (1, 1, 1, 1, 'Very Bad');
-INSERT INTO public.evaluations VALUES (2, 2, 1, 5, 'Perfect');
-INSERT INTO public.evaluations VALUES (3, 3, 1, 5, NULL);
-INSERT INTO public.evaluations VALUES (4, 4, 4, 1, 'It was raining that day :(');
-INSERT INTO public.evaluations VALUES (5, 2, 2, 3, NULL);
+INSERT INTO public.evaluations (id, activity_id, parent_id, rating, comment) VALUES (1, 1, 1, 1, 'Very Bad');
+INSERT INTO public.evaluations (id, activity_id, parent_id, rating, comment) VALUES (2, 2, 1, 5, 'Perfect');
+INSERT INTO public.evaluations (id, activity_id, parent_id, rating, comment) VALUES (3, 3, 1, 5, NULL);
+INSERT INTO public.evaluations (id, activity_id, parent_id, rating, comment) VALUES (4, 4, 4, 1, 'It was raining that day :(');
+INSERT INTO public.evaluations (id, activity_id, parent_id, rating, comment) VALUES (5, 2, 2, 2, NULL);
 
 
 --
@@ -869,10 +870,10 @@ INSERT INTO public.evaluations VALUES (5, 2, 2, 3, NULL);
 -- Data for Name: facilities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.facilities VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1, false);
-INSERT INTO public.facilities VALUES (2, 2, 'facility2', 'address2', 'district2', 10.2, 10.2, false);
-INSERT INTO public.facilities VALUES (3, 3, 'facility3', 'address3', 'district3', 10.3, 10.3, false);
-INSERT INTO public.facilities VALUES (4, 4, 'facility4', 'address4', 'district4', 10.4, 10.4, false);
+INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1, false);
+INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (2, 2, 'facility2', 'address2', 'district2', 10.2, 10.2, false);
+INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (3, 3, 'facility3', 'address3', 'district3', 10.3, 10.3, false);
+INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (4, 4, 'facility4', 'address4', 'district4', 10.4, 10.4, false);
 
 
 --
@@ -881,11 +882,11 @@ INSERT INTO public.facilities VALUES (4, 4, 'facility4', 'address4', 'district4'
 -- Data for Name: parents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.parents VALUES (1, 10.1, 10.1, 'address1', 'parent1');
-INSERT INTO public.parents VALUES (2, 10.1, 10.1, 'address2', 'parent2');
-INSERT INTO public.parents VALUES (3, 10.1, 10.1, 'address3', 'parent3');
-INSERT INTO public.parents VALUES (4, 10.1, 10.1, 'address4', 'parent4');
-INSERT INTO public.parents VALUES (5, 10.1, 10.1, 'address5', 'parent5');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (1, 10.1, 10.1, 'address1', 'parent1');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (2, 10.1, 10.1, 'address2', 'parent2');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (3, 10.1, 10.1, 'address3', 'parent3');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (4, 10.1, 10.1, 'address4', 'parent4');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (5, 10.1, 10.1, 'address5', 'parent5');
 
 
 --
@@ -894,29 +895,29 @@ INSERT INTO public.parents VALUES (5, 10.1, 10.1, 'address5', 'parent5');
 -- Data for Name: reservations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.reservations VALUES (2, 1, 1, '2022-07-01', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (3, 1, 2, '2022-07-01', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (4, 1, 2, '2022-07-03', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (5, 1, 3, '2022-07-05', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (6, 1, 3, '2022-07-06', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (7, 2, 1, '2022-07-01', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (8, 2, 1, '2022-07-02', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (9, 2, 1, '2022-07-03', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (10, 3, 2, '2022-07-07', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (11, 3, 2, '2022-07-09', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (12, 3, 5, '2022-07-01', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (13, 3, 6, '2022-07-05', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (14, 4, 6, '2022-07-05', '11:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (15, 4, 6, '2022-07-05', '12:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (16, 4, 1, '2022-07-03', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (17, 4, 1, '2022-07-04', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (18, 4, 4, '2022-07-10', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (19, 4, 4, '2022-07-10', '11:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (20, 4, 4, '2022-07-10', '12:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (21, 4, 4, '2022-07-10', '13:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (22, 4, 4, '2022-07-10', '14:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (23, 4, 4, '2022-07-11', '10:00:00', '2022-06-01');
-INSERT INTO public.reservations VALUES (24, 4, 4, '2022-07-11', '11:00:00', '2022-06-01');
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (2, 1, '2022-06-01', 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (3, 1, '2022-06-01', 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (4, 1, '2022-06-01', 2);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (5, 1, '2022-06-01', 3);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (6, 1, '2022-06-01', 5);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (7, 2, '2022-06-01', 5);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (8, 2, '2022-06-01', 6);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (9, 2, '2022-06-01', 6);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (10, 3, '2022-06-01', 7);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (11, 3, '2022-06-01', 7);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (12, 3, '2022-06-01', 8);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (13, 3, '2022-06-01', 9);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (14, 4, '2022-06-01', 10);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (15, 4, '2022-06-01', 10);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (16, 4, '2022-06-01', 11);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (17, 4, '2022-06-01', 11);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (18, 4, '2022-06-01', 12);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (19, 4, '2022-06-01', 13);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (20, 4, '2022-06-01', 13);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (21, 4, '2022-06-01', 13);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (22, 4, '2022-06-01', 13);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (23, 4, '2022-06-01', 13);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (24, 4, '2022-06-01', 13);
 
 
 --
@@ -925,10 +926,10 @@ INSERT INTO public.reservations VALUES (24, 4, 4, '2022-07-11', '11:00:00', '202
 -- Data for Name: sellers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.sellers VALUES (1, 'watermark1', 'seller1');
-INSERT INTO public.sellers VALUES (2, 'watermark2', 'seller2');
-INSERT INTO public.sellers VALUES (3, 'watermark3', 'seller3');
-INSERT INTO public.sellers VALUES (4, 'watermark4', 'seller4');
+INSERT INTO public.sellers (id, watermark, user_username) VALUES (1, 'watermark1', 'seller1');
+INSERT INTO public.sellers (id, watermark, user_username) VALUES (2, 'watermark2', 'seller2');
+INSERT INTO public.sellers (id, watermark, user_username) VALUES (3, 'watermark3', 'seller3');
+INSERT INTO public.sellers (id, watermark, user_username) VALUES (4, 'watermark4', 'seller4');
 
 
 --
@@ -937,16 +938,16 @@ INSERT INTO public.sellers VALUES (4, 'watermark4', 'seller4');
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users VALUES ('parent1', '$2a$10$RAQhDXDrPkwfiBuUrYL4ZOYM01EchnjyTJu3DwnKw/CAZf42nkWCW', 'parent1@mail.com', false, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('admin', '$2a$10$6dzVR3NN9HPqAInbw8XGauHeKrfWP17N/H7X2Mv6YvdzRYUiQkvIa', 'admin@mail.com', true, true, 'www.updatedImage.com', 10);
-INSERT INTO public.users VALUES ('parent2', '$2a$10$MLK/oyLWkWy.EhzBHUk0kumWxuCgHKEBrwAKOfvBOXFle9YfR1ubS', 'parent2@mail.com', false, false, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('parent3', '$2a$10$BZfZU3xsMchmFTcesigQzea5g8HHwyC3AkS4esNIsAjg6uNpsQE3a', 'parent3@mail.com', false, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('parent4', '$2a$10$dh8lnYCodq9bOtiC6DHnW.9oBB3RyQ92bmuuKycf3FBOWtIPhy1t2', 'parent4@mail.com', false, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('parent5', '$2a$10$DAfb27fB6e3LfSXfHe9eTuht1JNX47Knflr0A1RXTijg8q2wqv/L.', 'parent5@mail.com', false, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('seller1', '$2a$10$TZYRgM001/dEo.Zxkml2Ru5cMiGCQ1EBBKKwjVqu0wDYvsptIPAzq', 'seller1@mail.com', false, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('seller2', '$2a$10$iR5hYTp.thdomZ0p6VRJzubohDeerAnfMLhJejBZCGJ9GH5rr2g9a', 'seller2@mail.com', false, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('seller3', '$2a$10$MUPI0C0FMEcHGhB74DAD3OM3pOBmxK0e6rpj3GyziCsWXOm5Kxose', 'seller3@mail.com', false, true, 'www.google.com', 10);
-INSERT INTO public.users VALUES ('seller4', '$2a$10$5oez4k6fqQzjTeCwj2/xH.3w0SRkic6qp2U47bYkcHOlvItl5BY4m', 'seller4@mail.com', false, true, 'www.google.com', 10);
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent1', '$2a$10$RAQhDXDrPkwfiBuUrYL4ZOYM01EchnjyTJu3DwnKw/CAZf42nkWCW', 'parent1@mail.com', false, true, 'www.google.com', 10, 'parentName1', 'parentSurname1');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('admin', '$2a$10$6dzVR3NN9HPqAInbw8XGauHeKrfWP17N/H7X2Mv6YvdzRYUiQkvIa', 'admin@mail.com', true, true, 'www.updatedImage.com', 10, 'adminName', 'adminSurname');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent2', '$2a$10$MLK/oyLWkWy.EhzBHUk0kumWxuCgHKEBrwAKOfvBOXFle9YfR1ubS', 'parent2@mail.com', false, false, 'www.google.com', 10, 'parentName2', 'parentSurname2');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent3', '$2a$10$BZfZU3xsMchmFTcesigQzea5g8HHwyC3AkS4esNIsAjg6uNpsQE3a', 'parent3@mail.com', false, true, 'www.google.com', 10, 'parentName3', 'parentSurname3');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent4', '$2a$10$dh8lnYCodq9bOtiC6DHnW.9oBB3RyQ92bmuuKycf3FBOWtIPhy1t2', 'parent4@mail.com', false, true, 'www.google.com', 10, 'parentName4', 'parentSurname4');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent5', '$2a$10$DAfb27fB6e3LfSXfHe9eTuht1JNX47Knflr0A1RXTijg8q2wqv/L.', 'parent5@mail.com', false, true, 'www.google.com', 10, 'parentName5', 'parentSurname5');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('seller1', '$2a$10$TZYRgM001/dEo.Zxkml2Ru5cMiGCQ1EBBKKwjVqu0wDYvsptIPAzq', 'seller1@mail.com', false, true, 'www.google.com', 10, 'sellerName1', 'sellerSurname1');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('seller2', '$2a$10$iR5hYTp.thdomZ0p6VRJzubohDeerAnfMLhJejBZCGJ9GH5rr2g9a', 'seller2@mail.com', false, true, 'www.google.com', 10, 'sellerName2', 'sellerSurname2');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('seller3', '$2a$10$MUPI0C0FMEcHGhB74DAD3OM3pOBmxK0e6rpj3GyziCsWXOm5Kxose', 'seller3@mail.com', false, true, 'www.google.com', 10, 'sellerName3', 'sellerSurname3');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('seller4', '$2a$10$5oez4k6fqQzjTeCwj2/xH.3w0SRkic6qp2U47bYkcHOlvItl5BY4m', 'seller4@mail.com', false, true, 'www.google.com', 10, 'sellerName4', 'sellerSurname4');
 
 
 --
@@ -955,16 +956,16 @@ INSERT INTO public.users VALUES ('seller4', '$2a$10$5oez4k6fqQzjTeCwj2/xH.3w0SRk
 -- Data for Name: users_authorities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users_authorities VALUES ('parent1', 1);
-INSERT INTO public.users_authorities VALUES ('parent2', 1);
-INSERT INTO public.users_authorities VALUES ('parent3', 1);
-INSERT INTO public.users_authorities VALUES ('parent4', 1);
-INSERT INTO public.users_authorities VALUES ('parent5', 1);
-INSERT INTO public.users_authorities VALUES ('seller1', 2);
-INSERT INTO public.users_authorities VALUES ('seller2', 2);
-INSERT INTO public.users_authorities VALUES ('seller3', 2);
-INSERT INTO public.users_authorities VALUES ('seller4', 2);
-INSERT INTO public.users_authorities VALUES ('admin', 3);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('parent1', 1);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('parent2', 1);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('parent3', 1);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('parent4', 1);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('parent5', 1);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('seller1', 2);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('seller2', 2);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('seller3', 2);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('seller4', 2);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('admin', 3);
 
 
 --
@@ -991,7 +992,7 @@ SELECT pg_catalog.setval('public.activity_at_day_id_seq', 30, true);
 -- Name: activity_has_photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.activity_has_photo_id_seq', 1, false);
+SELECT pg_catalog.setval('public.activity_has_photo_id_seq', 1, true);
 
 
 --
@@ -1063,7 +1064,7 @@ SELECT pg_catalog.setval('public.facilities_id_seq', 4, true);
 -- Name: parents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.parents_id_seq', 8, true);
+SELECT pg_catalog.setval('public.parents_id_seq', 11, true);
 
 
 --
@@ -1337,16 +1338,16 @@ ALTER TABLE ONLY public.parents
 
 
 --
--- TOC entry 3287 (class 2606 OID 24809)
+-- TOC entry 3288 (class 2606 OID 24940)
 -- Name: reservations reservations_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.reservations
-    ADD CONSTRAINT reservations_fk FOREIGN KEY (activity_id) REFERENCES public.activities(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT reservations_fk FOREIGN KEY (activity_at_day_id) REFERENCES public.activity_at_day(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- TOC entry 3288 (class 2606 OID 24814)
+-- TOC entry 3287 (class 2606 OID 24814)
 -- Name: reservations reservations_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1363,7 +1364,7 @@ ALTER TABLE ONLY public.sellers
     ADD CONSTRAINT sellers_fk FOREIGN KEY (user_username) REFERENCES public.users(username) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2022-05-31 08:12:14
+-- Completed on 2022-06-06 21:05:38
 
 --
 -- PostgreSQL database dump complete

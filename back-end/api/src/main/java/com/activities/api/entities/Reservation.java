@@ -2,7 +2,6 @@ package com.activities.api.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,15 +21,11 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDate day;
-    private String time;
-    @Column(name = "date_of_reservation")
-    private LocalDate dateOfReservation;
-
+    private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name = "activity_id")
-    private Activity activity;
+    @JoinColumn(name = "activity_at_day_id")
+    private ActivityAtDay activityAtDay;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")

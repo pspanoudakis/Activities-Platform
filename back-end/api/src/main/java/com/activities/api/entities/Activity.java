@@ -29,8 +29,6 @@ public class Activity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
-
-    private int capacity;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "facility_id")
