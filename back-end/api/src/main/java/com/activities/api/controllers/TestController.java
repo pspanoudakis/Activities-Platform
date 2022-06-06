@@ -6,6 +6,7 @@ import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
 import com.activities.api.entities.AgeCategory;
+import com.activities.api.entities.Authority;
 import com.activities.api.entities.BanckAccount;
 import com.activities.api.entities.BankCard;
 import com.activities.api.entities.Category;
@@ -18,6 +19,7 @@ import com.activities.api.services.ActivityAtDayService;
 import com.activities.api.services.ActivityPhotoService;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AgeCategoryService;
+import com.activities.api.services.AuthorityService;
 import com.activities.api.services.BankAccountService;
 import com.activities.api.services.BankCardService;
 import com.activities.api.services.CategoryService;
@@ -48,7 +50,13 @@ public class TestController {
     @Autowired private ActivityAtDayService activityAtDayService;
     @Autowired private ActivityPhotoService activityPhotoService;
     @Autowired private EvaluationService evaluationService;
+    @Autowired private AuthorityService authorityService;
     @Autowired private ReservationService reservationService;
+
+    @GetMapping("/auths")
+    public ResponseEntity<List<Authority>> getAuthorities(){
+        return ResponseEntity.ok().body(authorityService.getAuthorities());
+    }
 
     @GetMapping("/agecats")
     public ResponseEntity<List<AgeCategory>> getAgeCategories(){
