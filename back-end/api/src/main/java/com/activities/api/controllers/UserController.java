@@ -38,11 +38,6 @@ public class UserController {
         System.out.println(users.get(0).getAuthorities().toString());
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
-
-    // @GetMapping("/byun/{username}")
-    // public ResponseEntity<User> getUserByUN(@PathVariable String username){
-    //     return ResponseEntity.ok().body(userService.getUserByUN(username));
-    // }
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request){

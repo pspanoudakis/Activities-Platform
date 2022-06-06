@@ -15,4 +15,8 @@ public class AuthorityService {
     public List<Authority> getAuthorities(){
         return authorityRepository.findAll();
     }
+
+    public Authority getAuthority(String authority){
+        return authorityRepository.findByAuthority(authority).orElse(null);
+    }
 }

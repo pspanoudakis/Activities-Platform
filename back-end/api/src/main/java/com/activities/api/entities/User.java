@@ -1,5 +1,6 @@
 package com.activities.api.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -30,10 +31,10 @@ public class User implements UserDetails{
     private String image;
     private boolean isAdmin = false;
     private boolean isActive = true;
-    private int balance;
+    private int balance = 0;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Collection<Authority> authorities;
+    private Collection<Authority> authorities = new ArrayList<>();
 
     public void addRole(Authority authority){ this.authorities.add(authority); }
 
@@ -41,7 +42,6 @@ public class User implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

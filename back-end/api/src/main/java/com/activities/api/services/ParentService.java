@@ -16,4 +16,8 @@ public class ParentService {
     public List<Parent> getParents(){
         return parentRepository.findAll();
     }
+
+    public Parent saveOrUpdateParent(Parent parent){
+        return parentRepository.save(parent);
+    }
 }
