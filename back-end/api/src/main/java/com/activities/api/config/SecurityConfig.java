@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/search/*/*").permitAll() 
             .antMatchers("/users/login").permitAll()    
             .antMatchers("/parent/signup").permitAll()  
-            .antMatchers("/parent/signup/*").permitAll()   
+            .antMatchers("/parent/signup/*").permitAll()
             .antMatchers("/test/*").permitAll()
             .anyRequest().authenticated();
 

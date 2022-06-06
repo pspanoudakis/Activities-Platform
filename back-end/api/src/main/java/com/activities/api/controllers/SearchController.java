@@ -20,11 +20,14 @@ import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.ActivityExtended;
 import com.activities.api.dto.Coordinates;
 import com.activities.api.dto.PagingResponse;
+import com.activities.api.dto.ShallowCategory;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.AgeCategory;
+import com.activities.api.entities.Category;
 import com.activities.api.entities.Facility;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AgeCategoryService;
+import com.activities.api.services.CategoryService;
 import com.activities.api.services.FacilityService;
 import com.activities.api.utils.MyUtil;
 
@@ -35,6 +38,18 @@ public class SearchController {
     @Autowired private ActivityService activityService;
     @Autowired private AgeCategoryService ageCategoryService;
     @Autowired private FacilityService facilityService;
+    @Autowired private CategoryService categoryService;
+
+    @GetMapping("/categories/{parent_id}")
+    public ResponseEntity<List<ShallowCategory>> getCategories(@PathVariable int parent_id){
+        Category category = (parent_id == 0) ? null : categoryService.getCategory(parent_id);
+        return ResponseEntity.ok().body(
+            categoryService.getByParent(category).stream()
+            .map(
+                cat -> new ShallowCategory(cat)
+            ).collect(Collectors.toList())
+        );
+    }
     
     @GetMapping("/activities")
     public ResponseEntity<PagingResponse<List<ActivityCompact>>> getFilteredActivities(
