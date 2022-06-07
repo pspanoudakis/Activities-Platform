@@ -7,6 +7,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Index } from './pages/Index';
+import { ActivityPage } from './pages/ActivityPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,9 @@ root.render(
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route index element={<Index />}/>
+                    <Route path="activities">
+                        <Route path=":activityId" element={<ActivityPage/>}/>
+                    </Route>
                     {/* <Route path="logout" element={<Logout />}/> */}
                 </Route>
             </Routes>

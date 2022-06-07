@@ -2,12 +2,16 @@ import React from "react"
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
+// incomplete
 export function ActivityRatingIndicator({
-    ratingScore
+    ratingScore,
+    starColor,
+    starSize,
+    textSize
 }) {
     return (
         <div className="flex flex-row gap-2 flex-wrap items-center justify-center">
-            <div className="flex flex-row gap-1 text-xl text-xdark-cyan">
+            <div className={`flex flex-row gap-1 ${starSize ?? 'text-xl'} ${starColor ?? 'text-xdark-cyan'}`}>
                 {
                     [...Array(5).keys()].map((_, i) => {
                         if (ratingScore >= (i + 1)) {
@@ -20,7 +24,7 @@ export function ActivityRatingIndicator({
                     })
                 }
             </div>
-            <span className="text-sm">
+            <span className={`${textSize ?? `text-sm`}`}>
                 {ratingScore} / 5
             </span>
         </div>

@@ -58,7 +58,7 @@ export function ActivitiesSection({
             <div
                 className={`flex flex-row justify-center gap-4 w-full rounded-xl ${showBg ? 'bg-cyan' : ''} p-4 items-center relative`}
                 style={{
-                    minHeight: '15rem'
+                    minHeight: '24rem'
                 }}
             >
                 {
