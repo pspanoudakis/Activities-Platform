@@ -127,10 +127,10 @@ ActivityExtendedDTO{
     #List<Pair<String,String>> datetimesPerWeek
 }
 
-# {
++ {
     GET(/search/activities/{activity_id})
     Περιγραφή:
-    Εκτεταμένη περιγραφή δραστηριότητας με activity.id = activity_id και συνοπτική περιγραφή δραστηριοτήτων στην ίδια διεύθυνση
+    Εκτεταμένη περιγραφή δραστηριότητας με activity.id = activity_id
     ResponseBody{
         <ActivityExtendedDTO>
     }
