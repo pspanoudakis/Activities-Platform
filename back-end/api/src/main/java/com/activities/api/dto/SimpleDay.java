@@ -15,11 +15,13 @@ public class SimpleDay {
     private String time;
     private LocalDate day;
     private int activity_id;
+    private int capacity;
 
     public SimpleDay(ActivityAtDay activityAtDay){
         this.id = activityAtDay.getId();
         this.time = activityAtDay.getTime();
         this.day = activityAtDay.getDay();
         this.activity_id = activityAtDay.getActivity().getId();
+        this.capacity = activityAtDay.getCapacity();
     }
 }

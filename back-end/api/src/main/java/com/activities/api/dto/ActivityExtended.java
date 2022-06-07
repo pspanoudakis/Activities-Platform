@@ -1,6 +1,5 @@
 package com.activities.api.dto;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,6 @@ public class ActivityExtended {
     double longitude;
     double latitude;
     String description;
-    List<ActivityCompact> colocatedActivities;
 
     public ActivityExtended(Activity activity, ActivityService activityService){
         this.name = activity.getName();
@@ -39,11 +37,5 @@ public class ActivityExtended {
         this.images = activityService.getActivityPhotos(activity).stream().map(
             photo -> photo.getUrl()
         ).collect(Collectors.toList());
-        this.colocatedActivities = activityService.getActivitiesByFacility(
-            activity.getFacility()
-        ).stream().map(
-            a -> new ActivityCompact(a, activityService, LocalDate.parse("2000-01-01"))
-        ).collect(Collectors.toList());
-        this.colocatedActivities.removeIf(item -> item.getActivity_id() == activity.getId());
     }
 }

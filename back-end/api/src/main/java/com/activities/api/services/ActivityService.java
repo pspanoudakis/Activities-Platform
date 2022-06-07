@@ -50,7 +50,7 @@ public class ActivityService {
 
 
     public List<ActivityAtDay> getDaysOfActivity(Activity activity){
-        return activityAtDayRepository.findByActivity(activity);
+        return activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, LocalDate.now());
     }
 
     public LocalDate getEarliestDate(Activity activity, LocalDate start_date){

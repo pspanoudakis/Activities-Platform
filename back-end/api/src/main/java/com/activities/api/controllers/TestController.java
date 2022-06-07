@@ -1,5 +1,6 @@
 package com.activities.api.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.activities.api.entities.Activity;
@@ -52,6 +53,11 @@ public class TestController {
     @Autowired private EvaluationService evaluationService;
     @Autowired private AuthorityService authorityService;
     @Autowired private ReservationService reservationService;
+
+    @GetMapping("/mytest")
+    public ResponseEntity<LocalDate> getMyTest(){
+        return ResponseEntity.ok().body(LocalDate.now());
+    }
 
     @GetMapping("/auths")
     public ResponseEntity<List<Authority>> getAuthorities(){
