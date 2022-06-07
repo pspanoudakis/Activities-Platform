@@ -114,10 +114,22 @@ public class SearchController {
     public ResponseEntity<List<ActivityCompact>> getActivitiesSamePlace(@PathVariable int activity_id){
         Activity activity = activityService.getActivity(activity_id);
         if(activity == null){
-            System.out.println("whyyyy");
             return ResponseEntity.badRequest().body(null);
         }
         List<ActivityCompact> compacts = activityService.getActivitiesByFacility(activity.getFacility()).stream()
+            .map(ac -> new ActivityCompact(ac, activityService, LocalDate.now())).collect(Collectors.toList());
+        compacts.removeIf(ac -> ac.getActivity_id() == activity_id || ac.getNextAvailableDate().equals(LocalDate.parse("3000-01-02")));
+        
+        return ResponseEntity.ok().body(compacts);
+    }
+
+    @GetMapping("activity/{activity_id}/same_seller")
+    public ResponseEntity<List<ActivityCompact>> getActivitiesSameSeller(@PathVariable int activity_id){
+        Activity activity = activityService.getActivity(activity_id);
+        if(activity == null){
+            return ResponseEntity.badRequest().body(null);
+        }
+        List<ActivityCompact> compacts = activityService.getActivitiesBySeller(activity).stream()
             .map(ac -> new ActivityCompact(ac, activityService, LocalDate.now())).collect(Collectors.toList());
         compacts.removeIf(ac -> ac.getActivity_id() == activity_id || ac.getNextAvailableDate().equals(LocalDate.parse("3000-01-02")));
         

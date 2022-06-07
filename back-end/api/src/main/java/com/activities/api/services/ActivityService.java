@@ -13,6 +13,7 @@ import com.activities.api.repositories.ActivityAtDayRepository;
 import com.activities.api.repositories.ActivityPhotoRepository;
 import com.activities.api.repositories.ActivityRepository;
 import com.activities.api.repositories.EvaluationRepository;
+import com.activities.api.repositories.FacilityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class ActivityService {
     @Autowired private EvaluationRepository evaluationRepository;
     @Autowired private ActivityAtDayRepository activityAtDayRepository;
     @Autowired private ActivityPhotoRepository activityPhotoRepository;
+    @Autowired private FacilityRepository facilityRepository;
 
     public List<Activity> getActivities(){
         return activityRepository.findAll();
@@ -46,6 +48,10 @@ public class ActivityService {
 
     public List<Activity> getActivitiesByFacility(Facility facility){
         return activityRepository.findByFacility(facility);
+    }
+
+    public List<Activity> getActivitiesBySeller(Activity activity){
+        return activityRepository.findByFacilityIn(facilityRepository.findBySeller(activity.getFacility().getSeller()));
     }
 
 
