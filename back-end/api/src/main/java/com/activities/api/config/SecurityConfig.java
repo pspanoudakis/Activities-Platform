@@ -45,12 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         }).and();
         http
             .authorizeRequests()
-            .antMatchers("/search/*").permitAll() 
-            .antMatchers("/search/*/*").permitAll() 
+            .antMatchers("/search/**").permitAll() 
             .antMatchers("/users/login").permitAll()    
             .antMatchers("/parent/signup").permitAll()  
             .antMatchers("/parent/signup/*").permitAll()
-            .antMatchers("/test/*").permitAll()
+            .antMatchers("/test/**").permitAll()
             .anyRequest().authenticated();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
