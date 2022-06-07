@@ -127,19 +127,12 @@ ActivityExtendedDTO{
     #List<Pair<String,String>> datetimesPerWeek
 }
 
-+ {
+# {
     GET(/search/activities/{activity_id})
     Περιγραφή:
     Εκτεταμένη περιγραφή δραστηριότητας με activity.id = activity_id και συνοπτική περιγραφή δραστηριοτήτων στην ίδια διεύθυνση
     ResponseBody{
-        <ActivityExtendedDTO>,
-        [
-            <ActivityCompactDTO>
-            .
-            .
-            .,
-            <ActivityCompactDTO>
-        ]
+        <ActivityExtendedDTO>
     }
 }
 
@@ -249,4 +242,45 @@ ResponseBody{
     <ReservationDTO>
 ],
 "totalPages": 10
+}
+
+////////////////////////////////////////////////////////////////////
+07/06
+
+POST(parent/{parent_id}/reservation/{activity_id})
+Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα με activity.id = activity_id
+RequestBody{
+    days: {
+    [
+        {
+            "activity_id": 1,
+            "number": 1
+        },
+        .
+        .
+        .
+    ]
+    }
+}
+
+GET(/search/acitvity/activit_id/same_place)
+Λίστα με τις δραστηριότητες που γίνονται στο ίδιο facility με την δραστηριότητα με activit.id = activit_id (προηγουμένως ενσωματομένο στο /search/activity/activity_id)
+ResponseBody{
+[
+    <ActivityCompactDTO>,
+    .
+    .
+    .
+]
+}
+
+GET(/search/acitvity/activit_id/same_seller)
+Λίστα με τις δραστηριότητες που γίνονται από τον ίδιο seller με την δραστηριότητα με activit.id = activit_id
+ResponseBody{
+[
+    <ActivityCompactDTO>,
+    .
+    .
+    .
+]
 }
