@@ -1,8 +1,7 @@
 Για http αίτημα σε /parent/* χρειάζεται token χρήστη με authority "PARENT_ROLE", εκτός του /parent/signup
 Για /search/* δεν θέλει token
 
-+ {
-    POST(/parent/signup)
++ {POST(/parent/signup)
     Περιγραφή:
     Εγγραφή χρήστη. Επιστροφή στοιχείων καινούργιου χρήστη και JWT
     RequestBody{
@@ -16,8 +15,7 @@
     }
 }
 
-+ {
-    GET(/search/subcategories/{parent_category_id})
++ {GET(/search/subcategories/{parent_category_id})
     Περιγραφή:
     Λίστα με τις υποκατηγορίες μίας γονικής κατηγορίας με category.id = parent_category_id. Για τις αρχικές κατηγορίες (που δεν έχουν κάποια γονική), parent_category_id = 0
     ResponseBody{
@@ -86,8 +84,7 @@ ResponseBody{
     ]
 }
 
-+ {
-    GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10)
++ {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10)
     Περιγραφή:
     Προβολή της 1ης σελίδας μεγέθους 10 συνοπτικών πληροφοριών για τις οποίες ισχύουν συνδιαστικά τα φίλτρα:
     Ηληκιακή Κατηγορία: Προσχολική (1 - age_category.id)
@@ -127,8 +124,7 @@ ActivityExtendedDTO{
     #List<Pair<String,String>> datetimesPerWeek
 }
 
-+ {
-    GET(/search/activities/{activity_id})
++ {GET(/search/activities/{activity_id})
     Περιγραφή:
     Εκτεταμένη περιγραφή δραστηριότητας με activity.id = activity_id
     ResponseBody{
@@ -244,18 +240,28 @@ ResponseBody{
 "totalPages": 10
 }
 
-////////////////////////////////////////////////////////////////////
-07/06
++{POST(parent/{parent_id}/reservation)
+    Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα. Επιστρέφεται η λίστα του RequestBody, και σε περίπτωση λάθους κωδικός BadRequest (400) και στο Header πεδίο 'error' με τιμή string που περιγράφει το λάθος.
+    RequestBody{
+        days: 
+        [
+            {
+                "aad_id": 1,
+                "number": 1
+            },
+            .
+            .
+            .
+        ]
+    }
+}
 
-POST(parent/{parent_id}/reservation/{activity_id})
-Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα με activity.id = activity_id
-RequestBody{
-    days: {
+
++{GET(/search/acitvity/activit_id/same_place)
+    Λίστα με τις δραστηριότητες που γίνονται στο ίδιο facility με την δραστηριότητα με activit.id = activit_id (προηγουμένως ενσωματομένο στο /search/activity/activity_id)
+    ResponseBody{
     [
-        {
-            "activity_id": 1,
-            "number": 1
-        },
+        <ActivityCompactDTO>,
         .
         .
         .
@@ -263,24 +269,14 @@ RequestBody{
     }
 }
 
-GET(/search/acitvity/activit_id/same_place)
-Λίστα με τις δραστηριότητες που γίνονται στο ίδιο facility με την δραστηριότητα με activit.id = activit_id (προηγουμένως ενσωματομένο στο /search/activity/activity_id)
-ResponseBody{
-[
-    <ActivityCompactDTO>,
-    .
-    .
-    .
-]
-}
-
-GET(/search/acitvity/activit_id/same_seller)
-Λίστα με τις δραστηριότητες που γίνονται από τον ίδιο seller με την δραστηριότητα με activit.id = activit_id
-ResponseBody{
-[
-    <ActivityCompactDTO>,
-    .
-    .
-    .
-]
++{GET(/search/acitvity/activit_id/same_seller)
+    Λίστα με τις δραστηριότητες που γίνονται από τον ίδιο seller με την δραστηριότητα με activit.id = activit_id
+    ResponseBody{
+    [
+        <ActivityCompactDTO>,
+        .
+        .
+        .
+    ]
+    }
 }

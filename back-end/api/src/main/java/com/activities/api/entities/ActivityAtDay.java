@@ -28,4 +28,9 @@ public class ActivityAtDay {
     @ManyToOne
     @JoinColumn(name = "activity_id")
     private Activity activity;
+
+    public void reserve(int number) throws Exception{
+        if(number > capacity) throw new Exception("Not enough capacity (aad.id=" + id +")");
+        this.capacity -= number;
+    }
 }

@@ -30,4 +30,6 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Parent parent;
+
+    int number;
 }

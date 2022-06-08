@@ -56,6 +56,7 @@ public class TestController {
 
     @GetMapping("/mytest")
     public ResponseEntity<LocalDate> getMyTest(){
+        
         return ResponseEntity.ok().body(LocalDate.now());
     }
 
