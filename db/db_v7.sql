@@ -5,7 +5,7 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.2
 
--- Started on 2022-06-06 21:05:38
+-- Started on 2022-06-08 11:11:43
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -521,7 +521,8 @@ CREATE TABLE public.reservations (
     id integer NOT NULL,
     parent_id integer NOT NULL,
     date date NOT NULL,
-    activity_at_day_id integer
+    activity_at_day_id integer,
+    number integer
 );
 
 
@@ -767,9 +768,6 @@ INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALU
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (28, 6, '2022-07-05', '10:00', 100);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (29, 6, '2022-07-05', '11:00', 100);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (30, 6, '2022-07-05', '12:00', 100);
-INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (1, 1, '2022-07-01', '10:00', 98);
-INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (2, 1, '2022-07-02', '10:00', 99);
-INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (3, 1, '2022-07-03', '10:00', 99);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (5, 1, '2022-07-05', '10:00', 98);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (6, 2, '2022-07-01', '10:00', 98);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (7, 2, '2022-07-03', '10:00', 98);
@@ -779,6 +777,9 @@ INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALU
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (11, 3, '2022-07-01', '10:00', 99);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (12, 3, '2022-07-02', '10:00', 99);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (13, 3, '2022-07-03', '10:00', 90);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (1, 1, '2022-07-01', '10:00', 97);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (3, 1, '2022-07-03', '10:00', 94);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (2, 1, '2022-07-02', '10:00', 85);
 
 
 --
@@ -871,9 +872,9 @@ INSERT INTO public.evaluations (id, activity_id, parent_id, rating, comment) VAL
 --
 
 INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1, false);
-INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (2, 2, 'facility2', 'address2', 'district2', 10.2, 10.2, false);
 INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (3, 3, 'facility3', 'address3', 'district3', 10.3, 10.3, false);
 INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (4, 4, 'facility4', 'address4', 'district4', 10.4, 10.4, false);
+INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (2, 1, 'facility2', 'address2', 'district2', 10.2, 10.2, false);
 
 
 --
@@ -895,29 +896,32 @@ INSERT INTO public.parents (id, longitude, latitude, address, user_username) VAL
 -- Data for Name: reservations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (2, 1, '2022-06-01', 1);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (3, 1, '2022-06-01', 1);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (4, 1, '2022-06-01', 2);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (5, 1, '2022-06-01', 3);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (6, 1, '2022-06-01', 5);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (7, 2, '2022-06-01', 5);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (8, 2, '2022-06-01', 6);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (9, 2, '2022-06-01', 6);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (10, 3, '2022-06-01', 7);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (11, 3, '2022-06-01', 7);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (12, 3, '2022-06-01', 8);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (13, 3, '2022-06-01', 9);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (14, 4, '2022-06-01', 10);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (15, 4, '2022-06-01', 10);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (16, 4, '2022-06-01', 11);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (17, 4, '2022-06-01', 11);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (18, 4, '2022-06-01', 12);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (19, 4, '2022-06-01', 13);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (20, 4, '2022-06-01', 13);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (21, 4, '2022-06-01', 13);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (22, 4, '2022-06-01', 13);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (23, 4, '2022-06-01', 13);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id) VALUES (24, 4, '2022-06-01', 13);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (2, 1, '2022-06-01', 1, 2);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (3, 1, '2022-06-01', 1, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (4, 1, '2022-06-01', 2, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (5, 1, '2022-06-01', 3, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (6, 1, '2022-06-01', 5, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (7, 2, '2022-06-01', 5, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (8, 2, '2022-06-01', 6, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (9, 2, '2022-06-01', 6, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (10, 3, '2022-06-01', 7, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (11, 3, '2022-06-01', 7, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (12, 3, '2022-06-01', 8, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (13, 3, '2022-06-01', 9, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (14, 4, '2022-06-01', 10, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (15, 4, '2022-06-01', 10, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (16, 4, '2022-06-01', 11, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (17, 4, '2022-06-01', 11, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (18, 4, '2022-06-01', 12, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (19, 4, '2022-06-01', 13, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (20, 4, '2022-06-01', 13, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (21, 4, '2022-06-01', 13, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (22, 4, '2022-06-01', 13, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (23, 4, '2022-06-01', 13, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (24, 4, '2022-06-01', 13, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (25, 1, '2022-06-08', 1, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (26, 1, '2022-06-08', 2, 4);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (27, 1, '2022-06-08', 3, 5);
 
 
 --
@@ -1073,7 +1077,7 @@ SELECT pg_catalog.setval('public.parents_id_seq', 11, true);
 -- Name: reservations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.reservations_id_seq', 24, true);
+SELECT pg_catalog.setval('public.reservations_id_seq', 27, true);
 
 
 --
@@ -1364,7 +1368,7 @@ ALTER TABLE ONLY public.sellers
     ADD CONSTRAINT sellers_fk FOREIGN KEY (user_username) REFERENCES public.users(username) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2022-06-06 21:05:38
+-- Completed on 2022-06-08 11:11:43
 
 --
 -- PostgreSQL database dump complete
