@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/parent/signup").permitAll()  
             .antMatchers("/parent/signup/*").permitAll()
             .antMatchers("/test/**").permitAll()
+            .antMatchers("/parent/*").hasAnyAuthority("ROLE_PARENT")
             .anyRequest().authenticated();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

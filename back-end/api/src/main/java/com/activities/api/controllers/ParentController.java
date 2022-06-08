@@ -19,11 +19,13 @@ import com.activities.api.dto.ReservationDTO;
 import com.activities.api.dto.ReservationRequest;
 import com.activities.api.dto.UserCreationRequest;
 import com.activities.api.entities.Authority;
+import com.activities.api.entities.BankCard;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Reservation;
 import com.activities.api.entities.User;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AuthorityService;
+import com.activities.api.services.BankCardService;
 import com.activities.api.services.ParentService;
 import com.activities.api.services.ReservationService;
 import com.activities.api.services.UserService;
@@ -40,6 +42,14 @@ public class ParentController {
     @Autowired private UserService userService;
     @Autowired private ActivityService activityService;
     @Autowired private ReservationService reservationService;
+    @Autowired private BankCardService bankCardService;
+
+    @GetMapping("/{parent_id}/cards")
+    public ResponseEntity<List<BankCard>> getBankCards(@PathVariable int parent_id){
+        return ResponseEntity.ok().body(
+            bankCardService.getByParent(parentService.getParent(parent_id))
+        );     
+    }
 
     @GetMapping("/{parent_id}/history")
     public ResponseEntity<PagingResponse<List<ReservationDTO>>> getHistory(@PathVariable int parent_id, @RequestBody PageRequest req){

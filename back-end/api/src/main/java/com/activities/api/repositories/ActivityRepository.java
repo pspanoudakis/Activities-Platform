@@ -12,9 +12,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer>{
+    
     public List<Activity> findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityIn(
         int max, int min, List<AgeCategory> ageCategories, List<Facility> facilities);
     public List<Activity> findByFacility(Facility facility);
     public List<Activity> findByFacilityIn(Collection<Facility> facilities);
+    
     
 }

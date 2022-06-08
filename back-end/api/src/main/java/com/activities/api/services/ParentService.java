@@ -76,7 +76,7 @@ public class ParentService {
     }
 
     public Parent getParent(int id){
-        return parentRepository.findById(id).orElse(null);
+        return parentRepository.findById(id).orElse(null); 
     }
 
     public Parent saveOrUpdateParent(Parent parent){
