@@ -1,5 +1,6 @@
 Για http αίτημα σε /parent/* χρειάζεται token χρήστη με authority "PARENT_ROLE", εκτός του /parent/signup
 Για /search/* δεν θέλει token
+Σε περίπτωση λάθους επιστρέφεται κωδικός BadRequest (400) και στο Header πεδίο 'error' με τιμή string που περιγράφει το λάθος.
 
 + {POST(/parent/signup)
     Περιγραφή:
@@ -222,6 +223,16 @@ ReservationDTO{
     int cost
 }
 
+ReservationDTO{
+    String name;
+    LocalDate reservationDate;
+    LocalDate activityDate;
+    String activityTime;
+    String sellerName;
+    int rating;
+    int cost;
+}
+
 - GET(/parent/{parent_id}/history)
 Περιγραφή:
 Σελίδα με κρατήσεις που έκανε ο parent με parent.id = parent_id.
@@ -230,7 +241,7 @@ RequestBody{
     "pageSize": 10
 }
 ResponseBody{
-[
+"page" :[
     <ReservationDTO>,
     .
     .
@@ -241,7 +252,7 @@ ResponseBody{
 }
 
 +{POST(parent/{parent_id}/reservation)
-    Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα. Επιστρέφεται η λίστα του RequestBody, και σε περίπτωση λάθους κωδικός BadRequest (400) και στο Header πεδίο 'error' με τιμή string που περιγράφει το λάθος.
+    Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα. Επιστρέφεται η λίστα του RequestBody
     RequestBody{
         days: 
         [
