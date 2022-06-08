@@ -4,7 +4,7 @@ import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SectionTitle } from "../shared/SectionTitle";
-import { ActivitySectionPageButton } from "./ActivitySectionPageButton";
+import { SwitchPageSideButton } from "./SwitchPageSideButton";
 
 const TOTAL_ACTIVITIES = 12
 const PAGE_SIZE = 3
@@ -66,7 +66,7 @@ export function ActivitiesSection({
                     <LoadingIndicator stretchParent={false}/>
                     :
                     <>
-                        <ActivitySectionPageButton
+                        <SwitchPageSideButton
                             direction="left"
                             disabled={page === 0}
                             switchPage={() => setPageInfo({page: page - 1, pageSize})}
@@ -75,7 +75,7 @@ export function ActivitiesSection({
                             activities.slice(page*pageSize, Math.min(page*pageSize + pageSize, activities.length))
                                     .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
                         }
-                        <ActivitySectionPageButton
+                        <SwitchPageSideButton
                             direction="right"
                             disabled={page === (TOTAL_ACTIVITIES / pageSize) - 1}
                             switchPage={() => setPageInfo({page: page + 1, pageSize})}

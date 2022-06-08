@@ -8,6 +8,7 @@ import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
 import { ActivityRatingIndicator } from "./ActivityRatingIndicator";
 import { ActivityReservationSelector } from "./ActivityReservationSelector";
 import { ActivityRateSelector } from "./ActivityRateSelector";
+import { ActivityImageSelector } from "./ActivityImageSelector";
 
 function sameDateTimes(d1, d2) {
     return d1.getHours() === d2.getHours && d1.getMinutes() === d1.getMinutes
@@ -165,10 +166,11 @@ export function ActivityContent({
                     </div>
                     <span className="tracking-tight">Πάροχος: {activityInfo.providerName}</span>
                     <div className="w-full md:gap-16 gap-8 flex flex-row flex-wrap md:justify-between justify-center items-center">
-                        <img
+                        {/* <img
                             src={activityInfo.images[0]} alt=""
                             className="rounded-2xl max-w-sm"    
-                        />
+                        /> */}
+                        <ActivityImageSelector images={activityInfo.images}/>
                         <div className="flex flex-row flex-wrap gap-5 flex-1 justify-center">
                             <div className="flex flex-col gap-3 items-start">
                                 <ActivityTimelineInfo
@@ -189,7 +191,7 @@ export function ActivityContent({
                     <div className="flex w-full md:gap-16 gap-8 flex-row flex-wrap justify-center items-start pt-5 md:justify-between">
                         <div className="flex flex-col flex-1 gap-2" style={{minWidth: '20rem'}}>
                             <span className="font-semibold">Περιγραφή/Σχόλια Παρόχου:</span>
-                            <textarea className="rounded-xl px-4 pt-2 text-sm" rows="8" style={{resize: 'none'}} value={activityInfo.description} readOnly/>
+                            <textarea className="rounded-xl px-4 pt-2 text-sm outline-none" rows="8" style={{resize: 'none'}} value={activityInfo.description} readOnly/>
                         </div>
                         <div className="flex flex-col flex-1 gap-3 justify-center">
                             <ActivityLocationIndicator locationName={activityInfo.location.text} textAlign="text-start"/>

@@ -36,7 +36,7 @@ export function fetchUpcomingActivities(n, callback) {
         (new Image()).src = `img${i}`
 
         return {
-            imgSrc: `https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1000&h=-1&s=1`,
+            imgSrc: `http://fairplay5x5.gr/wp-content/uploads/2015/09/slide1.jpg`,
             name: `Activity${i}`,
             locationName: `Κυκλαμίνων 48, Άνοιξη Αττικής`,
             nextDate: `11/4/22 14:00`
@@ -54,8 +54,10 @@ export function fetchActivity(activityId, callback) {
         name: 'Ποδόσφαιρο 5x5',
         providerName: 'Νίκος Παπαδόπουλος',
         images: [
-            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1000&h=-1&s=1",
-            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1000&h=-1&s=1"
+            "http://fairplay5x5.gr/wp-content/uploads/2015/09/slide1.jpg",
+            "https://elclasico.gr/wp-content/uploads/2017/12/5x5-podosfairo.jpg",
+            "https://i.redd.it/cjkz6lpzmprx.jpg",
+            "https://www.pixelstalk.net/wp-content/uploads/2016/06/High-Res-Backgrounds-Free-Download.jpg"
         ],
         rating: 3.8,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.\nUllam, sapiente nobis ipsa est eius unde, aliquid iusto saepe nostrum architecto rem quis consequuntur eaque reiciendis ipsam.\nIpsa odio commodi ullam?',
@@ -100,9 +102,16 @@ export function fetchActivity(activityId, callback) {
             return acc
         }, [])
     }
+    console.log(activity)
 
     runWithDelay(() => callback({
         activity,
+        ok: true
+    }))
+}
+
+export function submitActivityReview(activityId, userId, rate, text, callback) {
+    runWithDelay(() => callback({
         ok: true
     }))
 }

@@ -43,6 +43,7 @@ function App() {
               <div style={{ maxWidth: "60rem", minWidth: "20rem"}} className='w-full h-max flex flex-col gap-2 items-center'>
                 <Outlet/>
               </div>
+              {/* <Footer/> */}
           </div>
         </div>
       </AppContext.Provider>
