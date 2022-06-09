@@ -28,10 +28,13 @@ code {
 @tailwind components;
 @tailwind utilities;
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   html {
     font-size: smaller;
   }
+}
+button {
+  @apply duration-200
 }
 
 #root {

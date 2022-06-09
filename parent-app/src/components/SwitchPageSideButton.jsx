@@ -19,7 +19,7 @@ export function SwitchPageSideButton({
             <FontAwesomeIcon icon={icon} className="text-gray-500"/>
         </button>
         :
-        (<button className="bg-dark-cyan hover:bg-xdark-cyan duration-200 rounded-full h-max px-3 py-2" onClick={() => switchPage()}>
+        (<button className="bg-dark-cyan hover:bg-xdark-cyan rounded-full h-max px-3 py-2" onClick={() => switchPage()}>
             <FontAwesomeIcon icon={icon}/>
         </button>)
     )

@@ -51,7 +51,7 @@ export function ActivityImageSelector({
     }, [loading])
 
     return (
-        <div className="flex flex-row justify-between items-center relative gap-1" style={{minHeight: '15rem', minWidth: '20rem'}}>
+        <div className="flex flex-row justify-between items-center relative gap-1" style={{height: '20rem', minWidth: '20rem'}}>
             <SwitchPageSideButton
                 direction="left"
                 disabled={currentImageIdx === 0}

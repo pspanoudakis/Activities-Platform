@@ -17,7 +17,8 @@ function App() {
     },
     //userInfo: null,
     showModal: false,
-    modalContent: null
+    modalContent: null,
+    modalScroll: false
   })
 
   return (
@@ -28,10 +29,12 @@ function App() {
       }}>
         <Modal
           show={appContext.showModal}
+          overflowScroll={appContext.modalScroll}
           closeCallback={() => setAppContext({
             ...appContext,
             showModal: false,
-            modalContent: null
+            modalContent: null,
+            modalScroll: false
         })}>
           { appContext.modalContent }
         </Modal>

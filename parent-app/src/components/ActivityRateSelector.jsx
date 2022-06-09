@@ -72,7 +72,8 @@ export function ActivityRateSelector({
                                     'Η αξιολόγησή σας υποβλήθηκε επιτυχώς.'
                                     :
                                     'Kάτι πήγε στραβά με την υποβολή της αξιολόγησής σας. Δοκιμάστε ξανά.'
-                                }/>
+                                }/>,
+                modalScroll: false
             })
         })
     }
@@ -95,7 +96,6 @@ export function ActivityRateSelector({
                     className="
                         font-semibold
                         bg-dark-cyan hover:bg-xdark-cyan disabled:bg-cyan disabled:text-gray-500
-                        duration-200
                         rounded-xl
                         px-4 py-2"
                     onClick={submitReview}>
@@ -104,7 +104,7 @@ export function ActivityRateSelector({
             </div>
             {
                 loading ?
-                <LoadingIndicator stretchParent={true} customColor='bg-white/60'/>
+                <LoadingIndicator stretchParent={true} customColor='bg-white/70'/>
                 :
                 null
             }

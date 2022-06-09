@@ -28,18 +28,6 @@ export function Index() {
 
     return (
         <div className="w-full flex flex-col gap-3 items-center">
-            {/* <button onClick={() => context.setState({
-                ...context.state,
-                showModal: true,
-                modalContent: (
-                    <div className="bg-blue-600 rounded-3xl px-4">Modal Content</div>
-                )
-            })}>
-                Open Modal
-            </button>
-            <TestComponent/>
-            <h2>Parent Index</h2> */}
-
             <ActivitiesSection
                 showBg={true}
                 title="Κλείστε Ξανά"

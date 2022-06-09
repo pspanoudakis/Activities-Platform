@@ -80,11 +80,11 @@ export function fetchActivity(activityId, callback) {
                 if (i % 3 !== 0) {
                     daySlots = [
                         {
-                            id: `slot${i}`,
+                            id: `slot${i}_0`,
                             date: new Date(2022, 5, i + 1, 14, 30, 0)
                         },
                         {
-                            id: `slot${i}`,
+                            id: `slot${i}_1`,
                             date: new Date(2022, 5, i + 1, 18, 15, 0)
                         }
                     ]
