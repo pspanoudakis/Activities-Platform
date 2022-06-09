@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
+import com.activities.api.dto.PlannedActivity;
 import com.activities.api.dto.ReservationDTO;
 import com.activities.api.dto.ReservationRequest;
 import com.activities.api.dto.UserCreationRequest;
@@ -46,9 +47,30 @@ public class ParentController {
 
     @GetMapping("/{parent_id}/cards")
     public ResponseEntity<List<BankCard>> getBankCards(@PathVariable int parent_id){
+        
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
         return ResponseEntity.ok().body(
-            bankCardService.getByParent(parentService.getParent(parent_id))
+            bankCardService.getByParent(parent)
         );     
+    }
+
+    @GetMapping("/{parent_id}/upcoming")
+    public ResponseEntity<List<PlannedActivity>> getUpcoming(@PathVariable int parent_id){
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
+        List<PlannedActivity> activities = reservationService.getReservationsByParent(parent).stream().map(
+            res ->{
+                PlannedActivity pa = new PlannedActivity(res.getActivityAtDay());
+                return pa;
+            }
+        ).collect(Collectors.toList());
+        Collections.sort(activities);
+        activities = activities.stream().limit(5).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(activities);
     }
 
     @GetMapping("/{parent_id}/history")
