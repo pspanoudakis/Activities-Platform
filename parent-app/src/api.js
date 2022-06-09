@@ -115,3 +115,9 @@ export function submitActivityReview(activityId, userId, rate, text, callback) {
         ok: true
     }))
 }
+
+export function fetchBookReservations(reservations, username, callback) {
+    runWithDelay(() => callback({
+        ok: true
+    }))
+}

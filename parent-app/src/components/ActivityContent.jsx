@@ -1,7 +1,7 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 
 import { AppContext } from '../AppContext'
-import { fetchActivity } from '../api'
+import { fetchActivity, fetchBookReservations } from '../api'
 import { dateText, dateTimeText, DAY_NAMES } from "../dates";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
@@ -9,6 +9,8 @@ import { ActivityRatingIndicator } from "./ActivityRatingIndicator";
 import { ActivityReservationSelector } from "./ActivityReservationSelector";
 import { ActivityRateSelector } from "./ActivityRateSelector";
 import { ActivityImageSelector } from "./ActivityImageSelector";
+import { ModalVerifyPrompt } from "../shared/ModalVerifyPrompt";
+import { ModalResultMessage } from "../shared/ModalResultMessage";
 
 function sameDateTimes(d1, d2) {
     return d1.getHours() === d2.getHours && d1.getMinutes() === d1.getMinutes
@@ -74,30 +76,32 @@ function ActivityTimelineInfo({
     )
 }
 
+const initialState = {
+    name: '',
+    providerName: '',
+    images: [],
+    rating: -1,
+    description: '',
+    location: {
+        longitude: 0,
+        latitude: 0,
+        text: ''
+    },
+    ageCategory: '',
+    price: -1,
+    repeated: false,
+    startDate: null,
+    endDate: null,
+    slots: []
+}
+
 export function ActivityContent({
     activityId
 }) {
 
     const context = useContext(AppContext)
 
-    const [activityInfo, setActivityInfo] = useState({
-        name: '',
-        providerName: '',
-        images: [],
-        rating: -1,
-        description: '',
-        location: {
-            longitude: 0,
-            latitude: 0,
-            text: ''
-        },
-        ageCategory: '',
-        price: -1,
-        repeated: false,
-        startDate: null,
-        endDate: null,
-        slots: []
-    })
+    const [activityInfo, setActivityInfo] = useState(initialState)
 
     const dayTimes = useMemo(() => {
         const map = []
@@ -119,21 +123,63 @@ export function ActivityContent({
     const [loading, setLoading] = useState(true)
     const [reservations, setReservations] = useState([])
     const [quantity, setQuantity] = useState(1)
+    const [totalPrice, setTotalPrice] = useState(0)
 
-    function calculcatePrice() {
-        return reservations.reduce((total, r) => {
-            return total + (r.quantity)*activityInfo.price
-        }, 0)
+    function resetState() {
+        setReservations([])
+        setQuantity(1)
+        setTotalPrice(0)
+        setLoading(true)
     }
 
     useEffect(() => {
-        fetchActivity(activityId, (response) => {
-            if (response.ok) {
-                setActivityInfo(response.activity)
-            }
-            setLoading(false)
+        setTotalPrice(reservations.reduce((total, r) => {
+            return total + (r.quantity)*activityInfo.price
+        }, 0))
+    }, [reservations])
+
+    useEffect(() => {
+        if (loading) {
+            fetchActivity(activityId, (response) => {
+                if (response.ok) {
+                    setActivityInfo(response.activity)
+                }
+                setLoading(false)
+            })
+        }
+    }, [loading])
+
+    const verifyPrompt = () => {
+        context.setState({
+            ...context.state,
+            showModal: true,
+            modalContent: <ModalVerifyPrompt
+                                onVerify={bookReservations}
+                                text="Είστε βέβαιοι ότι θέλετε να προχωρήσετε με τις επιλεγμένες κρατήσεις?"
+                            />
         })
-    }, [])
+    }
+
+    function bookReservations() {
+        console.log(reservations)
+
+        fetchBookReservations(reservations, context.state.userInfo.userName, ({ok}) => {
+            context.setState({
+                ...context.state,
+                showModal: true,
+                modalContent: <ModalResultMessage
+                                    success={ok}
+                                    onVerify={bookReservations}
+                                    text={ ok?
+                                        "Οι κρατήσεις σας καταχωρήθηκαν επιτυχώς."
+                                        :
+                                        "Υπήρξε κάποιο πρόβλημα με την καταχώρηση των κρατήσεών σας. Προσπαθήστε ξανά."
+                                    }
+                                />
+            })
+            resetState()
+        })
+    }
     
     return (
         <div
@@ -189,14 +235,15 @@ export function ActivityContent({
                                 {
                                     reservations.length > 0 ?
                                     <button
-                                        className="bg-green-600 text-white hover:bg-green-700 rounded-2xl py-1 px-8 whitespace-nowrap"
+                                        onClick={verifyPrompt}
+                                        className="bg-green-600 text-white text-lg hover:bg-green-700 rounded-2xl py-2 px-8 whitespace-nowrap"
                                     >
-                                        {`Αγορά για ${calculcatePrice()} πόντους`}
+                                        {`Αγορά για ${totalPrice} πόντους`}
                                     </button>
                                     :
                                     <button
                                         disabled
-                                        className="bg-green-600/70 text-white rounded-2xl py-1 px-8"
+                                        className="bg-green-600/70 text-white text-lg rounded-2xl py-2 px-8"
                                     >
                                         Αγορά
                                     </button>

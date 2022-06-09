@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import DatePicker from 'react-date-picker';
 import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../dates";
+import { ActionButton } from "../shared/ActionButton";
+import { Checklist } from "../shared/Checklist";
 
-function ActionButton({
-    text,
-    onClick,
-    disabled
+function ReservationItem({
+    data,
+    id,
+    checked
 }) {
     return (
-        <button
-            className="text-sm rounded-xl bg-navbar-cyan hover:bg-navbar-dark-cyan h-max py-1 px-3 disabled:bg-dark-cyan disabled:text-gray-500"
-            disabled={disabled}
-            onClick={onClick}
-        >
-            {text}
-        </button>
+        <div key={id} className={`text-sm w-full flex flex-row justify-between pl-3 duration-400 ${checked ? 'line-through' : ''}`}>
+            <span>
+                {`${DAY_NAMES[data.slot.date.getDay()]} ${dateText(data.slot.date)}, ${dateTimeText(data.slot.date)}`}
+            </span>
+            <span>
+                {`Άτομα: ${data.quantity}`}
+            </span>
+        </div>
     )
 }
 
@@ -122,13 +125,13 @@ export function ActivityReservationSelector({
                     />
                 </div>
             </div>
-            <div className="flex flex-col gap-2">
-                Επιλεγμένες Ημερομηνίες:
-            {
-                reservations.map((r, i) => 
-                    <div key={i}>{`${DAY_NAMES[r.slot.date.getDay()]} ${dateText(r.slot.date)}, ${dateTimeText(r.slot.date)} #${r.quantity}`}</div>    
-                )
-            }
+            <div className="flex flex-col gap-2 w-full">
+                <span className="font-semibold text-center">Επιλεγμένες Κρατήσεις:</span>
+                <Checklist
+                    items={reservations}
+                    ItemRenderer={ReservationItem}
+                    setItems={updateReservations}
+                />
             </div>
         </div>
     )
