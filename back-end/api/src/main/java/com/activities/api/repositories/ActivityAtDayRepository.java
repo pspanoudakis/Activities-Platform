@@ -14,5 +14,4 @@ public interface ActivityAtDayRepository extends JpaRepository<ActivityAtDay, In
 
     public List<ActivityAtDay> findByActivityAndDayAfterOrderByDayAsc(Activity activity, LocalDate strart_date);
     public List<ActivityAtDay> findByActivity(Activity activity);
-    
 }

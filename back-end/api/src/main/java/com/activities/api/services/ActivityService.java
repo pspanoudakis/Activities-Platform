@@ -3,6 +3,7 @@ package com.activities.api.services;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.activities.api.dto.ActivityPopularity;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
@@ -35,6 +36,10 @@ public class ActivityService {
         Activity a = activityRepository.findById(id).orElse(null);
         // System.out.println(a.toString());
         return a;
+    }
+
+    public List<ActivityPopularity> getActivitiesSortedByReservations(){
+        return activityRepository.getActivitiesSortedByReservations();
     }
 
     public int getActivityRating(Activity activity){

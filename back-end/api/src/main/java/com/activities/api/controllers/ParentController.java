@@ -56,6 +56,8 @@ public class ParentController {
         );     
     }
 
+    
+
     @GetMapping("/{parent_id}/upcoming")
     public ResponseEntity<List<PlannedActivity>> getUpcoming(@PathVariable int parent_id){
         Parent parent = parentService.getParent(parent_id);

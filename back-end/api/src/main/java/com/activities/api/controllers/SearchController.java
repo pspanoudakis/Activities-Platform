@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.ActivityExtended;
+import com.activities.api.dto.ActivityPopularityCompact;
 import com.activities.api.dto.Coordinates;
 import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.ShallowCategory;
@@ -49,6 +50,13 @@ public class SearchController {
                 cat -> new ShallowCategory(cat)
             ).collect(Collectors.toList())
         );
+    }
+
+    @GetMapping("/activities/popular")
+    public ResponseEntity<List<ActivityPopularityCompact>> getPopularActivities(){
+        return ResponseEntity.ok().body(activityService.getActivitiesSortedByReservations().stream().map(
+            ac -> new ActivityPopularityCompact(ac, activityService)
+        ).limit(5).collect(Collectors.toList()));
     }
     
     @GetMapping("/activities")
