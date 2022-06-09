@@ -46,30 +46,32 @@ ActivityCompactDTO{
     "nextAvailableDate": "2022-01-20"
 }
 
-- GET(/search/activities/popular)
-Περιγραφή:
-Επιστροφή των 5 δραστηριοτήτων με τις περισσότερες κρατήσεις
-ResponseBody{
-    [
-        <ActivityCompactDTO>
-        .
-        .
-        .,
-        <ActivityCompactDTO>
-    ]
++ {GET(/search/activities/popular)
+    Περιγραφή:
+    Επιστροφή των 5 δραστηριοτήτων με τις περισσότερες κρατήσεις
+    ResponseBody{
+        [
+            {<ActivityCompactDTO>, reservations}
+            .
+            .
+            .,
+            {<ActivityCompactDTO>, reservations}
+        ]
+    }
 }
 
-- GET(/parent/{parent_id}/activities/upcoming)
-Περιγραφή:
-Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
-ResponseBody{
-    [
-        <ActivityCompactDTO>
-        .
-        .
-        .,
-        <ActivityCompactDTO>
-    ]
++ {GET(/parent/{parent_id}/activities/upcoming)
+    Περιγραφή:
+    Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
+    ResponseBody{
+        [
+            <ActivityCompactDTO>
+            .
+            .
+            .,
+            <ActivityCompactDTO>
+        ]
+    }
 }
 
 - GET(/parent/{parent_id}/activities/booked/)
