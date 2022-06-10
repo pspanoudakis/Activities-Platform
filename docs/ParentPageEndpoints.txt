@@ -212,32 +212,31 @@ ResponseBody{
 }
 
 
-- GET(/parent/{parent_id}/my_cards)
-Περιγραφή:
-Πληροφορίες καρτών του parent με parent.id = parent_id
-ResponseBody{
-[
-    <bank_card_data>,
-    .
-    .
-    .,
-    <bank_card_data>
-]
++ {GET(/parent/{parent_id}/cards)
+    Περιγραφή:
+    Πληροφορίες καρτών του parent με parent.id = parent_id
+    ResponseBody{
+    [
+        <bank_card_data>,
+        .
+        .
+        .,
+        <bank_card_data>
+    ]
+    }
 }
 
-- DELETE(/parent/{parent_id}/my_cards/{card_id})
-Περιγραφή:
-Διαγραφή κάρτας με bank_card.id = card_id
-ResponseBody{
-    <bank_card_data>
++ {DELETE(/parent/{parent_id}/card/{card_id})
+    Περιγραφή:
+    Διαγραφή κάρτας με bank_card.id = card_id
+    ResponseBody{
+        <bank_card_data>
+    }
 }
 
 - POST(/parent/{parent_id}/add_points/{points})
 Περιγραφή:
 Αυξάνει τον λογαριασμό του parent με parent.id = parent_id κατά points.
-RequestBody{
-    <user_data>
-}
 
 - POST(/parent/{parent_id}/add_card)
 Περιγραφή:

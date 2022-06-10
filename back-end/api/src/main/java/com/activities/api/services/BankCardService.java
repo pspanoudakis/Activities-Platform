@@ -18,6 +18,14 @@ public class BankCardService {
         return bankCardRepository.findAll();
     }
 
+    public BankCard getCard(int id){
+        return bankCardRepository.findById(id).orElse(null);
+    }
+
+    public void deleteCard(BankCard card){
+        bankCardRepository.delete(card);
+    }
+
     public List<BankCard> getByParent(Parent parent){
         return bankCardRepository.findByParent(parent);
     }

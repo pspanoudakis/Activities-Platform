@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.ParentTypeAwareTypeInformation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +64,21 @@ public class ParentController {
     @Autowired private EvaluationService evaluationService;
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private JwtUtil jwtUtil;
+
+    @DeleteMapping("/{parent_id}/card/{card_id}")
+    public ResponseEntity<BankCard> deleteCard(@PathVariable int parent_id, @PathVariable int card_id){
+
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
+        BankCard card = bankCardService.getCard(card_id);
+        if(card == null)return ResponseEntity.badRequest().header("error", "no card with card.id = " + card_id).body(null);
+
+        if(card.getParent().getId() != parent_id)return ResponseEntity.badRequest().header("error", "card (card.id = " + card_id + ") does not belong to parent (parent.id = " + parent_id + ")").body(null);
+
+        bankCardService.deleteCard(card);
+        return ResponseEntity.ok().body(card);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request){
