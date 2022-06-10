@@ -34,6 +34,10 @@ public class ParentService {
 
     }
 
+    public Parent getByUser(User user){
+        return parentRepository.findByUser(user).orElse(null);
+    }
+
     @Transactional
     public Parent saveParentWithUser(Parent parent, User user){
 

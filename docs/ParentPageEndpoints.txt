@@ -179,16 +179,17 @@ parentProfileDTO{
     }
 }
 
-- POST(/parent/login)
-RequestBody{
-    "username": "parent1",
-    "password": "parent1"
-}
-ResponseHeaders{
-    "authorization": JWT
-}
-ResponseBody{
-    <paren_data>
++ {POST(/parent/login)
+    RequestBody{
+        "username": "parent1",
+        "password": "parent1"
+    }
+    ResponseHeaders{
+        "authorization": JWT
+    }
+    ResponseBody{
+        <paren_data>
+    }
 }
 
 - GET(/parent/{parent_id}/my_activities)
