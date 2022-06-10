@@ -8,4 +8,5 @@ import lombok.Data;
 public class  PagingResponse <T> {
     T page;
     int total_pages;
+    int current_page;
 }

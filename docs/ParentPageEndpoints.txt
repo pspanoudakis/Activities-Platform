@@ -1,4 +1,4 @@
-Για http αίτημα σε /parent/* χρειάζεται token χρήστη με authority "PARENT_ROLE", εκτός του /parent/signup
+Για http αίτημα σε /parent/* χρειάζεται token χρήστη με authority "PARENT_ROLE", εκτός του /parent/signup και /parent/login
 Για /search/* δεν θέλει token
 Σε περίπτωση λάθους επιστρέφεται κωδικός BadRequest (400) και στο Header πεδίο 'error' με τιμή string που περιγράφει το λάθος.
 
@@ -31,11 +31,12 @@
 }
 
 ActivityCompactDTO{
+    int id;
     String name,
     int rating,
     String address,
     int price,
-    LocalDate nextAvailableDate
+    LocalDate date //earliest or reservation date depending on use
 }
 
 + {GET(/search/activities/popular)
@@ -52,17 +53,23 @@ ActivityCompactDTO{
     }
 }
 
-+ {GET(/parent/{parent_id}//upcoming)
+# {GET(/parent/{parent_id}//upcoming)
     Περιγραφή:
     Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
+    {
+        "pageNumber": 1,
+        "pageSize": 10
+    }
     ResponseBody{
-        [
+        "page": [
             <ActivityCompactDTO>
             .
             .
             .,
             <ActivityCompactDTO>
         ]
+        "totalPages": 10,
+        "currentPage": 1
     }
 }
 
@@ -192,26 +199,6 @@ parentProfileDTO{
     }
 }
 
-- GET(/parent/{parent_id}/my_activities)
-Περιγραφή:
-Συνοπτική περιγραφή δραστηριοτήτων που έχει κάνει κράτηση ο parent με parent.id = parent_id, και δεν έχουν γίνει ακόμη
-ResponseBody{
-[
-    {
-        <ActivityCompactDTO>,
-        <reservation_data>
-    }
-    .
-    .
-    .,
-    {
-        <ActivityCompactDTO>,
-        <reservation_data>
-    }
-]
-}
-
-
 + {GET(/parent/{parent_id}/cards)
     Περιγραφή:
     Πληροφορίες καρτών του parent με parent.id = parent_id
@@ -238,7 +225,6 @@ ResponseBody{
     Περιγραφή:
     Αυξάνει τον λογαριασμό του parent με parent.id = parent_id κατά points.
 }
-
 
 + {POST(/parent/{parent_id}/add_card)
     Περιγραφή:
@@ -304,7 +290,6 @@ ReservationDTO{
         ]
     }
 }
-
 
 +{GET(/search/acitvity/activit_id/same_place)
     Λίστα με τις δραστηριότητες που γίνονται στο ίδιο facility με την δραστηριότητα με activit.id = activit_id (προηγουμένως ενσωματομένο στο /search/activity/activity_id)

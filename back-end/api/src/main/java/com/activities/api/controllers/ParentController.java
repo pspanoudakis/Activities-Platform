@@ -255,7 +255,7 @@ public class ParentController {
 
         int total_pages = (int) Math.ceil((double) res.size() / (double) req.getPageSize());
         PagingResponse<List<ReservationDTO>> response = new PagingResponse<List<ReservationDTO>>(
-            MyUtil.getPage(res, req.getPageNumber(), req.getPageSize()), total_pages
+            MyUtil.getPage(res, req.getPageNumber(), req.getPageSize()), total_pages, req.getPageNumber()
             );
 
         return ResponseEntity.ok().body(response);

@@ -112,7 +112,7 @@ public class SearchController {
         //Send wanted page of data, and total number of same size pages
         int total_pages = (int) Math.ceil((double) compactActivities.size() / (double) page_size);
         PagingResponse<List<ActivityCompact>> res = new PagingResponse<List<ActivityCompact>>(
-            MyUtil.getPage(compactActivities, page_number, page_size), total_pages
+            MyUtil.getPage(compactActivities, page_number, page_size), total_pages, page_number
             );
 
         return ResponseEntity.ok().body(res);
