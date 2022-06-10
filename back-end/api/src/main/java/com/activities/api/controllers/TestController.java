@@ -1,10 +1,6 @@
 package com.activities.api.controllers;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.activities.api.dto.ActivityCompact;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
@@ -32,7 +28,6 @@ import com.activities.api.services.ParentService;
 import com.activities.api.services.ReservationService;
 import com.activities.api.services.SellerService;
 
-import org.hibernate.type.descriptor.java.LocalDateJavaDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -18,6 +18,7 @@ import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.EvaluationRequest;
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
+import com.activities.api.dto.ParentProfileDTO;
 import com.activities.api.dto.PlannedActivity;
 import com.activities.api.dto.ReservationDTO;
 import com.activities.api.dto.ReservationRequest;
@@ -52,6 +53,14 @@ public class ParentController {
     @Autowired private ReservationService reservationService;
     @Autowired private BankCardService bankCardService;
     @Autowired private EvaluationService evaluationService;
+
+    @GetMapping("/{parent_id}/profile")
+    public ResponseEntity<?> getProfile(@PathVariable int parent_id){
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
+        return ResponseEntity.ok().body(new ParentProfileDTO(parent));
+    }
 
     @PostMapping("/{parent_id}/evaluate/{activity_id}")
     public ResponseEntity<String> makeEvaluation(@PathVariable int parent_id, @PathVariable int activity_id, @RequestBody EvaluationRequest req){
@@ -100,8 +109,6 @@ public class ParentController {
             bankCardService.getByParent(parent)
         );     
     }
-
-    
 
     @GetMapping("/{parent_id}/upcoming")
     public ResponseEntity<List<PlannedActivity>> getUpcoming(@PathVariable int parent_id){

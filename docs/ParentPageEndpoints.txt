@@ -139,11 +139,34 @@ ActivityExtendedDTO{
     }
 }
 
+parentProfileDTO{
+    int id;
+    Double longitude;
+    Double latitude;
+    String address;
+
+    String email;
+    String image;
+    String name;
+    String surname;
+
+    int balance;
+}
+
 - GET(/parent/{perent_id}/profile)
 Περιγραφή:
 Πληροφορίες προφίλ parent με parent.id = parent_id
 ResponseBody{
-    <parent_data>
+    <parentProfileDTO>
+}
+
+- POST(/parent/{parent_id}/edit_profile)
+Περγιγραφή: αποθήκευση αλλαγών στο προφίλ ενός parent με parent.id = parent_id
+RequestBody{
+    <parentProfileDTO>
+}
+ResponseBody{
+    <parentProfileDTO>
 }
 
 - DELETE(/parent/{parent_id})
@@ -229,22 +252,23 @@ ReservationDTO{
     int cost;
 }
 
-- GET(/parent/{parent_id}/history)
-Περιγραφή:
-Σελίδα με κρατήσεις που έκανε ο parent με parent.id = parent_id.
-RequestBody{
-    "pageNumber": 1,
-    "pageSize": 10
-}
-ResponseBody{
-"page" :[
-    <ReservationDTO>,
-    .
-    .
-    .,
-    <ReservationDTO>
-],
-"totalPages": 10
++ {GET(/parent/{parent_id}/history)
+    Περιγραφή:
+    Σελίδα με κρατήσεις που έκανε ο parent με parent.id = parent_id.
+    RequestBody{
+        "pageNumber": 1,
+        "pageSize": 10
+    }
+    ResponseBody{
+    "page" :[
+        <ReservationDTO>,
+        .
+        .
+        .,
+        <ReservationDTO>
+    ],
+    "totalPages": 10
+    }
 }
 
 +{POST(parent/{parent_id}/reservation)
