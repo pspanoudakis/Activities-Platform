@@ -12,9 +12,11 @@ import com.activities.api.dto.ReservationRequest;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Reservation;
+import com.activities.api.entities.User;
 import com.activities.api.repositories.ActivityAtDayRepository;
 import com.activities.api.repositories.ParentRepository;
 import com.activities.api.repositories.ReservationRepository;
+import com.activities.api.repositories.UserRepository;
 
 @Service
 public class ParentService {
@@ -22,6 +24,14 @@ public class ParentService {
     @Autowired private ParentRepository parentRepository;
     @Autowired private ActivityAtDayRepository activityAtDayRepository;
     @Autowired private ReservationRepository reservationRepository;
+    @Autowired private UserRepository  userRepository;
+
+    @Transactional
+    public Parent saveParentWithUser(Parent parent, User user){
+
+        parent.setUser(userRepository.save(user));
+        return parentRepository.save(parent);
+    }
 
     @Transactional
     public void makeReservations(List<ReservationRequest> reservations, int parent_id) throws Exception{

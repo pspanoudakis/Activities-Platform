@@ -153,14 +153,15 @@ parentProfileDTO{
     int balance;
 }
 
-- GET(/parent/{perent_id}/profile)
-Περιγραφή:
-Πληροφορίες προφίλ parent με parent.id = parent_id
-ResponseBody{
-    <parentProfileDTO>
++ {GET(/parent/{perent_id}/profile)
+    Περιγραφή:
+    Πληροφορίες προφίλ parent με parent.id = parent_id
+    ResponseBody{
+        <parentProfileDTO>
+    }
 }
 
-- POST(/parent/{parent_id}/edit_profile)
+- POST(/parent/edit_profile)
 Περγιγραφή: αποθήκευση αλλαγών στο προφίλ ενός parent με parent.id = parent_id
 RequestBody{
     <parentProfileDTO>

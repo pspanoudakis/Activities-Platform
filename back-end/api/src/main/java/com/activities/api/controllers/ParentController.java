@@ -54,8 +54,29 @@ public class ParentController {
     @Autowired private BankCardService bankCardService;
     @Autowired private EvaluationService evaluationService;
 
+    @PostMapping("/edit_profile")
+    public ResponseEntity<ParentProfileDTO> editProfile(@RequestBody ParentProfileDTO profile){
+    
+        Parent parent = parentService.getParent(profile.getId());
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + profile.getId()).body(null);
+
+        User user = parent.getUser();
+        if(user.getBalance() != profile.getBalance())return ResponseEntity.badRequest().header("error", "you cannot change balance from here").body(null);
+
+        user.setEmail(profile.getEmail());
+        user.setImage(profile.getImage());
+        user.setName(profile.getName());
+        user.setSurname(profile.getSurname());
+        
+        parent.setAddress(profile.getAddress());
+        parent.setLatitude(profile.getLatitude());
+        parent.setLongitude(profile.getLongitude());
+
+        return ResponseEntity.ok().body(new ParentProfileDTO(parentService.saveParentWithUser(parent, user)));
+    }
+
     @GetMapping("/{parent_id}/profile")
-    public ResponseEntity<?> getProfile(@PathVariable int parent_id){
+    public ResponseEntity<ParentProfileDTO> getProfile(@PathVariable int parent_id){
         Parent parent = parentService.getParent(parent_id);
         if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
 
