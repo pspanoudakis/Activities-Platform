@@ -18,6 +18,10 @@ public class ReservationService {
         return reservationRepository.findByParent(parent);
     }
 
+    public List<Long> getParentReservedActivityIds(int parent_id){
+        return reservationRepository.getParentReservedActivityIds(parent_id);
+    }
+
     public List<Reservation> getReservations(){
         return reservationRepository.findAll();
     }

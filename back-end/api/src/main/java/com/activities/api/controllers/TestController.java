@@ -61,9 +61,7 @@ public class TestController {
     @GetMapping("/mytest/{id}")
     public ResponseEntity<List<?>> getMyTest(@PathVariable int id){
         
-        return ResponseEntity.ok().body(activityService.getRecentlyBooked(id, 5).stream().map(
-            act -> new ActivityCompact(act, activityService, LocalDate.now())).collect(Collectors.toList())
-        );
+        return ResponseEntity.ok().body(reservationService.getParentReservedActivityIds(id));
     }
 
     @GetMapping("/auths")

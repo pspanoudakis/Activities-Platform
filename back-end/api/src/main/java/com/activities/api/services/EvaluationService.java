@@ -13,6 +13,10 @@ public class EvaluationService {
     
     @Autowired private EvaluationRepository evaluationRepository;
 
+    public Evaluation saveOrUpdate(Evaluation evaluation){
+        return evaluationRepository.save(evaluation);
+    }
+
     public List<Evaluation> getEvaluations(){
         return evaluationRepository.findAll();
     }

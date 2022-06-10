@@ -15,25 +15,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
+import com.activities.api.dto.EvaluationRequest;
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.PlannedActivity;
 import com.activities.api.dto.ReservationDTO;
 import com.activities.api.dto.ReservationRequest;
 import com.activities.api.dto.UserCreationRequest;
+import com.activities.api.entities.Activity;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.BankCard;
+import com.activities.api.entities.Evaluation;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Reservation;
 import com.activities.api.entities.User;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AuthorityService;
 import com.activities.api.services.BankCardService;
+import com.activities.api.services.EvaluationService;
 import com.activities.api.services.ParentService;
 import com.activities.api.services.ReservationService;
 import com.activities.api.services.UserService;
 import com.activities.api.utils.CustomPasswordEncoder;
 import com.activities.api.utils.MyUtil;
+
 
 @RestController
 @RequestMapping("parent")
@@ -46,6 +51,36 @@ public class ParentController {
     @Autowired private ActivityService activityService;
     @Autowired private ReservationService reservationService;
     @Autowired private BankCardService bankCardService;
+    @Autowired private EvaluationService evaluationService;
+
+    @PostMapping("/{parent_id}/evaluate/{activity_id}")
+    public ResponseEntity<String> makeEvaluation(@PathVariable int parent_id, @PathVariable int activity_id, @RequestBody EvaluationRequest req){
+
+        int rating = req.getRating();
+        if(rating < 1 || rating > 5)
+            return ResponseEntity.badRequest().header("error", "given rating: " + rating + " (must be between 1 and 5)" ).body(null);
+        
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
+        Activity activity = activityService.getActivity(activity_id);
+        if(activity == null)return ResponseEntity.badRequest().header("error", "no activity with activity.id = " + activity_id).body(null);
+
+        List<Long> parentReservedActivityIds = reservationService.getParentReservedActivityIds(parent_id);
+        if(!parentReservedActivityIds.contains((long) activity_id))
+            return ResponseEntity.badRequest().header("error", "parent (parent.id = " + parent_id + ") has not made reservation to activity (activity.id = " + activity_id + ")").body(null);
+
+        Evaluation evaluation = new Evaluation();
+        evaluation.setActivity(activity);
+        evaluation.setComment(req.getComment());
+        evaluation.setParent(parent);
+        evaluation.setRating(rating);
+
+        if(evaluationService.saveOrUpdate(evaluation) == null)
+            return ResponseEntity.badRequest().header("error", "error with saving new evaluation").body(null);
+
+        return ResponseEntity.ok().body("evaluation saved");
+    }
 
     @GetMapping("/{parent_id}/recently_booked")
     public ResponseEntity<List<ActivityCompact>> getMyTest(@PathVariable int parent_id){

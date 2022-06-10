@@ -128,14 +128,15 @@ ActivityExtendedDTO{
     }
 }
 
-- POST("/parent/{parent_id}/evaluate/{activity_id})
-Περιγραφή: Υποβολή αξιολόγισης από parent με parent.id = parent_id για δραστηριότητα με activity.id = activity_id
-RequestBody{
-    "rating": 3,
-    "comment": "test comment"
-} 
-ResponseBody{
-    <evalutaion_data>
++ {POST("/parent/{parent_id}/evaluate/{activity_id})
+    Περιγραφή: Υποβολή αξιολόγισης από parent με parent.id = parent_id για δραστηριότητα με activity.id = activity_id
+    RequestBody{
+        "rating": 3,
+        "comment": "test comment"
+    } 
+    ResponseBody{
+        <evalutaion_data>
+    }
 }
 
 - GET(/parent/{perent_id}/profile)
