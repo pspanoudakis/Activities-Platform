@@ -65,6 +65,23 @@ public class ParentController {
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private JwtUtil jwtUtil;
 
+    @PostMapping("/{parent_id}/add_points/{points}")
+    public ResponseEntity<String> addPoints(@PathVariable int parent_id, @PathVariable int points){
+
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
+        User user = parent.getUser();
+        int total = user.getBalance();
+        total += points;
+        user.setBalance(total);
+
+        if(parentService.saveParentWithUser(parent, user) == null)
+            return ResponseEntity.badRequest().header("error", "error while saving data").body(null);
+
+        return ResponseEntity.ok().body("ok");
+    }
+
     @DeleteMapping("/{parent_id}/card/{card_id}")
     public ResponseEntity<BankCard> deleteCard(@PathVariable int parent_id, @PathVariable int card_id){
 

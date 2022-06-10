@@ -234,9 +234,10 @@ ResponseBody{
     }
 }
 
-- POST(/parent/{parent_id}/add_points/{points})
-Περιγραφή:
-Αυξάνει τον λογαριασμό του parent με parent.id = parent_id κατά points.
++ {POST(/parent/{parent_id}/add_points/{points})
+    Περιγραφή:
+    Αυξάνει τον λογαριασμό του parent με parent.id = parent_id κατά points.
+}
 
 - POST(/parent/{parent_id}/add_card)
 Περιγραφή:
