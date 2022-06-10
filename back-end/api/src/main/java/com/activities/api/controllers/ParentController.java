@@ -233,7 +233,7 @@ public class ParentController {
 
         int total_pages = (int) Math.ceil((double) activities.size() / (double) req.getPageSize());
         return ResponseEntity.ok().body(
-            new PagingResponse<List<PlannedActivity>>(activities, total_pages, req.getPageNumber())
+            new PagingResponse<List<PlannedActivity>>(MyUtil.getPage(activities, req.getPageNumber(), req.getPageSize()), total_pages, req.getPageNumber())
         );
     }
 
