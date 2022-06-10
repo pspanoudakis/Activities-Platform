@@ -2,8 +2,9 @@ package com.activities.api.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.activities.api.dto.ActivityPopularity;
+import com.activities.api.dto.ActivityCompact;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
@@ -31,9 +32,11 @@ import com.activities.api.services.ParentService;
 import com.activities.api.services.ReservationService;
 import com.activities.api.services.SellerService;
 
+import org.hibernate.type.descriptor.java.LocalDateJavaDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,11 +58,13 @@ public class TestController {
     @Autowired private AuthorityService authorityService;
     @Autowired private ReservationService reservationService;
 
-    // @GetMapping("/mytest")
-    // public ResponseEntity<List<ActivityPopularity>> getMyTest(){
+    @GetMapping("/mytest/{id}")
+    public ResponseEntity<List<?>> getMyTest(@PathVariable int id){
         
-    //     return ResponseEntity.ok().body(activityAtDayService.getActivitiesSortedByReservations());
-    // }
+        return ResponseEntity.ok().body(activityService.getRecentlyBooked(id, 5).stream().map(
+            act -> new ActivityCompact(act, activityService, LocalDate.now())).collect(Collectors.toList())
+        );
+    }
 
     @GetMapping("/auths")
     public ResponseEntity<List<Authority>> getAuthorities(){

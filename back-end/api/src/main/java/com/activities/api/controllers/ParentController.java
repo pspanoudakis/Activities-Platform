@@ -1,5 +1,6 @@
 package com.activities.api.controllers;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.PlannedActivity;
@@ -44,6 +46,14 @@ public class ParentController {
     @Autowired private ActivityService activityService;
     @Autowired private ReservationService reservationService;
     @Autowired private BankCardService bankCardService;
+
+    @GetMapping("/{parent_id}/recently_booked")
+    public ResponseEntity<List<ActivityCompact>> getMyTest(@PathVariable int parent_id){
+        
+        return ResponseEntity.ok().body(activityService.getRecentlyBooked(parent_id, 5).stream().map(
+            act -> new ActivityCompact(act, activityService, LocalDate.now())).collect(Collectors.toList())
+        );
+    }
 
     @GetMapping("/{parent_id}/cards")
     public ResponseEntity<List<BankCard>> getBankCards(@PathVariable int parent_id){

@@ -5,6 +5,7 @@ import com.activities.api.entities.Activity;
 import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.Facility;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,6 +23,9 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     
     @Query("SELECT new com.activities.api.dto.ActivityPopularity(act, SUM(res.number)) FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act GROUP BY act.id ORDER BY SUM(res.number) DESC")
     public List<ActivityPopularity> getActivitiesSortedByReservations();
+
+    @Query("SELECT act FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act INNER JOIN res.parent par WHERE par.id = ?2 AND ?1 > aad.day  ORDER BY res.date ASC")
+    public List<Activity> getRecentlyBookedActivities(LocalDate today, int pid);
     
     
 }

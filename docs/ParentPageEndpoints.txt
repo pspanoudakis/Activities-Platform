@@ -37,14 +37,6 @@ ActivityCompactDTO{
     int price,
     LocalDate nextAvailableDate
 }
-π.χ.
-{
-    "name": "activity1",
-    "rating": 4,
-    "address": "Κυψέλης 18, 123 45"
-    "price": 120,
-    "nextAvailableDate": "2022-01-20"
-}
 
 + {GET(/search/activities/popular)
     Περιγραφή:
@@ -60,7 +52,7 @@ ActivityCompactDTO{
     }
 }
 
-+ {GET(/parent/{parent_id}/activities/upcoming)
++ {GET(/parent/{parent_id}//upcoming)
     Περιγραφή:
     Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
     ResponseBody{
@@ -74,17 +66,18 @@ ActivityCompactDTO{
     }
 }
 
-- GET(/parent/{parent_id}/activities/booked/)
-Περιγραφή:
-Επιστροφή 5 κρατήσεων, του parent με parent.id = parent_id, σε δραστηριοτήτες που έχουν ολοκληρωθεί.
-ResponseBody{
-    [
-        <ActivityCompactDTO>
-        .
-        .
-        .,
-        <ActivityCompactDTO>
-    ]
++ {GET(/parent/{parent_id}//recently_booked/)
+    Περιγραφή:
+    Επιστροφή 5 κρατήσεων, του parent με parent.id = parent_id, σε δραστηριοτήτες που έχουν ολοκληρωθεί.
+    ResponseBody{
+        [
+            <ActivityCompactDTO>
+            .
+            .
+            .,
+            <ActivityCompactDTO>
+        ]
+    }
 }
 
 + {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10)

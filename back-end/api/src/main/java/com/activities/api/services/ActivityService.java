@@ -2,6 +2,7 @@ package com.activities.api.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.activities.api.dto.ActivityPopularity;
 import com.activities.api.entities.Activity;
@@ -62,6 +63,12 @@ public class ActivityService {
 
     public List<ActivityAtDay> getDaysOfActivity(Activity activity){
         return activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, LocalDate.now());
+    }
+
+    public List<Activity> getRecentlyBooked(int parent_id, int limit){
+        return activityRepository.getRecentlyBookedActivities(
+            /*LocalDate.now().minusDays(1)*/ LocalDate.parse("2022-08-30"), parent_id)
+        .stream().limit(limit).collect(Collectors.toList());
     }
 
     public LocalDate getEarliestDate(Activity activity, LocalDate start_date){
