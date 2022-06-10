@@ -1,0 +1,331 @@
+Για http αίτημα σε /parent/* χρειάζεται token χρήστη με authority "PARENT_ROLE", εκτός του /parent/signup
+Για /search/* δεν θέλει token
+Σε περίπτωση λάθους επιστρέφεται κωδικός BadRequest (400) και στο Header πεδίο 'error' με τιμή string που περιγράφει το λάθος.
+
++ {POST(/parent/signup)
+    Περιγραφή:
+    Εγγραφή χρήστη. Επιστροφή στοιχείων καινούργιου χρήστη και JWT
+    RequestBody{
+        "username": "user123",
+        "email": "test@mail.com",
+        "password": "12345"
+    }
+    ResponseHeaders.authorization = JWT
+    ResponseBody{
+        <parent_data>
+    }
+}
+
++ {GET(/search/subcategories/{parent_category_id})
+    Περιγραφή:
+    Λίστα με τις υποκατηγορίες μίας γονικής κατηγορίας με category.id = parent_category_id. Για τις αρχικές κατηγορίες (που δεν έχουν κάποια γονική), parent_category_id = 0
+    ResponseBody{
+        [
+            <category_data>,
+            .
+            .
+            .,
+            <category_data>
+        ]
+    }
+}
+
+ActivityCompactDTO{
+    String name,
+    int rating,
+    String address,
+    int price,
+    LocalDate nextAvailableDate
+}
+
++ {GET(/search/activities/popular)
+    Περιγραφή:
+    Επιστροφή των 5 δραστηριοτήτων με τις περισσότερες κρατήσεις
+    ResponseBody{
+        [
+            {<ActivityCompactDTO>, reservations}
+            .
+            .
+            .,
+            {<ActivityCompactDTO>, reservations}
+        ]
+    }
+}
+
++ {GET(/parent/{parent_id}//upcoming)
+    Περιγραφή:
+    Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
+    ResponseBody{
+        [
+            <ActivityCompactDTO>
+            .
+            .
+            .,
+            <ActivityCompactDTO>
+        ]
+    }
+}
+
++ {GET(/parent/{parent_id}//recently_booked/)
+    Περιγραφή:
+    Επιστροφή 5 κρατήσεων, του parent με parent.id = parent_id, σε δραστηριοτήτες που έχουν ολοκληρωθεί.
+    ResponseBody{
+        [
+            <ActivityCompactDTO>
+            .
+            .
+            .,
+            <ActivityCompactDTO>
+        ]
+    }
+}
+
++ {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10)
+    Περιγραφή:
+    Προβολή της 1ης σελίδας μεγέθους 10 συνοπτικών πληροφοριών για τις οποίες ισχύουν συνδιαστικά τα φίλτρα:
+    Ηληκιακή Κατηγορία: Προσχολική (1 - age_category.id)
+    Περιοχή τιμής: 100 - 200
+    Ημερολογιακή περιοχή: 2022-01-01 έως 2022-02-01
+    Βαθμολογία: >3 αστέρια
+    Περιοχή: Athens
+    Μέγιστη απόσταση: 20 km.
+    RequestBody(απαραίτητο μόνο αν έχει δοθεί max_distance){
+        "longitude": 12.0
+        "latitude": 10.0
+    }
+    ResponseBody{
+        [
+            <ActivityCompactDTO>
+            .
+            .
+            .,
+            <ActivityCompactDTO>,
+            "totalPages": 3
+        ]
+    }
+}
+
+ActivityExtendedDTO{
+    String name,
+    String image_url,
+    List<activity_at_day> days,
+    int cost,
+    String seller_name,
+    String address,
+    double longitude,
+    double latitude,
+    String description,
+    #LocalDate start_date,
+    #LocalDate end_date,
+    #List<Pair<String,String>> datetimesPerWeek
+}
+
++ {GET(/search/activities/{activity_id})
+    Περιγραφή:
+    Εκτεταμένη περιγραφή δραστηριότητας με activity.id = activity_id
+    ResponseBody{
+        <ActivityExtendedDTO>
+    }
+}
+
++ {POST("/parent/{parent_id}/evaluate/{activity_id})
+    Περιγραφή: Υποβολή αξιολόγισης από parent με parent.id = parent_id για δραστηριότητα με activity.id = activity_id
+    RequestBody{
+        "rating": 3,
+        "comment": "test comment"
+    } 
+    ResponseBody{
+        <evalutaion_data>
+    }
+}
+
+parentProfileDTO{
+    int id;
+    Double longitude;
+    Double latitude;
+    String address;
+
+    String email;
+    String image;
+    String name;
+    String surname;
+
+    int balance;
+}
+
++ {GET(/parent/{perent_id}/profile)
+    Περιγραφή:
+    Πληροφορίες προφίλ parent με parent.id = parent_id
+    ResponseBody{
+        <parentProfileDTO>
+    }
+}
+
++ {POST(/parent/edit_profile)
+    Περγιγραφή: αποθήκευση αλλαγών στο προφίλ ενός parent με parent.id = parent_id
+    RequestBody{
+        <parentProfileDTO>
+    }
+    ResponseBody{
+        <parentProfileDTO>
+    }
+}
+
++ {DELETE(/parent/{parent_id})
+    Περιγραφή:
+    Διαγραφή parent με parent.id = parent_id
+    ResponseBody{
+        <parent_data>
+    }
+}
+
++ {POST(/parent/login)
+    RequestBody{
+        "username": "parent1",
+        "password": "parent1"
+    }
+    ResponseHeaders{
+        "authorization": JWT
+    }
+    ResponseBody{
+        <paren_data>
+    }
+}
+
+- GET(/parent/{parent_id}/my_activities)
+Περιγραφή:
+Συνοπτική περιγραφή δραστηριοτήτων που έχει κάνει κράτηση ο parent με parent.id = parent_id, και δεν έχουν γίνει ακόμη
+ResponseBody{
+[
+    {
+        <ActivityCompactDTO>,
+        <reservation_data>
+    }
+    .
+    .
+    .,
+    {
+        <ActivityCompactDTO>,
+        <reservation_data>
+    }
+]
+}
+
+
++ {GET(/parent/{parent_id}/cards)
+    Περιγραφή:
+    Πληροφορίες καρτών του parent με parent.id = parent_id
+    ResponseBody{
+    [
+        <bank_card_data>,
+        .
+        .
+        .,
+        <bank_card_data>
+    ]
+    }
+}
+
++ {DELETE(/parent/{parent_id}/card/{card_id})
+    Περιγραφή:
+    Διαγραφή κάρτας με bank_card.id = card_id
+    ResponseBody{
+        <bank_card_data>
+    }
+}
+
++ {POST(/parent/{parent_id}/add_points/{points})
+    Περιγραφή:
+    Αυξάνει τον λογαριασμό του parent με parent.id = parent_id κατά points.
+}
+
+
++ {POST(/parent/{parent_id}/add_card)
+    Περιγραφή:
+    Προσθήκη κάρτας (ή ενημέρωση αν το "bank_card.id" δίνεται και υπάρχει ήδη) για τον χρήστη parent με parent.id = parent_id
+    RequestBody{
+        <bank_card_data>
+    }
+    ResponseBody{
+        <bank_card_data>
+    }
+}
+
+ReservationDTO{
+    String activityName,
+    LocalDate reservationDate,
+    LocalDate activityDate,
+    String sellerName,
+    int rating,
+    int cost
+}
+
+ReservationDTO{
+    String name;
+    LocalDate reservationDate;
+    LocalDate activityDate;
+    String activityTime;
+    String sellerName;
+    int rating;
+    int cost;
+}
+
++ {GET(/parent/{parent_id}/history)
+    Περιγραφή:
+    Σελίδα με κρατήσεις που έκανε ο parent με parent.id = parent_id.
+    RequestBody{
+        "pageNumber": 1,
+        "pageSize": 10
+    }
+    ResponseBody{
+    "page" :[
+        <ReservationDTO>,
+        .
+        .
+        .,
+        <ReservationDTO>
+    ],
+    "totalPages": 10
+    }
+}
+
++{POST(parent/{parent_id}/reservation)
+    Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα. Επιστρέφεται η λίστα του RequestBody
+    RequestBody{
+        days: 
+        [
+            {
+                "aad_id": 1,
+                "number": 1
+            },
+            .
+            .
+            .
+        ]
+    }
+}
+
+
++{GET(/search/acitvity/activit_id/same_place)
+    Λίστα με τις δραστηριότητες που γίνονται στο ίδιο facility με την δραστηριότητα με activit.id = activit_id (προηγουμένως ενσωματομένο στο /search/activity/activity_id)
+    ResponseBody{
+    [
+        <ActivityCompactDTO>,
+        .
+        .
+        .
+    ]
+    }
+}
+
++{GET(/search/acitvity/activit_id/same_seller)
+    Λίστα με τις δραστηριότητες που γίνονται από τον ίδιο seller με την δραστηριότητα με activit.id = activit_id
+    ResponseBody{
+    [
+        <ActivityCompactDTO>,
+        .
+        .
+        .
+    ]
+    }
+}
