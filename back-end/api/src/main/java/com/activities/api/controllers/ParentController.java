@@ -219,7 +219,7 @@ public class ParentController {
     }
 
     @GetMapping("/{parent_id}/upcoming")
-    public ResponseEntity<List<PlannedActivity>> getUpcoming(@PathVariable int parent_id){
+    public ResponseEntity<PagingResponse<List<PlannedActivity>>> getUpcoming(@PathVariable int parent_id, @RequestBody PageRequest req){
         Parent parent = parentService.getParent(parent_id);
         if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
 
@@ -230,9 +230,11 @@ public class ParentController {
             }
         ).collect(Collectors.toList());
         Collections.sort(activities);
-        activities = activities.stream().limit(5).collect(Collectors.toList());
 
-        return ResponseEntity.ok().body(activities);
+        int total_pages = (int) Math.ceil((double) activities.size() / (double) req.getPageSize());
+        return ResponseEntity.ok().body(
+            new PagingResponse<List<PlannedActivity>>(activities, total_pages, req.getPageNumber())
+        );
     }
 
     @GetMapping("/{parent_id}/history")

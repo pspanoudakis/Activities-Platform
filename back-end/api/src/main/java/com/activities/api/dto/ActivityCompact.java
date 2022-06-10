@@ -18,7 +18,7 @@ public class ActivityCompact {
     private int rating;
     private String address;
     private int price;
-    private LocalDate nextAvailableDate;
+    private LocalDate date;
     @JsonIgnore
     private Coordinates coordinates;
 
@@ -29,7 +29,7 @@ public class ActivityCompact {
         this.address = activity.getFacility().getAddress();
         this.coordinates = new Coordinates(activity.getFacility().getLongitude(), activity.getFacility().getLatitude());
         this.rating = activityService.getActivityRating(activity);
-        this.nextAvailableDate = activityService.getEarliestDate(activity, start_date);
+        this.date = activityService.getEarliestDate(activity, start_date);
     }
 
 }

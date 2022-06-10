@@ -53,7 +53,19 @@ ActivityCompactDTO{
     }
 }
 
-# {GET(/parent/{parent_id}//upcoming)
+plannedActivity{
+    int id;
+    String name;
+    String ageCategory;
+    String category;
+    String facility;
+    String address;
+    String description;
+    LocalDate day;
+    String time;
+}
+
++ {GET(/parent/{parent_id}//upcoming)
     Περιγραφή:
     Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
     {
@@ -62,11 +74,11 @@ ActivityCompactDTO{
     }
     ResponseBody{
         "page": [
-            <ActivityCompactDTO>
+            <plannedActivity>
             .
             .
             .,
-            <ActivityCompactDTO>
+            <plannedActivity>
         ]
         "totalPages": 10,
         "currentPage": 1
@@ -235,15 +247,6 @@ parentProfileDTO{
     ResponseBody{
         <bank_card_data>
     }
-}
-
-ReservationDTO{
-    String activityName,
-    LocalDate reservationDate,
-    LocalDate activityDate,
-    String sellerName,
-    int rating,
-    int cost
 }
 
 ReservationDTO{
