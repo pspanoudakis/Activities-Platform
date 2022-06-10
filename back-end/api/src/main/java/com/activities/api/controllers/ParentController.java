@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,15 @@ public class ParentController {
     @Autowired private ReservationService reservationService;
     @Autowired private BankCardService bankCardService;
     @Autowired private EvaluationService evaluationService;
+
+    @DeleteMapping("/{parent_id}")
+    public ResponseEntity<Parent> deleteParent(@PathVariable int parent_id){
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
+        parentService.deleteParent(parent);
+        return ResponseEntity.ok().body(parent);
+    }
 
     @PostMapping("/edit_profile")
     public ResponseEntity<ParentProfileDTO> editProfile(@RequestBody ParentProfileDTO profile){

@@ -27,6 +27,14 @@ public class ParentService {
     @Autowired private UserRepository  userRepository;
 
     @Transactional
+    public void deleteParent(Parent parent){
+        
+        parentRepository.delete(parent);
+        userRepository.delete(parent.getUser());
+
+    }
+
+    @Transactional
     public Parent saveParentWithUser(Parent parent, User user){
 
         parent.setUser(userRepository.save(user));

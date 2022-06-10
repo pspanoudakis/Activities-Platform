@@ -35,7 +35,7 @@ public class User implements UserDetails{
     private boolean isActive = true;
     private int balance = 0;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Authority> authorities = new ArrayList<>();
 
     public void addRole(Authority authority){ this.authorities.add(authority); }

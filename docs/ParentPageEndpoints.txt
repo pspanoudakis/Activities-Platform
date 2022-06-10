@@ -171,11 +171,12 @@ parentProfileDTO{
     }
 }
 
-- DELETE(/parent/{parent_id})
-Περιγραφή:
-Διαγραφή parent με parent.id = parent_id
-ResponseBody{
-    <parent_data>
++ {DELETE(/parent/{parent_id})
+    Περιγραφή:
+    Διαγραφή parent με parent.id = parent_id
+    ResponseBody{
+        <parent_data>
+    }
 }
 
 - GET(/parent/{parent_id}/my_activities)
