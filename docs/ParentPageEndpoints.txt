@@ -179,6 +179,18 @@ parentProfileDTO{
     }
 }
 
+- POST(/parent/login)
+RequestBody{
+    "username": "parent1",
+    "password": "parent1"
+}
+ResponseHeaders{
+    "authorization": JWT
+}
+ResponseBody{
+    <paren_data>
+}
+
 - GET(/parent/{parent_id}/my_activities)
 Περιγραφή:
 Συνοπτική περιγραφή δραστηριοτήτων που έχει κάνει κράτηση ο parent με parent.id = parent_id, και δεν έχουν γίνει ακόμη
