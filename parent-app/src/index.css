@@ -1,13 +1,72 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+html, body, #root {
+  font-family: 'open-sans', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  min-height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+html, body, #root {
+  font-family: 'open-sans', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  width: 100%;
+  min-height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media screen and (max-width: 1024px) {
+  html {
+    font-size: smaller;
+  }
+}
+button {
+  @apply duration-200
+}
+
+#root {
+  @apply bg-xlight-cyan
+}
+
+.result-table-row:last-child > td:first-child {
+  @apply rounded-bl-3xl
+}
+
+.result-table-row:last-child > td:last-child {
+  @apply rounded-br-3xl
+}
+
+.result-table-row:nth-child(odd) {
+  @apply bg-gray-200
+}
+
+.result-table-row:nth-child(even) {
+  @apply bg-white
+}
+
+.result-table-row > * div {
+  @apply
+    w-full
+    flex
+    justify-center
+    p-2
+}
+
+.pagination-options > * button {
+  @apply
+    py-1 px-3
+    rounded-lg
 }
