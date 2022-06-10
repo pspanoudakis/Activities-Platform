@@ -65,6 +65,16 @@ public class ParentController {
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private JwtUtil jwtUtil;
 
+    @PostMapping("/{parent_id}/add_card")
+    public ResponseEntity<BankCard> addCard(@PathVariable int parent_id, @RequestBody BankCard card){
+
+        Parent parent = parentService.getParent(parent_id);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+
+        card.setParent(parent);
+        return ResponseEntity.ok().body(bankCardService.saveOrUpdateCard(card));
+    }
+
     @PostMapping("/{parent_id}/add_points/{points}")
     public ResponseEntity<String> addPoints(@PathVariable int parent_id, @PathVariable int points){
 

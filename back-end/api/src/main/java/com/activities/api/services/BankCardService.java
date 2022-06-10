@@ -14,6 +14,10 @@ import com.activities.api.repositories.BankCardRepository;
 public class BankCardService {
     @Autowired private BankCardRepository bankCardRepository;
 
+    public BankCard saveOrUpdateCard(BankCard card){
+        return bankCardRepository.save(card);
+    }
+
     public List<BankCard> getBankCards(){
         return bankCardRepository.findAll();
     }

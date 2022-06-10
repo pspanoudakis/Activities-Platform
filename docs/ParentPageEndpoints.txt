@@ -239,14 +239,16 @@ ResponseBody{
     Αυξάνει τον λογαριασμό του parent με parent.id = parent_id κατά points.
 }
 
-- POST(/parent/{parent_id}/add_card)
-Περιγραφή:
-Προσθήκη κάρτας (ή ενημέρωση αν το "bank_card.id" δίνεται και υπάρχει ήδη) για τον χρήστη parent με parent.id = parent_id
-RequestBody{
-    <bank_card_data>
-}
-ResponseBody{
-    <bank_card_data>
+
++ {POST(/parent/{parent_id}/add_card)
+    Περιγραφή:
+    Προσθήκη κάρτας (ή ενημέρωση αν το "bank_card.id" δίνεται και υπάρχει ήδη) για τον χρήστη parent με parent.id = parent_id
+    RequestBody{
+        <bank_card_data>
+    }
+    ResponseBody{
+        <bank_card_data>
+    }
 }
 
 ReservationDTO{
