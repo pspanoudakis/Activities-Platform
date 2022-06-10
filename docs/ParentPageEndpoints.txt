@@ -161,13 +161,14 @@ parentProfileDTO{
     }
 }
 
-- POST(/parent/edit_profile)
-Περγιγραφή: αποθήκευση αλλαγών στο προφίλ ενός parent με parent.id = parent_id
-RequestBody{
-    <parentProfileDTO>
-}
-ResponseBody{
-    <parentProfileDTO>
++ {POST(/parent/edit_profile)
+    Περγιγραφή: αποθήκευση αλλαγών στο προφίλ ενός parent με parent.id = parent_id
+    RequestBody{
+        <parentProfileDTO>
+    }
+    ResponseBody{
+        <parentProfileDTO>
+    }
 }
 
 - DELETE(/parent/{parent_id})
