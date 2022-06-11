@@ -172,14 +172,17 @@ public class ParentController {
 
     @GetMapping("/profile")
     public ResponseEntity<ParentProfileDTO> getProfile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
-        String username = jwtUtil.getUsernameFromToken(token.split(" ")[1]);
-        User user = userService.getUserByUN(username);
-        if(user == null)return ResponseEntity.badRequest().header("error", "user " + username + " does not exist").body(null);
-
-        Parent parent = parentService.getByUser(user);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "user " + username + " is not a parent").body(null);
-
-        return ResponseEntity.ok().body(new ParentProfileDTO(parent));
+        try {
+            return ResponseEntity.ok().body(
+            new ParentProfileDTO(
+                getParentFromToken(token)
+            )
+        );
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
     }
 
     @PostMapping("/evaluate/{activity_id}")
@@ -189,12 +192,14 @@ public class ParentController {
         if(rating < 1 || rating > 5)
             return ResponseEntity.badRequest().header("error", "given rating: " + rating + " (must be between 1 and 5)" ).body(null);
         
-        String username = jwtUtil.getUsernameFromToken(token.split(" ")[1]);
-        User user = userService.getUserByUN(username);
-        if(user == null)return ResponseEntity.badRequest().header("error", "user " + username + " does not exist").body(null);
-
-        Parent parent = parentService.getByUser(user);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with username = " + username).body(null);
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
 
         Activity activity = activityService.getActivity(activity_id);
         if(activity == null)return ResponseEntity.badRequest().header("error", "no activity with activity.id = " + activity_id).body(null);
@@ -254,12 +259,18 @@ public class ParentController {
         );
     }
 
-    @GetMapping("/{parent_id}/history")
-    public ResponseEntity<PagingResponse<List<ReservationDTO>>> getHistory(@PathVariable int parent_id, @RequestBody PageRequest req){
+    @GetMapping("/history")
+    public ResponseEntity<PagingResponse<List<ReservationDTO>>> getHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody PageRequest req){
         
         //get reservations of parent
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null) return ResponseEntity.badRequest().header("error", "parent (parent.id=" + parent_id +") does not exist").body(null);
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
         
         List<Reservation> reservations = reservationService.getReservationsByParent(parent);
         if(reservations == null) return ResponseEntity.ok().body(null);
@@ -316,4 +327,13 @@ public class ParentController {
     }
 
 
+    Parent getParentFromToken(String token) throws BadCredentialsException{
+        String username = jwtUtil.getUsernameFromToken(token.split(" ")[1]);
+        User user = userService.getUserByUN(username);
+        if(user == null)throw new BadCredentialsException("user " + username + " does not exist");
+
+        Parent parent = parentService.getByUser(user);
+        if(parent == null)throw new BadCredentialsException("user " + username + " is not a parent)");
+        return parent;
+    }
 }
