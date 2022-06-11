@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -119,16 +120,23 @@ public class ParentController {
 
             User user = (User) authenticate.getPrincipal();
             Parent parent = parentService.getByUser(user);
+
+            Authority parent_role = authorityService.getAuthority("ROLE_PARENT");
+            if(!user.getAuthorities().contains(parent_role))
+                throw new BadCredentialsException("user is not a parent");
+
+            String token = jwtUtil.generateToken(user);
+            
             user.setPassword(null);
             if(parent != null)parent.setUser(user);
             return ResponseEntity.ok()
                 .header(
                     HttpHeaders.AUTHORIZATION,
-                    jwtUtil.generateToken(user)
+                    token
                 )
                 .body(parent);
         } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error", ex.getMessage()).build();
         }
     }
 
@@ -162,27 +170,36 @@ public class ParentController {
         return ResponseEntity.ok().body(new ParentProfileDTO(parentService.saveParentWithUser(parent, user)));
     }
 
-    @GetMapping("/{parent_id}/profile")
-    public ResponseEntity<ParentProfileDTO> getProfile(@PathVariable int parent_id){
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+    @GetMapping("/profile")
+    public ResponseEntity<ParentProfileDTO> getProfile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        String username = jwtUtil.getUsernameFromToken(token.split(" ")[1]);
+        User user = userService.getUserByUN(username);
+        if(user == null)return ResponseEntity.badRequest().header("error", "user " + username + " does not exist").body(null);
+
+        Parent parent = parentService.getByUser(user);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "user " + username + " is not a parent").body(null);
 
         return ResponseEntity.ok().body(new ParentProfileDTO(parent));
     }
 
-    @PostMapping("/{parent_id}/evaluate/{activity_id}")
-    public ResponseEntity<String> makeEvaluation(@PathVariable int parent_id, @PathVariable int activity_id, @RequestBody EvaluationRequest req){
+    @PostMapping("/evaluate/{activity_id}")
+    public ResponseEntity<String> makeEvaluation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable int activity_id, @RequestBody EvaluationRequest req){
 
         int rating = req.getRating();
         if(rating < 1 || rating > 5)
             return ResponseEntity.badRequest().header("error", "given rating: " + rating + " (must be between 1 and 5)" ).body(null);
         
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+        String username = jwtUtil.getUsernameFromToken(token.split(" ")[1]);
+        User user = userService.getUserByUN(username);
+        if(user == null)return ResponseEntity.badRequest().header("error", "user " + username + " does not exist").body(null);
+
+        Parent parent = parentService.getByUser(user);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with username = " + username).body(null);
 
         Activity activity = activityService.getActivity(activity_id);
         if(activity == null)return ResponseEntity.badRequest().header("error", "no activity with activity.id = " + activity_id).body(null);
 
+        int parent_id = parent.getId();
         List<Long> parentReservedActivityIds = reservationService.getParentReservedActivityIds(parent_id);
         if(!parentReservedActivityIds.contains((long) activity_id))
             return ResponseEntity.badRequest().header("error", "parent (parent.id = " + parent_id + ") has not made reservation to activity (activity.id = " + activity_id + ")").body(null);
@@ -297,4 +314,6 @@ public class ParentController {
 
         return ResponseEntity.ok().body(parent);
     }
+
+
 }
