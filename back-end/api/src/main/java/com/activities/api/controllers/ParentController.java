@@ -292,10 +292,10 @@ public class ParentController {
 
     }
 
-    @PostMapping("/{parent_id}/reservation")
-    public ResponseEntity<List<ReservationRequest>> makeReservation(@PathVariable int parent_id, @RequestBody List<ReservationRequest> reservations){
+    @PostMapping("/reservation")
+    public ResponseEntity<List<ReservationRequest>> makeReservation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody List<ReservationRequest> reservations){
         try {
-            parentService.makeReservations(reservations, parent_id);
+            parentService.makeReservations(reservations, getParentFromToken(token).getId());
         } catch (Exception e) {
             return ResponseEntity.badRequest().header("error", e.getMessage()).body(reservations);
         }
