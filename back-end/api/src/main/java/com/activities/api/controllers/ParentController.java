@@ -140,10 +140,16 @@ public class ParentController {
         }
     }
 
-    @DeleteMapping("/{parent_id}")
-    public ResponseEntity<Parent> deleteParent(@PathVariable int parent_id){
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+    @DeleteMapping("")
+    public ResponseEntity<Parent> deleteParent(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
 
         parentService.deleteParent(parent);
         return ResponseEntity.ok().body(parent);
