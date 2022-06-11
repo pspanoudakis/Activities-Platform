@@ -278,6 +278,9 @@ public class ParentController {
     public ResponseEntity<Parent> createNewParent(@RequestBody UserCreationRequest req){
         Authority authority = authorityService.getAuthority("ROLE_PARENT");
 
+        if(userService.getUserByUN(req.getUsername()) != null)
+            return ResponseEntity.badRequest().header("error", "username already exists").body(null);
+
         User user = new User();
         user.setUsername(req.getUsername());
         user.setPassword(encoder.getPasswordEncoder().encode(req.getPassword()));
