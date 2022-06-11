@@ -240,10 +240,16 @@ public class ParentController {
         );     
     }
 
-    @GetMapping("/{parent_id}/upcoming")
-    public ResponseEntity<PagingResponse<List<PlannedActivity>>> getUpcoming(@PathVariable int parent_id, @RequestBody PageRequest req){
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+    @GetMapping("/upcoming")
+    public ResponseEntity<PagingResponse<List<PlannedActivity>>> getUpcoming(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody PageRequest req){
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
 
         List<PlannedActivity> activities = reservationService.getReservationsByParent(parent).stream().map(
             res ->{
