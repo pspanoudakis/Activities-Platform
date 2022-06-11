@@ -229,15 +229,19 @@ public class ParentController {
         );
     }
 
-    @GetMapping("/{parent_id}/cards")
-    public ResponseEntity<List<BankCard>> getBankCards(@PathVariable int parent_id){
-        
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
-
+    @GetMapping("/cards")
+    public ResponseEntity<List<BankCard>> getBankCards(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        try {
         return ResponseEntity.ok().body(
-            bankCardService.getByParent(parent)
-        );     
+            bankCardService.getByParent(
+                getParentFromToken(token)
+            )
+        ); 
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }   
     }
 
     @GetMapping("/upcoming")
