@@ -150,10 +150,17 @@ public class ParentController {
     }
 
     @PostMapping("/edit_profile")
-    public ResponseEntity<ParentProfileDTO> editProfile(@RequestBody ParentProfileDTO profile){
-    
-        Parent parent = parentService.getParent(profile.getId());
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + profile.getId()).body(null);
+    public ResponseEntity<ParentProfileDTO> editProfile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody ParentProfileDTO profile){
+        
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+            if(parent.getId() != profile.getId())throw new Exception("profile id (" + profile.getId() + ") does not match parent id (" + parent.getId() + ") described in jwt");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
 
         User user = parent.getUser();
         if(user.getBalance() != profile.getBalance())return ResponseEntity.badRequest().header("error", "you cannot change balance from here").body(null);
