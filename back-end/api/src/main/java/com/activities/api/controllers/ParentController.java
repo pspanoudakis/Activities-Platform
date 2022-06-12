@@ -66,11 +66,17 @@ public class ParentController {
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private JwtUtil jwtUtil;
 
-    @PostMapping("/{parent_id}/add_card")
-    public ResponseEntity<BankCard> addCard(@PathVariable int parent_id, @RequestBody BankCard card){
+    @PostMapping("/add_card")
+    public ResponseEntity<BankCard> addCard(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody BankCard card){
 
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
 
         card.setParent(parent);
         return ResponseEntity.ok().body(bankCardService.saveOrUpdateCard(card));
