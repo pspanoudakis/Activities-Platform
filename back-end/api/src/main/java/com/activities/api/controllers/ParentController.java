@@ -82,11 +82,17 @@ public class ParentController {
         return ResponseEntity.ok().body(bankCardService.saveOrUpdateCard(card));
     }
 
-    @PostMapping("/{parent_id}/add_points/{points}")
-    public ResponseEntity<String> addPoints(@PathVariable int parent_id, @PathVariable int points){
+    @PostMapping("/add_points/{points}")
+    public ResponseEntity<String> addPoints(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable int points){
 
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
 
         User user = parent.getUser();
         int total = user.getBalance();
