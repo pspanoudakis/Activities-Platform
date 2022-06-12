@@ -105,11 +105,18 @@ public class ParentController {
         return ResponseEntity.ok().body("ok");
     }
 
-    @DeleteMapping("/{parent_id}/card/{card_id}")
-    public ResponseEntity<BankCard> deleteCard(@PathVariable int parent_id, @PathVariable int card_id){
+    @DeleteMapping("/card/{card_id}")
+    public ResponseEntity<BankCard> deleteCard(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable int card_id){
 
-        Parent parent = parentService.getParent(parent_id);
-        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with parent.id = " + parent_id).body(null);
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
+        int parent_id = parent.getId();
 
         BankCard card = bankCardService.getCard(card_id);
         if(card == null)return ResponseEntity.badRequest().header("error", "no card with card.id = " + card_id).body(null);
