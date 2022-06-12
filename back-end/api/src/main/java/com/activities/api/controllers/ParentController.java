@@ -371,13 +371,13 @@ public class ParentController {
         Parent parent = new Parent();
         parent.setUser(user);
         parentService.saveOrUpdateParent(parent);
+        String token = jwtUtil.generateToken(user);
 
         user.setPassword(null);
         parent.setUser(user);
-
-        return ResponseEntity.ok().body(parent);
+        
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).body(parent);
     }
-
 
     Parent getParentFromToken(String token) throws BadCredentialsException{
         String username = jwtUtil.getUsernameFromToken(token.split(" ")[1]);
