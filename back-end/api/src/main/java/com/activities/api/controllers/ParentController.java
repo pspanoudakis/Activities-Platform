@@ -253,8 +253,18 @@ public class ParentController {
         return ResponseEntity.ok().body("evaluation saved");
     }
 
-    @GetMapping("/{parent_id}/recently_booked")
-    public ResponseEntity<List<ActivityCompact>> getMyTest(@PathVariable int parent_id){
+    @GetMapping("/recently_booked")
+    public ResponseEntity<List<ActivityCompact>> getMyTest(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+
+        Parent parent;
+        try {
+            parent = getParentFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                "error", e.getMessage()
+            ).body(null);
+        }
+        int parent_id = parent.getId();
         
         return ResponseEntity.ok().body(activityService.getRecentlyBooked(parent_id, 5).stream().map(
             act -> new ActivityCompact(act, activityService, LocalDate.now())).collect(Collectors.toList())
