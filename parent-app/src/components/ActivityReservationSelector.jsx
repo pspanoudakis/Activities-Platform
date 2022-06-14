@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from 'react-date-picker';
-import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../dates";
+import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../utils/dates";
 import { ActionButton } from "../shared/ActionButton";
 import { Checklist } from "../shared/Checklist";
 

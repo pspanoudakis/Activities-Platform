@@ -6,7 +6,7 @@ import { faArrowRightFromBracket, faBars, faCreditCard, faPersonSwimming, faSear
 import { AppContext } from "../AppContext";
 import { NavbarUserOption } from "./NavbarUserOption";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
-import { MD_PXLIMIT } from "../deviceConstants";
+import { MD_PXLIMIT } from "../utils/deviceConstants";
 
 function NavbarButton({
     title,

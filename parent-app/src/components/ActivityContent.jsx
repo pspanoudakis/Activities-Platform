@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 
 import { AppContext } from '../AppContext'
-import { fetchActivity, fetchBookReservations } from '../api'
-import { dateText, dateTimeText, DAY_NAMES } from "../dates";
+import { fetchActivity, fetchBookReservations } from '../api/fetchAPI'
+import { dateText, dateTimeText, DAY_NAMES } from "../utils/dates";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
 import { ActivityRatingIndicator } from "./ActivityRatingIndicator";
@@ -142,7 +142,7 @@ export function ActivityContent({
         if (loading) {
             fetchActivity(activityId, (response) => {
                 if (response.ok) {
-                    setActivityInfo(response.activity)
+                    setActivityInfo(response.data)
                 }
                 setLoading(false)
             })
@@ -163,14 +163,14 @@ export function ActivityContent({
     function bookReservations() {
         console.log(reservations)
 
-        fetchBookReservations(reservations, context.state.userInfo.userName, ({ok}) => {
+        fetchBookReservations(reservations, context.state.userInfo.userName, (response) => {
             context.setState({
                 ...context.state,
                 showModal: true,
                 modalContent: <ModalResultMessage
-                                    success={ok}
+                                    success={response.ok}
                                     onVerify={bookReservations}
-                                    text={ ok?
+                                    text={ response.ok?
                                         "Οι κρατήσεις σας καταχωρήθηκαν επιτυχώς."
                                         :
                                         "Υπήρξε κάποιο πρόβλημα με την καταχώρηση των κρατήσεών σας. Προσπαθήστε ξανά."
