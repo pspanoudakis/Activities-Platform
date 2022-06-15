@@ -96,15 +96,11 @@ export function loginWithCredentials(username, password, callback) {
 export function loginWithJwt(callback) {
     runWithDelay(() => {
         fetchWrapper({
-            endpoint: 'parent/login',
-            method: 'POST',    
-            // To be emptied when quickLogin endpoint is ready
-            body: { 
-                username: 'pavlos',
-                password: '12345'
-            },    
+            endpoint: 'parent/quick_login',
+            method: 'POST',
+            body: { },
             omitAuthHeader: false,
-            needAuth: true,
+            needAuth: false,
             callback: loginCallback(callback, false)
         })
     })
@@ -130,8 +126,6 @@ export function signUp(username, email, password, callback) {
 export function fetchRecommendedActivities(n, callback) {
     const results = [...Array(n).keys()].map((_, i) => {
 
-        (new Image()).src = `img${i}`
-
         return {
             imgSrc: `https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1000&h=-1&s=1`,
             name: `Activity${i}`,
@@ -145,8 +139,6 @@ export function fetchRecommendedActivities(n, callback) {
 
 export function fetchUpcomingActivities(n, callback) {
     const results = [...Array(n).keys()].map((_, i) => {
-
-        (new Image()).src = `img${i}`
 
         return {
             imgSrc: `http://fairplay5x5.gr/wp-content/uploads/2015/09/slide1.jpg`,

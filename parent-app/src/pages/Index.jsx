@@ -14,8 +14,6 @@ export function Index() {
 
     const activities =  [...Array(4).keys()].map((_, i) => {
 
-        (new Image()).src = `img${i}`
-
         return {
             imgSrc: `https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1000&h=-1&s=1`,
             name: `Ποδόσφαιρο 5x5 ${i}`,
