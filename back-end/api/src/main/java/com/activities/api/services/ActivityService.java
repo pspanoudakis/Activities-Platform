@@ -48,6 +48,10 @@ public class ActivityService {
         return calculateRating(evaluations);
     }
 
+    public long countActivities(){
+        return activityRepository.count();
+    }
+
     public List<ActivityPhoto> getActivityPhotos(Activity activity){
         return activityPhotoRepository.findByActivity(activity);
     }

@@ -27,5 +27,4 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     @Query("SELECT act FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act INNER JOIN res.parent par WHERE par.id = ?2 AND ?1 > aad.day  ORDER BY res.date ASC")
     public List<Activity> getRecentlyBookedActivities(LocalDate today, int pid);
     
-    
 }

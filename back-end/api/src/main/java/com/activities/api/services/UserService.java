@@ -30,6 +30,14 @@ public class UserService {
         return userRepo.findById(username).orElse(null);
     }
 
+    public int countSellers(){
+        return userRepo.countByAuthorities_Authority("ROLE_SELLER");
+    }
+
+    public int countParents(){
+        return userRepo.countByAuthorities_Authority("ROLE_PARENT");
+    }
+
     public User deleteUser(String username){
         User user = null;
         try {
