@@ -74,7 +74,7 @@ export function SignUpForm() {
     }
     
     return (
-        <div className="w-full flex flex-col gap-12 justify-center items-center px-6 py-3 relative">
+        <div className="w-full h-full flex flex-col gap-8 justify-center items-center px-6 py-3 relative">
             <SectionTitle>
                 Δημιουργία Λογαριασμού
             </SectionTitle>
@@ -83,61 +83,74 @@ export function SignUpForm() {
                 onSubmit={submitForm}
                 className="w-full flex flex-col gap-2 justify-center items-center py-3"
             >
-                <FormFieldWithHint
-                    labelText="Όνομα Χρήστη"
-                    labelFor="uname"
-                    type="text"
-                    value={username}
-                    setValue={setUsername}
-                    placeholder="Όνομα Χρήστη"
-                    skipHint={usernameOk}
-                    hintText={"Απαιτείται τουλάχιστον 1 χαρακτήρας."}
-                />
-                <FormFieldWithHint
-                    labelText="Email"
-                    labelFor="email"
-                    type="text"
-                    value={email}
-                    setValue={setEmail}
-                    placeholder="Email"
-                    skipHint={emailOk}
-                    hintText={"Απαιτείται μια έγκυρη διεύθυνση email."}
-                />
-                <FormFieldWithHint
-                    labelText="Κωδικός Πρόσβασης"
-                    labelFor="pwd"
-                    type="password"
-                    value={pwd}
-                    setValue={setPwd}
-                    placeholder="Κωδικός Πρόσβασης"
-                    skipHint={pwdOk}
-                    hintText={"Απαιτούνται τουλάχιστον 8 χαρακτήρες."}
-                />
-                <FormFieldWithHint
-                    labelText="Επιβεβαίωση Κωδικού"
-                    labelFor="pwd"
-                    type="password"
-                    value={verifyPwd}
-                    setValue={setVerifyPwd}
-                    placeholder="Επιβεβαίωση Κωδικού"
-                    skipHint={verifyPwdOk}
-                    hintText={"Οι κωδικοί πρόσβασης δεν ταιριάζουν."}
-                />
-                <button
-                    type="submit"
+                <div
                     className="
-                        rounded-xl
-                        px-3 py-1
-                        text-lg
-                        bg-navbar-cyan
-                        hover:bg-navbar-dark-cyan
-                        disabled:bg-dark-cyan
-                        disabled:text-gray-500
+                        grid
+                        md:grid-cols-2 md:grid-rows-3
+                        sm:grid-cols-1 sm:grid-rows-6
+                        gap-x-20 gap-y-5
+                        rounded-lg
                     "
-                    disabled={!canSubmitForm}
                 >
-                    Δημιουργία Λογαριασμού
-                </button>
+                    <FormFieldWithHint
+                        labelText="Όνομα Χρήστη"
+                        labelFor="uname"
+                        type="text"
+                        value={username}
+                        setValue={setUsername}
+                        placeholder="Όνομα Χρήστη"
+                        skipHint={usernameOk}
+                        hintText={"Απαιτείται τουλάχιστον 1 χαρακτήρας."}
+                    />
+                    <FormFieldWithHint
+                        labelText="Email"
+                        labelFor="email"
+                        type="text"
+                        value={email}
+                        setValue={setEmail}
+                        placeholder="Email"
+                        skipHint={emailOk}
+                        hintText={"Απαιτείται μια έγκυρη διεύθυνση email."}
+                    />
+                    <FormFieldWithHint
+                        labelText="Κωδικός Πρόσβασης"
+                        labelFor="pwd"
+                        type="password"
+                        value={pwd}
+                        setValue={setPwd}
+                        placeholder="Κωδικός Πρόσβασης"
+                        skipHint={pwdOk}
+                        hintText={"Απαιτούνται τουλάχιστον 8 χαρακτήρες."}
+                    />
+                    <FormFieldWithHint
+                        labelText="Επιβεβαίωση Κωδικού"
+                        labelFor="pwd"
+                        type="password"
+                        value={verifyPwd}
+                        setValue={setVerifyPwd}
+                        placeholder="Επιβεβαίωση Κωδικού"
+                        skipHint={verifyPwdOk}
+                        hintText={"Οι κωδικοί πρόσβασης δεν ταιριάζουν."}
+                    />
+                    <div className="flex justify-center md:col-span-2 sm:col-span-1">
+                        <button
+                            type="submit"
+                            className="
+                                h-max
+                                rounded-xl
+                                px-4 py-2
+                                text-lg
+                                bg-navbar-cyan
+                                hover:bg-navbar-dark-cyan
+                                disabled:bg-dark-cyan
+                                disabled:text-gray-500
+                            "
+                            disabled={!canSubmitForm}
+                        >
+                            Δημιουργία Λογαριασμού
+                        </button>
+                    </div>
+                </div>
             </form>
             {
                 loading ?

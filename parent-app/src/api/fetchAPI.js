@@ -117,7 +117,7 @@ export function signUp(username, email, password, callback) {
                 email,
                 password
             },
-            omitAuthHeader: false,
+            omitAuthHeader: true,
             needAuth: true,
             callback: loginCallback(callback, true)
         })

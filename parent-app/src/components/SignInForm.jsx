@@ -50,14 +50,19 @@ export function SignInForm() {
     }
     
     return (
-        <div className="w-full flex flex-col gap-12 justify-center items-center px-6 py-3 relative">
+        <div
+            className="w-max h-full flex flex-col gap-8 justify-center items-center px-6 py-3 relative"
+            style={{
+                minWidth: '20vw'
+            }}
+        >
             <SectionTitle>
                 Σύνδεση
             </SectionTitle>
             <form
                 method="POST"
                 onSubmit={submitForm}
-                className="w-full flex flex-col gap-2 justify-center items-center py-3"
+                className="w-max flex flex-col flex-wrap gap-2 justify-center items-center py-3"
             >
                 <div className="flex flex-col gap-1">
                     <FormInputField
@@ -67,24 +72,25 @@ export function SignInForm() {
                         type="text"
                         value={username}
                         setValue={setUsername}
-                        placeholder="Όνομα Χρήστη"
+                        placeholder=""
                     />
                 </div>
                 <div className="flex flex-col gap-1">
                     <FormInputField
                         labelFor="pwd"
-                        labelText="Κωδικός"
+                        labelText="Κωδικός Πρόσβασης"
                         classExtra="w-max"
                         type="password"
                         value={password}
                         setValue={setPassword}
-                        placeholder="Κωδικός"
+                        placeholder=""
                     />
                 </div>
                 <button
                     type="submit"
                     className="
                         rounded-xl
+                        mt-5
                         px-3 py-1
                         text-lg
                         bg-navbar-cyan
