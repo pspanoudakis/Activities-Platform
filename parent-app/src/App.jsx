@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { loginWithJwt } from './api/fetchAPI';
 import { jwtIsStored } from './api/jwt';
 import { LoadingIndicator } from './shared/LoadingIndicator';
+import { Footer } from './shared/Footer';
 
 function App() {
     const [pendingLogin, setPendingLogin] = useState(true)
@@ -85,7 +86,7 @@ function App() {
                         <Outlet/>
                     }
                     </div>
-                    {/* <Footer/> */}
+                    <Footer/>
                 </div>
             </div>
         </AppContext.Provider>

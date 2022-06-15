@@ -1,4 +1,4 @@
-import { faCalendar, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function ActivityDateIndicator({
