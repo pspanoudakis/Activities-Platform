@@ -127,6 +127,28 @@ public class ParentController {
         return ResponseEntity.ok().body(card);
     }
 
+    @PostMapping("/quick_login")
+    public ResponseEntity<?> quickLogin(@RequestHeader(HttpHeaders.AUTHORIZATION) String full_token){
+
+        try {
+            String token = full_token.split(" ")[1];
+            User user = userService.getUserByUN(jwtUtil.getUsernameFromToken(token));
+            Parent parent = parentService.getByUser(user);
+            if(jwtUtil.validateToken(token, user) == false)throw new BadCredentialsException("Token not valid");
+            Authority parent_role = authorityService.getAuthority("ROLE_PARENT");
+            if(!user.getAuthorities().contains(parent_role))
+                throw new BadCredentialsException("user is not a parent");
+            if(parent != null)parent.setUser(user);
+            return ResponseEntity.ok()
+                .header(
+                    HttpHeaders.AUTHORIZATION,
+                    token
+                )
+                .body(parent);
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error", ex.getMessage()).build();
+        }
+    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request){
         try {

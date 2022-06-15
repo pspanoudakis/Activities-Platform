@@ -317,3 +317,8 @@ ReservationDTO{
     ]
     }
 }
+
++ {GET(/parent/quick_login)
+    RequestHeader{ "authorization": JWT}
+    ResponseHeader{ "authorization": same JWT}
+}
