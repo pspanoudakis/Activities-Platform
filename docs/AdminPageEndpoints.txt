@@ -33,22 +33,23 @@ UserCompact{
     "status": "blocked"     //status = ["active", "blocked"]
 }
 
-Get("/admin/get_users/?username=parent1")
-αν το username δεν δίνεται επιστρέφονται όλοι οι χρήστες
-RequestBody{
-    "pageNumber": 1,
-    "pageSize": 10
-}
-RequestBody{
-    "page":[
-        <UserCompact>,
-        .
-        .
-        .
-        <UserCompact>
-    ],
-    "total_pages": 10,
-    "current_page": 1
++ {Get("/admin/get_users/?username=parent1")
+    αν το username δεν δίνεται ή είναι κενό String (/admin/get_users/?username=) επιστρέφονται όλοι οι χρήστες
+    RequestBody{
+        "pageNumber": 1,
+        "pageSize": 10
+    }
+    RequestBody{
+        "page":[
+            <UserCompact>,
+            .
+            .
+            .
+            <UserCompact>
+        ],
+        "total_pages": 10,
+        "current_page": 1
+    }
 }
 
 ReservationDTO{

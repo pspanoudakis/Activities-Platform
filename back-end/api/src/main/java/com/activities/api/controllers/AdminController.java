@@ -1,14 +1,21 @@
 package com.activities.api.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.activities.api.dto.PageRequest;
+import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.StatsResponse;
+import com.activities.api.dto.UserCompact;
 import com.activities.api.dto.UserCreationRequest;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.Parent;
@@ -19,6 +26,7 @@ import com.activities.api.services.AuthorityService;
 import com.activities.api.services.ParentService;
 import com.activities.api.services.SellerService;
 import com.activities.api.services.UserService;
+import com.activities.api.utils.MyUtil;
 
 @RestController
 @RequestMapping("/admin")
@@ -65,7 +73,6 @@ public class AdminController {
         return ResponseEntity.ok().body(user);
     }
 
-
     @GetMapping("stats")
     public ResponseEntity<StatsResponse> getStats(){
         return ResponseEntity.ok().body(
@@ -74,6 +81,36 @@ public class AdminController {
                 userService.countParents(),
                 activityService.countActivities()
             )
+        );
+    }
+
+    @GetMapping("/get_users")
+    public ResponseEntity<?> getUsers(
+        @RequestParam(required = false, defaultValue = "") String username,
+        @RequestBody PageRequest req
+    ){
+
+        if(!username.equals("")){
+            User user = userService.getUserByUN(username);
+            if(user == null)return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body(
+                new UserCompact(user)
+            );
+        }
+        
+        List<UserCompact> list = userService.getAllUsers()
+            .stream().map(
+                user -> new UserCompact(user)
+            ).collect(Collectors.toList());
+
+        MyUtil.getPage(list, req.getPageNumber(), req.getPageSize());
+        int total_pages = (int) Math.ceil((double) list.size() / (double) req.getPageSize());
+        return ResponseEntity.ok().body(
+            new PagingResponse<List<UserCompact>>(
+                MyUtil.getPage(list, req.getPageNumber(), req.getPageSize()),
+                total_pages,
+                req.getPageNumber()
+            ) 
         );
     }
 
