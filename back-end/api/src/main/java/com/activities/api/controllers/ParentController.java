@@ -31,7 +31,7 @@ import com.activities.api.dto.ParentProfileDTO;
 import com.activities.api.dto.PlannedActivity;
 import com.activities.api.dto.ReservationDTO;
 import com.activities.api.dto.ReservationRequest;
-import com.activities.api.dto.UserCreationRequest;
+import com.activities.api.dto.ParentCreationRequest;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.BankCard;
@@ -127,6 +127,28 @@ public class ParentController {
         return ResponseEntity.ok().body(card);
     }
 
+    @PostMapping("/quick_login")
+    public ResponseEntity<?> quickLogin(@RequestHeader(HttpHeaders.AUTHORIZATION) String full_token){
+
+        try {
+            String token = full_token.split(" ")[1];
+            User user = userService.getUserByUN(jwtUtil.getUsernameFromToken(token));
+            Parent parent = parentService.getByUser(user);
+            if(jwtUtil.validateToken(token, user) == false)throw new BadCredentialsException("Token not valid");
+            Authority parent_role = authorityService.getAuthority("ROLE_PARENT");
+            if(!user.getAuthorities().contains(parent_role))
+                throw new BadCredentialsException("user is not a parent");
+            if(parent != null)parent.setUser(user);
+            return ResponseEntity.ok()
+                .header(
+                    HttpHeaders.AUTHORIZATION,
+                    token
+                )
+                .body(parent);
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error", ex.getMessage()).build();
+        }
+    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request){
         try {
@@ -355,7 +377,7 @@ public class ParentController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Parent> createNewParent(@RequestBody UserCreationRequest req){
+    public ResponseEntity<Parent> createNewParent(@RequestBody ParentCreationRequest req){
         Authority authority = authorityService.getAuthority("ROLE_PARENT");
 
         if(userService.getUserByUN(req.getUsername()) != null)

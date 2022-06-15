@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class UserCreationRequest {
-    private String username;
-    private String password;
-    private String email;
-    private String role;
+public class StatsResponse {
+    int sellers;
+    int parents;
+    long activities;
 }
