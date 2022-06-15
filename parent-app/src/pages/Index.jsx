@@ -1,16 +1,16 @@
-import React, { /* useContext */ } from "react"
+import React, { useContext } from "react"
 
 //import {TestComponent} from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
-//import { AppContext } from "../AppContext";
 import { ActivitiesSection } from "../components/ActivitiesSection";
-import { fetchRebookActivities, fetchUpcomingActivities } from "../api";
+import { fetchRebookActivities, fetchUpcomingActivities } from "../api/fetchAPI";
 import { RecommendedActivityTile } from "../components/RecommendedActivityTile";
 import { UpcomingActivityTile } from "../components/UpcomingActivityTile";
 import { SearchResultTile } from "../components/SearchResultTile";
+import { AppContext } from "../AppContext";
 
 export function Index() {
 
-    //const context = useContext(AppContext)
+    const context = useContext(AppContext)
 
     const activities =  [...Array(4).keys()].map((_, i) => {
 

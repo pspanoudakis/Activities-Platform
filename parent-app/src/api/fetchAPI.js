@@ -1,5 +1,5 @@
 import { runWithDelay } from "./delay"
-import { getJwt, isJwtStored, updateJwt } from "./jwt"
+import { getJwt, updateJwt } from "./jwt"
 
 const REST_API_DOMAIN = 'http://localhost:8070'
 const createEndpoint = (endpoint) => `${REST_API_DOMAIN}/${endpoint}`
@@ -15,11 +15,13 @@ class APIResponse {
 // Maybe use these to indicate specific scenarios
 export const RESPONSE_STATUS = {
     OK: 200,
-    BAD_REQUEST: 400,
+    BAD_REQUEST: 401,
+
+    // to be properly set when known
     EXPIRED_JWT: -1
 }
 
-function fetchWrapper({endpoint, method, body, needAuth, callback, omitAuthHeader}) {
+function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, callback}) {
     fetch(
         createEndpoint(endpoint),
         {
@@ -52,47 +54,77 @@ function fetchWrapper({endpoint, method, body, needAuth, callback, omitAuthHeade
     })
 }
 
-export function loginWithCredentials(username, password, callback) {
-    fetchWrapper({
-        endpoint: 'parent/login',
-        method: 'POST',
-        body: {
-            username, password
-        },
-        omitAuthHeader: false,
-        needAuth: true,
-        callback: (response) => {
-            if (response.ok) {
-                updateJwt(response.auth)
-            }
-            callback(new APIResponse(response.data, response.ok, response.status))
-        }
-    })
+function flattenUserInfo(userInfo) {
+    return {
+        address: userInfo.address,
+        id: userInfo.id,
+        latitude: userInfo.latitude,
+        longitude: userInfo.longitude,
+        ...userInfo.user
+    }
 }
 
-export function loginWithJwt(callback) {
-    if (isJwtStored()) {
+function loginCallback(callback, renewJwt) {
+    return (response) => {
+        console.log(response)
+        let responseData = response.data;
+        if (response.ok) {
+            if (renewJwt) {
+                updateJwt(response.auth)
+            }
+            responseData = flattenUserInfo(response.data)
+        }
+        callback(new APIResponse(responseData, response.ok, response.status))
+    }
+}
+
+export function loginWithCredentials(username, password, callback) {
+    runWithDelay(() => 
         fetchWrapper({
             endpoint: 'parent/login',
             method: 'POST',
-            body: { 
-                username: 'pavlos',
-                password: '12345'
+            body: {
+                username, password
             },
             omitAuthHeader: false,
             needAuth: true,
-            callback: (response) => {
-                if (response.ok) {
-                    updateJwt(response.auth)
-                }
-                callback(new APIResponse(response.data, response.ok, response.status))
-            }
+            callback: loginCallback(callback, true)
         })
-    }
-    else {
-        // To trigger a "To continue, please login first" msg
-        callback(new APIResponse(null, false, RESPONSE_STATUS.EXPIRED_JWT))
-    }
+    )    
+}
+
+export function loginWithJwt(callback) {
+    runWithDelay(() => {
+        fetchWrapper({
+            endpoint: 'parent/login',
+            method: 'POST',    
+            // To be emptied when quickLogin endpoint is ready
+            body: { 
+                username: 'pavlos',
+                password: '12345'
+            },    
+            omitAuthHeader: false,
+            needAuth: true,
+            callback: loginCallback(callback, false)
+        })
+    })
+}
+
+export function signUp(username, email, password, callback) {
+    runWithDelay(() => {
+        fetchWrapper({
+            endpoint: 'parent/signup',
+            method: 'POST',
+            body: {
+                username,
+                email,
+                password
+            },
+            omitAuthHeader: false,
+            needAuth: true,
+            callback: loginCallback(callback, true)
+        })
+    })
 }
 
 export function fetchRecommendedActivities(n, callback) {

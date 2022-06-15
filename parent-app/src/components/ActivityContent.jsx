@@ -153,10 +153,12 @@ export function ActivityContent({
         context.setState({
             ...context.state,
             showModal: true,
-            modalContent: <ModalVerifyPrompt
-                                onVerify={bookReservations}
-                                text="Είστε βέβαιοι ότι θέλετε να προχωρήσετε με τις επιλεγμένες κρατήσεις?"
-                            />
+            modalProps: {
+                content: <ModalVerifyPrompt
+                            onVerify={bookReservations}
+                            text="Είστε βέβαιοι ότι θέλετε να προχωρήσετε με τις επιλεγμένες κρατήσεις?"
+                        />
+            }
         })
     }
 
@@ -167,15 +169,17 @@ export function ActivityContent({
             context.setState({
                 ...context.state,
                 showModal: true,
-                modalContent: <ModalResultMessage
-                                    success={response.ok}
-                                    onVerify={bookReservations}
-                                    text={ response.ok?
-                                        "Οι κρατήσεις σας καταχωρήθηκαν επιτυχώς."
-                                        :
-                                        "Υπήρξε κάποιο πρόβλημα με την καταχώρηση των κρατήσεών σας. Προσπαθήστε ξανά."
-                                    }
-                                />
+                modalProps: {
+                    content: <ModalResultMessage
+                                success={response.ok}
+                                onVerify={bookReservations}
+                                text={ response.ok?
+                                    "Οι κρατήσεις σας καταχωρήθηκαν επιτυχώς."
+                                    :
+                                    "Υπήρξε κάποιο πρόβλημα με την καταχώρηση των κρατήσεών σας. Προσπαθήστε ξανά."
+                                }
+                            />
+                }
             })
             resetState()
         })
@@ -205,8 +209,9 @@ export function ActivityContent({
                                 onClick={() => context.setState({
                                     ...context.state,
                                     showModal: true,
-                                    modalContent: <ActivityRateSelector activityId={activityId}/>,
-                                    modalScroll: false
+                                    modalProps: {
+                                        content: <ActivityRateSelector activityId={activityId}/>
+                                    }
                                 })}
                             >
                                 Αξιολόγησέ το

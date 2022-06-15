@@ -1,57 +1,96 @@
 import React, { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { AppContext } from './AppContext';
 import { Modal } from './shared/Modal';
 import { Navbar } from './components/Navbar';
+import { useEffect } from 'react';
+import { loginWithJwt } from './api/fetchAPI';
+import { jwtIsStored } from './api/jwt';
+import { LoadingIndicator } from './shared/LoadingIndicator';
 
-function App() { 
+function App() {
+    const [pendingLogin, setPendingLogin] = useState(true)
+    const [appContext, setAppContext] = useState({
+        /* userInfo: {
+            username: 'parentUser',
+            userId: 16,
+            balance: 126
+        }, */
+        userInfo: null,
+        showModal: false,
+        modalProps: {
+            content: null,
+            scroll: false,
+            bgColor: 'white'
+        }
+    })
 
-  const navigate = useNavigate()
-  const [appContext, setAppContext] = useState({
-    navigate: navigate,
-    /* userInfo: {
-      username: 'parentUser',
-      userId: 16,
-      balance: 126
-    }, */
-    userInfo: null,
-    showModal: false,
-    modalContent: null,
-    modalScroll: false
-  })
+    useEffect(() => {
+        // Attempt to login with jwt
+        if (jwtIsStored()) {
+            //setPendingLogin(true)
+            loginWithJwt((response) => {
+                console.log(response)
+                if (response.ok) {
+                    setAppContext({
+                        ...appContext,
+                        userInfo: response.data
+                    })
+                }
+                else {
+                    console.log('jwt expired or not found')
+                }
+                setPendingLogin(false)
+            })
+        }
+        else {
+            setPendingLogin(false)
+        }
+    }, [])
 
-  return (
+    return (
     <>
-      <AppContext.Provider value={{
-        state: appContext,
-        setState: setAppContext
-      }}>
-        <Modal
-          show={appContext.showModal}
-          overflowScroll={appContext.modalScroll}
-          closeCallback={() => setAppContext({
-            ...appContext,
-            showModal: false,
-            modalContent: null,
-            modalScroll: false
-        })}>
-          { appContext.modalContent }
-        </Modal>
-        <div className='w-full, flex justify-center h-full'>
-          <div
-            className='w-full h-max flex flex-col gap-2 items-center'
-          >
-              <Navbar/>
-              <div style={{ maxWidth: "60rem", minWidth: "20rem"}} className='w-full h-max flex flex-col gap-2 items-center'>
-                <Outlet/>
-              </div>
-              {/* <Footer/> */}
-          </div>
-        </div>
-      </AppContext.Provider>
+        <AppContext.Provider value={{
+                state: appContext,
+                setState: setAppContext
+            }}
+        >
+            <Modal
+                color={appContext.modalProps.bgColor}
+                show={appContext.showModal}
+                overflowScroll={appContext.modalProps.scroll}
+                closeCallback={() => setAppContext({
+                    ...appContext,
+                    showModal: false,
+                    modalProps: {
+                        content: null,
+                        scroll: false,
+                        bgColor: 'white'
+                    }
+                })}
+            >
+                { appContext.modalProps.content }
+            </Modal>
+            <div className='w-full, flex justify-center h-full'>
+                <div
+                    className='w-full h-max flex flex-col gap-2 items-center'
+                >
+                    <Navbar/>
+                    <div style={{ maxWidth: "60rem", minWidth: "20rem"}} className='w-full h-max flex flex-col gap-2 items-center'>
+                    {
+                        pendingLogin ?
+                        <LoadingIndicator stretchParent={false}/>
+                        :
+                        <Outlet/>
+                    }
+                    </div>
+                    {/* <Footer/> */}
+                </div>
+            </div>
+        </AppContext.Provider>
     </>
-  );
+    );
 }
 
 export default App;

@@ -12,6 +12,6 @@ export function deleteJwt() {
     localStorage.removeItem(JWT_STORAGE_KEY)
 }
 
-export function isJwtStored() {
-    return getJwt() == JWT_NOT_FOUND
+export function jwtIsStored() {
+    return getJwt() !== JWT_NOT_FOUND
 }

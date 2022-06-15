@@ -66,14 +66,16 @@ export function ActivityRateSelector({
             context.setState({
                 ...context.state,
                 showModal: true,
-                modalContent: <ModalResultMessage
+                modalProps: {
+                    content: <ModalResultMessage
                                 success={response.ok}
                                 text={response.ok ?
                                     'Η αξιολόγησή σας υποβλήθηκε επιτυχώς.'
                                     :
                                     'Kάτι πήγε στραβά με την υποβολή της αξιολόγησής σας. Δοκιμάστε ξανά.'
-                                }/>,
-                modalScroll: false
+                                }
+                            />
+                }
             })
         })
     }
