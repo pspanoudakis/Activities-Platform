@@ -1,7 +1,7 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
-import { submitActivityReview } from "../api";
+import { submitActivityReview } from "../api/fetchAPI";
 import { AppContext } from "../AppContext";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
@@ -62,13 +62,13 @@ export function ActivityRateSelector({
         //console.log(`User: ${context.state.userInfo.username}, Rate: ${selectedRate + 1}`)
         //console.log(`${text}`)
         setLoading(true)
-        submitActivityReview(activityId, context.state.userInfo.username, selectedRate + 1, text, ({ok}) => {
+        submitActivityReview(activityId, context.state.userInfo.username, selectedRate + 1, text, (response) => {
             context.setState({
                 ...context.state,
                 showModal: true,
                 modalContent: <ModalResultMessage
-                                success={ok}
-                                text={ok ?
+                                success={response.ok}
+                                text={response.ok ?
                                     'Η αξιολόγησή σας υποβλήθηκε επιτυχώς.'
                                     :
                                     'Kάτι πήγε στραβά με την υποβολή της αξιολόγησής σας. Δοκιμάστε ξανά.'

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MD_PXLIMIT, SM_PXLIMIT } from "../deviceConstants";
+import { MD_PXLIMIT, SM_PXLIMIT } from "../utils/deviceConstants";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
@@ -41,7 +41,7 @@ export function ActivitiesSection({
     useEffect(() => {
         fetchData(TOTAL_ACTIVITIES, (response) => {
             if (response.ok) {
-                setActivities(response.results)
+                setActivities(response.data)
             }
             else {
                 console.error(response)
