@@ -16,4 +16,8 @@ public class SellerService {
     public List<Seller> getSellers(){
         return sellerRepository.findAll();
     }
+
+    public Seller saveOrUpdateSeller(Seller seller){
+        return sellerRepository.save(seller);
+    }
 }

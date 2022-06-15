@@ -31,7 +31,7 @@ import com.activities.api.dto.ParentProfileDTO;
 import com.activities.api.dto.PlannedActivity;
 import com.activities.api.dto.ReservationDTO;
 import com.activities.api.dto.ReservationRequest;
-import com.activities.api.dto.UserCreationRequest;
+import com.activities.api.dto.ParentCreationRequest;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.BankCard;
@@ -377,7 +377,7 @@ public class ParentController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Parent> createNewParent(@RequestBody UserCreationRequest req){
+    public ResponseEntity<Parent> createNewParent(@RequestBody ParentCreationRequest req){
         Authority authority = authorityService.getAuthority("ROLE_PARENT");
 
         if(userService.getUserByUN(req.getUsername()) != null)

@@ -7,15 +7,16 @@ UserCreationRequest{
     string role
 }
 
-Post("/admin/create_user)
-RequestBody{
-    string name,
-    string email,
-    string password,
-    string role     //role = ["ROLE_PARENT", "ROLE_SELLER", "ROLE_ADMIN"]
-}
-ResponseBody{
-    <user_data>
++{Post("/admin/create_user)
+    RequestBody{
+        string name,
+        string email,
+        string password,
+        string role     //role = ["ROLE_PARENT", "ROLE_SELLER", "ROLE_ADMIN"]
+    }
+    ResponseBody{
+        <user_data>
+    }
 }
 
 Get("/admin/stats")
