@@ -59,14 +59,12 @@ ReservationDTO{
     LocalDate reservation_time,
     int amount
 }
-Get("/admin/get_parent/{username})
+Get("/admin/get_parent_reservations/{username})
 RequestBody{
     "pageNumber": 1,
     "pageSize": 10
 }
 ResponseBody{
-    "username": "parent1",
-    "status": "active",
     "page": [
         <ReservationDTO>,
         .
@@ -85,14 +83,12 @@ ActivityDTO{
     LocalDate end_date,
     int price
 }
-Get("/admin/get_seller/{username})
+Get("/admin/get_seller_activities/{username})
 RequestBody{
     "pageNumber": 1,
     "pageSize": 10
 }
 ResponseBody{
-    "username": "parent1",
-    "status": "active",
     "page": [
         <ActivityDTO>,
         .
@@ -104,13 +100,13 @@ ResponseBody{
     "current_page": 1
 }
 
-Get("admin/get_admin/{username})
-RequestBody{
-    "pageNumber": 1,
-    "pageSize": 10
-}
+Get("/admin/user/{username}")
 ResponseBody{
-    "username": admin
+    "username": "parent1",
+    "status": "active",
+    "image": "http:...",
+    "role": "PARENT_ROLE"
+
 }
 
 Post("admin/change_password/{username}")
