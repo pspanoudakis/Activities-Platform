@@ -11,6 +11,7 @@ import { ActivityRateSelector } from "./ActivityRateSelector";
 import { ActivityImageSelector } from "./ActivityImageSelector";
 import { ModalVerifyPrompt } from "../shared/ModalVerifyPrompt";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
+import { /* FrozenMap, */ TestMap } from "./Map";
 
 function sameDateTimes(d1, d2) {
     return d1.getHours() === d2.getHours && d1.getMinutes() === d1.getMinutes
@@ -266,7 +267,17 @@ export function ActivityContent({
                     </div>
                     <div className="flex flex-col flex-1 gap-3 justify-center">
                         <ActivityLocationIndicator locationName={activityInfo.location.text} textAlign="text-start"/>
-                        <div className="flex justify-center items-center p-12 h-64 bg-white" style={{minWidth: '40vw'}}>Map</div>
+                        {/* <FrozenMap
+                            markerPosition={{
+                                lat: 55.05112,
+                                lng: 55.05112
+                            }}
+                            style={{
+                                width: '500px',
+                                height: '500px'
+                            }}
+                        /> */}
+                        <TestMap/>
                     </div>
                 </div>
             }
