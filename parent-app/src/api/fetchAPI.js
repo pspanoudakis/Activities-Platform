@@ -1,7 +1,8 @@
 import { runWithDelay } from "./delay"
 import { getJwt, updateJwt } from "./jwt"
 
-const REST_API_DOMAIN = 'http://localhost:8070'
+//const REST_API_DOMAIN = 'http://localhost:8070'
+const REST_API_DOMAIN = ''
 const createEndpoint = (endpoint) => `${REST_API_DOMAIN}/${endpoint}`
 
 class APIResponse {
@@ -29,7 +30,7 @@ function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, callbac
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': omitAuthHeader ? '' : getJwt()
+                'Authorization': omitAuthHeader ? '' : `Bearer ${getJwt()}`
             },
             body: JSON.stringify(body)
         }
@@ -86,7 +87,7 @@ export function loginWithCredentials(username, password, callback) {
             body: {
                 username, password
             },
-            omitAuthHeader: false,
+            omitAuthHeader: true,
             needAuth: true,
             callback: loginCallback(callback, true)
         })
@@ -116,7 +117,7 @@ export function signUp(username, email, password, callback) {
                 email,
                 password
             },
-            omitAuthHeader: false,
+            omitAuthHeader: true,
             needAuth: true,
             callback: loginCallback(callback, true)
         })

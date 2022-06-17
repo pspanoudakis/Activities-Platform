@@ -49,7 +49,7 @@ function NavbarUserOptionsMenu({
                 isLink={true}
                 url="/"
             >
-                <span>Το Προφίλ μου</span>
+                <span className="font-medium text-lg">{context.state.userInfo.username}</span>
                 {showIcons && <FontAwesomeIcon icon={faUser} size="lg"/>}
             </NavbarUserOption>
             {
@@ -82,7 +82,7 @@ function NavbarUserOptionsMenu({
                 isLink={false}
                 callback={logOut}
             >
-                <span>Αποσύνδεση</span>
+                <span className="font-light">Αποσύνδεση</span>
                 <FontAwesomeIcon icon={faArrowRightFromBracket} size="lg"/>
             </NavbarUserOption>
         </>
@@ -115,7 +115,8 @@ export function Navbar() {
             showModal: true,
             modalProps: {
                 content: <SignUpForm/>,
-                bgColor: 'bg-cyan'
+                bgColor: 'bg-cyan',
+                scroll: true
             }
         })
     }
@@ -126,7 +127,8 @@ export function Navbar() {
             showModal: true,
             modalProps: {
                 content: <SignInForm/>,
-                bgColor: 'bg-cyan'
+                bgColor: 'bg-cyan',
+                scroll: true
             }
         })
     }

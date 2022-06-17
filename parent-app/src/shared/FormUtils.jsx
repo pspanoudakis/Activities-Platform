@@ -31,7 +31,7 @@ export function FormFieldHint({text, skipHint}) {
                 skipHint ?
                 null
                 :
-                <span className="w-60">
+                <span className="w-52">
                     {text}
                 </span>
             }
