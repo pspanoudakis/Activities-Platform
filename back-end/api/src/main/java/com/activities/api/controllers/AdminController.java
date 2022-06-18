@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.ParentReservation;
+import com.activities.api.dto.SellerActivity;
 import com.activities.api.dto.StatsResponse;
 import com.activities.api.dto.UserCompact;
 import com.activities.api.dto.UserCreationRequest;
@@ -23,6 +24,7 @@ import com.activities.api.entities.Authority;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Seller;
 import com.activities.api.entities.User;
+import com.activities.api.services.ActivityAtDayService;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AuthorityService;
 import com.activities.api.services.ParentService;
@@ -41,6 +43,7 @@ public class AdminController {
     @Autowired private UserService userService;
     @Autowired private ActivityService activityService;
     @Autowired private ReservationService reservationService;
+    @Autowired private ActivityAtDayService activityAtDayService;
 
     @PostMapping("/create_user")
     public ResponseEntity<?> createUser(@RequestBody UserCreationRequest req){
@@ -137,6 +140,31 @@ public class AdminController {
         int total_pages = (int) Math.ceil((double) list.size() / (double) req.getPageSize());
         return ResponseEntity.ok().body(
             new PagingResponse<List<ParentReservation>>(
+                MyUtil.getPage(list, req.getPageNumber(), req.getPageSize()),
+                total_pages,
+                req.getPageNumber()
+            ) 
+        );
+    }
+
+    @GetMapping("/get_seller_activities/{username}")
+    public ResponseEntity<PagingResponse<List<SellerActivity>>> getSellerActivities(
+        @PathVariable String username,
+        @RequestBody PageRequest req
+    ){
+
+        Seller seller = sellerService.getSellerByUN(username);
+        if(seller == null)return ResponseEntity.badRequest().header("error", "no seller with username " + username).body(null);
+
+        List<SellerActivity> list = activityService.getActivitiesOfSeller(seller)
+            .stream().map(
+                act -> activityAtDayService.getSellerActivity(act.getId())
+            ).collect(Collectors.toList());
+
+        
+        int total_pages = (int) Math.ceil((double) list.size() / (double) req.getPageSize());
+        return ResponseEntity.ok().body(
+            new PagingResponse<List<SellerActivity>>(
                 MyUtil.getPage(list, req.getPageNumber(), req.getPageSize()),
                 total_pages,
                 req.getPageNumber()

@@ -11,6 +11,7 @@ import com.activities.api.entities.ActivityPhoto;
 import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.Evaluation;
 import com.activities.api.entities.Facility;
+import com.activities.api.entities.Seller;
 import com.activities.api.repositories.ActivityAtDayRepository;
 import com.activities.api.repositories.ActivityPhotoRepository;
 import com.activities.api.repositories.ActivityRepository;
@@ -58,6 +59,10 @@ public class ActivityService {
 
     public List<Activity> getActivitiesByFacility(Facility facility){
         return activityRepository.findByFacility(facility);
+    }
+
+    public List<Activity> getActivitiesOfSeller(Seller seller){
+        return activityRepository.findByFacilityIn(facilityRepository.findBySeller(seller));
     }
 
     public List<Activity> getActivitiesBySeller(Activity activity){

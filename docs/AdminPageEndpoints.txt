@@ -84,21 +84,22 @@ ActivityDTO{
     LocalDate end_date,
     int price
 }
-Get("/admin/get_seller_activities/{username})
-RequestBody{
-    "pageNumber": 1,
-    "pageSize": 10
-}
-ResponseBody{
-    "page": [
-        <ActivityDTO>,
-        .
-        .
-        .
-        <ActivityDTO>
-    ],
-    "total_pages": 10,
-    "current_page": 1
++{Get("/admin/get_seller_activities/{username})
+    RequestBody{
+        "pageNumber": 1,
+        "pageSize": 10
+    }
+    ResponseBody{
+        "page": [
+            <ActivityDTO>,
+            .
+            .
+            .
+            <ActivityDTO>
+        ],
+        "total_pages": 10,
+        "current_page": 1
+    }
 }
 
 Get("/admin/user/{username}")

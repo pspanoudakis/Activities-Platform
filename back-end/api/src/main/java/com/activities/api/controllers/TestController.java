@@ -54,9 +54,9 @@ public class TestController {
     @Autowired private ReservationService reservationService;
 
     @GetMapping("/mytest/{id}")
-    public ResponseEntity<List<?>> getMyTest(@PathVariable int id){
+    public ResponseEntity<?> getMyTest(@PathVariable int id){
         
-        return ResponseEntity.ok().body(reservationService.getParentReservedActivityIds(id));
+        return ResponseEntity.ok().body(activityAtDayService.getSellerActivity(1));
     }
 
     @GetMapping("/auths")

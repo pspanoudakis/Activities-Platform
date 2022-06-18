@@ -20,4 +20,8 @@ public class SellerService {
     public Seller saveOrUpdateSeller(Seller seller){
         return sellerRepository.save(seller);
     }
+
+    public Seller getSellerByUN(String username){
+        return sellerRepository.findByUser_Username(username).orElse(null);
+    }
 }
