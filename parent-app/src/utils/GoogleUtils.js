@@ -1,4 +1,4 @@
-class GoogleUtils {
+export class GoogleUtils {
     static PROJECT_API_KEY = 'AIzaSyApkbklYBjYv73xEWvH7Oupo_1qP4vSf0I'
 
     static getAddressFromAddressComponents(addressComponents) {
@@ -14,7 +14,7 @@ class GoogleUtils {
         .then((response) => {
             if (response.ok) {
                 response.json().then( apiResponse => {
-                    if (apiResponse.status != "OK") {
+                    if (apiResponse.status !== "OK") {
                         callback('Άγνωστη Τοποθεσία')
                     }
                     else {
