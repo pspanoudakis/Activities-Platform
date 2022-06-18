@@ -118,9 +118,9 @@ ActivityDTO{
     }
 }
 
-Post("/admin/set_active/{username}")
++Post("/admin/set_active/{username}")
 
-Post("/admin/set_blocked/{username}")
++Post("/admin/set_blocked/{username}")
 
 Post("/admin/change_role/{username}")
 RequestBody{

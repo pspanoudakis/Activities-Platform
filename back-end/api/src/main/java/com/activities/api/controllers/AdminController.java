@@ -50,6 +50,30 @@ public class AdminController {
     @Autowired private ActivityAtDayService activityAtDayService;
     @Autowired private CustomPasswordEncoder customPasswordEncoder;
 
+    @PostMapping("/set_active/{username}")
+    public ResponseEntity<String> setActive(@PathVariable String username){
+
+        User user = userService.getUserByUN(username);
+        if(user == null)return ResponseEntity.badRequest().header("error", "no user with username " + username).body(null);
+
+        user.setActive(true);
+        userService.createOrUpdateUser(user);
+
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PostMapping("/set_blocked/{username}")
+    public ResponseEntity<String> setBlocked(@PathVariable String username){
+        
+        User user = userService.getUserByUN(username);
+        if(user == null)return ResponseEntity.badRequest().header("error", "no user with username " + username).body(null);
+
+        user.setActive(false);
+        userService.createOrUpdateUser(user);
+
+        return ResponseEntity.ok().body(null);
+    }
+
 
     @PostMapping("/change_password/{username}")
     public ResponseEntity<String> changePassword(@PathVariable String username, @RequestBody PasswordChangeRequest req){
