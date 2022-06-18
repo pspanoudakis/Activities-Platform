@@ -24,4 +24,15 @@ export class GoogleUtils {
             }
         })
     }
+
+    static async coordinatesToAddressAsync(lat, lng) {
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?location_type=ROOFTOP&language=el&latlng=${lat},${lng}&key=${GoogleUtils.PROJECT_API_KEY}`)
+        if (response.ok) {
+            const apiResponse = await response.json()
+            if (apiResponse.status === "OK") {
+                return GoogleUtils.getAddressFromAddressComponents(apiResponse.results[0].address_components)
+            }
+        }
+        return 'Άγνωστη Τοποθεσία'
+    }
 }

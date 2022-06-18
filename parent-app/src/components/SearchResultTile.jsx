@@ -13,16 +13,27 @@ export function SearchResultTile({
         rating,
         nextDate,
         price
-    }
+    },
+    onClick,
+    isSelected
 }) {
+
     return (
-        <Link to="/">
+        <div className="cursor-pointer" onClick={() => onClick()}>
             <ContentTile
                 padding="p-2"
                 bgColor="bg-white"
                 stretch={true}
                 dimensions=""
-                classExtra="hover:bg-xlight-cyan shadow-md hover:shadow-lg duration-200"
+                classExtra={`
+                    ${
+                        isSelected ?
+                        'bg-xlight-cyan shadow-lg border-4 border-navbar-cyan'
+                        :
+                        'hover:bg-xlight-cyan shadow-md hover:shadow-lg'
+                    }
+                    duration-200
+                `}
             >
                 <div className="flex flex-row gap-3 items-center justify-around text-left flex-wrap">
                     <img src={imgSrc} alt={imgSrc} className="rounded-3xl w-48"/>
@@ -37,6 +48,6 @@ export function SearchResultTile({
                     </div>
                 </div>
             </ContentTile>
-        </Link>
+        </div>
     )
 }
