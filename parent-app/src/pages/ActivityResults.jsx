@@ -6,6 +6,7 @@ import { fetchActivityResults } from "../api/fetchAPI";
 import { MultiMarkerMap } from "../components/Maps";
 import { SearchResultTile } from "../components/SearchResultTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
+import { PageSelector } from "../shared/PaginatedTable";
 import { GoogleUtils } from "../utils/GoogleUtils";
 
 function HomeAddressIndicator({
@@ -24,7 +25,7 @@ function HomeAddressIndicator({
                 pending ?
                 <button
                     className={`
-                        flex flex-row gap-1 
+                        flex flex-row gap-1 items-center
                         bg-dark-cyan hover:bg-xdark-cyan
                         py-1 px-3 rounded-2xl
                     `}
@@ -36,7 +37,7 @@ function HomeAddressIndicator({
                 :
                 <button
                 className={`
-                    flex flex-row gap-1 
+                    flex flex-row gap-1 items-center
                     bg-dark-cyan hover:bg-xdark-cyan
                     py-1 px-3 rounded-2xl
                 `}
@@ -74,6 +75,9 @@ export function ActivityResults({
     const [selectedActivity, setSelectedActivity] = useState(-1)
     const [activities, setActivities] =  useState([])
     const [activityLocations, setActivityLocations] = useState([])
+
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(-1)
     
     const activityClicked = (idx) => {
         setSecondaryPositions([activities[idx].location])
@@ -87,8 +91,12 @@ export function ActivityResults({
     }, [homePosition])
 
     useEffect(() => {
-        fetchActivityResults(options, (response) => {
+        setLoading(true)
+        setSelectedActivity(-1)
+        setSecondaryPositions([])
+        fetchActivityResults(options, currentPage, (response) => {
             if (response.ok) {
+                setTotalPages(response.totalPages)
                 setActivities(response.data)
                 fetchLocationAdresses(response.data).then((locations) => {
                     console.log(locations)
@@ -100,7 +108,7 @@ export function ActivityResults({
                 console.log('Failed to fetch activity results')
             }
         })
-    }, [])
+    }, [currentPage])
 
     const homePositionSelected = (pos) => {
         setHomePosition(pos)
@@ -131,21 +139,34 @@ export function ActivityResults({
                 onClick={homePositionSelected}
                 notifyOnClick={pendingHomeSelection}
             />
-            <div className="w-10/12 flex flex-col gap-2">
+            <div className="w-10/12 flex flex-col gap-2 relative">
+                <PageSelector
+                    canNextPage={currentPage < totalPages - 1}
+                    canPreviousPage={currentPage > 0}
+                    currentPage={currentPage}
+                    gotoPage={(newPage) => setCurrentPage(newPage)}
+                    previousPage={() => setCurrentPage(currentPage - 1)}
+                    nextPage={() => setCurrentPage(currentPage + 1)}
+                    totalPages={totalPages}
+                />
+                <div className="w-full flex flex-col gap-2 overflow-y-scroll" style={{maxHeight: '50vh'}}>
+                {
+                    activities.length > 0 ?
+                    activities.map((a, i) => <SearchResultTile
+                                                key={i}
+                                                activityInfo={{...a, locationName: activityLocations[i]}}
+                                                onClick={() => activityClicked(i)}
+                                                isSelected={selectedActivity === i}
+                                            />)
+                    :
+                    null
+                }
+                </div>
             {
                 loading ?
-                <LoadingIndicator/>
+                <LoadingIndicator stretchParent={activities.length > 0}/>
                 :
-                <>
-                    {
-                        activities.map((a, i) => <SearchResultTile
-                                                    key={i}
-                                                    activityInfo={{...a, locationName: activityLocations[i]}}
-                                                    onClick={() => activityClicked(i)}
-                                                    isSelected={selectedActivity === i}
-                                                />)
-                    }
-                </>
+                null
             }
             </div>
         </>

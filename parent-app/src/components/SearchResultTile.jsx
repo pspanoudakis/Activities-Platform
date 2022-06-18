@@ -28,9 +28,9 @@ export function SearchResultTile({
                 classExtra={`
                     ${
                         isSelected ?
-                        'bg-xlight-cyan shadow-lg border-4 border-navbar-cyan'
+                        'bg-light-cyan shadow-lg border-4 border-navbar-cyan'
                         :
-                        'hover:bg-xlight-cyan shadow-md hover:shadow-lg'
+                        'hover:bg-light-cyan shadow-md hover:shadow-lg'
                     }
                     duration-200
                 `}
