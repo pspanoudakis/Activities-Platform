@@ -102,13 +102,14 @@ ActivityDTO{
     }
 }
 
-Get("/admin/user/{username}")
-ResponseBody{
-    "username": "parent1",
-    "status": "active",
-    "image": "http:...",
-    "role": "PARENT_ROLE"
++{Get("/admin/user/{username}")
+    ResponseBody{
+        "username": "parent1",
+        "status": "active",
+        "image": "http:...",
+        "role": "PARENT_ROLE"
 
+    }
 }
 
 Post("admin/change_password/{username}")

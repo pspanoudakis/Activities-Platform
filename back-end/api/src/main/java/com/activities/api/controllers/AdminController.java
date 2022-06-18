@@ -20,6 +20,7 @@ import com.activities.api.dto.SellerActivity;
 import com.activities.api.dto.StatsResponse;
 import com.activities.api.dto.UserCompact;
 import com.activities.api.dto.UserCreationRequest;
+import com.activities.api.dto.UserDTO;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Seller;
@@ -44,6 +45,14 @@ public class AdminController {
     @Autowired private ActivityService activityService;
     @Autowired private ReservationService reservationService;
     @Autowired private ActivityAtDayService activityAtDayService;
+
+    @GetMapping("/get_user/{username}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username){
+        User user = userService.getUserByUN(username);
+        if(user == null)return ResponseEntity.badRequest().header("error", "no user with username " + username).body(null);
+
+        return ResponseEntity.ok().body(new UserDTO(user));
+    }
 
     @PostMapping("/create_user")
     public ResponseEntity<?> createUser(@RequestBody UserCreationRequest req){
