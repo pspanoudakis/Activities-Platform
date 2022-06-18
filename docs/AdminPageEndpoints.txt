@@ -59,21 +59,22 @@ ReservationDTO{
     LocalDate reservation_time,
     int amount
 }
-Get("/admin/get_parent_reservations/{username})
-RequestBody{
-    "pageNumber": 1,
-    "pageSize": 10
-}
-ResponseBody{
-    "page": [
-        <ReservationDTO>,
-        .
-        .
-        .
-        <ReservationDTO>
-    ],
-    "total_pages": 10,
-    "current_page": 1
++{Get("/admin/get_parent_reservations/{username})
+    RequestBody{
+        "pageNumber": 1,
+        "pageSize": 10
+    }
+    ResponseBody{
+        "page": [
+            <ReservationDTO>,
+            .
+            .
+            .
+            <ReservationDTO>
+        ],
+        "total_pages": 10,
+        "current_page": 1
+    }
 }
 
 ActivityDTO{

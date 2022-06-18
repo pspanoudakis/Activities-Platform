@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
+import com.activities.api.dto.ParentReservation;
 import com.activities.api.dto.StatsResponse;
 import com.activities.api.dto.UserCompact;
 import com.activities.api.dto.UserCreationRequest;
@@ -24,6 +26,7 @@ import com.activities.api.entities.User;
 import com.activities.api.services.ActivityService;
 import com.activities.api.services.AuthorityService;
 import com.activities.api.services.ParentService;
+import com.activities.api.services.ReservationService;
 import com.activities.api.services.SellerService;
 import com.activities.api.services.UserService;
 import com.activities.api.utils.MyUtil;
@@ -37,6 +40,7 @@ public class AdminController {
     @Autowired private SellerService sellerService;
     @Autowired private UserService userService;
     @Autowired private ActivityService activityService;
+    @Autowired private ReservationService reservationService;
 
     @PostMapping("/create_user")
     public ResponseEntity<?> createUser(@RequestBody UserCreationRequest req){
@@ -103,10 +107,36 @@ public class AdminController {
                 user -> new UserCompact(user)
             ).collect(Collectors.toList());
 
-        MyUtil.getPage(list, req.getPageNumber(), req.getPageSize());
+        // MyUtil.getPage(list, req.getPageNumber(), req.getPageSize());
         int total_pages = (int) Math.ceil((double) list.size() / (double) req.getPageSize());
         return ResponseEntity.ok().body(
             new PagingResponse<List<UserCompact>>(
+                MyUtil.getPage(list, req.getPageNumber(), req.getPageSize()),
+                total_pages,
+                req.getPageNumber()
+            ) 
+        );
+    }
+
+
+    @GetMapping("/get_parent_reservations/{username}")
+    public ResponseEntity<PagingResponse<List<ParentReservation>>> getParentReservations(
+        @PathVariable String username,
+        @RequestBody PageRequest req
+    ){
+
+        Parent parent = parentService.getParentByUN(username);
+        if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with username " + username).body(null);
+        
+        List<ParentReservation> list = reservationService.getReservationsByParent(
+            parentService.getParentByUN(username)
+        ).stream().map(
+            res -> new ParentReservation(res)
+        ).collect(Collectors.toList());
+
+        int total_pages = (int) Math.ceil((double) list.size() / (double) req.getPageSize());
+        return ResponseEntity.ok().body(
+            new PagingResponse<List<ParentReservation>>(
                 MyUtil.getPage(list, req.getPageNumber(), req.getPageSize()),
                 total_pages,
                 req.getPageNumber()

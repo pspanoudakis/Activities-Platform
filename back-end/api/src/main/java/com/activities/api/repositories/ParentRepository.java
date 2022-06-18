@@ -11,4 +11,5 @@ import com.activities.api.entities.User;
 @Repository
 public interface ParentRepository extends JpaRepository<Parent, Integer>{
     Optional<Parent> findByUser(User user);
+    Optional<Parent> findByUser_Username(String username);
 }
