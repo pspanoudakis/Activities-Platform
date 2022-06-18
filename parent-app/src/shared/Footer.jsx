@@ -24,25 +24,25 @@ export function Footer() {
                 </div>
                 <div className="flex flex-1 flex-col justify-start items-center gap-1">
                     <span className="font-semibold text-lg">Η Εταιρεία</span>
-                    <a href="" className="underline">Λίγα Λόγια για εμάς</a>
-                    <a href="" className="underline">Συνεργάτες</a>
+                    <a href="/" className="underline">Λίγα Λόγια για εμάς</a>
+                    <a href="/" className="underline">Συνεργάτες</a>
                 </div>
                 <div className="flex flex-1 flex-col justify-start items-center gap-1">
                     <div className="flex-1 p-4 flex justify-center items-center">
-                        <a href="" className="flex flex-1 font-semibold text-lg underline">Συχνές Ερωτήσεις</a>
+                        <a href="/" className="flex flex-1 font-semibold text-lg underline">Συχνές Ερωτήσεις</a>
                     </div>
                 </div>
                 <div className="flex flex-1 flex-row justify-evenly items-center text-2xl" style={{minWidth: '12rem'}}>
-                    <a href="">
+                    <a href="https://facebook.com">
                         <FontAwesomeIcon icon={faFacebook}/>
                     </a>
-                    <a href="">
+                    <a href="https://instagram.com">
                         <FontAwesomeIcon icon={faInstagram}/>
                     </a>
-                    <a href="">
+                    <a href="https://twitter.com">
                         <FontAwesomeIcon icon={faTwitter}/>
                     </a>
-                    <a href="">
+                    <a href="https://github.com">
                         <FontAwesomeIcon icon={faGithub}/>
                     </a>
                 </div>

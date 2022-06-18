@@ -1,3 +1,4 @@
+import { GoogleUtils } from "../utils/GoogleUtils"
 import { runWithDelay } from "./delay"
 import { getJwt, updateJwt } from "./jwt"
 
@@ -168,9 +169,8 @@ export function fetchActivity(activityId, callback) {
         rating: 3.8,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.\nUllam, sapiente nobis ipsa est eius unde, aliquid iusto saepe nostrum architecto rem quis consequuntur eaque reiciendis ipsam.\nIpsa odio commodi ullam?',
         location: {
-            longitude: 0,
-            latitude: 0,
-            text: 'Αθηνάς 6, Αττική'
+            latitude: 38.11987459663194,
+            longitude: 23.866071050478975
         },
         ageCategory: 'Προσχολική (0-5)',
         price: 26,
@@ -210,7 +210,12 @@ export function fetchActivity(activityId, callback) {
     }
     console.log(activity)
 
-    runWithDelay(() => callback(new APIResponse(activity, true, RESPONSE_STATUS.OK)))
+    runWithDelay(() => {
+        GoogleUtils.coordinatesToAddress(activity.location.latitude, activity.location.longitude, (address) => {
+            activity.location.address = address
+            callback(new APIResponse(activity, true, RESPONSE_STATUS.OK))
+        })
+    })
 }
 
 export function submitActivityReview(activityId, userId, rate, text, callback) {
