@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.ParentReservation;
 import com.activities.api.dto.SellerActivity;
 import com.activities.api.dto.StatsResponse;
+import com.activities.api.dto.PasswordChangeRequest;
 import com.activities.api.dto.UserCompact;
 import com.activities.api.dto.UserCreationRequest;
 import com.activities.api.dto.UserDTO;
@@ -32,6 +34,7 @@ import com.activities.api.services.ParentService;
 import com.activities.api.services.ReservationService;
 import com.activities.api.services.SellerService;
 import com.activities.api.services.UserService;
+import com.activities.api.utils.CustomPasswordEncoder;
 import com.activities.api.utils.MyUtil;
 
 @RestController
@@ -45,6 +48,24 @@ public class AdminController {
     @Autowired private ActivityService activityService;
     @Autowired private ReservationService reservationService;
     @Autowired private ActivityAtDayService activityAtDayService;
+    @Autowired private CustomPasswordEncoder customPasswordEncoder;
+
+
+    @PostMapping("/change_password/{username}")
+    public ResponseEntity<String> changePassword(@PathVariable String username, @RequestBody PasswordChangeRequest req){
+
+        PasswordEncoder encoder = customPasswordEncoder.getPasswordEncoder();
+
+        User user = userService.getUserByUN(username);
+        if(user == null)return ResponseEntity.badRequest().header("error", "no user with username " + username).body(null);
+
+        user.setPassword(
+            encoder.encode(req.getPassword())
+        );
+        userService.createOrUpdateUser(user);
+
+        return ResponseEntity.ok().body(null);
+    }
 
     @GetMapping("/get_user/{username}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String username){

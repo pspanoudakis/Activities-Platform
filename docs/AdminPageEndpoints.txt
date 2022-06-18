@@ -112,9 +112,10 @@ ActivityDTO{
     }
 }
 
-Post("admin/change_password/{username}")
-RequestBody{
-    "new_password": 1234
++{Post("admin/change_password/{username}")
+    RequestBody{
+        "password": 1234
+    }
 }
 
 Post("/admin/set_active/{username}")
