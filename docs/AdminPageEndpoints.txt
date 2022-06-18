@@ -122,7 +122,8 @@ ActivityDTO{
 
 +Post("/admin/set_blocked/{username}")
 
-Post("/admin/change_role/{username}")
-RequestBody{
-    "role": "ROLE_PARENT"
++{Post("/admin/change_role/{username}")
+    RequestBody{
+        "role": "ROLE_PARENT"
+    }
 }

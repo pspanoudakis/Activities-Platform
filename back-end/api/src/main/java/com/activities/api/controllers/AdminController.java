@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.activities.api.dto.ChangeRoleRequest;
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.ParentReservation;
@@ -49,6 +50,21 @@ public class AdminController {
     @Autowired private ReservationService reservationService;
     @Autowired private ActivityAtDayService activityAtDayService;
     @Autowired private CustomPasswordEncoder customPasswordEncoder;
+
+    @PostMapping("/change_role/{username}")
+    public ResponseEntity<String> changeRole(@PathVariable String username, @RequestBody ChangeRoleRequest req){
+
+        User user = userService.getUserByUN(username);
+        if(user == null)return ResponseEntity.badRequest().header("error", "no user with username " + username).body(null);
+
+        Authority authority = authorityService.getAuthority(req.getRole());
+        if(authority == null)return ResponseEntity.badRequest().header("error", "no role  " + req.getRole()).body(null);
+
+        user.clearRoles();
+        user.addRole(authority);
+        userService.createOrUpdateUser(user);
+        return ResponseEntity.ok().body(null);
+    }
 
     @PostMapping("/set_active/{username}")
     public ResponseEntity<String> setActive(@PathVariable String username){

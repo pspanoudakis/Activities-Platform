@@ -41,6 +41,8 @@ public class User implements UserDetails{
     private Collection<Authority> authorities = new ArrayList<>();
 
     public void addRole(Authority authority){ this.authorities.add(authority); }
+    public void removeRole(Authority authority){this.authorities.remove(authority);}
+    public void clearRoles(){this.authorities.clear();}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
