@@ -8,7 +8,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Index } from './pages/Index';
 import { ActivityPage } from './pages/ActivityPage';
-import { SearchActivityPage } from './pages/SearchActivityPage';
+import { SearchResultsPage } from './pages/SearchResultsPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,7 +20,7 @@ root.render(
                     <Route path="activities">
                         <Route path=":activityId" element={<ActivityPage/>} />
                     </Route>
-                    <Route path="searchActivity" element={<SearchActivityPage/>} />
+                    <Route path="searchActivity" element={<SearchResultsPage/>} />
                     {/* <Route path="logout" element={<Logout />}/> */}
                 </Route>
             </Routes>

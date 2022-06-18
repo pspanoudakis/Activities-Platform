@@ -35,7 +35,7 @@ export function SearchResultTile({
                     duration-200
                 `}
             >
-                <div className="flex flex-row gap-3 items-center justify-around text-left flex-wrap">
+                <div className="flex flex-row gap-3 items-center justify-between text-left flex-wrap px-2">
                     <img src={imgSrc} alt={imgSrc} className="rounded-3xl w-48"/>
                     <div className="flex flex-col gap-2 justify-start">
                         <span className="text-xl font-medium text-center">{name}</span>
