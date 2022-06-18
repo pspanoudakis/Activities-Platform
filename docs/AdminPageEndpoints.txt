@@ -102,25 +102,28 @@ ActivityDTO{
     }
 }
 
-Get("/admin/user/{username}")
-ResponseBody{
-    "username": "parent1",
-    "status": "active",
-    "image": "http:...",
-    "role": "PARENT_ROLE"
++{Get("/admin/user/{username}")
+    ResponseBody{
+        "username": "parent1",
+        "status": "active",
+        "image": "http:...",
+        "role": "PARENT_ROLE"
 
+    }
 }
 
-Post("admin/change_password/{username}")
-RequestBody{
-    "new_password": 1234
++{Post("admin/change_password/{username}")
+    RequestBody{
+        "password": 1234
+    }
 }
 
-Post("/admin/set_active/{username}")
++Post("/admin/set_active/{username}")
 
-Post("/admin/set_blocked/{username}")
++Post("/admin/set_blocked/{username}")
 
-Post("/admin/change_role/{username}")
-RequestBody{
-    "role": "ROLE_PARENT"
++{Post("/admin/change_role/{username}")
+    RequestBody{
+        "role": "ROLE_PARENT"
+    }
 }
