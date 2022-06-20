@@ -1,6 +1,8 @@
 package com.activities.api.controllers;
 
 import java.util.List;
+
+import com.activities.api.dto.ShallowCategory;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
@@ -54,9 +56,13 @@ public class TestController {
     @Autowired private ReservationService reservationService;
 
     @GetMapping("/mytest/{id}")
-    public ResponseEntity<?> getMyTest(@PathVariable int id){
+    public ResponseEntity<?> getMyTest(@PathVariable String id){
         
-        return ResponseEntity.ok().body(activityAtDayService.getSellerActivity(1));
+        return ResponseEntity.ok().body(
+            categoryService.getCategoriesRecursively(id)
+            .stream().map(cat -> new ShallowCategory(cat))
+            .toList()
+        );
     }
 
     @GetMapping("/auths")
