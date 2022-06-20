@@ -59,7 +59,7 @@ export function ActivityImageSelector({
             />
             {
                 currentImageIdx >= 0 ?
-                <img src={images[currentImageIdx]} alt="image" className="rounded-2xl max-w-xs sm:max-w-sm"/>
+                <img src={images[currentImageIdx]} alt="" className="rounded-2xl max-w-xs sm:max-w-sm"/>
                 :
                 null
             }

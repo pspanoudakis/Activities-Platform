@@ -29,7 +29,7 @@ function App() {
 
     useEffect(() => {
         // Attempt to login with jwt
-        if (jwtIsStored()) {
+        if (!appContext.userInfo && jwtIsStored()) {
             //setPendingLogin(true)
             loginWithJwt((response) => {
                 console.log(response)
@@ -48,7 +48,7 @@ function App() {
         else {
             setPendingLogin(false)
         }
-    }, [])
+    }, [appContext])
 
     return (
     <>
