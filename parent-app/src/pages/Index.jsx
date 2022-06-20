@@ -16,13 +16,13 @@ export function Index() {
             <ActivitiesSection
                 showBg={true}
                 title="Κλείστε Ξανά"
-                fetchData={fetchRebookActivities}
+                fetchData={(n, callback) => fetchRebookActivities(-1, n, callback)}
                 TileRenderer={RecommendedActivityTile}
             />
             <ActivitiesSection
                 showBg={false}
                 title="Επερχόμενες Δραστηριότητες"
-                fetchData={fetchUpcomingActivities}
+                fetchData={(n, callback) => fetchUpcomingActivities(-1, n, callback)}
                 TileRenderer={UpcomingActivityTile}
             />
         </div>

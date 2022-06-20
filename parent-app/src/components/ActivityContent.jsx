@@ -137,7 +137,7 @@ export function ActivityContent({
         setTotalPrice(reservations.reduce((total, r) => {
             return total + (r.quantity)*activityInfo.price
         }, 0))
-    }, [reservations])
+    }, [reservations, activityInfo.price])
 
     useEffect(() => {
         if (loading) {
@@ -148,7 +148,7 @@ export function ActivityContent({
                 setLoading(false)
             })
         }
-    }, [loading])
+    }, [loading, activityId])
 
     const verifyPrompt = () => {
         context.setState({

@@ -100,7 +100,7 @@ export function Navbar() {
     const mdDevice = useHasMaxWidth(MD_PXLIMIT)
 
     useEffect(() => {
-        if (showOptionsMenu && !context.state.userInfo) {
+        if (!context.state.userInfo) {
             setShowOptionsMenu(false)
         }
     }, [mdDevice, context.state.userInfo])
