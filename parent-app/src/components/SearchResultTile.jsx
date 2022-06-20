@@ -48,7 +48,7 @@ export function SearchResultTile({
                         </div>
                         <div className="flex flex-col gap-2 justify-center">
                             <ActivityRatingIndicator ratingScore={rating} />
-                            <Link to="/" className="text-center bg-navbar-cyan hover:bg-navbar-dark-cyan px-2 py-1 rounded-xl font-semibold">
+                            <Link to="/" className="text-center bg-navbar-cyan hover:bg-navbar-dark-cyan px-2 py-1 rounded-xl font-semibold duration-150">
                                 {`${price} Πόντοι`}
                             </Link>
                         </div>
