@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { fetchActivityResults } from "../api/fetchAPI";
-import { MultiMarkerMap } from "../components/Maps";
-import { SearchResultTile } from "../components/SearchResultTile";
+import { MultiMarkerMap } from "./Maps";
+import { SearchResultTile } from "./SearchResultTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { PageSelector } from "../shared/PaginatedTable";
 import { GoogleUtils } from "../utils/GoogleUtils";
@@ -90,11 +90,13 @@ export function ActivityResults({
         })
     }, [homePosition])
 
-    useEffect(() => {
-        setLoading(true)
+    const loadData = (page) => {
+        if (!loading) {
+            setLoading(true)
+        }
         setSelectedActivity(-1)
         setSecondaryPositions([])
-        fetchActivityResults(options, currentPage, (response) => {
+        fetchActivityResults(options, page, (response) => {
             if (response.ok) {
                 setTotalPages(response.totalPages)
                 setActivities(response.data)
@@ -108,6 +110,19 @@ export function ActivityResults({
                 console.log('Failed to fetch activity results')
             }
         })
+    }
+
+    useEffect(() => {
+        if (currentPage !== 0) {
+            setCurrentPage(0)
+        }
+        else {
+            loadData(0)
+        }
+    }, [options])
+
+    useEffect(() => {
+        loadData(currentPage)
     }, [currentPage])
 
     const homePositionSelected = (pos) => {
@@ -125,7 +140,7 @@ export function ActivityResults({
     }
 
     return (
-        <>
+        <div className="w-full flex flex-col gap-3 items-center justify-start">
             <HomeAddressIndicator
                 address={homeAddress}
                 onSelectNew={selectNewHome}
@@ -139,7 +154,7 @@ export function ActivityResults({
                 onClick={homePositionSelected}
                 notifyOnClick={pendingHomeSelection}
             />
-            <div className="w-10/12 flex flex-col gap-2 relative">
+            <div className="w-full flex flex-col gap-2 relative">
                 <PageSelector
                     canNextPage={currentPage < totalPages - 1}
                     canPreviousPage={currentPage > 0}
@@ -169,6 +184,6 @@ export function ActivityResults({
                 null
             }
             </div>
-        </>
+        </div>
     )    
 }

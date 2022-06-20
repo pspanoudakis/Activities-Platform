@@ -73,8 +73,15 @@ public class SearchController {
         @RequestParam(required = false, defaultValue = "getAnyDistrict") String district,
         @RequestParam(required = false, defaultValue = "0") Integer rating,
         @RequestParam(required = false, defaultValue = "0") Integer max_distance,
+        @RequestParam(required = false, defaultValue = "") String category_name,
         @RequestBody Optional<Coordinates> coords
         ){
+
+        List<Category> categories = category_name.equals("")
+        ?   categoryService.getCategories()
+        :   categoryService.getCategoriesRecursively(category_name);
+
+        if(categories == null)return ResponseEntity.badRequest().header("error", "no category " + category_name).body(null);
 
         List<AgeCategory> ageCategories = (
             (age_category == 0)
@@ -89,10 +96,11 @@ public class SearchController {
         );
 
         //get activities in price range and wanted category and in wanted district
-        List<Activity> activities = activityService.findInPriceRangeAndOfCategoryAndInFacilities(
+        List<Activity> activities = activityService.filterPriceAgeCategoryFacilityCategory(
             max_price, min_price, 
             ageCategories,
-            facilities
+            facilities,
+            categories
             ); 
         
         //Map activities to compactActivities

@@ -139,7 +139,7 @@ export function fetchRecommendedActivities(n, callback) {
     runWithDelay(() => callback(new APIResponse(results, true, RESPONSE_STATUS.OK)))
 }
 
-export function fetchUpcomingActivities(n, callback) {
+export function fetchUpcomingActivities(userId, n, callback) {
     const results = [...Array(n).keys()].map((_, i) => {
 
         return {
@@ -152,7 +152,15 @@ export function fetchUpcomingActivities(n, callback) {
     runWithDelay(() => callback(new APIResponse(results, true, RESPONSE_STATUS.OK)))
 }
 
-export function fetchRebookActivities(n, callback) {
+export function fetchSameProviderActivities(activityId, n, callback) {
+    fetchRecommendedActivities(n, callback)
+}
+
+export function fetchSamePlaceActivities(activityId, n, callback) {
+    fetchRecommendedActivities(n, callback)
+}
+
+export function fetchRebookActivities(userId, n, callback) {
     fetchRecommendedActivities(n, callback)
 }
 

@@ -29,7 +29,7 @@ function App() {
 
     useEffect(() => {
         // Attempt to login with jwt
-        if (jwtIsStored()) {
+        if (!appContext.userInfo && jwtIsStored()) {
             //setPendingLogin(true)
             loginWithJwt((response) => {
                 console.log(response)
@@ -48,7 +48,7 @@ function App() {
         else {
             setPendingLogin(false)
         }
-    }, [])
+    }, [appContext])
 
     return (
     <>
@@ -78,7 +78,8 @@ function App() {
                     className='flex-1 flex flex-col gap-2 items-center justify-between'
                 >
                     <Navbar/>
-                    <div style={{ maxWidth: "60rem", minWidth: "20rem"}} className='w-full h-full flex flex-col gap-2 items-center justify-start'>
+                    {/* Test maxWidth */}
+                    <div style={{ maxWidth: "70rem", minWidth: "20rem"}} className='w-full h-full flex flex-col gap-2 items-center justify-start'>
                     {
                         pendingLogin ?
                         <LoadingIndicator stretchParent={false}/>

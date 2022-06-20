@@ -29,7 +29,7 @@ export function ActivityImageSelector({
                 })
             }
         }
-    }, [nextImageIdx])
+    }, [nextImageIdx, images.length])
 
     useEffect(() => {
         if (loading) {
@@ -48,7 +48,7 @@ export function ActivityImageSelector({
                 })
             }
         }
-    }, [loading])
+    }, [loading, images])
 
     return (
         <div className="flex flex-row justify-between items-center relative gap-1" style={{height: '20rem', minWidth: '20rem'}}>
@@ -59,7 +59,7 @@ export function ActivityImageSelector({
             />
             {
                 currentImageIdx >= 0 ?
-                <img src={images[currentImageIdx]} alt="image" className="rounded-2xl max-w-xs sm:max-w-sm"/>
+                <img src={images[currentImageIdx]} alt="" className="rounded-2xl max-w-xs sm:max-w-sm"/>
                 :
                 null
             }

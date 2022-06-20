@@ -9,6 +9,7 @@ import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
 import com.activities.api.entities.AgeCategory;
+import com.activities.api.entities.Category;
 import com.activities.api.entities.Evaluation;
 import com.activities.api.entities.Facility;
 import com.activities.api.entities.Seller;
@@ -92,13 +93,14 @@ public class ActivityService {
         return (int) ((double) total/size + 0.5);
     }
 
-    public List<Activity> findInPriceRangeAndOfCategoryAndInFacilities(
+    public List<Activity> filterPriceAgeCategoryFacilityCategory(
         int max, int min, 
         List<AgeCategory> ageCategories, 
-        List<Facility> facilities){
+        List<Facility> facilities,
+        List<Category> categories){
 
-        return activityRepository.findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityIn(
-            max, min, ageCategories, facilities);
+        return activityRepository.findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityInAndCategoryIn(
+            max, min, ageCategories, facilities, categories);
     }
 }
 

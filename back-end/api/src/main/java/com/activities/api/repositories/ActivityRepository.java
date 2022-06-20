@@ -3,6 +3,7 @@ package com.activities.api.repositories;
 import com.activities.api.dto.ActivityPopularity;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.AgeCategory;
+import com.activities.api.entities.Category;
 import com.activities.api.entities.Facility;
 
 import java.time.LocalDate;
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     
-    public List<Activity> findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityIn(
-        int max, int min, List<AgeCategory> ageCategories, List<Facility> facilities);
+    public List<Activity> findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityInAndCategoryIn(
+        int max, int min, List<AgeCategory> ageCategories, List<Facility> facilities, List<Category> categories);
     public List<Activity> findByFacility(Facility facility);
     public List<Activity> findByFacilityIn(Collection<Facility> facilities);
     
