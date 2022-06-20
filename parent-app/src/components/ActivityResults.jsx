@@ -90,11 +90,13 @@ export function ActivityResults({
         })
     }, [homePosition])
 
-    useEffect(() => {
-        setLoading(true)
+    const loadData = (page) => {
+        if (!loading) {
+            setLoading(true)
+        }
         setSelectedActivity(-1)
         setSecondaryPositions([])
-        fetchActivityResults(options, currentPage, (response) => {
+        fetchActivityResults(options, page, (response) => {
             if (response.ok) {
                 setTotalPages(response.totalPages)
                 setActivities(response.data)
@@ -108,6 +110,19 @@ export function ActivityResults({
                 console.log('Failed to fetch activity results')
             }
         })
+    }
+
+    useEffect(() => {
+        if (currentPage !== 0) {
+            setCurrentPage(0)
+        }
+        else {
+            loadData(0)
+        }
+    }, [options])
+
+    useEffect(() => {
+        loadData(currentPage)
     }, [currentPage])
 
     const homePositionSelected = (pos) => {

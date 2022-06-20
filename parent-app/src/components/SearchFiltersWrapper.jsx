@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 export function SearchFiltersWrapper({
-    options,
     keepOpen,
     setOpen,
-    isOpen
+    isOpen,
+    options,
+    setOptions
 }) {
     
     return (

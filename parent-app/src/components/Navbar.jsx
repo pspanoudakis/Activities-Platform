@@ -94,6 +94,7 @@ export function Navbar() {
     const context = useContext(AppContext)
     const navigate = useNavigate()
 
+    const [textSearchValue, setTextSearchValue] = useState('')
     const [showOptionsMenu, setShowOptionsMenu] = useState(false)
 
     const mdDevice = useHasMaxWidth(MD_PXLIMIT)
@@ -106,7 +107,7 @@ export function Navbar() {
 
     const triggerTextSearch = (e) => {
         e.preventDefault()
-        navigate('/')
+        navigate(`/searchActivity?text=${textSearchValue}`)
     }
 
     const openSignUpModal = () => {
@@ -139,7 +140,13 @@ export function Navbar() {
                 <div className="flex-1 flex flex-row justify-start gap-5">
                     <Link to="/" className="font-bold text-2xl">Logo</Link>
                     <form method="GET" className="bg-white rounded-3xl pl-3 flex-1 flex flex-row gap-3 items-center" onSubmit={triggerTextSearch}>
-                        <input type="text" className="focus:outline-none placeholder:italic flex-1" placeholder="Αναζητήστε μια δραστηριότητα..."/>
+                        <input
+                            value={textSearchValue}
+                            onChange={e => setTextSearchValue(e.target.value)}
+                            type="text"
+                            className="focus:outline-none placeholder:italic flex-1"
+                            placeholder="Αναζητήστε μια δραστηριότητα..."
+                        />
                         <button type="submit" className="hover:bg-light-cyan rounded-full px-3 py-1">
                             <FontAwesomeIcon icon={faSearch} color="gray"/>                        
                         </button>
