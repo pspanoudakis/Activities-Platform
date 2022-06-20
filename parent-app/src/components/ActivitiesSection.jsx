@@ -48,7 +48,7 @@ export function ActivitiesSection({
             }
             setLoading(false)
         })
-    }, [])
+    }, [fetchData])
 
     return (
         <div className="flex flex-col w-full h-max gap-4 pt-3">

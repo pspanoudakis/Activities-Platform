@@ -27,7 +27,9 @@ export function SingleMarkerMap({
 export function MultiMarkerMap({
     style,
     mainMarkerPosition,
-    restMarkersPositions
+    restMarkersPositions,
+    onClick,
+    notifyOnClick
 }) {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -57,13 +59,26 @@ export function MultiMarkerMap({
 
     return isLoaded ? (
         <GoogleMap
+            options={{
+                maxZoom: 18,
+                draggableCursor: notifyOnClick ? "pointer" : null
+            }}
             mapContainerStyle={style}
-            center={mainMarkerPosition}
+            center={notifyOnClick ? null : mainMarkerPosition}
             zoom={14}
             onLoad={onLoad}
+            onClick={(e) => {
+                if (notifyOnClick) {
+                    onClick({
+                        "lat": e.latLng.lat(),
+                        "lng": e.latLng.lng()
+                    })
+                }
+            }}
             onUnmount={onUnmount}
         >
-            <Marker position={mainMarkerPosition} visible={true}/>
+            
+            <Marker position={mainMarkerPosition} visible={true} icon="https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"/>
             {
                 restMarkersPositions.map((p, i) => <Marker key={i} position={p} visible={true}/>)
             }

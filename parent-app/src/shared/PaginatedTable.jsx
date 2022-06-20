@@ -25,7 +25,7 @@ function PageSizeSelector({
     )
 }
 
-function PageSelector({
+export function PageSelector({
     canPreviousPage,
     canNextPage,
     gotoPage,
