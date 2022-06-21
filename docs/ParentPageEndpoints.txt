@@ -118,7 +118,7 @@ plannedActivity{
     }
 }
 
-+ {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10&category_name=category1_level1)
++ {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10)
     Περιγραφή:
     Προβολή της 1ης σελίδας μεγέθους 10 συνοπτικών πληροφοριών για τις οποίες ισχύουν συνδιαστικά τα φίλτρα:
     Ηληκιακή Κατηγορία: Προσχολική (1 - age_category.id)
@@ -126,11 +126,18 @@ plannedActivity{
     Ημερολογιακή περιοχή: 2022-01-01 έως 2022-02-01
     Βαθμολογία: >3 αστέρια
     Περιοχή: Athens
-    Μέγιστη απόσταση: 20 km.
-    Κατηγορία (ή υπερκατηγορία): category1_level1
+    Μέγιστη απόσταση: 20 km
     RequestBody(απαραίτητο μόνο αν έχει δοθεί max_distance){
-        "longitude": 12.0
-        "latitude": 10.0
+        "categories": [
+            "category_name1",
+            .
+            .
+            .
+        ]
+        "coordinates": {
+            "longitude": 12.0
+            "latitude": 10.0
+        }
     }
     ResponseBody{
         [
