@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { useMemo } from "react";
-import { useContext } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { signUp } from "../api/fetchAPI";
 import { AppContext } from "../AppContext";
 import { FormFieldWithHint } from "../shared/FormUtils";
