@@ -30,6 +30,25 @@
     }
 }
 
+GET(/search/all_categories)
+ResponseBody{
+[
+    {
+        "id",
+        "name",
+        "children": [
+            <category_data>,
+            .
+            .
+            .
+        ]
+    },
+    .
+    .
+    .
+]
+}
+
 ActivityCompactDTO{
     int id;
     String name,
