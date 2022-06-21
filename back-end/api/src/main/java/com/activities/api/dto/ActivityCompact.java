@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.activities.api.entities.Activity;
 import com.activities.api.services.ActivityService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +18,6 @@ public class ActivityCompact {
     private String address;
     private int price;
     private LocalDate date;
-    @JsonIgnore
     private Coordinates coordinates;
 
     public ActivityCompact(Activity activity, ActivityService activityService, LocalDate start_date){
