@@ -19,8 +19,12 @@ repositories {
 	maven{
 		url "https://mvnrepository.com/artifact/com.auth0/java-jwt"
 		url "https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt"
+		url "https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api"
+		url "https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine"
+		url "https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params"
 	}
 }
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -35,6 +39,11 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-config:5.7.1'
 	implementation 'com.auth0:java-jwt:3.19.2'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+	testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+
 }
 
 tasks.named('test') {

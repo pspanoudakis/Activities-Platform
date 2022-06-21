@@ -1,9 +1,11 @@
 package com.activities.api.controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.ActivityExtended;
 import com.activities.api.dto.ActivityPopularityCompact;
+import com.activities.api.dto.CatCoordRequest;
+import com.activities.api.dto.CategoryWithChildren;
 import com.activities.api.dto.Coordinates;
 import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.ShallowCategory;
@@ -59,6 +63,19 @@ public class SearchController {
         ).limit(5).collect(Collectors.toList()));
     }
     
+    @GetMapping("/all_categories")
+    public ResponseEntity<List<CategoryWithChildren>> getCategoriesWithChildren(@RequestParam(required = false, defaultValue = "false") Boolean recursion){
+
+        return ResponseEntity.ok().body(
+            categoryService.getCategories()
+            .stream()
+            .map(
+                cat -> new CategoryWithChildren(cat, categoryService, recursion)
+                // cat -> new CategoryWithChildren(cat, categoryService, true)
+            ).collect(Collectors.toList())
+        );
+    }
+
     @GetMapping("/activities")
     public ResponseEntity<PagingResponse<List<ActivityCompact>>> getFilteredActivities(
         @RequestParam(required = false, defaultValue = "1") Integer page_number, 
@@ -73,15 +90,29 @@ public class SearchController {
         @RequestParam(required = false, defaultValue = "getAnyDistrict") String district,
         @RequestParam(required = false, defaultValue = "0") Integer rating,
         @RequestParam(required = false, defaultValue = "0") Integer max_distance,
-        @RequestParam(required = false, defaultValue = "") String category_name,
-        @RequestBody Optional<Coordinates> coords
+        @RequestBody Optional<CatCoordRequest> request
         ){
+        CatCoordRequest req = request.orElse(null);
 
-        List<Category> categories = category_name.equals("")
-        ?   categoryService.getCategories()
-        :   categoryService.getCategoriesRecursively(category_name);
+        List<String> category_names = (req == null || (req != null && req.getCategories() == null))
+        ?   null
+        :   req.getCategories();
+        List<Category> categories;
+        
+        if(category_names == null)categories = categoryService.getCategories();
+        else{
+            int size = category_names.size();
+            ArrayList<Category> cats = new ArrayList<Category>();
 
-        if(categories == null)return ResponseEntity.badRequest().header("error", "no category " + category_name).body(null);
+            for(int i = 0; i < size; i++){
+                String category_name = category_names.get(i);
+                List<Category> toAdd = categoryService.getCategoriesRecursively(category_name);
+                if(toAdd == null)return ResponseEntity.badRequest().header("error", "no category " + category_name).body(null);
+
+                cats.addAll(toAdd);
+            }
+            categories = new ArrayList<Category>(Set.copyOf(cats));
+        }
 
         List<AgeCategory> ageCategories = (
             (age_category == 0)
@@ -110,11 +141,14 @@ public class SearchController {
                                                         return ac;
                                                     }).collect(Collectors.toList());
         
+        Coordinates coords = (req == null || (req != null && req.getCoordinates() == null))
+        ?   null
+        :   req.getCoordinates();
         //remove if outside of date range or of smaller rating
         compactActivities.removeIf(
             ca -> ca.getRating() < rating 
             || ca.getDate().isAfter(end_date)
-            || (max_distance != 0 && coords != null && ca.getCoordinates().distance(coords.orElse(null)) >= max_distance)
+            || (max_distance != 0 && coords != null && ca.getCoordinates().distance(coords) >= max_distance)
         );
 
         //Send wanted page of data, and total number of same size pages

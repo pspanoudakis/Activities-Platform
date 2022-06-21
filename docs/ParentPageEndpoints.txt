@@ -30,23 +30,25 @@
     }
 }
 
-GET(/search/all_categories)
-ResponseBody{
-[
-    {
-        "id",
-        "name",
-        "children": [
-            <category_data>,
-            .
-            .
-            .
-        ]
-    },
-    .
-    .
-    .
-]
++{GET(/search/all_categories)
+    Προεραιτική request parameter, recursion (default = false). Αν είναι true τοτε επιστρέφει όλους τους απογόνους, αλλιώς μόνο τους άμεσους
+    ResponseBody{
+    [
+        {
+            "id",
+            "name",
+            "children": [
+                <category_data>,
+                .
+                .
+                .
+            ]
+        },
+        .
+        .
+        .
+    ]
+    }
 }
 
 ActivityCompactDTO{
