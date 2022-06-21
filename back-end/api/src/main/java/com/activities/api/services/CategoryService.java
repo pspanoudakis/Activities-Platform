@@ -1,5 +1,6 @@
 package com.activities.api.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.activities.api.entities.Category;
@@ -23,5 +24,23 @@ public class CategoryService {
 
     public Category getCategory(int id){
         return categoryRepository.findById(id).orElse(null);
+    }
+
+    public List<Category> getCategoriesRecursively(String name){
+
+        if(name == null)return getCategories();
+
+        Category root = categoryRepository.findByName(name).orElse(null);
+        if(root == null)return null;
+
+        ArrayList<Category> res = new ArrayList<>();
+        res.add(root);
+        List<Category> temp = categoryRepository.findByParentCategoryIn(res);
+        while(!temp.isEmpty()){
+            res.addAll(temp);
+            temp = categoryRepository.findByParentCategoryIn(temp);
+        }
+
+        return res; 
     }
 }
