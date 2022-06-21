@@ -1,7 +1,6 @@
 import { faHouse, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { fetchActivityResults } from "../api/fetchAPI";
 import { MultiMarkerMap } from "./Maps";
 import { SearchResultTile } from "./SearchResultTile";

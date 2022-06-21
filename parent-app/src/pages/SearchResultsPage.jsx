@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ActivityResults } from "../components/ActivityResults";
 import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
@@ -8,7 +7,7 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
 
 /**
  * @typedef {object} FilterOptions
- * @property {number | undefined} categoryId
+ * @property {object | undefined} categories
  * @property {number | undefined} ageCategory
  * @property {number | undefined} minPrice
  * @property {number | undefined} maxPrice
@@ -18,16 +17,45 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
  * @property {number | undefined} maxDistance
  */
 
+// Will get this from context probably
+const categories = (() => {
+    const idxs = [...Array(8).keys()]
+    const categories = {}
+    idxs.forEach(i => {
+        categories[`MainCategory${i}`] = [
+            `Subcategory${i}_1`,
+            `Subcategory${i}_2`,
+            `Subcategory${i}_3`,
+            `Subcategory${i}_4`,
+        ]
+    })
+    //console.log(categories);
+    return categories
+})()
 export function SearchResultsPage() {
 
     const params = useParams()
     const [searchOptions, setSearchOptions] = useState({
         text: params.text ?? '',        
         /** @type {FilterOptions} */
-        filters: {}
+        filters: {
+            categories: Object.keys(categories).reduce((storedMain, category) => {
+                storedMain[category] = {
+                    isSelected: false,
+                    subcategories: categories[category].reduce((storedSub, subcategory) => {
+                        storedSub[subcategory] = false
+                        return storedSub
+                    }, {})
+                }
+                return storedMain
+            }, {})
+        }
     })
 
+    //useEffect(() => console.log('state', searchOptions), [])
+
     const updateFilters = (newFilters) => {
+        //console.log(newFilters)
         setSearchOptions({
             text: searchOptions.text,
             filters: newFilters
@@ -42,7 +70,6 @@ export function SearchResultsPage() {
     }, [mdDevice])
 
     useEffect(() => {
-        console.log('text changed')
         setSearchOptions({
             text: params.text,
             filters: searchOptions.filters
@@ -50,7 +77,7 @@ export function SearchResultsPage() {
     }, [params])
 
     return (
-        <div className={`w-full flex ${mdDevice ? 'flex-col gap-2 px-2' : 'flex-row gap-3'} items-center justify-center`}>
+        <div className={`w-full flex ${mdDevice ? 'flex-col gap-2 px-2' : 'flex-row gap-3'} items-start justify-center`}>
             <SearchFiltersWrapper
                 isOpen={filtersOpen || !mdDevice}
                 keepOpen={!mdDevice}
