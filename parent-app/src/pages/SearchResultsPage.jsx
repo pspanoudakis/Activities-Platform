@@ -7,17 +7,18 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
 
 /**
  * @typedef {object} FilterOptions
- * @property {object | undefined} categories
- * @property {number | undefined} ageCategory
- * @property {number | undefined} minPrice
- * @property {number | undefined} maxPrice
- * @property {string | undefined} startDate
- * @property {string | undefined} endDate
- * @property {string | undefined} district
- * @property {number | undefined} maxDistance
+ * @property {object} categories
+ * @property {Array<object>} ageCategories
+ * @property {[string, string]} priceRange
+ * @property {[string, string]} dateRange
+ * @property {string} minRating
+ * @property {string} district
+ * @property {string} maxDistance
  */
 
-// Will get this from context probably
+
+// Will probably fetch these two
+
 const categories = (() => {
     const idxs = [...Array(8).keys()]
     const categories = {}
@@ -32,6 +33,14 @@ const categories = (() => {
     //console.log(categories);
     return categories
 })()
+
+const ageCategories = {
+    1: 'Προσχολική (0-5)',
+    2: 'Δημοτικού (6-11)',
+    3: 'Γυμνασίου (12-15)',
+}
+
+
 export function SearchResultsPage() {
 
     const params = useParams()
@@ -48,14 +57,25 @@ export function SearchResultsPage() {
                     }, {})
                 }
                 return storedMain
-            }, {})
+            }, {}),
+            ageCategories: Object.keys(ageCategories).map((ageCategory, i) => {
+                return {
+                    name: ageCategories[ageCategory],
+                    isSelected: i === 0
+                }
+            }),
+            priceRange: ['', ''],
+            dateRange: ['', ''],
+            minRating: '',
+            district: '',
+            maxDistance: ''
         }
     })
 
     //useEffect(() => console.log('state', searchOptions), [])
 
     const updateFilters = (newFilters) => {
-        //console.log(newFilters)
+        console.log(newFilters)
         setSearchOptions({
             text: searchOptions.text,
             filters: newFilters
