@@ -45,6 +45,18 @@ public class SearchController {
     @Autowired private FacilityService facilityService;
     @Autowired private CategoryService categoryService;
 
+    @GetMapping("/districts")
+    public ResponseEntity<List<String>> getDistricts(){
+        return ResponseEntity.ok().body(facilityService.getDistricts());
+    }
+
+    @GetMapping("/age_categories")
+    public ResponseEntity<List<AgeCategory>> getAgeCategories(){
+        return ResponseEntity.ok().body(
+            ageCategoryService.getAgeCategories()
+        );
+    }
+
     @GetMapping("/categories/{parent_id}")
     public ResponseEntity<List<ShallowCategory>> getCategories(@PathVariable int parent_id){
         Category category = (parent_id == 0) ? null : categoryService.getCategory(parent_id);
