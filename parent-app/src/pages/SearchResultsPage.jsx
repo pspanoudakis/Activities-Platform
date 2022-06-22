@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ActivityResults } from "../components/ActivityResults";
 import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
@@ -12,8 +11,8 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
  * @property {Array<object>} ageCategories
  * @property {[string, string]} priceRange
  * @property {[string, string]} dateRange
- * @property {string} minRating
- * @property {string} district
+ * @property {Array<object>} minRating
+ * @property {Array<object>} districts
  * @property {string} maxDistance
  */
 
@@ -40,6 +39,13 @@ const ageCategories = {
     2: 'Δημοτικού (6-11)',
     3: 'Γυμνασίου (12-15)',
 }
+
+const districtNames = [
+    'Αθήνα',
+    'Θεσσαλονίκη',
+    'Πάτρα',
+    'Λάρισα'
+]
 
 
 export function SearchResultsPage() {
@@ -70,8 +76,13 @@ export function SearchResultsPage() {
             }),
             priceRange: ['', ''],
             dateRange: ['', ''],
-            minRating: '',
-            district: '',
+            minRating: [...Array(5).keys()].map(_ => false),
+            districts: districtNames.reduce((stored, current) => {
+                return {
+                    ...stored,
+                    [current]: false
+                }
+            }, {}),
             maxDistance: ''
         }
     })

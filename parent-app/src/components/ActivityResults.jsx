@@ -1,6 +1,6 @@
+import React, { useState, useEffect } from "react";
 import { faHouse, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect } from "react";
 import { fetchActivityResults } from "../api/fetchAPI";
 import { MultiMarkerMap } from "./Maps";
 import { SearchResultTile } from "./SearchResultTile";
@@ -163,7 +163,7 @@ export function ActivityResults({
                     nextPage={() => setCurrentPage(currentPage + 1)}
                     totalPages={totalPages}
                 />
-                <div className="w-full flex flex-col gap-2 overflow-y-scroll" style={{maxHeight: '50vh'}}>
+                <div className="w-full flex flex-col gap-2 overflow-y-auto" style={{maxHeight: '50vh'}}>
                 {
                     activities.length > 0 ?
                     activities.map((a, i) => <SearchResultTile

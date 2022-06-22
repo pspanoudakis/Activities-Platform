@@ -1,6 +1,6 @@
+import React, { useMemo, useState } from "react";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
 
 function CategoryFamilyChecklist({
     mainName,
@@ -196,20 +196,88 @@ function DateRangePicker({
     )
 }
 
-function MaxDistancePicker ({
-    selection,
-    setSelection
+function DistrictPicker({
+    selections,
+    setSelections
 }) {
 
-    const [value, setValue] = useState(selection)
+    const districtNames = useMemo(() => Object.keys(selections), [selections])
+
+    const selectedDistrict = useMemo(() => {
+        return districtNames.find(name => selections[name]) ?? ''
+    }, [selections])
+
+    const updateSelection = (newSelection) => {
+        setSelections(districtNames.reduce((stored, name) => {
+            return {
+                ...stored,
+                [name]: name === newSelection
+            }
+        }, {}))
+    }
+
+    return (
+        <div className="flex flex-col gap-2">
+            <span className="font-semibold text-lg">Περιοχή</span>
+            <select className="py-1 px-2 rounded-xl outline-none" value={selectedDistrict} onChange={(e) => updateSelection(e.target.value)}>
+                <option className="text-gray-500 italic" value="">{selectedDistrict === '' ? 'Επιλέξτε...' : 'Επαναφορά...'}</option>
+            {
+                districtNames.map((d, i) => {
+                    return (<option key={i} value={d}>{d}</option>)
+                })
+            }
+            </select>
+        </div>
+    )    
+}
+
+function MinRatingPicker({
+    selections,
+    setSelections
+}) {
+    
+    const selectedRate = useMemo(() => {
+        return selections.findIndex(v => v)
+    }, [selections])
+
+    const updateSelection = (idx) => {
+        setSelections( selections.map((r, i) => i === idx) )
+    }
+    
+    return (
+        <div className="flex flex-col gap-2">
+            <span className="font-semibold text-lg">Αξιολόγηση</span>
+            <select
+                className="py-1 px-2 rounded-xl outline-none w-32"
+                value={selectedRate > -1 ? selectedRate : ''}
+                onChange={(e) => updateSelection(parseInt(e.target.value))}
+            >
+                <option className="text-gray-500 italic" value="">{selectedRate === -1 ? 'Επιλέξτε...' : 'Επαναφορά...'}</option>
+            {
+                selections.map((_, r) => {
+                    return (<option key={r} value={r}>{r + 1}+ αστέρια</option>)
+                })
+            }
+            </select>
+        </div>
+    )
+
+}
+
+function MaxDistancePicker ({
+    selections,
+    setSelections
+}) {
+
+    const [value, setValue] = useState(selections)
     
     return (
         <div className="flex flex-col gap-2">
             <div className="font-semibold text-lg">
                 Μεγ. Απόσταση από διεύθυνση
                 {
-                    value !== selection ?
-                    <button className="ml-3 h-max w-max text-xs font-semibold bg-navbar-cyan py-1 px-2 rounded-3xl" onClick={() => setSelection(value)}>
+                    value !== selections ?
+                    <button className="ml-3 h-max w-max text-xs font-semibold bg-navbar-cyan py-1 px-2 rounded-3xl" onClick={() => setSelections(value)}>
                         Εφαρμογή
                     </button>
                     :
@@ -218,7 +286,7 @@ function MaxDistancePicker ({
             </div>
             
             <div className="flex flex-row gap-2 items-center">
-                <input className="w-20 rounded-xl py-1 px-2" type="number" value={value} onChange={e => setValue(e.target.value)} />
+                <input className="w-16 rounded-xl py-1 px-2" type="number" value={value} onChange={e => setValue(e.target.value)} />
                 <span className="w-full text-sm">km</span>
             </div>
             
@@ -263,9 +331,9 @@ export function SearchFiltersWrapper({
     return (
         <div
             className={`
-                flex flex-col justify-start items-center gap-4
+                flex flex-col justify-start gap-4
                 bg-dark-cyan rounded-xl
-                ${keepOpen ? 'w-72 py-8 h-full' : `w-full py-2 ${isOpen ? 'pb-4 h-96 overflow-y-scroll' : ''}` } 
+                ${keepOpen ? 'w-72 pl-4 py-8 h-screen overflow-y-auto items-start' : `items-center w-full py-2 ${isOpen ? 'pb-4 h-96 overflow-y-scroll' : ''}` } 
             `}
         >
         {
@@ -288,7 +356,7 @@ export function SearchFiltersWrapper({
         }
         {
             isOpen ?
-            <div className="flex flex-col gap-3 w-48 items-start px-1">
+            <div className={`flex flex-col gap-3 w-48 items-start pl-1`}>
                 <CategoryPicker
                     selections={options.categories}
                     setSelections={changeCategories}
@@ -305,9 +373,17 @@ export function SearchFiltersWrapper({
                     selections={options.dateRange}
                     setSelections={filterSetter('dateRange')}
                 />
+                <MinRatingPicker
+                    selections={options.minRating}
+                    setSelections={filterSetter('minRating')}
+                />
+                <DistrictPicker
+                    selections={options.districts}
+                    setSelections={filterSetter('districts')}
+                />
                 <MaxDistancePicker
-                    selection={options.maxDistance}
-                    setSelection={filterSetter('maxDistance')}
+                    selections={options.maxDistance}
+                    setSelections={filterSetter('maxDistance')}
                 />
             </div>
             :
