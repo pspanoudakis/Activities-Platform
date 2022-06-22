@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams, createSearchParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket, faBars, faCreditCard, faPersonSwimming, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../AppContext";
@@ -93,6 +93,7 @@ export function Navbar() {
 
     const context = useContext(AppContext)
     const navigate = useNavigate()
+    const [params,] = useSearchParams()
 
     const [textSearchValue, setTextSearchValue] = useState('')
     const [showOptionsMenu, setShowOptionsMenu] = useState(false)
@@ -107,7 +108,14 @@ export function Navbar() {
 
     const triggerTextSearch = (e) => {
         e.preventDefault()
-        navigate(`/searchActivity?text=${textSearchValue}`)
+        //navigate(`/searchActivity?text=${textSearchValue}&categories=${encodeURIComponent( params.get('categories') ?? '')}`, )
+        navigate({
+            pathname: '/searchActivity',
+            search: createSearchParams({
+                text: textSearchValue,
+                categories: params.get('categories') ?? ''
+            }).toString()
+        })
     }
 
     const openSignUpModal = () => {

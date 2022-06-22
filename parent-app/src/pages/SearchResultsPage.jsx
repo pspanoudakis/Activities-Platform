@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ActivityResults } from "../components/ActivityResults";
 import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
@@ -43,16 +44,19 @@ const ageCategories = {
 
 export function SearchResultsPage() {
 
-    const params = useParams()
+    const [params, setParams] = useSearchParams()
+
+    const storedCategories = useRef(params.get('categories') ? JSON.parse(params.get('categories')) : [])
+
     const [searchOptions, setSearchOptions] = useState({
-        text: params.text ?? '',        
+        text: params.get('text') ?? '',        
         /** @type {FilterOptions} */
         filters: {
             categories: Object.keys(categories).reduce((storedMain, category) => {
                 storedMain[category] = {
-                    isSelected: false,
+                    isSelected: storedCategories.current.includes(category),
                     subcategories: categories[category].reduce((storedSub, subcategory) => {
-                        storedSub[subcategory] = false
+                        storedSub[subcategory] = storedCategories.current.includes(subcategory)
                         return storedSub
                     }, {})
                 }
@@ -72,10 +76,8 @@ export function SearchResultsPage() {
         }
     })
 
-    //useEffect(() => console.log('state', searchOptions), [])
-
     const updateFilters = (newFilters) => {
-        console.log(newFilters)
+        //console.log(newFilters)
         setSearchOptions({
             text: searchOptions.text,
             filters: newFilters
@@ -90,11 +92,41 @@ export function SearchResultsPage() {
     }, [mdDevice])
 
     useEffect(() => {
+        const newCategories = (params.get('categories') ? JSON.parse(params.get('categories')) : [])
+        const categoriesChanged = newCategories.join(',') !== storedCategories.current.join(',')
+        if (categoriesChanged) {
+            storedCategories.current = newCategories
+        }
         setSearchOptions({
-            text: params.text,
-            filters: searchOptions.filters
+            text: params.get('text') ?? '',
+            filters: (
+                categoriesChanged ?
+                {
+                    ...searchOptions.filters,
+                    categories: Object.keys(categories).reduce((storedMain, category) => {
+                        storedMain[category] = {
+                            isSelected: newCategories.includes(category),
+                            subcategories: categories[category].reduce((storedSub, subcategory) => {
+                                storedSub[subcategory] = newCategories.includes(subcategory)
+                                return storedSub
+                            }, {})
+                        }
+                        return storedMain
+                    }, {})
+                }
+                :
+                searchOptions.filters
+            )
         })
     }, [params])
+
+    const updateUrlCategories = (newCategoriesParam) => {
+        setParams({
+            text: params.get('text') ?? '',
+            categories: newCategoriesParam
+        })
+        //navigate(`/searchActivity?text=${params.get('text') ?? ''}&categories=${newCategoriesParam}`)
+    }
 
     return (
         <div className={`w-full flex ${mdDevice ? 'flex-col gap-2 px-2' : 'flex-row gap-3'} items-start justify-center`}>
@@ -104,6 +136,7 @@ export function SearchResultsPage() {
                 setOpen={setFiltersOpen}
                 options={searchOptions.filters}
                 setOptions={updateFilters}
+                updateCategories={updateUrlCategories}
             />
             <ActivityResults
                 options={searchOptions}

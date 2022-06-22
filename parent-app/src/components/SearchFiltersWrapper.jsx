@@ -26,7 +26,7 @@ function CategoryFamilyChecklist({
 
     const toggleSub = (subcategoryName) => {
         updateSelections(mainName, {
-            ...selections,
+            isSelected: false,
             subcategories: {
                 ...selections.subcategories,
                 [subcategoryName]: !selections.subcategories[subcategoryName]
@@ -232,7 +232,8 @@ export function SearchFiltersWrapper({
     setOpen,
     isOpen,
     options,
-    setOptions
+    setOptions,
+    updateCategories
 }) {
 
     const filterSetter = (propertyName) => ( (newValue) => {
@@ -241,6 +242,23 @@ export function SearchFiltersWrapper({
             [propertyName]: newValue
         })
     } )
+
+    const changeCategories = (newSelections) => {
+        const selected = []
+        for (const category in newSelections) {
+            if (newSelections[category].isSelected) {
+                selected.push(category)
+            }
+            else {
+                for (const subcategory in newSelections[category].subcategories) {
+                    if (newSelections[category].subcategories[subcategory]) {
+                        selected.push(subcategory)
+                    }
+                }
+            }
+        }
+        updateCategories(JSON.stringify(selected))
+    }
     
     return (
         <div
@@ -273,7 +291,7 @@ export function SearchFiltersWrapper({
             <div className="flex flex-col gap-3 w-48 items-start px-1">
                 <CategoryPicker
                     selections={options.categories}
-                    setSelections={filterSetter('categories')}
+                    setSelections={changeCategories}
                 />
                 <AgeCategoryPicker
                     selections={options.ageCategories}

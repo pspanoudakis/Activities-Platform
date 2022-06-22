@@ -100,7 +100,7 @@ export function ActivityResults({
                 setTotalPages(response.totalPages)
                 setActivities(response.data)
                 fetchLocationAdresses(response.data).then((locations) => {
-                    console.log(locations)
+                    //console.log(locations)
                     setActivityLocations(locations)
                     setLoading(false)
                 })
