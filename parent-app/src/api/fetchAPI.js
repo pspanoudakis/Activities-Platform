@@ -23,7 +23,7 @@ export const RESPONSE_STATUS = {
     EXPIRED_JWT: -1
 }
 
-function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, callback}) {
+export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, callback}) {
     fetch(
         createEndpoint(endpoint),
         {
@@ -162,42 +162,6 @@ export function fetchSamePlaceActivities(activityId, n, callback) {
 
 export function fetchRebookActivities(userId, n, callback) {
     fetchRecommendedActivities(n, callback)
-}
-
-export function fetchActivityResults(options, requestedPage, callback) {
-    const locations = [
-        {
-            lat: 38.095822,
-            lng: 23.815153
-        },
-        {
-            lat: 38.064543,
-            lng: 23.781032
-        },
-        {
-            lat: 38.080634,
-            lng: 23.686668
-        },
-        {
-            lat: 38.337563,
-            lng: 23.642770
-        }
-    ]
-    callback({
-        ok: true,
-        totalPages: 4,
-        data: [...Array(4).keys()].map((_, i) => {
-
-            return {
-                imgSrc: `https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1000&h=-1&s=1`,
-                name: `Ποδόσφαιρο 5x5 ${i}`,
-                rating: 3.9,
-                location: locations[i],
-                price: 100,
-                nextDate: `11/4/22 14:00`
-            }
-        })
-    })
 }
 
 export function fetchActivity(activityId, callback) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { faHouse, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fetchActivityResults } from "../api/fetchAPI";
+import { fetchActivityResults } from "../api/searchAPI";
 import { MultiMarkerMap } from "./Maps";
 import { SearchResultTile } from "./SearchResultTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
@@ -50,15 +50,16 @@ function HomeAddressIndicator({
     )
 }
 
-async function fetchLocationAdresses(activities) {
+/* async function fetchLocationAdresses(activities) {
     const locations = []
     for (const a of activities) {
-        const l = await GoogleUtils.coordinatesToAddressAsync(a.location.lat, a.location.lng)
+        const l = await GoogleUtils.coordinatesToAddressAsync(a.coordinates.latitude, a.coordinates.longitude)
         locations.push(l)
     }
     return locations
-}
+} */
 
+const PAGE_SIZE = 4
 export function ActivityResults({
     options,
     initialHomePosition
@@ -73,13 +74,17 @@ export function ActivityResults({
 
     const [selectedActivity, setSelectedActivity] = useState(-1)
     const [activities, setActivities] =  useState([])
-    const [activityLocations, setActivityLocations] = useState([])
+    //const [activityLocations, setActivityLocations] = useState([])
 
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages] = useState(-1)
     
     const activityClicked = (idx) => {
-        setSecondaryPositions([activities[idx].location])
+        console.log(activities[idx].coordinates);
+        setSecondaryPositions([{
+            lat: activities[idx].coordinates.latitude,
+            lng: activities[idx].coordinates.longitude
+        }])
         setSelectedActivity(idx)
     }
 
@@ -95,15 +100,16 @@ export function ActivityResults({
         }
         setSelectedActivity(-1)
         setSecondaryPositions([])
-        fetchActivityResults(options, page, (response) => {
+        fetchActivityResults(options, page, PAGE_SIZE, (response) => {
             if (response.ok) {
                 setTotalPages(response.totalPages)
                 setActivities(response.data)
-                fetchLocationAdresses(response.data).then((locations) => {
+                /* fetchLocationAdresses(response.data).then((locations) => {
                     //console.log(locations)
                     setActivityLocations(locations)
                     setLoading(false)
-                })
+                }) */
+                setLoading(false)
             }
             else {
                 console.log('Failed to fetch activity results')
@@ -115,7 +121,7 @@ export function ActivityResults({
         if (currentPage !== 0) {
             setCurrentPage(0)
         }
-        else {
+        else if (totalPages != -1) {
             loadData(0)
         }
     }, [options])
@@ -168,7 +174,7 @@ export function ActivityResults({
                     activities.length > 0 ?
                     activities.map((a, i) => <SearchResultTile
                                                 key={i}
-                                                activityInfo={{...a, locationName: activityLocations[i]}}
+                                                activityInfo={a}
                                                 onClick={() => activityClicked(i)}
                                                 isSelected={selectedActivity === i}
                                             />)
