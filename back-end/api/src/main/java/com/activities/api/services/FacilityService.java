@@ -14,6 +14,10 @@ public class FacilityService {
 
     @Autowired private FacilityRepository facilityRepository;
 
+    public List<String> getDistricts(){
+        return facilityRepository.getDistricts();
+    }
+
     public List<Facility> getFacilities(){
         return facilityRepository.findAll();
     }

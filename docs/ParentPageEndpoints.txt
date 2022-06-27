@@ -120,6 +120,31 @@ plannedActivity{
     }
 }
 
++{GET(/search/age_categories)
+    ResponseBody{
+    [
+        {
+            "name",
+            "id"
+        },
+        .
+        .
+        .
+    ]
+    }
+}
+
++{GET(/search/districts)
+    ResponseBody{
+    [
+        "district_name1",
+        .
+        .
+        .
+    ]
+    }
+}
+
 + {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10)
     Περιγραφή:
     Προβολή της 1ης σελίδας μεγέθους 10 συνοπτικών πληροφοριών για τις οποίες ισχύουν συνδιαστικά τα φίλτρα:
