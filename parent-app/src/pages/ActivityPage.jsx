@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { fetchSamePlaceActivities, fetchSameProviderActivities } from "../api/fetchAPI";
+import { fetchSamePlaceActivities, fetchSameProviderActivities } from "../api/recommendationsAPI";
 import { ActivitiesSection } from "../components/ActivitiesSection";
 import { ActivityContent } from "../components/ActivityContent";
 import { RecommendedActivityTile } from "../components/RecommendedActivityTile";

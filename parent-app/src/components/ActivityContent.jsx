@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 
 import { AppContext } from '../AppContext'
-import { fetchActivity, fetchBookReservations } from '../api/fetchAPI'
 import { dateText, dateTimeText, DAY_NAMES } from "../utils/dates";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
@@ -12,6 +11,7 @@ import { ActivityImageSelector } from "./ActivityImageSelector";
 import { ModalVerifyPrompt } from "../shared/ModalVerifyPrompt";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
 import { SingleMarkerMap } from "./Maps";
+import { fetchActivity, fetchBookReservations } from "../api/activityAPI";
 
 function sameDateTimes(d1, d2) {
     return d1.getHours() === d2.getHours && d1.getMinutes() === d1.getMinutes

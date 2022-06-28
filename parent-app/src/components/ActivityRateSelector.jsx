@@ -1,7 +1,7 @@
+import React, { useContext, useState } from "react";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useState } from "react";
-import { submitActivityReview } from "../api/fetchAPI";
+import { submitActivityReview } from "../api/activityAPI";
 import { AppContext } from "../AppContext";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
