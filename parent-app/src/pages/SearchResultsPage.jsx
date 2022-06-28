@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { fetchAgeCategories, fetchDistrictNames } from "../api/searchAPI";
+import { fetchAgeCategories, fetchCategories, fetchDistrictNames } from "../api/searchAPI";
 import { ActivityResults } from "../components/ActivityResults";
 import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
@@ -18,44 +18,18 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
  * @property {string} maxDistance
  */
 
-
-// Need to fetch this
-
-const categories = (() => {
-    const idxs = [...Array(8).keys()]
-    const categories = {}
-    idxs.forEach(i => {
-        categories[`MainCategory${i}`] = [
-            `Subcategory${i}_1`,
-            `Subcategory${i}_2`,
-            `Subcategory${i}_3`,
-            `Subcategory${i}_4`,
-        ]
-    })
-    //console.log(categories);
-    return categories
-})()
-
 export function SearchResultsPage() {
 
     const [params, setParams] = useSearchParams()
     const [loading, setLoading] = useState(true)
-    const storedCategories = useRef(params.get('categories') ? JSON.parse(params.get('categories')) : [])
+    const storedSelectedCategories = useRef(params.get('categories') ? JSON.parse(params.get('categories')) : [])
+    const storedAvailableCategories = useRef({})
 
     const [searchOptions, setSearchOptions] = useState({
         text: params.get('text') ?? '',        
         /** @type {FilterOptions} */
         filters: {
-            categories: Object.keys(categories).reduce((storedMain, category) => {
-                storedMain[category] = {
-                    isSelected: storedCategories.current.includes(category),
-                    subcategories: categories[category].reduce((storedSub, subcategory) => {
-                        storedSub[subcategory] = storedCategories.current.includes(subcategory)
-                        return storedSub
-                    }, {})
-                }
-                return storedMain
-            }, {}),
+            categories: {},
             ageCategories: [],
             priceRange: ['', ''],
             dateRange: ['', ''],
@@ -65,32 +39,31 @@ export function SearchResultsPage() {
         }
     })
 
-    const updateFilters = (newFilters) => {
-        setSearchOptions({
-            text: searchOptions.text,
-            filters: newFilters
-        })
-    }
-
     const mdDevice = useHasMaxWidth(MD_PXLIMIT)
     const [filtersOpen, setFiltersOpen] = useState(false)
 
     useEffect(() => {
         let districts = {}
         let ageCategories = []
+        let categories = []
+
         Promise.all([
-            fetchDistrictNames().then((response) => {
+            fetchCategories().then((response) => {
                 if (response.ok) {
-                    console.log(response.data)
-                    districts = response.data.reduce((stored, current) => {
-                        return {
-                            ...stored,
-                            [current]: false
+                    storedAvailableCategories.current = response.data
+                    categories = Object.keys(response.data).reduce((storedMain, category) => {
+                        storedMain[category] = {
+                            isSelected: storedSelectedCategories.current.includes(category),
+                            subcategories: response.data[category].reduce((storedSub, subcategory) => {
+                                storedSub[subcategory] = storedSelectedCategories.current.includes(subcategory)
+                                return storedSub
+                            }, {})
                         }
+                        return storedMain
                     }, {})
                 }
                 else {
-                    console.log('Failed to fetch District Names');
+                    console.log('Failed to fetch Categories');
                 }
             }),
             fetchAgeCategories().then((response) => {
@@ -106,18 +79,33 @@ export function SearchResultsPage() {
                 else {
                     console.log('Failed to fetch Age Categories');
                 }
-            })
+            }),
+            fetchDistrictNames().then((response) => {
+                if (response.ok) {
+                    districts = response.data.reduce((stored, current) => {
+                        return {
+                            ...stored,
+                            [current]: false
+                        }
+                    }, {})
+                }
+                else {
+                    console.log('Failed to fetch District Names');
+                }
+            })            
         ]).then(() => {
             setSearchOptions({
                 ...searchOptions,
                 filters: {
                     ...searchOptions.filters,
+                    categories,
                     ageCategories,
                     districts
                 }
             })
             setLoading(false)
         })
+
     }, [])
 
     useEffect(() => {
@@ -126,9 +114,9 @@ export function SearchResultsPage() {
 
     useEffect(() => {
         const newCategories = (params.get('categories') ? JSON.parse(params.get('categories')) : [])
-        const categoriesChanged = newCategories.join(',') !== storedCategories.current.join(',')
+        const categoriesChanged = newCategories.join(',') !== storedSelectedCategories.current.join(',')
         if (categoriesChanged) {
-            storedCategories.current = newCategories
+            storedSelectedCategories.current = newCategories
         }
         setSearchOptions({
             text: params.get('text') ?? '',
@@ -136,10 +124,10 @@ export function SearchResultsPage() {
                 categoriesChanged ?
                 {
                     ...searchOptions.filters,
-                    categories: Object.keys(categories).reduce((storedMain, category) => {
+                    categories: Object.keys(storedAvailableCategories.current).reduce((storedMain, category) => {
                         storedMain[category] = {
                             isSelected: newCategories.includes(category),
-                            subcategories: categories[category].reduce((storedSub, subcategory) => {
+                            subcategories: storedAvailableCategories.current[category].reduce((storedSub, subcategory) => {
                                 storedSub[subcategory] = newCategories.includes(subcategory)
                                 return storedSub
                             }, {})
@@ -159,6 +147,13 @@ export function SearchResultsPage() {
             categories: newCategoriesParam
         })
         //navigate(`/searchActivity?text=${params.get('text') ?? ''}&categories=${newCategoriesParam}`)
+    }
+
+    const updateFilters = (newFilters) => {
+        setSearchOptions({
+            text: searchOptions.text,
+            filters: newFilters
+        })
     }
 
     return (

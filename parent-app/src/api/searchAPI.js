@@ -2,7 +2,6 @@ import { fetchAsyncWrapper, fetchWrapper } from "./fetchAPI"
 
 const parameterValueGetters = {
     'age_category': ({ageCategories}) => {
-        console.log(ageCategories);
         for (const c of ageCategories) {
             if (c.isSelected) {
                 return c.id
@@ -49,19 +48,19 @@ function buildSearchParams(options, requestedPage, pageSize) {
     return paramStr
 }
 
-function buildSearchRequestBody(options) {
+/* function buildSearchRequestBody(options) {
     return {}
-}
+} */
 
 export function fetchActivityResults(options, requestedPage, pageSize, callback) {
     fetchWrapper({
         endpoint: `search/activities?${buildSearchParams(options, requestedPage, pageSize)}`,
         method: 'GET',
-        body: buildSearchRequestBody(options),
+        //body: buildSearchRequestBody(options),
         omitAuthHeader: true,
         needAuth: false,
         callback: (response) => {
-            console.log(response)
+            //console.log(response)
             callback({
                 ok: response.ok,
                 totalPages: response.ok ? response.data.total_pages : -1,
@@ -69,6 +68,29 @@ export function fetchActivityResults(options, requestedPage, pageSize, callback)
             })
         }
     })
+}
+
+export async function fetchCategories() {
+    /* return await fetchAsyncWrapper({
+        endpoint: `search/all_categories`,
+        method: "GET"
+    }) */
+
+    // Placeholder
+    const idxs = [...Array(8).keys()]
+    const categories = {}
+    idxs.forEach(i => {
+        categories[`MainCategory${i}`] = [
+            `Subcategory${i}_1`,
+            `Subcategory${i}_2`,
+            `Subcategory${i}_3`,
+            `Subcategory${i}_4`,
+        ]
+    })
+    return {
+        ok: true,
+        data: categories
+    }
 }
 
 export async function fetchDistrictNames() {
