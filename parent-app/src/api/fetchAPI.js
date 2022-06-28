@@ -33,7 +33,7 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
                 'Content-Type': 'application/json',
                 'Authorization': omitAuthHeader ? '' : `Bearer ${getJwt()}`
             },
-            body: JSON.stringify(body)
+            body: method === 'POST' ? JSON.stringify(body) : undefined
         }
     )
     .then(response => {

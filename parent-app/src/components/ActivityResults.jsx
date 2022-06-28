@@ -113,6 +113,8 @@ export function ActivityResults({
             }
             else {
                 console.log('Failed to fetch activity results')
+                setTotalPages(0)
+                setLoading(false)
             }
         })
     }
@@ -179,7 +181,14 @@ export function ActivityResults({
                                                 isSelected={selectedActivity === i}
                                             />)
                     :
-                    null
+                    (
+                        loading ?
+                        null
+                        :
+                        <div className="flex justify-center items-center text-xl font-light h-16 text-center">
+                            Δεν βρέθηκαν αποτελέσματα με βάση τα κριτήρια αναζήτησης.
+                        </div>
+                    )
                 }
                 </div>
             {

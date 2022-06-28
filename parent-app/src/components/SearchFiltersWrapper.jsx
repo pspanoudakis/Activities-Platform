@@ -112,6 +112,7 @@ function AgeCategoryPicker({
     const changeAgeCategory = (idx) => {
         setSelections(selections.map((category, i) => {
             return {
+                id: category.id,
                 name: category.name,
                 isSelected: i === idx
             }

@@ -70,6 +70,7 @@ export function SearchResultsPage() {
             }, {}),
             ageCategories: Object.keys(ageCategories).map((ageCategory, i) => {
                 return {
+                    id: ageCategory,
                     name: ageCategories[ageCategory],
                     isSelected: i === 0
                 }
