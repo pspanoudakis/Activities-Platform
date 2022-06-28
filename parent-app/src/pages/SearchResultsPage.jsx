@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import { fetchAgeCategories, fetchDistrictNames } from "../api/searchAPI";
 import { ActivityResults } from "../components/ActivityResults";
 import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
+import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { MD_PXLIMIT } from "../utils/deviceConstants";
 
 /**
@@ -17,7 +19,7 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
  */
 
 
-// Will probably fetch these two
+// Need to fetch this
 
 const categories = (() => {
     const idxs = [...Array(8).keys()]
@@ -34,24 +36,10 @@ const categories = (() => {
     return categories
 })()
 
-const ageCategories = {
-    1: 'Προσχολική (0-5)',
-    2: 'Δημοτικού (6-11)',
-    3: 'Γυμνασίου (12-15)',
-}
-
-const districtNames = [
-    'Αθήνα',
-    'Θεσσαλονίκη',
-    'Πάτρα',
-    'Λάρισα'
-]
-
-
 export function SearchResultsPage() {
 
     const [params, setParams] = useSearchParams()
-
+    const [loading, setLoading] = useState(true)
     const storedCategories = useRef(params.get('categories') ? JSON.parse(params.get('categories')) : [])
 
     const [searchOptions, setSearchOptions] = useState({
@@ -68,28 +56,16 @@ export function SearchResultsPage() {
                 }
                 return storedMain
             }, {}),
-            ageCategories: Object.keys(ageCategories).map((ageCategory, i) => {
-                return {
-                    id: ageCategory,
-                    name: ageCategories[ageCategory],
-                    isSelected: i === 0
-                }
-            }),
+            ageCategories: [],
             priceRange: ['', ''],
             dateRange: ['', ''],
             minRating: [...Array(5).keys()].map(_ => false),
-            districts: districtNames.reduce((stored, current) => {
-                return {
-                    ...stored,
-                    [current]: false
-                }
-            }, {}),
+            districts: {},
             maxDistance: ''
         }
     })
 
     const updateFilters = (newFilters) => {
-        //console.log(newFilters)
         setSearchOptions({
             text: searchOptions.text,
             filters: newFilters
@@ -98,6 +74,51 @@ export function SearchResultsPage() {
 
     const mdDevice = useHasMaxWidth(MD_PXLIMIT)
     const [filtersOpen, setFiltersOpen] = useState(false)
+
+    useEffect(() => {
+        let districts = {}
+        let ageCategories = []
+        Promise.all([
+            fetchDistrictNames().then((response) => {
+                if (response.ok) {
+                    console.log(response.data)
+                    districts = response.data.reduce((stored, current) => {
+                        return {
+                            ...stored,
+                            [current]: false
+                        }
+                    }, {})
+                }
+                else {
+                    console.log('Failed to fetch District Names');
+                }
+            }),
+            fetchAgeCategories().then((response) => {
+                if (response.ok) {
+                    ageCategories = response.data.map((ageCategory, i) => {
+                        return {
+                            id: ageCategory.id,
+                            name: ageCategory.name,
+                            isSelected: i === 0
+                        }
+                    })
+                }
+                else {
+                    console.log('Failed to fetch Age Categories');
+                }
+            })
+        ]).then(() => {
+            setSearchOptions({
+                ...searchOptions,
+                filters: {
+                    ...searchOptions.filters,
+                    ageCategories,
+                    districts
+                }
+            })
+            setLoading(false)
+        })
+    }, [])
 
     useEffect(() => {
         setFiltersOpen(false)
@@ -141,6 +162,9 @@ export function SearchResultsPage() {
     }
 
     return (
+        loading ?
+        <LoadingIndicator stretchParent={false}/>
+        :
         <div className={`w-full flex ${mdDevice ? 'flex-col gap-2 px-2' : 'flex-row gap-3'} items-start justify-center`}>
             <SearchFiltersWrapper
                 isOpen={filtersOpen || !mdDevice}

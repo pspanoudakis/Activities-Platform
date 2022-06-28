@@ -123,7 +123,7 @@ export function ActivityResults({
         if (currentPage !== 0) {
             setCurrentPage(0)
         }
-        else if (totalPages != -1) {
+        else if (totalPages !== -1) {
             loadData(0)
         }
     }, [options])

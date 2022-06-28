@@ -1,4 +1,4 @@
-import { fetchWrapper } from "./fetchAPI"
+import { fetchAsyncWrapper, fetchWrapper } from "./fetchAPI"
 
 const parameterValueGetters = {
     'age_category': ({ageCategories}) => {
@@ -24,7 +24,7 @@ const parameterValueGetters = {
     },
     'rating': ({minRating}) => {
         const rating = minRating.findIndex(r => r)
-        return rating != -1 ? rating + 1 : ''
+        return rating !== -1 ? rating + 1 : ''
     },
     'district': ({districts}) => {
         for (const d in districts) {
@@ -68,5 +68,19 @@ export function fetchActivityResults(options, requestedPage, pageSize, callback)
                 data: response.ok ? response.data.page : []
             })
         }
+    })
+}
+
+export async function fetchDistrictNames() {
+    return await fetchAsyncWrapper({
+        endpoint: `search/districts`,
+        method: "GET"
+    })
+}
+
+export async function fetchAgeCategories() {
+    return await fetchAsyncWrapper({
+        endpoint: `search/age_categories`,
+        method: "GET"
     })
 }

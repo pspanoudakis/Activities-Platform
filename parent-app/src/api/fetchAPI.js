@@ -56,6 +56,35 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
     })
 }
 
+export async function fetchAsyncWrapper({endpoint, method, body}) {
+    return await fetch(
+        createEndpoint(endpoint),
+        {
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: method === 'POST' ? JSON.stringify(body) : undefined
+        }
+    )
+    .then(async response => {
+        if (response.ok) {
+            return {
+                data: await response.json(),
+                ok: true,
+                status: RESPONSE_STATUS.OK
+            }
+        }
+        else {
+            return {
+                ok: false,
+                status: response.status
+            }
+        }
+    })
+}
+
 export function fetchRecommendedActivities(n, callback) {
     const results = [...Array(n).keys()].map((_, i) => {
 
