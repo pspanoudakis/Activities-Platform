@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useContext } from "react";
-import { signUp } from "../api/fetchAPI";
+import { signUp } from "../api/loginAPI";
 import { AppContext } from "../AppContext";
 import { FormFieldWithHint } from "../shared/FormUtils";
 import { LoadingIndicator } from "../shared/LoadingIndicator";

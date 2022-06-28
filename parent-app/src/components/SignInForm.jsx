@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useContext } from "react";
-import { loginWithCredentials, RESPONSE_STATUS } from "../api/fetchAPI";
+import { RESPONSE_STATUS } from "../api/fetchAPI";
+import { loginWithCredentials } from "../api/loginAPI";
 import { AppContext } from "../AppContext";
 import { FormInputField } from "../shared/FormUtils";
 import { SectionTitle } from "../shared/SectionTitle";
