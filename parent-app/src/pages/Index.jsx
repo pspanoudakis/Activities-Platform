@@ -6,16 +6,18 @@ import { RecommendedActivityTile } from "../components/RecommendedActivityTile";
 import { UpcomingActivityTile } from "../components/UpcomingActivityTile";
 import { AppContext } from "../AppContext";
 import { fetchPopularActivities, fetchRebookActivities, fetchUpcomingActivities } from "../api/recommendationsAPI";
+import { PlatformShowcase } from "../components/PlatformShowcase";
 
 function LandingHomePage() {
     return (
-        <div className="w-full flex flex-col gap-3 items-center">
+        <div className="w-full flex flex-col gap-3 items-center px-3">
             <ActivitiesSection
                 showBg={true}
                 title="Δημοφιλείς Δραστηριότητες"
                 fetchData={(n, callback) => fetchPopularActivities(n, callback)}
                 TileRenderer={RecommendedActivityTile}
             />
+            <PlatformShowcase/>
         </div>
     )
 }
