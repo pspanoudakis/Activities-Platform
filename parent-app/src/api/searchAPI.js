@@ -1,3 +1,4 @@
+import { delay } from "./delay"
 import { fetchAsyncWrapper, fetchWrapper } from "./fetchAPI"
 
 const parameterValueGetters = {
@@ -70,23 +71,43 @@ export function fetchActivityResults(options, requestedPage, pageSize, callback)
     })
 }
 
-export async function fetchCategories() {
+export async function fetchCategories(needImgs) {
     /* return await fetchAsyncWrapper({
         endpoint: `search/all_categories`,
         method: "GET"
     }) */
 
     // Placeholder
-    const idxs = [...Array(8).keys()]
+    const imgPath = 'https://www.timeoutriyadh.com/cloud/timeoutriyadh/2021/09/30/lcJcmAZT-shutterstock_400441870-1200x760.jpg'
+    const idxs = [...Array(6).keys()]
     const categories = {}
     idxs.forEach(i => {
-        categories[`MainCategory${i}`] = [
+        categories[`MainCategory${i}`] = needImgs ? {
+            children: {
+                [`Subcategory${i}_1`]: imgPath,
+                [`Subcategory${i}_2`]: imgPath,
+                [`Subcategory${i}_3`]: imgPath,
+                [`Subcategory${i}_4`]: imgPath
+            },
+            img: imgPath
+        }
+        :
+        [
             `Subcategory${i}_1`,
             `Subcategory${i}_2`,
             `Subcategory${i}_3`,
             `Subcategory${i}_4`,
         ]
     })
+    categories['Άλλες Δραστηριότητες'] = needImgs ? {
+        children: null,
+        img: imgPath
+    }
+    :
+    []
+
+    await delay(1000)
+
     return {
         ok: true,
         data: categories

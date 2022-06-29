@@ -9,6 +9,10 @@ import reportWebVitals from './reportWebVitals';
 import { Index } from './pages/Index';
 import { ActivityPage } from './pages/ActivityPage';
 import { SearchResultsPage } from './pages/SearchResultsPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { ReservationsPage } from './pages/ReservationsPage';
+import { UpcomingActivitiesPage } from './pages/UpcomingActivitiesPage';
+import { WalletPage } from './pages/WalletPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,7 +25,12 @@ root.render(
                         <Route path=":activityId" element={<ActivityPage/>} />
                     </Route>
                     <Route path="searchActivity" element={<SearchResultsPage/>} />
-                    {/* <Route path="logout" element={<Logout />}/> */}
+                    <Route path="profile">
+                        <Route index element={<ProfilePage/>}/>
+                        <Route path="history" element={<ReservationsPage/>}/>
+                        <Route path="upcoming" element={<UpcomingActivitiesPage/>}/>
+                        <Route path="wallet" element={<WalletPage/>}/>
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>
