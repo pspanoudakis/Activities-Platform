@@ -47,7 +47,7 @@ function NavbarUserOptionsMenu({
                 hoverColor="hover:bg-navbar-cyan"
                 padding="py-2"
                 isLink={true}
-                url="/"
+                url="/profile"
             >
                 <span className="font-medium text-lg">{context.state.userInfo.username}</span>
                 {showIcons && <FontAwesomeIcon icon={faUser} size="lg"/>}
@@ -58,7 +58,7 @@ function NavbarUserOptionsMenu({
                     hoverColor="hover:bg-navbar-cyan"
                     padding="py-2"
                     isLink={true}
-                    url="/"
+                    url="/profile/wallet"
                 >
                     <span className="w-max">Υπόλοιπο Πόντων:</span>
                     <span className="text-lg font-medium">{userInfo.balance}</span>
@@ -71,7 +71,7 @@ function NavbarUserOptionsMenu({
                 hoverColor="hover:bg-navbar-cyan"
                 padding="py-2"
                 isLink={true}
-                url="/"
+                url="/profile/upcoming"
             >
                 <span>Οι Δραστηριότητές μου</span>
                 {showIcons && <FontAwesomeIcon icon={faPersonSwimming} size="lg"/>}
@@ -169,7 +169,7 @@ export function Navbar() {
                     (
                         context.state.userInfo ?
                         <div className="flex flex-row items-center">
-                            <NavbarUserOption hoverColor="hover:bg-navbar-dark-cyan" url="/">
+                            <NavbarUserOption hoverColor="hover:bg-navbar-dark-cyan"isLink={true} url="/profile/wallet">
                                 <FontAwesomeIcon icon={faCreditCard} size="lg"/>
                                 <span className="w-max text-sm">Υπόλοιπο Πόντων:</span>
                                 <span className="text-lg font-medium">{context.state.userInfo.balance}</span>

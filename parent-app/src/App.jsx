@@ -67,7 +67,7 @@ function App() {
                     modalProps: {
                         content: null,
                         scroll: false,
-                        bgColor: 'white'
+                        bgColor: ''
                     }
                 })}
             >

@@ -88,14 +88,14 @@ export function ActivityCategoryPicker() {
                 Αναζητήστε μια δραστηριότητα
             </SectionTitle>
             <div
-                className="flex flex-col gap-2 rounded-xl bg-cyan w-full px-4 py-3 justify-start overflow-y-auto"
+                className="flex flex-col gap-2 rounded-xl bg-cyan w-full px-5 py-4 justify-start overflow-y-auto relative"
                 style={{
                     height: '45vh'
                 }}
             >
             {
                 loading ?
-                <LoadingIndicator/>
+                <LoadingIndicator stretchParent={true} customColor='transparent'/>
                 : (
                     selectedCategory ?
                     <>

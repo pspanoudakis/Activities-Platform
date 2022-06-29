@@ -13,6 +13,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { ReservationsPage } from './pages/ReservationsPage';
 import { UpcomingActivitiesPage } from './pages/UpcomingActivitiesPage';
 import { WalletPage } from './pages/WalletPage';
+import { NotFound } from './components/NotFound';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -31,6 +32,7 @@ root.render(
                         <Route path="upcoming" element={<UpcomingActivitiesPage/>}/>
                         <Route path="wallet" element={<WalletPage/>}/>
                     </Route>
+                    <Route path="*" element={<NotFound/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
