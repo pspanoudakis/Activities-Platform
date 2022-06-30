@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { fetchAgeCategories, fetchCategories, fetchDistrictNames } from "../api/searchAPI";
+import { AppContext } from "../AppContext";
 import { ActivityResults } from "../components/ActivityResults";
 import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
@@ -18,7 +19,13 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
  * @property {string} maxDistance
  */
 
+const defaultHomePosition = {
+    "lat": 38.11987459663194,
+    "lng": 23.866071050478975
+}
 export function SearchResultsPage() {
+
+    const context = useContext(AppContext)
 
     const [params, setParams] = useSearchParams()
     const [loading, setLoading] = useState(true)
@@ -171,10 +178,16 @@ export function SearchResultsPage() {
             />
             <ActivityResults
                 options={searchOptions}
-                initialHomePosition={{
-                    "lat": 38.11987459663194,
-                    "lng": 23.866071050478975
-                }}
+                initialHomePosition={
+                    context.state.userInfo ?
+                    {
+                        "lat": context.state.userInfo.latitude,
+                        "lng": context.state.userInfo.longitude
+                    }
+                    :
+                    defaultHomePosition
+                }
+                initialAddress={context.state.userInfo ? context.state.userInfo.address : ''}
             />
         </div>
     )

@@ -53,7 +53,7 @@ function buildSearchParams(options, requestedPage, pageSize) {
     return {}
 } */
 
-export function fetchActivityResults(options, requestedPage, pageSize, callback) {
+export function fetchActivityResults(homePosition, options, requestedPage, pageSize, callback) {
     fetchWrapper({
         endpoint: `search/activities?${buildSearchParams(options, requestedPage, pageSize)}`,
         method: 'GET',
