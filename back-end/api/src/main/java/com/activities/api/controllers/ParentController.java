@@ -83,7 +83,7 @@ public class ParentController {
     }
 
     @PostMapping("/add_points/{points}")
-    public ResponseEntity<String> addPoints(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable int points){
+    public ResponseEntity<User> addPoints(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable int points){
 
         Parent parent;
         try {
@@ -102,7 +102,7 @@ public class ParentController {
         if(parentService.saveParentWithUser(parent, user) == null)
             return ResponseEntity.badRequest().header("error", "error while saving data").body(null);
 
-        return ResponseEntity.ok().body("ok");
+        return ResponseEntity.ok().body(user);
     }
 
     @DeleteMapping("/card/{card_id}")

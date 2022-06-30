@@ -7,10 +7,11 @@ import { UpcomingActivityTile } from "../components/UpcomingActivityTile";
 import { AppContext } from "../AppContext";
 import { fetchPopularActivities, fetchRebookActivities, fetchUpcomingActivities } from "../api/recommendationsAPI";
 import { PlatformShowcase } from "../components/PlatformShowcase";
+import { ActivityCategoryPicker } from "../components/ActivityCategoryPicker";
 
-function LandingHomePage() {
+function LandingHomeContent() {
     return (
-        <div className="w-full flex flex-col gap-3 items-center px-3">
+        <>
             <ActivitiesSection
                 showBg={true}
                 title="Δημοφιλείς Δραστηριότητες"
@@ -18,13 +19,13 @@ function LandingHomePage() {
                 TileRenderer={RecommendedActivityTile}
             />
             <PlatformShowcase/>
-        </div>
+        </>
     )
 }
 
-function UserHomePage() {
+function UserHomeContent() {
     return (
-        <div className="w-full flex flex-col gap-3 items-center">
+        <>
             <ActivitiesSection
                 showBg={true}
                 title="Κλείστε Ξανά"
@@ -37,7 +38,7 @@ function UserHomePage() {
                 fetchData={(n, callback) => fetchUpcomingActivities(-1, n, callback)}
                 TileRenderer={UpcomingActivityTile}
             />
-        </div>
+        </>
     )
 }
 
@@ -45,9 +46,15 @@ export function Index() {
 
     const context = useContext(AppContext)
     return (
-        context.state.userInfo ?
-        <UserHomePage/>
-        :
-        <LandingHomePage/>
+        <div className="w-full flex flex-col gap-3 items-center px-3 pt-4">
+            <ActivityCategoryPicker/>
+        {
+            context.state.userInfo ?
+            <UserHomeContent/>
+            :
+            <LandingHomeContent/>
+        }
+        </div>
+        
     )
 }

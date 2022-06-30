@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
 import { LoadingIndicator } from "./LoadingIndicator";
 
 export function ModalVerifyPrompt({

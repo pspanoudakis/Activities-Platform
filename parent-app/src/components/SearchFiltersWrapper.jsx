@@ -8,19 +8,18 @@ function CategoryFamilyChecklist({
     updateSelections
 }) {
 
-    //console.log('selections', selections)
-
     const [isOpen, setIsOpen] = useState(false)
+
+    const subcategoryNames = useMemo(() => Object.keys(selections.subcategories), [selections.subcategories])
 
     const toggleMain = () => {
         const newSelections = {
             isSelected: !selections.isSelected,
             subcategories: {}
         }
-        for (const subcategory of Object.keys(selections.subcategories)) {
+        for (const subcategory of subcategoryNames) {
             newSelections.subcategories[subcategory] = false
         }
-        //console.log(newSelections);
         updateSelections(mainName, newSelections)
     }
 
@@ -38,16 +37,31 @@ function CategoryFamilyChecklist({
         <div className="w-full flex flex-col gap-2">
             <div className="w-full flex flex-row gap-2 items-center">
                 <input type="checkbox" checked={selections.isSelected} onChange={toggleMain}/>
-                <button className="flex flex-row gap-2 items-center" onClick={() => setIsOpen(!isOpen)}>
+                <button
+                    className="flex flex-row gap-2 items-center"
+                    onClick={() => {
+                        if (subcategoryNames.length > 0) {
+                            setIsOpen(!isOpen)
+                        }
+                        else {
+                            toggleMain()
+                        }
+                    }}
+                >
                     <span>{mainName}</span>
+                {
+                    subcategoryNames.length > 0 ?
                     <FontAwesomeIcon className="duration-150" icon={faCaretDown} rotation={isOpen ? 180 : 0}/>
+                    :
+                    null
+                }
                 </button>
             </div>
             {
-                isOpen ?
+                (subcategoryNames.length > 0) && isOpen ?
                 <div className="flex flex-col gap-2 pl-6">
                 {
-                    Object.keys(selections.subcategories).map((sname, i) => {
+                    subcategoryNames.map((sname, i) => {
                         return (
                             <div key={i} className="w-32 flex flex-row gap-1 items-center text-sm">
                                 <input type="checkbox" checked={selections.subcategories[sname]} onChange={() => toggleSub(sname)}/>
@@ -59,8 +73,7 @@ function CategoryFamilyChecklist({
                 </div>
                 :
                 null
-            }
-            
+            }            
         </div>
     )
 }
