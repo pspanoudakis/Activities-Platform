@@ -50,10 +50,10 @@ export function CardInfoModifier({
             return true
         }
         return false
-    }, [cardInfo, cardNumber, expirationDate, cvv, ownerName])
+    }, [cardInfo, initialDate, cardNumber, expirationDate, cvv, ownerName])
     
     return (
-        <div className="flex flex-col gap-5 items-center">
+        <div className="flex flex-col gap-5 items-center py-7">
             <SectionTitle>
                 Στοιχεία Κάρτας
             </SectionTitle>
@@ -82,18 +82,26 @@ export function CardInfoModifier({
                     <div className="flex flex-col gap-2 items-center">
                         <span>Ημ. Λήξης</span>
                         <div className="flex flex-row gap-1 justify-start">
-                            <FormInputField
-                                placeholder="Μ"
+                            <select
                                 value={expirationDate.month}
-                                setValue={(v) => setExpirationDate({month: v, year: expirationDate.year})}
-                                classExtra="outline-none border focus:shadow-md focus:border-black border-gray-300 w-16 duration-200"
-                            />
-                            <FormInputField
-                                placeholder="Έτος"
+                                onChange={e => setExpirationDate({month: e.target.value, year: expirationDate.year})}
+                                className="outline-none border focus:shadow-md focus:border-black border-gray-300 w-16 duration-200 rounded-lg p-2">
+                            {
+                                [...Array(12).keys()].map(i => 
+                                        <option key={i} value={i + 1}>{i + 1}</option>
+                                    )
+                            }
+                            </select>
+                            <select
                                 value={expirationDate.year}
-                                setValue={(v) => setExpirationDate({month: expirationDate.month, year: v})}
-                                classExtra="outline-none border focus:shadow-md focus:border-black border-gray-300 w-20 duration-200"
-                            />
+                                onChange={e => setExpirationDate({month: expirationDate.month, year: e.target.value})}
+                                className="outline-none border focus:shadow-md focus:border-black border-gray-300 w-20 duration-200 rounded-lg p-2">
+                            {
+                                [...Array(10).keys()].map(i => 
+                                        <option key={i} value={i + 2023}>{i + 2023}</option>
+                                    )
+                            }
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -118,7 +126,12 @@ export function CardInfoModifier({
                     ownerName
                 })}
             >
-                Ενημέρωση Στοιχείων
+            {
+                cannotSave ?
+                'Τα στοιχεία της Κάρτας έχουν αποθηκευτεί.'
+                :
+                'Ενημέρωση Στοιχείων Κάρτας'
+            }
             </button>
         </div>
     )

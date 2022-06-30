@@ -28,3 +28,21 @@ export function updateUserCard(newInfo, cardId, callback) {
         callback
     })
 }
+
+export function addPoints(amount, callback) {
+    fetchWrapper({
+        endpoint: `parent/add_points/${amount}`,
+        method: 'POST',
+        body: {},
+        omitAuthHeader: false,
+        needAuth: false,
+        callback: (response) => {
+            if (response.ok) {
+                callback({data: response.data.balance, ok: true})
+            }
+            else {
+                callback(response)
+            }
+        }
+    })
+}

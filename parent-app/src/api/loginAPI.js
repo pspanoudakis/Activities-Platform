@@ -2,7 +2,7 @@ import { updateJwt } from "./jwt"
 import { runWithDelay } from "./delay";
 import { APIResponse, fetchWrapper } from "./fetchAPI";
 
-function flattenUserInfo(userInfo) {
+export function flattenUserInfo(userInfo) {
     return {
         address: userInfo.address,
         id: userInfo.id,
