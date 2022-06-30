@@ -12,7 +12,12 @@ export function FormInputField({
     
     return (
         <>
-            <label htmlFor={labelFor}>{labelText}</label>
+            {
+                labelFor ?
+                <label htmlFor={labelFor}>{labelText}</label>
+                :
+                null
+            }
             <input
                 type={type ? type : "text"}
                 className={`rounded-lg px-5 py-2 ${classExtra}`}
