@@ -6,6 +6,7 @@ import { ActivityRatingIndicator } from "./ActivityRatingIndicator";
 
 export function RecommendedActivityTile({
     activityInfo: {
+        id,
         imgSrc,
         name,
         rating,
@@ -16,7 +17,7 @@ export function RecommendedActivityTile({
     }
 }) {
     return (
-        <Link to="/">
+        <Link to={`/activities/${id}`}>
             <ContentTile
                 padding="p-4"
                 bgColor="bg-white"
