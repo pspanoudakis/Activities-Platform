@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SwitchPageSideButton } from "./SwitchPageSideButton";
 
+const PLACEHOLDER_IMG = 'https://user-images.githubusercontent.com/2351721/31314483-7611c488-ac0e-11e7-97d1-3cfc1c79610e.png'
 export function ActivityImageSelector({
     images
 }) {
@@ -29,10 +30,19 @@ export function ActivityImageSelector({
                 })
             }
         }
+        else {
+            const placeholderImg = new Image()
+            placeholderImg.src = PLACEHOLDER_IMG
+            setState({
+                cachedImages: [placeholderImg],
+                currentImageIdx: 0,
+                loading: false
+            })
+        }
     }, [nextImageIdx, images.length])
 
     useEffect(() => {
-        if (loading) {
+        if (loading && images.length > 0) {
             const imgObj = new Image()
             imgObj.src = images[nextImageIdx]
             imgObj.onload = () => {
@@ -59,13 +69,13 @@ export function ActivityImageSelector({
             />
             {
                 currentImageIdx >= 0 ?
-                <img src={images[currentImageIdx]} alt="" className="rounded-2xl max-w-xs sm:max-w-sm"/>
+                <img src={images[currentImageIdx] ?? PLACEHOLDER_IMG} alt="" className="rounded-2xl max-w-xs sm:max-w-sm"/>
                 :
                 null
             }
             <SwitchPageSideButton
                 direction="right"
-                disabled={currentImageIdx === images.length - 1}
+                disabled={currentImageIdx === images.length - 1 || images.length === 0}
                 switchPage={() => setNextImageIdx(nextImageIdx + 1)}
             />
             {

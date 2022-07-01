@@ -1,6 +1,7 @@
 package com.activities.api.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.activities.api.dto.ShallowCategory;
 import com.activities.api.entities.Activity;
@@ -60,8 +61,7 @@ public class TestController {
         
         return ResponseEntity.ok().body(
             categoryService.getCategoriesRecursively(id)
-            .stream().map(cat -> new ShallowCategory(cat))
-            .toList()
+            .stream().map(cat -> new ShallowCategory(cat)).collect(Collectors.toList())
         );
     }
 

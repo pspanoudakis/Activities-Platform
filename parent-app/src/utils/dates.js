@@ -3,8 +3,13 @@ export function dateText(date) {
 }
 
 export function dateTimeText(date) {
-    const text = `${date.getHours()}:${date.getMinutes()}`
-    return text.length > 4 ? text : `0${text}`
+    let hoursText = date.getHours().toString()
+    hoursText = hoursText.length > 1 ? hoursText : `0${hoursText}`
+
+    let minutesText = date.getMinutes().toString()
+    minutesText = minutesText.length > 1 ? minutesText : `0${minutesText}`
+    
+    return `${hoursText}:${minutesText}`
 }
 
 export function equalDates(d1, d2) {

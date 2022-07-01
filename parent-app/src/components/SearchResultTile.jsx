@@ -47,7 +47,7 @@ export function SearchResultTile({
                         </div>
                         <div className="flex flex-col gap-2 justify-center" style={{minWidth: '10rem'}}>
                             <ActivityRatingIndicator ratingScore={rating} />
-                            <Link to="/" className="text-center bg-navbar-cyan hover:bg-navbar-dark-cyan px-2 py-1 rounded-xl font-semibold duration-150">
+                            <Link to={`/activities/${activity_id}`} className="text-center bg-navbar-cyan hover:bg-navbar-dark-cyan px-2 py-1 rounded-xl font-semibold duration-150">
                                 {`${price} Πόντοι`}
                             </Link>
                         </div>
