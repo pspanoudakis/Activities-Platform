@@ -5,7 +5,7 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.2
 
--- Started on 2022-07-01 03:05:59
+-- Started on 2022-07-01 03:41:00
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -346,7 +346,8 @@ ALTER SEQUENCE public.bank_cards_id_seq OWNED BY public.bank_cards.id;
 CREATE TABLE public.categories (
     id integer NOT NULL,
     parent_category_id integer,
-    name character varying NOT NULL
+    name character varying NOT NULL,
+    image character varying
 );
 
 
@@ -789,6 +790,7 @@ INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALU
 --
 
 INSERT INTO public.activity_has_photo (id, url, activity_id) VALUES (1, 'test.com', 1);
+INSERT INTO public.activity_has_photo (id, url, activity_id) VALUES (2, 'test2.com', 1);
 
 
 --
@@ -845,12 +847,12 @@ INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, cvv,
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.categories (id, parent_category_id, name) VALUES (3, 1, 'category1_level2');
-INSERT INTO public.categories (id, parent_category_id, name) VALUES (4, 2, 'category2_level2');
-INSERT INTO public.categories (id, parent_category_id, name) VALUES (1, NULL, 'category1_level1');
-INSERT INTO public.categories (id, parent_category_id, name) VALUES (2, NULL, 'category2_level1');
-INSERT INTO public.categories (id, parent_category_id, name) VALUES (5, 3, 'category1_level3');
-INSERT INTO public.categories (id, parent_category_id, name) VALUES (6, 4, 'category2_level3');
+INSERT INTO public.categories (id, parent_category_id, name, image) VALUES (3, 1, 'category1_level2', 'image3');
+INSERT INTO public.categories (id, parent_category_id, name, image) VALUES (4, 2, 'category2_level2', 'image4');
+INSERT INTO public.categories (id, parent_category_id, name, image) VALUES (1, NULL, 'category1_level1', 'image1');
+INSERT INTO public.categories (id, parent_category_id, name, image) VALUES (2, NULL, 'category2_level1', 'image2');
+INSERT INTO public.categories (id, parent_category_id, name, image) VALUES (5, 3, 'category1_level3', 'image5');
+INSERT INTO public.categories (id, parent_category_id, name, image) VALUES (6, 4, 'category2_level3', 'image6');
 
 
 --
@@ -1008,7 +1010,7 @@ SELECT pg_catalog.setval('public.activity_at_day_id_seq', 30, true);
 -- Name: activity_has_photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.activity_has_photo_id_seq', 1, true);
+SELECT pg_catalog.setval('public.activity_has_photo_id_seq', 2, true);
 
 
 --
@@ -1389,7 +1391,7 @@ ALTER TABLE ONLY public.sellers
     ADD CONSTRAINT sellers_fk FOREIGN KEY (user_username) REFERENCES public.users(username) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2022-07-01 03:05:59
+-- Completed on 2022-07-01 03:41:01
 
 --
 -- PostgreSQL database dump complete

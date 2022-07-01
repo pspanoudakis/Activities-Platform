@@ -16,11 +16,13 @@ public class CategoryWithChildren {
     private int id;
     private String name;
     private List<CategoryWithChildren> children;
+    private String image;
 
     public CategoryWithChildren(Category category, CategoryService categoryService, Boolean recursively){
 
         this.id = category.getId();
         this.name = category.getName();
+        this.image = category.getImage();
         this.children = 
         (
             recursively
