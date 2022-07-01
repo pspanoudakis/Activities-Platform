@@ -1,6 +1,6 @@
 import { getJwt } from "./jwt"
 
-//const REST_API_DOMAIN = 'http://localhost:8070'
+//const REST_API_DOMAIN = 'https://localhost:8070'
 const REST_API_DOMAIN = ''
 const createEndpoint = (endpoint) => `${REST_API_DOMAIN}/${endpoint}`
 
@@ -37,13 +37,25 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
     .then(response => {
         console.log(response);
         if (response.ok) {
-            response.json().then(rjson =>
-                callback({
-                    data: rjson,
-                    ok: true,
-                    auth: needAuth ? response.headers.get('Authorization') : {}
-                })
-            )
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                response.json().then(rjson =>
+                    callback({
+                        data: rjson,
+                        ok: true,
+                        auth: needAuth ? response.headers.get('Authorization') : {}
+                    })
+                )
+            }
+            else {
+                response.text().then(rtext =>
+                    callback({
+                        data: rtext,
+                        ok: true,
+                        auth: needAuth ? response.headers.get('Authorization') : {}
+                    })
+                )
+            }
         }
         else {
             callback({

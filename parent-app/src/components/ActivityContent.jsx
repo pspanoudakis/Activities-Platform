@@ -51,6 +51,9 @@ function ActivityTimelineInfo({
     slots
 }) {
 
+    const startText = dateText(startDate)
+    const endText = dateText(endDate)
+
     return (
         <div className="flex flex-col gap-1 items-center md:items-start">
             <span className="font-semibold text-lg">Διεξαγωγή:</span>
@@ -58,7 +61,9 @@ function ActivityTimelineInfo({
             {
                 repeated ?
                 <>
-                    <span className="font-medium">{`${dateText(startDate)} - ${dateText(endDate)}`}</span>
+                    <span className="font-medium">
+                        {`${!startText || !endText ? 'Αυτή η δραστηριότητα δεν διεξάγεται προς το παρόν.' : `${dateText(startDate)} - ${dateText(endDate)}`}`}
+                    </span>
                     {
                         RepeatedActivityTimeline(dayTimes)
                     }
@@ -66,9 +71,12 @@ function ActivityTimelineInfo({
                 :
                 <>
                     {
+                        slots.length > 0 ?
                         slots.map((slot, idx) => {
                             return <span key={idx}>{`${DAY_NAMES[slot.date.getDay()]} ${dateText(slot.date)}, ${dateTimeText(slot.date)}`}</span>
                         })
+                        :
+                        <span>Αυτή η δραστηριότητα δεν διεξάγεται προς το παρόν.</span>
                     }
                 </>
             }
