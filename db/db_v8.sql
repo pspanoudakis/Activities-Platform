@@ -5,7 +5,7 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.2
 
--- Started on 2022-06-08 11:11:43
+-- Started on 2022-07-01 03:05:59
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,7 +20,7 @@ SET row_security = off;
 
 DROP DATABASE "activitiesDB";
 --
--- TOC entry 3464 (class 1262 OID 24583)
+-- TOC entry 3466 (class 1262 OID 24583)
 -- Name: activitiesDB; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -53,7 +53,7 @@ CREATE SCHEMA public;
 ALTER SCHEMA public OWNER TO postgres;
 
 --
--- TOC entry 3465 (class 0 OID 0)
+-- TOC entry 3467 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
 --
@@ -101,7 +101,7 @@ CREATE SEQUENCE public.activities_id_seq
 ALTER TABLE public.activities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3466 (class 0 OID 0)
+-- TOC entry 3468 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: activities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -142,7 +142,7 @@ CREATE SEQUENCE public.activity_at_day_id_seq
 ALTER TABLE public.activity_at_day_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3467 (class 0 OID 0)
+-- TOC entry 3469 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: activity_at_day_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -181,7 +181,7 @@ CREATE SEQUENCE public.activity_has_photo_id_seq
 ALTER TABLE public.activity_has_photo_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3468 (class 0 OID 0)
+-- TOC entry 3470 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: activity_has_photo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -219,7 +219,7 @@ CREATE SEQUENCE public.age_categories_id_seq
 ALTER TABLE public.age_categories_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3469 (class 0 OID 0)
+-- TOC entry 3471 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: age_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -288,7 +288,7 @@ CREATE SEQUENCE public.bank_accounts_id_seq
 ALTER TABLE public.bank_accounts_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3470 (class 0 OID 0)
+-- TOC entry 3472 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: bank_accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -306,7 +306,7 @@ CREATE TABLE public.bank_cards (
     parent_id integer NOT NULL,
     card_number text NOT NULL,
     expiration_date character varying NOT NULL,
-    ccv character varying NOT NULL,
+    cvv character varying NOT NULL,
     owner_name character varying
 );
 
@@ -330,7 +330,7 @@ CREATE SEQUENCE public.bank_cards_id_seq
 ALTER TABLE public.bank_cards_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3471 (class 0 OID 0)
+-- TOC entry 3473 (class 0 OID 0)
 -- Dependencies: 214
 -- Name: bank_cards_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -369,7 +369,7 @@ CREATE SEQUENCE public.categories_id_seq
 ALTER TABLE public.categories_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3472 (class 0 OID 0)
+-- TOC entry 3474 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -410,7 +410,7 @@ CREATE SEQUENCE public.evaluations_id_seq
 ALTER TABLE public.evaluations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3473 (class 0 OID 0)
+-- TOC entry 3475 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: evaluations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -438,7 +438,7 @@ CREATE TABLE public.facilities (
 ALTER TABLE public.facilities OWNER TO postgres;
 
 --
--- TOC entry 3474 (class 0 OID 0)
+-- TOC entry 3476 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: COLUMN facilities.district; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -463,7 +463,7 @@ CREATE SEQUENCE public.facilities_id_seq
 ALTER TABLE public.facilities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3475 (class 0 OID 0)
+-- TOC entry 3477 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: facilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -504,7 +504,7 @@ CREATE SEQUENCE public.parents_id_seq
 ALTER TABLE public.parents_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3476 (class 0 OID 0)
+-- TOC entry 3478 (class 0 OID 0)
 -- Dependencies: 212
 -- Name: parents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -545,7 +545,7 @@ CREATE SEQUENCE public.reservations_id_seq
 ALTER TABLE public.reservations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3477 (class 0 OID 0)
+-- TOC entry 3479 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: reservations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -560,7 +560,7 @@ ALTER SEQUENCE public.reservations_id_seq OWNED BY public.reservations.id;
 
 CREATE TABLE public.sellers (
     id integer NOT NULL,
-    watermark character varying NOT NULL,
+    watermark character varying,
     user_username character varying NOT NULL
 );
 
@@ -584,7 +584,7 @@ CREATE SEQUENCE public.sellers_id_seq
 ALTER TABLE public.sellers_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3478 (class 0 OID 0)
+-- TOC entry 3480 (class 0 OID 0)
 -- Dependencies: 210
 -- Name: sellers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -613,7 +613,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 3479 (class 0 OID 0)
+-- TOC entry 3481 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: TABLE users; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -731,7 +731,7 @@ ALTER TABLE ONLY public.sellers ALTER COLUMN id SET DEFAULT nextval('public.sell
 
 
 --
--- TOC entry 3445 (class 0 OID 24693)
+-- TOC entry 3447 (class 0 OID 24693)
 -- Dependencies: 223
 -- Data for Name: activities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -745,7 +745,7 @@ INSERT INTO public.activities (id, name, category_id, age_category_id, facility_
 
 
 --
--- TOC entry 3449 (class 0 OID 24765)
+-- TOC entry 3451 (class 0 OID 24765)
 -- Dependencies: 227
 -- Data for Name: activity_at_day; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -779,11 +779,11 @@ INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALU
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (13, 3, '2022-07-03', '10:00', 90);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (1, 1, '2022-07-01', '10:00', 97);
 INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (3, 1, '2022-07-03', '10:00', 94);
-INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (2, 1, '2022-07-02', '10:00', 85);
+INSERT INTO public.activity_at_day (id, activity_id, day, "time", capacity) VALUES (2, 1, '2022-07-02', '10:00', 75);
 
 
 --
--- TOC entry 3454 (class 0 OID 24901)
+-- TOC entry 3456 (class 0 OID 24901)
 -- Dependencies: 232
 -- Data for Name: activity_has_photo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -792,7 +792,7 @@ INSERT INTO public.activity_has_photo (id, url, activity_id) VALUES (1, 'test.co
 
 
 --
--- TOC entry 3453 (class 0 OID 24820)
+-- TOC entry 3455 (class 0 OID 24820)
 -- Dependencies: 231
 -- Data for Name: age_categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -803,7 +803,7 @@ INSERT INTO public.age_categories (id, name) VALUES (3, 'Γυμνασίου');
 
 
 --
--- TOC entry 3457 (class 0 OID 24920)
+-- TOC entry 3459 (class 0 OID 24920)
 -- Dependencies: 235
 -- Data for Name: authority; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -814,7 +814,7 @@ INSERT INTO public.authority (id, authority) VALUES (3, 'ROLE_ADMIN');
 
 
 --
--- TOC entry 3439 (class 0 OID 24651)
+-- TOC entry 3441 (class 0 OID 24651)
 -- Dependencies: 217
 -- Data for Name: bank_accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -826,20 +826,21 @@ INSERT INTO public.bank_accounts (id, seller_id, iban, account_number, owner_nam
 
 
 --
--- TOC entry 3437 (class 0 OID 24637)
+-- TOC entry 3439 (class 0 OID 24637)
 -- Dependencies: 215
 -- Data for Name: bank_cards; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (1, 1, '1111222233334441', '01/23', '111', 'parentName1');
-INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (2, 2, '1111222233334442', '02/23', '222', 'parentName2');
-INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (3, 3, '1111222233334443', '03/23', '333', 'parentName3');
-INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (4, 4, '1111222233334444', '04/23', '444', 'parentName4');
-INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, ccv, owner_name) VALUES (5, 5, '1111222233334445', '05/23', '555', 'parentName5');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, cvv, owner_name) VALUES (1, 1, '1111222233334441', '01/23', '111', 'parentName1');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, cvv, owner_name) VALUES (3, 3, '1111222233334443', '03/23', '333', 'parentName3');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, cvv, owner_name) VALUES (4, 4, '1111222233334444', '04/23', '444', 'parentName4');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, cvv, owner_name) VALUES (5, 5, '1111222233334445', '05/23', '555', 'parentName5');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, cvv, owner_name) VALUES (2, 1, '1111222233334442', '02/23', '222', 'parentName1');
+INSERT INTO public.bank_cards (id, parent_id, card_number, expiration_date, cvv, owner_name) VALUES (8, 2, '0000111122223333', '01/25', '100', 'parentName2');
 
 
 --
--- TOC entry 3441 (class 0 OID 24665)
+-- TOC entry 3443 (class 0 OID 24665)
 -- Dependencies: 219
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -853,7 +854,7 @@ INSERT INTO public.categories (id, parent_category_id, name) VALUES (6, 4, 'cate
 
 
 --
--- TOC entry 3447 (class 0 OID 24746)
+-- TOC entry 3449 (class 0 OID 24746)
 -- Dependencies: 225
 -- Data for Name: evaluations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -866,32 +867,34 @@ INSERT INTO public.evaluations (id, activity_id, parent_id, rating, comment) VAL
 
 
 --
--- TOC entry 3443 (class 0 OID 24679)
+-- TOC entry 3445 (class 0 OID 24679)
 -- Dependencies: 221
 -- Data for Name: facilities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1, false);
 INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (3, 3, 'facility3', 'address3', 'district3', 10.3, 10.3, false);
 INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (4, 4, 'facility4', 'address4', 'district4', 10.4, 10.4, false);
 INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (2, 1, 'facility2', 'address2', 'district2', 10.2, 10.2, false);
+INSERT INTO public.facilities (id, seller_id, name, address, district, longitude, latitude, approved) VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1, false);
 
 
 --
--- TOC entry 3435 (class 0 OID 24625)
+-- TOC entry 3437 (class 0 OID 24625)
 -- Dependencies: 213
 -- Data for Name: parents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (1, 10.1, 10.1, 'address1', 'parent1');
 INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (2, 10.1, 10.1, 'address2', 'parent2');
-INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (3, 10.1, 10.1, 'address3', 'parent3');
 INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (4, 10.1, 10.1, 'address4', 'parent4');
 INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (5, 10.1, 10.1, 'address5', 'parent5');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (3, 10.2, 10.1, 'address3', 'parent3');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (15, 10.2, 10.1, 'address3', 'loukas');
+INSERT INTO public.parents (id, longitude, latitude, address, user_username) VALUES (16, NULL, NULL, NULL, 'newParent');
 
 
 --
--- TOC entry 3451 (class 0 OID 24803)
+-- TOC entry 3453 (class 0 OID 24803)
 -- Dependencies: 229
 -- Data for Name: reservations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -901,8 +904,6 @@ INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (4, 1, '2022-06-01', 2, 1);
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (5, 1, '2022-06-01', 3, 1);
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (6, 1, '2022-06-01', 5, 1);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (7, 2, '2022-06-01', 5, 1);
-INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (8, 2, '2022-06-01', 6, 1);
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (9, 2, '2022-06-01', 6, 1);
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (10, 3, '2022-06-01', 7, 1);
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (11, 3, '2022-06-01', 7, 1);
@@ -922,10 +923,12 @@ INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (25, 1, '2022-06-08', 1, 1);
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (26, 1, '2022-06-08', 2, 4);
 INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (27, 1, '2022-06-08', 3, 5);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (8, 2, '2022-06-04', 6, 1);
+INSERT INTO public.reservations (id, parent_id, date, activity_at_day_id, number) VALUES (7, 2, '2022-06-10', 5, 1);
 
 
 --
--- TOC entry 3433 (class 0 OID 24611)
+-- TOC entry 3435 (class 0 OID 24611)
 -- Dependencies: 211
 -- Data for Name: sellers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -934,15 +937,16 @@ INSERT INTO public.sellers (id, watermark, user_username) VALUES (1, 'watermark1
 INSERT INTO public.sellers (id, watermark, user_username) VALUES (2, 'watermark2', 'seller2');
 INSERT INTO public.sellers (id, watermark, user_username) VALUES (3, 'watermark3', 'seller3');
 INSERT INTO public.sellers (id, watermark, user_username) VALUES (4, 'watermark4', 'seller4');
+INSERT INTO public.sellers (id, watermark, user_username) VALUES (6, NULL, 'newSeller');
 
 
 --
--- TOC entry 3431 (class 0 OID 24584)
+-- TOC entry 3433 (class 0 OID 24584)
 -- Dependencies: 209
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent1', '$2a$10$RAQhDXDrPkwfiBuUrYL4ZOYM01EchnjyTJu3DwnKw/CAZf42nkWCW', 'parent1@mail.com', false, true, 'www.google.com', 10, 'parentName1', 'parentSurname1');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent1', '$2a$10$MQdY27tT1QS8qAI5JSiySucGQJHdfjX5KbND0QuEglNXDtAX0D/tS', 'parent1@mail.com', false, true, 'www.google.com', 30, 'parentName1', 'parentSurname1');
 INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('admin', '$2a$10$6dzVR3NN9HPqAInbw8XGauHeKrfWP17N/H7X2Mv6YvdzRYUiQkvIa', 'admin@mail.com', true, true, 'www.updatedImage.com', 10, 'adminName', 'adminSurname');
 INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent2', '$2a$10$MLK/oyLWkWy.EhzBHUk0kumWxuCgHKEBrwAKOfvBOXFle9YfR1ubS', 'parent2@mail.com', false, false, 'www.google.com', 10, 'parentName2', 'parentSurname2');
 INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('parent3', '$2a$10$BZfZU3xsMchmFTcesigQzea5g8HHwyC3AkS4esNIsAjg6uNpsQE3a', 'parent3@mail.com', false, true, 'www.google.com', 10, 'parentName3', 'parentSurname3');
@@ -952,10 +956,14 @@ INSERT INTO public.users (username, password, email, is_admin, is_active, image,
 INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('seller2', '$2a$10$iR5hYTp.thdomZ0p6VRJzubohDeerAnfMLhJejBZCGJ9GH5rr2g9a', 'seller2@mail.com', false, true, 'www.google.com', 10, 'sellerName2', 'sellerSurname2');
 INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('seller3', '$2a$10$MUPI0C0FMEcHGhB74DAD3OM3pOBmxK0e6rpj3GyziCsWXOm5Kxose', 'seller3@mail.com', false, true, 'www.google.com', 10, 'sellerName3', 'sellerSurname3');
 INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('seller4', '$2a$10$5oez4k6fqQzjTeCwj2/xH.3w0SRkic6qp2U47bYkcHOlvItl5BY4m', 'seller4@mail.com', false, true, 'www.google.com', 10, 'sellerName4', 'sellerSurname4');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('loukas', '$2a$10$1ABRzwZ7XCxOykhuJ8Uoh.TYGUSu1C3V1efpzys3zeE8e5eP5CVdO', 'hi@mail.com', false, true, NULL, 0, 'loukas', 'Mastoropoulos');
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('newParent', 'newParentPass', 'newParentEmail', false, true, NULL, 0, NULL, NULL);
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('newSeller', 'newSellerPass', 'newSellerEmail', false, true, NULL, 0, NULL, NULL);
+INSERT INTO public.users (username, password, email, is_admin, is_active, image, balance, name, surname) VALUES ('newAdmin', 'newAdminPass', 'newAdminEmail', true, true, NULL, 0, NULL, NULL);
 
 
 --
--- TOC entry 3458 (class 0 OID 24925)
+-- TOC entry 3460 (class 0 OID 24925)
 -- Dependencies: 236
 -- Data for Name: users_authorities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -970,10 +978,14 @@ INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('se
 INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('seller3', 2);
 INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('seller4', 2);
 INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('admin', 3);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('newParent', 1);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('newSeller', 2);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('newAdmin', 3);
+INSERT INTO public.users_authorities (user_username, authorities_id) VALUES ('loukas', 1);
 
 
 --
--- TOC entry 3480 (class 0 OID 0)
+-- TOC entry 3482 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: activities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -982,7 +994,7 @@ SELECT pg_catalog.setval('public.activities_id_seq', 6, true);
 
 
 --
--- TOC entry 3481 (class 0 OID 0)
+-- TOC entry 3483 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: activity_at_day_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -991,7 +1003,7 @@ SELECT pg_catalog.setval('public.activity_at_day_id_seq', 30, true);
 
 
 --
--- TOC entry 3482 (class 0 OID 0)
+-- TOC entry 3484 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: activity_has_photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1000,7 +1012,7 @@ SELECT pg_catalog.setval('public.activity_has_photo_id_seq', 1, true);
 
 
 --
--- TOC entry 3483 (class 0 OID 0)
+-- TOC entry 3485 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: age_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1009,7 +1021,7 @@ SELECT pg_catalog.setval('public.age_categories_id_seq', 3, true);
 
 
 --
--- TOC entry 3484 (class 0 OID 0)
+-- TOC entry 3486 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: authority_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1018,7 +1030,7 @@ SELECT pg_catalog.setval('public.authority_id_seq', 3, true);
 
 
 --
--- TOC entry 3485 (class 0 OID 0)
+-- TOC entry 3487 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: bank_accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1027,16 +1039,16 @@ SELECT pg_catalog.setval('public.bank_accounts_id_seq', 4, true);
 
 
 --
--- TOC entry 3486 (class 0 OID 0)
+-- TOC entry 3488 (class 0 OID 0)
 -- Dependencies: 214
 -- Name: bank_cards_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.bank_cards_id_seq', 5, true);
+SELECT pg_catalog.setval('public.bank_cards_id_seq', 8, true);
 
 
 --
--- TOC entry 3487 (class 0 OID 0)
+-- TOC entry 3489 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1045,16 +1057,16 @@ SELECT pg_catalog.setval('public.categories_id_seq', 6, true);
 
 
 --
--- TOC entry 3488 (class 0 OID 0)
+-- TOC entry 3490 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: evaluations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.evaluations_id_seq', 5, true);
+SELECT pg_catalog.setval('public.evaluations_id_seq', 10, true);
 
 
 --
--- TOC entry 3489 (class 0 OID 0)
+-- TOC entry 3491 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: facilities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1063,16 +1075,16 @@ SELECT pg_catalog.setval('public.facilities_id_seq', 4, true);
 
 
 --
--- TOC entry 3490 (class 0 OID 0)
+-- TOC entry 3492 (class 0 OID 0)
 -- Dependencies: 212
 -- Name: parents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.parents_id_seq', 11, true);
+SELECT pg_catalog.setval('public.parents_id_seq', 16, true);
 
 
 --
--- TOC entry 3491 (class 0 OID 0)
+-- TOC entry 3493 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: reservations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1081,12 +1093,12 @@ SELECT pg_catalog.setval('public.reservations_id_seq', 27, true);
 
 
 --
--- TOC entry 3492 (class 0 OID 0)
+-- TOC entry 3494 (class 0 OID 0)
 -- Dependencies: 210
 -- Name: sellers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.sellers_id_seq', 4, true);
+SELECT pg_catalog.setval('public.sellers_id_seq', 6, true);
 
 
 --
@@ -1207,6 +1219,15 @@ ALTER TABLE ONLY public.sellers
 
 
 --
+-- TOC entry 3276 (class 2606 OID 24946)
+-- Name: users_authorities users_authorities_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_authorities
+    ADD CONSTRAINT users_authorities_pk PRIMARY KEY (user_username, authorities_id);
+
+
+--
 -- TOC entry 3248 (class 2606 OID 24888)
 -- Name: users users_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -1216,7 +1237,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3281 (class 2606 OID 24706)
+-- TOC entry 3283 (class 2606 OID 24706)
 -- Name: activities activities_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1225,7 +1246,7 @@ ALTER TABLE ONLY public.activities
 
 
 --
--- TOC entry 3282 (class 2606 OID 24711)
+-- TOC entry 3284 (class 2606 OID 24711)
 -- Name: activities activities_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1234,7 +1255,7 @@ ALTER TABLE ONLY public.activities
 
 
 --
--- TOC entry 3283 (class 2606 OID 24828)
+-- TOC entry 3285 (class 2606 OID 24828)
 -- Name: activities activities_fk_4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1243,7 +1264,7 @@ ALTER TABLE ONLY public.activities
 
 
 --
--- TOC entry 3286 (class 2606 OID 24771)
+-- TOC entry 3288 (class 2606 OID 24771)
 -- Name: activity_at_day activity_at_day_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1252,7 +1273,7 @@ ALTER TABLE ONLY public.activity_at_day
 
 
 --
--- TOC entry 3289 (class 2606 OID 24913)
+-- TOC entry 3291 (class 2606 OID 24913)
 -- Name: activity_has_photo activity_has_photo_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1261,7 +1282,7 @@ ALTER TABLE ONLY public.activity_has_photo
 
 
 --
--- TOC entry 3278 (class 2606 OID 24659)
+-- TOC entry 3280 (class 2606 OID 24659)
 -- Name: bank_accounts bank_accounts_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1270,7 +1291,7 @@ ALTER TABLE ONLY public.bank_accounts
 
 
 --
--- TOC entry 3277 (class 2606 OID 24645)
+-- TOC entry 3279 (class 2606 OID 24645)
 -- Name: bank_cards bank_cards_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1279,7 +1300,7 @@ ALTER TABLE ONLY public.bank_cards
 
 
 --
--- TOC entry 3279 (class 2606 OID 24673)
+-- TOC entry 3281 (class 2606 OID 24673)
 -- Name: categories categories_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1288,7 +1309,7 @@ ALTER TABLE ONLY public.categories
 
 
 --
--- TOC entry 3284 (class 2606 OID 24754)
+-- TOC entry 3286 (class 2606 OID 24754)
 -- Name: evaluations evaluations_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1297,7 +1318,7 @@ ALTER TABLE ONLY public.evaluations
 
 
 --
--- TOC entry 3285 (class 2606 OID 24759)
+-- TOC entry 3287 (class 2606 OID 24759)
 -- Name: evaluations evaluations_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1306,7 +1327,7 @@ ALTER TABLE ONLY public.evaluations
 
 
 --
--- TOC entry 3280 (class 2606 OID 24687)
+-- TOC entry 3282 (class 2606 OID 24687)
 -- Name: facilities facilities_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1315,7 +1336,7 @@ ALTER TABLE ONLY public.facilities
 
 
 --
--- TOC entry 3291 (class 2606 OID 24933)
+-- TOC entry 3293 (class 2606 OID 24933)
 -- Name: users_authorities fkirolm9syye5giedkp35a0g70p; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1324,7 +1345,7 @@ ALTER TABLE ONLY public.users_authorities
 
 
 --
--- TOC entry 3290 (class 2606 OID 24928)
+-- TOC entry 3292 (class 2606 OID 24928)
 -- Name: users_authorities fkt25vmk46t0o0x01yo0wyx7wmf; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1333,7 +1354,7 @@ ALTER TABLE ONLY public.users_authorities
 
 
 --
--- TOC entry 3276 (class 2606 OID 24894)
+-- TOC entry 3278 (class 2606 OID 24894)
 -- Name: parents parents_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1342,7 +1363,7 @@ ALTER TABLE ONLY public.parents
 
 
 --
--- TOC entry 3288 (class 2606 OID 24940)
+-- TOC entry 3290 (class 2606 OID 24940)
 -- Name: reservations reservations_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1351,7 +1372,7 @@ ALTER TABLE ONLY public.reservations
 
 
 --
--- TOC entry 3287 (class 2606 OID 24814)
+-- TOC entry 3289 (class 2606 OID 24814)
 -- Name: reservations reservations_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1360,7 +1381,7 @@ ALTER TABLE ONLY public.reservations
 
 
 --
--- TOC entry 3275 (class 2606 OID 24889)
+-- TOC entry 3277 (class 2606 OID 24889)
 -- Name: sellers sellers_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1368,7 +1389,7 @@ ALTER TABLE ONLY public.sellers
     ADD CONSTRAINT sellers_fk FOREIGN KEY (user_username) REFERENCES public.users(username) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2022-06-08 11:11:43
+-- Completed on 2022-07-01 03:05:59
 
 --
 -- PostgreSQL database dump complete

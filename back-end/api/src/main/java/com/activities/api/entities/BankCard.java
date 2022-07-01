@@ -23,7 +23,7 @@ public class BankCard {
     private int id;
     private String cardNumber;
     private String expirationDate;
-    private String ccv;
+    private String cvv;
     private String ownerName;
 
     @ManyToOne
