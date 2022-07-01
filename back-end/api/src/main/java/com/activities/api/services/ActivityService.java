@@ -93,6 +93,13 @@ public class ActivityService {
         return (int) ((double) total/size + 0.5);
     }
 
+    public List<String> getActivityImages(Activity activity){
+        return activityPhotoRepository.findByActivity(activity)
+            .stream().map(
+                act -> act.getUrl()
+            ).collect(Collectors.toList());
+    }
+
     public List<Activity> filterPriceAgeCategoryFacilityCategory(
         int max, int min, 
         List<AgeCategory> ageCategories, 

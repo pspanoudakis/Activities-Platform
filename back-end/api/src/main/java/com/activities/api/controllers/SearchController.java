@@ -79,11 +79,10 @@ public class SearchController {
     public ResponseEntity<List<CategoryWithChildren>> getCategoriesWithChildren(@RequestParam(required = false, defaultValue = "false") Boolean recursion){
 
         return ResponseEntity.ok().body(
-            categoryService.getCategories()
+            categoryService.getByParent(null)
             .stream()
             .map(
                 cat -> new CategoryWithChildren(cat, categoryService, recursion)
-                // cat -> new CategoryWithChildren(cat, categoryService, true)
             ).collect(Collectors.toList())
         );
     }

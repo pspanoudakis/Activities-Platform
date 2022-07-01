@@ -1,0 +1,66 @@
+version: "3"
+
+services:
+
+  parent-app:
+    build:
+      context: ./parent-app
+    container_name: parent-app-container
+    stdin_open: true
+    volumes:
+      - ./parent-app:/app/parent-app
+      - /app/parent-app/node_modules
+    ports:
+      - '3000:3000'
+
+  provider-app:
+    build:
+      context: ./provider-app
+    container_name: provider-app-container
+    stdin_open: true
+    volumes:
+      - ./provider-app:/app/provider-app
+      - /app/provider-app/node_modules
+    ports:
+      - '3001:3001'
+
+  database:
+    image: postgres:14-alpine
+    restart: always
+    container_name: database-container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Loukas438
+      - POSTGRES_DB=activitiesDB
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./db/db_v9.sql:/docker-entrypoint-initdb.d/crate_tables.sql
+    networks:
+      - local-net
+  
+  api:
+    build: 
+      context: ./back-end/api
+    container_name: api-container
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/activitiesDB
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Loukas438
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - '8070:8070'
+    networks:
+      - local-net
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  local-net:
+    driver: bridge
+  

@@ -57,6 +57,7 @@ ActivityCompactDTO{
     int rating,
     String address,
     int price,
+    List<String> images,
     LocalDate date //earliest or reservation date depending on use
 }
 
@@ -333,7 +334,7 @@ ReservationDTO{
 }
 
 +{POST(parent/{parent_id}/reservation)
-    Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα. Επιστρέφεται η λίστα του RequestBody
+    Κρατήσεις από parent με parent.id = parent_id σε δραστηριότητα. Επιστρέφεται το νέο balance του parent.
     RequestBody{
         days: 
         [
