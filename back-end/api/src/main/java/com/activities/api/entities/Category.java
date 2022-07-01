@@ -27,5 +27,6 @@ public class Category {
     @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
     private String name;
+    private String image;
 
 }

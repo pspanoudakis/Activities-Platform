@@ -15,7 +15,7 @@ public class CategoryWithChildren {
     
     private int id;
     private String name;
-    private List<ShallowCategory> children;
+    private List<CategoryWithChildren> children;
 
     public CategoryWithChildren(Category category, CategoryService categoryService, Boolean recursively){
 
@@ -29,7 +29,7 @@ public class CategoryWithChildren {
         )
         .stream()
             .map(
-                cat -> new ShallowCategory(cat)
+                cat -> new CategoryWithChildren(cat, categoryService, recursively)
             ).collect(Collectors.toList());
 
         if(recursively)children.removeIf(child -> child.getId() == this.id);
