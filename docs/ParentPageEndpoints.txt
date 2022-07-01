@@ -57,6 +57,7 @@ ActivityCompactDTO{
     int rating,
     String address,
     int price,
+    List<String> images,
     LocalDate date //earliest or reservation date depending on use
 }
 
