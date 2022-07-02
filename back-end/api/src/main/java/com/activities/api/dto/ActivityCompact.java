@@ -21,10 +21,12 @@ public class ActivityCompact {
     private LocalDate date;
     private Coordinates coordinates;
     private List<String> images;
+    private Boolean periodic;
 
     public ActivityCompact(Activity activity, ActivityService activityService, LocalDate start_date){
         this.activity_id = activity.getId();
         this.name = activity.getName();
+        this.periodic = activity.getPeriodic();
         this.price = activity.getPrice();
         this.address = activity.getFacility().getAddress();
         this.images = activityService.getActivityImages(activity);

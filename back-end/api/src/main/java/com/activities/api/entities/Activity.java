@@ -37,4 +37,5 @@ public class Activity {
     private String description;
     private int price;
     private Boolean approved;
+    private Boolean periodic = false;
 }

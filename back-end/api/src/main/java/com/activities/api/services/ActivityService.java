@@ -32,11 +32,11 @@ public class ActivityService {
     @Autowired private FacilityRepository facilityRepository;
 
     public List<Activity> getActivities(){
-        return activityRepository.findAll();
+        return activityRepository.findByApprovedTrue();
     }
 
     public Activity getActivity(int id){
-        Activity a = activityRepository.findById(id).orElse(null);
+        Activity a = activityRepository.findByIdAndApprovedTrue(id).orElse(null);
         // System.out.println(a.toString());
         return a;
     }
@@ -46,7 +46,7 @@ public class ActivityService {
     }
 
     public int getActivityRating(Activity activity){
-        List<Evaluation> evaluations = evaluationRepository.findByActivity(activity);
+        List<Evaluation> evaluations = evaluationRepository.findByActivityAndActivity_ApprovedTrue(activity);
         return calculateRating(evaluations);
     }
 
@@ -59,15 +59,15 @@ public class ActivityService {
     }
 
     public List<Activity> getActivitiesByFacility(Facility facility){
-        return activityRepository.findByFacility(facility);
+        return activityRepository.findByFacilityAndApprovedTrue(facility);
     }
 
     public List<Activity> getActivitiesOfSeller(Seller seller){
-        return activityRepository.findByFacilityIn(facilityRepository.findBySeller(seller));
+        return activityRepository.findByFacilityInAndApprovedTrue(facilityRepository.findBySeller(seller));
     }
 
     public List<Activity> getActivitiesBySeller(Activity activity){
-        return activityRepository.findByFacilityIn(facilityRepository.findBySeller(activity.getFacility().getSeller()));
+        return activityRepository.findByFacilityInAndApprovedTrue(facilityRepository.findBySeller(activity.getFacility().getSeller()));
     }
 
 
@@ -82,7 +82,7 @@ public class ActivityService {
     }
 
     public LocalDate getEarliestDate(Activity activity, LocalDate start_date){
-        List<ActivityAtDay> days = activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, start_date.minusDays(1));
+        List<ActivityAtDay> days = activityAtDayRepository.findByActivityAndDayAfterAndCapacityGreaterThanOrderByDayAsc(activity, start_date.minusDays(1), 0);
         return (!days.isEmpty()) ? days.get(0).getDay() : LocalDate.parse("3000-01-02");
     }
 
@@ -106,7 +106,7 @@ public class ActivityService {
         List<Facility> facilities,
         List<Category> categories){
 
-        return activityRepository.findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityInAndCategoryIn(
+        return activityRepository.findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityInAndCategoryInAndApprovedTrue(
             max, min, ageCategories, facilities, categories);
     }
 }

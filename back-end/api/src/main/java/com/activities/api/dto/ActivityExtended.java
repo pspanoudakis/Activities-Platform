@@ -22,10 +22,12 @@ public class ActivityExtended {
     double longitude;
     double latitude;
     String description;
+    private Boolean periodic;
 
     public ActivityExtended(Activity activity, ActivityService activityService){
         this.name = activity.getName();
         this.cost = activity.getPrice();
+        this.periodic = activity.getPeriodic();
         this.seller_name = activity.getFacility().getSeller().getUser().getUsername();
         this.address = activity.getFacility().getAddress();
         this.longitude = activity.getFacility().getLongitude();
