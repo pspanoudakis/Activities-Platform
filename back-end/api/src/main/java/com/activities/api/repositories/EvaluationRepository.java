@@ -11,5 +11,5 @@ import com.activities.api.entities.Evaluation;
 @Repository
 public interface EvaluationRepository extends JpaRepository<Evaluation, Integer>{
     
-    public List<Evaluation> findByActivity(Activity activity);
+    public List<Evaluation> findByActivityAndActivity_ApprovedTrue(Activity activity);
 }
