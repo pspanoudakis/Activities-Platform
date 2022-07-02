@@ -56,7 +56,8 @@ const activity = {
 }
 
 function getDateFromResponseSlot(slot) {
-    const [year, month, day] = slot.day.split('-').map(s => parseInt(s))
+    //const [year, month, day] = slot.day.split('-').map(s => parseInt(s))
+    const [year, month, day] = slot.day
     const [hours, minutes] = slot.time.split(':').map(s => parseInt(s))
 
     return new Date(year, month - 1, day, hours, minutes, 0)
