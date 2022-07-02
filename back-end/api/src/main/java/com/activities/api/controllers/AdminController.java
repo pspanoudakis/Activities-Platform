@@ -1,11 +1,14 @@
 package com.activities.api.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.ChangeRoleRequest;
 import com.activities.api.dto.PageRequest;
 import com.activities.api.dto.PagingResponse;
@@ -24,6 +28,7 @@ import com.activities.api.dto.PasswordChangeRequest;
 import com.activities.api.dto.UserCompact;
 import com.activities.api.dto.UserCreationRequest;
 import com.activities.api.dto.UserDTO;
+import com.activities.api.entities.Activity;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.Parent;
 import com.activities.api.entities.Seller;
@@ -89,7 +94,6 @@ public class AdminController {
 
         return ResponseEntity.ok().body(null);
     }
-
 
     @PostMapping("/change_password/{username}")
     public ResponseEntity<String> changePassword(@PathVariable String username, @RequestBody PasswordChangeRequest req){
@@ -191,7 +195,6 @@ public class AdminController {
         );
     }
 
-
     @GetMapping("/get_parent_reservations/{username}")
     public ResponseEntity<PagingResponse<List<ParentReservation>>> getParentReservations(
         @PathVariable String username,
@@ -242,4 +245,59 @@ public class AdminController {
         );
     }
 
+    @PostMapping("/activity/{activity_id}/approve")
+    public ResponseEntity<Activity> approveActivity(@PathVariable int activity_id){
+
+        Activity activity = activityService.getById(activity_id);
+        if(activity == null)
+            return ResponseEntity
+                .badRequest()
+                .header("error", "Activity with id = " + activity_id + " does not exist")
+                .body(null);
+        
+        if(activity.getApproved())
+            return ResponseEntity
+                .badRequest()
+                .header("error", "Activity with id = " + activity_id + " is already approved")
+                .body(null);
+              
+        activity.setApproved(true);
+
+        return ResponseEntity.ok().body(
+            activityService.saveOrUpdateActivity(activity)
+        );
+    }
+
+    @GetMapping("/pending_activities")
+    public ResponseEntity<PagingResponse<List<ActivityCompact>>> getPendingActivities(
+        @RequestParam(required = false, defaultValue = "1") int pageNumber, 
+        @RequestParam(required = false, defaultValue = "1") int pageSize){
+
+        Page<Activity> page = activityService.getPendingActivitiesPage(pageNumber, pageSize);
+        return ResponseEntity.ok().body(
+            new PagingResponse<List<ActivityCompact>>(
+                page.map(
+                    act -> new ActivityCompact(
+                        act, 
+                        activityService, 
+                        LocalDate.now())
+                ).getContent(), 
+                page.getTotalPages(), 
+                pageNumber
+            )
+        );
+    }
+
+
+    @DeleteMapping("/activity/{activity_id}")
+    public ResponseEntity<Activity> deleteActivity(@PathVariable int activity_id){
+
+        Activity activity = activityService.getById(activity_id);
+        if(activity == null)
+            return ResponseEntity.badRequest()
+                .header("error", "Activity with id = " + activity_id + " does not exist").body(null);
+        
+        activityService.deleteActivity(activity);
+        return ResponseEntity.ok().body(activity);
+    }
 }

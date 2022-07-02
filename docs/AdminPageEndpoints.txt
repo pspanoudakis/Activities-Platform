@@ -127,3 +127,29 @@ ActivityDTO{
         "role": "ROLE_PARENT"
     }
 }
+
++{Get("/admin/pending_activities?pageNumber=1&pageSize=40")
+    Επιστρέφει τις δραστηριότητες που περιμένουν έγκριση ή απόρριψη.
+    ResponseBody{
+    [
+        <ActivityDTO>,
+        .
+        .
+        .
+    ]
+    }
+}
+
++{Post("/admin/activity/{id}/approve)
+    Εγκρίνει την δραστηριότητα με activity.id = id. Επιστρέφει τα ενημερωμένα στοιχεία της δραστηριότητας.
+    ResponseBody{
+        <activity_data>
+    }
+}
+
++{Delete("/admin/activity/{id})
+    Διαγράφει την δραστηριότητα με activity.id = id. Επιστρέφει την δραστηριότηα που διαγράφτηκε
+    ResponseBody{
+        <activity_data>
+    }
+}

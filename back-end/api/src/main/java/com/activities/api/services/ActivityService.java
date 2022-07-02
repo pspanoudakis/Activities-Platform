@@ -20,6 +20,9 @@ import com.activities.api.repositories.EvaluationRepository;
 import com.activities.api.repositories.FacilityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,14 +34,32 @@ public class ActivityService {
     @Autowired private ActivityPhotoRepository activityPhotoRepository;
     @Autowired private FacilityRepository facilityRepository;
 
+
+    public Activity saveOrUpdateActivity(Activity activity){
+        return activityRepository.save(activity);
+    }
+
     public List<Activity> getActivities(){
         return activityRepository.findByApprovedTrue();
+    }
+
+    public Activity getById(int id){
+        return activityRepository.findById(id).orElse(null);
     }
 
     public Activity getActivity(int id){
         Activity a = activityRepository.findByIdAndApprovedTrue(id).orElse(null);
         // System.out.println(a.toString());
         return a;
+    }
+
+    public void deleteActivity(Activity activity){
+        activityRepository.delete(activity);
+    }
+
+    public Page<Activity> getPendingActivitiesPage(int pageNumber, int pageSize){
+        Pageable page = PageRequest.of(pageNumber-1, pageSize);
+        return activityRepository.findAllByApprovedFalse(page);
     }
 
     public List<ActivityPopularity> getActivitiesSortedByReservations(){

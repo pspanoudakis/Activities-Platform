@@ -30,6 +30,5 @@ public class Facility {
     private String district;
     private Double longitude;
     private Double latitude;
-    private Boolean approved;
 
 }
