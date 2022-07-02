@@ -82,7 +82,7 @@ public class ActivityService {
     }
 
     public LocalDate getEarliestDate(Activity activity, LocalDate start_date){
-        List<ActivityAtDay> days = activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, start_date.minusDays(1));
+        List<ActivityAtDay> days = activityAtDayRepository.findByActivityAndDayAfterAndCapacityGreaterThanOrderByDayAsc(activity, start_date.minusDays(1), 0);
         return (!days.isEmpty()) ? days.get(0).getDay() : LocalDate.parse("3000-01-02");
     }
 
