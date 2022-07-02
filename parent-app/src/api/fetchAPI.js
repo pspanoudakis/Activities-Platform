@@ -1,7 +1,7 @@
 import { getJwt } from "./jwt"
 
 //const REST_API_DOMAIN = 'https://localhost:8070'
-const REST_API_DOMAIN = ''
+const REST_API_DOMAIN = 'https://localhost:8070'
 const createEndpoint = (endpoint) => `${REST_API_DOMAIN}/${endpoint}`
 
 export class APIResponse {

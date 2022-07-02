@@ -1,21 +1,17 @@
 {
-  "name": "parent-app",
+  "name": "admin-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
-    "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1": "npm:@JohnVaiosDimopoulos/software-engineering-project-spring-2022-team1@^1.0.0",
-    "@react-google-maps/api": "^2.12.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.0.0",
-    "react-date-picker": "^8.4.0",
     "react-dom": "^18.0.0",
-    "react-media": "^1.10.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-table": "^7.8.0",
@@ -23,7 +19,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

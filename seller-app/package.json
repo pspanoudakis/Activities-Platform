@@ -1,26 +1,24 @@
 {
-  "name": "provider-app",
+  "name": "seller-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.1.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@fortawesome/react-fontawesome": "^0.1.18",
     "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1": "npm:@JohnVaiosDimopoulos/software-engineering-project-spring-2022-team1@^1.0.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.0.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.3.0",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.1",
-    "react-table": "^7.8.0",
-    "spinners-react": "^1.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=3001 react-scripts start",
+    "start": "PORT=3002 react-scripts start",
     "build": "react-scripts build",
+    "build-css": "npx tailwindcss-cli build -i src/styles.css -o public/styles.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -43,8 +41,6 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.7",
-    "postcss": "^8.4.14",
     "tailwindcss": "^3.0.24"
   }
 }
