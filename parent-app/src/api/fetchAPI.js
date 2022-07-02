@@ -45,7 +45,13 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
                         ok: true,
                         auth: needAuth ? response.headers.get('Authorization') : {}
                     })
-                )
+                ).catch(() => {
+                    callback({
+                        data: null,
+                        ok: true,
+                        auth: needAuth ? response.headers.get('Authorization') : {}
+                    })
+                })
             }
             else {
                 response.text().then(rtext =>
@@ -54,7 +60,13 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
                         ok: true,
                         auth: needAuth ? response.headers.get('Authorization') : {}
                     })
-                )
+                ).catch(() => {
+                    callback({
+                        data: null,
+                        ok: true,
+                        auth: needAuth ? response.headers.get('Authorization') : {}
+                    })
+                })
             }
         }
         else {

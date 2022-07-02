@@ -42,7 +42,7 @@ export function SearchResultTile({
                     className="flex flex-row gap-3 items-center md:justify-between justify-center text-left flex-wrap px-2"
                     style={{minHeight: '7rem'}}
                 >
-                    <img src={images[0] ?? PLACEHOLDER_ACTIVITY_IMG} alt={images[0]} className="rounded-3xl w-48"/>
+                    <img src={images[0] ?? PLACEHOLDER_ACTIVITY_IMG} alt={images[0]} className="rounded-3xl w-48" style={{maxHeight: '7rem'}}/>
                     <div className="flex-1 flex flex-row items-center md:justify-between md:px-4 justify-around text-left flex-wrap gap-2" style={{minWidth: '15rem'}}>
                         <div className="flex flex-col gap-2 justify-start">
                             <span className="text-xl font-medium text-center">{name}</span>

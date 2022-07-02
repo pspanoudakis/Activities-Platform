@@ -60,11 +60,14 @@ public class ParentService {
             ).collect(Collectors.toList())
         );
 
+        int cost = 0;
+
         //make reservations on each day
         for(int i = 0; i < reservations.size(); i++){
             ActivityAtDay aad =aadList.get(i);
             aad.reserve(reservations.get(i).getNumber());
             aadList.set(i, aad);
+            cost += aad.getActivity().getPrice() * reservations.get(i).getNumber();
         }
 
         //save new changes
@@ -73,6 +76,16 @@ public class ParentService {
         //get parent
         Parent parent = parentRepository.findById(parent_id).orElse(null);
         if(parent == null) throw new Exception("Parent (parent.id = " + parent_id + ") does not exist");
+
+        User user = parent.getUser();
+        int balance = user.getBalance();
+
+        if(balance < cost)
+            throw new Exception("Parent (parent.id = " + parent_id + ") does not have enough money");
+
+        user.setBalance(balance - cost);
+        parent.setUser(user);
+        parentRepository.save(parent);
 
         //create reservations
         List<Reservation> res = aadList.stream().map(

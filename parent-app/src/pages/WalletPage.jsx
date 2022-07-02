@@ -92,7 +92,7 @@ export function WalletPage() {
         setLoading(true)
         updateUserCard({
                 cardNumber,
-                ccv: cvv,
+                cvv: cvv,
                 expirationDate,
                 ownerName
             },
@@ -104,7 +104,7 @@ export function WalletPage() {
                     // Backend MUST return new card info (response.data)
                     setCardInfo({
                         cardNumber,
-                        ccv: cvv,
+                        cvv: cvv,
                         expirationDate,
                         ownerName,
                         id: cardInfo.id

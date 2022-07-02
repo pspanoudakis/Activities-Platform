@@ -124,7 +124,7 @@ public class AdminController {
         User user = new User();
         user.setEmail(req.getEmail());
         user.setUsername(req.getUsername());
-        user.setPassword(req.getPassword());
+        user.setPassword(customPasswordEncoder.getPasswordEncoder().encode(req.getPassword()));
 
         String role = req.getRole();
         Authority user_role = authorityService.getAuthority(role);

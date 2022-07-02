@@ -12,6 +12,7 @@ import { ModalVerifyPrompt } from "../shared/ModalVerifyPrompt";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
 import { SingleMarkerMap } from "./Maps";
 import { fetchActivity, fetchBookReservations } from "../api/activityAPI";
+import { SignInForm } from "./SignInForm";
 
 function sameDateTimes(d1, d2) {
     return d1.getHours() === d2.getHours && d1.getMinutes() === d1.getMinutes
@@ -159,22 +160,33 @@ export function ActivityContent({
     }, [loading, activityId])
 
     const verifyPrompt = () => {
-        context.setState({
-            ...context.state,
-            showModal: true,
-            modalProps: {
-                content: <ModalVerifyPrompt
-                            onVerify={bookReservations}
-                            text="Είστε βέβαιοι ότι θέλετε να προχωρήσετε με τις επιλεγμένες κρατήσεις?"
-                        />
-            }
-        })
+        if (context.state.userInfo) {
+            context.setState({
+                ...context.state,
+                showModal: true,
+                modalProps: {
+                    content: <ModalVerifyPrompt
+                                onVerify={bookReservations}
+                                text="Είστε βέβαιοι ότι θέλετε να προχωρήσετε με τις επιλεγμένες κρατήσεις?"
+                            />
+                }
+            })
+        }
+        else {
+            context.setState({
+                ...context.state,
+                showModal: true,
+                modalProps: {
+                    bgColor: 'bg-cyan',
+                    canScroll: true,
+                    content: <SignInForm/>
+                }
+            })
+        }
     }
 
     function bookReservations() {
-        console.log(reservations)
-
-        fetchBookReservations(reservations, context.state.userInfo.userName, (response) => {
+        fetchBookReservations(reservations, (response) => {
             context.setState({
                 ...context.state,
                 showModal: true,
@@ -215,13 +227,28 @@ export function ActivityContent({
                             />
                             <button
                                 className="text-sm font-semibold bg-yellow-500 hover:bg-yellow-600 rounded-full px-4 py-1"
-                                onClick={() => context.setState({
-                                    ...context.state,
-                                    showModal: true,
-                                    modalProps: {
-                                        content: <ActivityRateSelector activityId={activityId}/>
+                                onClick={() => {
+                                    if (context.state.userInfo) {
+                                        context.setState({
+                                            ...context.state,
+                                            showModal: true,
+                                            modalProps: {
+                                                content: <ActivityRateSelector activityId={activityId}/>
+                                            }
+                                        })
                                     }
-                                })}
+                                    else {
+                                        context.setState({
+                                            ...context.state,
+                                            showModal: true,
+                                            modalProps: {
+                                                bgColor: 'bg-cyan',
+                                                canScroll: true,
+                                                content: <SignInForm/>
+                                            }
+                                        })
+                                    }
+                                }}
                             >
                                 Αξιολόγησέ το
                             </button>

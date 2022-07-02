@@ -33,8 +33,7 @@ export function CardInfoModifier({
     const [cardNumber, setCardNumber] = useState(cardInfo ? cardInfo.cardNumber : '')
     const [expirationDate, setExpirationDate] = useState(initialDate)
 
-    // Note: backend names it 'ccv' instead of 'cvv'
-    const [cvv, setCvv] = useState(cardInfo ? cardInfo.ccv : '')
+    const [cvv, setCvv] = useState(cardInfo ? cardInfo.cvv : '')
     const [ownerName, setOwnerName] = useState(cardInfo ? cardInfo.ownerName : '')
 
     const cannotSave = useMemo(() => {
@@ -43,7 +42,7 @@ export function CardInfoModifier({
                 return (
                     cardNumber === cardInfo.cardNumber &&
                     compareDates(expirationDate, initialDate) &&
-                    cvv === cardInfo.ccv &&
+                    cvv === cardInfo.cvv &&
                     ownerName === cardInfo.ownerName
                 )
             }
