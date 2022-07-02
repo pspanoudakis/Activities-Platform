@@ -59,10 +59,8 @@ export function ActivityRateSelector({
     const [loading, setLoading] = useState(false)
 
     function submitReview() {
-        //console.log(`User: ${context.state.userInfo.username}, Rate: ${selectedRate + 1}`)
-        //console.log(`${text}`)
         setLoading(true)
-        submitActivityReview(activityId, context.state.userInfo.username, selectedRate + 1, text, (response) => {
+        submitActivityReview(activityId, selectedRate + 1, text, (response) => {
             context.setState({
                 ...context.state,
                 showModal: true,

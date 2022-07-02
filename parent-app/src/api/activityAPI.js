@@ -137,10 +137,50 @@ export function fetchActivity(activityId, callback) {
     })
 }
 
-export function submitActivityReview(activityId, userId, rate, text, callback) {
-    runWithDelay(() => callback(new APIResponse(null, true, RESPONSE_STATUS.OK)))
+export function submitActivityReview(activityId, rate, text, callback) {
+    fetchWrapper({
+        endpoint: `parent/evaluate/${activityId}`,
+        method: 'POST',
+        body: {
+            "rating": rate,
+            "comment": text
+        },
+        omitAuthHeader: false,
+        needAuth: false,
+        callback: (response) => {
+            if (response.ok) {
+                callback(new APIResponse(null, true, RESPONSE_STATUS.OK))
+            }
+            else {
+                callback(new APIResponse(null, false, -1))
+            }
+        }
+    })
 }
 
-export function fetchBookReservations(reservations, username, callback) {
-    runWithDelay(() => callback(new APIResponse(null, true, RESPONSE_STATUS.OK)))
+export function fetchBookReservations(reservations, callback) {
+
+    const days = []
+
+    for (const reservation of reservations) {
+        days.push({
+            "aad_id": reservation.slot.id,
+            "number": reservation.quantity
+        })
+    }
+    fetchWrapper({
+        endpoint: 'parent/reservation',
+        method: 'POST',
+        body: days,
+        omitAuthHeader: false,
+        needAuth: false,
+        callback: (response) => {
+            if (response.ok) {
+                callback(new APIResponse(null, true, RESPONSE_STATUS.OK))
+            }
+            else {
+                callback(new APIResponse(null, false, -1))
+            }
+        }
+    })
 }
