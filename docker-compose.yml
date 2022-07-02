@@ -13,16 +13,27 @@ services:
     ports:
       - '3000:3000'
 
-  provider-app:
+  admin-app:
     build:
-      context: ./provider-app
-    container_name: provider-app-container
+      context: ./admin-app
+    container_name: admin-app-container
     stdin_open: true
     volumes:
-      - ./provider-app:/app/provider-app
-      - /app/provider-app/node_modules
+      - ./admin-app:/app/admin-app
+      - /app/admin-app/node_modules
     ports:
       - '3001:3001'
+
+  seller-app:
+    build: 
+      context: ./seller-app
+    container_name: seller-app-container
+    stdin_open: true
+    volumes:
+      - ./seller-app:/app/seller-app
+      - /app/seller-app/node_modules
+    ports:
+      - '3002:3002'
 
   database:
     image: postgres:14-alpine
