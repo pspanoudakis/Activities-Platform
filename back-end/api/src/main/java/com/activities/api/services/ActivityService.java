@@ -66,7 +66,7 @@ public class ActivityService {
         return activityRepository.getActivitiesSortedByReservations();
     }
 
-    public int getActivityRating(Activity activity){
+    public Double getActivityRating(Activity activity){
         List<Evaluation> evaluations = evaluationRepository.findByActivityAndActivity_ApprovedTrue(activity);
         return calculateRating(evaluations);
     }
@@ -107,11 +107,11 @@ public class ActivityService {
         return (!days.isEmpty()) ? days.get(0).getDay() : LocalDate.parse("3000-01-02");
     }
 
-    private int calculateRating(List<Evaluation> evaluations){
+    private Double calculateRating(List<Evaluation> evaluations){
         int size = evaluations.size();
         int total = 0;
         for(int i = 0; i < size; i++) total += evaluations.get(i).getRating();
-        return (int) ((double) total/size + 0.5);
+        return ((double) total/size + 0.5);
     }
 
     public List<String> getActivityImages(Activity activity){

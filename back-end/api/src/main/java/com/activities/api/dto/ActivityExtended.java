@@ -23,6 +23,7 @@ public class ActivityExtended {
     double latitude;
     String description;
     private Boolean periodic;
+    Double rating;
 
     public ActivityExtended(Activity activity, ActivityService activityService){
         this.name = activity.getName();
@@ -33,6 +34,7 @@ public class ActivityExtended {
         this.longitude = activity.getFacility().getLongitude();
         this.latitude = activity.getFacility().getLatitude();
         this.description = activity.getDescription();
+        this.rating = activityService.getActivityRating(activity);
         this.days = activityService.getDaysOfActivity(activity).stream().map(
             day -> new SimpleDay(day)
         ).collect(Collectors.toList());
