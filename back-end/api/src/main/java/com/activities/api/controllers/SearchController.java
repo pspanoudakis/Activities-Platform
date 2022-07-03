@@ -101,9 +101,17 @@ public class SearchController {
         @RequestParam(required = false, defaultValue = "getAnyDistrict") String district,
         @RequestParam(required = false, defaultValue = "0") Integer rating,
         @RequestParam(required = false, defaultValue = "0") Integer max_distance,
+        @RequestParam(required = false, defaultValue = "") Double latitude,
+        @RequestParam(required = false, defaultValue = "") Double longitude,
+        @RequestParam(required = false, defaultValue = "") List<String> categoriesList,
         @RequestBody Optional<CatCoordRequest> request
         ){
-        CatCoordRequest req = request.orElse(null);
+            
+        CatCoordRequest req = new CatCoordRequest();
+        if(latitude != null && longitude != null)
+            req.setCoordinates(new Coordinates(longitude, latitude));
+        if(categoriesList.size() != 0)
+            req.setCategories(categoriesList);
 
         List<String> category_names = (req == null || (req != null && req.getCategories() == null))
         ?   null

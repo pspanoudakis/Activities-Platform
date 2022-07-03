@@ -10,7 +10,7 @@ public class Coordinates {
     private Double longitude;
     private double latitude;
 
-    Coordinates(Double lon, Double lat){
+    public Coordinates(Double lon, Double lat){
         this.longitude = lon;
         this.latitude = lat;
     }
