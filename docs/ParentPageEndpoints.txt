@@ -87,13 +87,9 @@ plannedActivity{
     String time;
 }
 
-+ {GET(/parent/{parent_id}//upcoming)
++ {GET(/parent/{parent_id}//upcoming?pageNumber=1&pageSize=10)
     Περιγραφή:
     Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
-    {
-        "pageNumber": 1,
-        "pageSize": 10
-    }
     ResponseBody{
         "page": [
             <plannedActivity>
@@ -303,13 +299,9 @@ ReservationDTO{
     int cost;
 }
 
-+ {GET(/parent/{parent_id}/history)
++ {GET(/parent/{parent_id}/history?pageNumber=1&pageSize=10)
     Περιγραφή:
     Σελίδα με κρατήσεις που έκανε ο parent με parent.id = parent_id.
-    RequestBody{
-        "pageNumber": 1,
-        "pageSize": 10
-    }
     ResponseBody{
     "page" :[
         <ReservationDTO>,

@@ -168,8 +168,11 @@ public class AdminController {
     @GetMapping("/get_users")
     public ResponseEntity<?> getUsers(
         @RequestParam(required = false, defaultValue = "") String username,
-        @RequestBody PageRequest req
+        @RequestParam(defaultValue = "1") int pageSize,
+        @RequestParam(defaultValue = "1") int pageNumber
     ){
+
+        PageRequest req = new PageRequest(pageNumber, pageSize);
 
         if(!username.equals("")){
             User user = userService.getUserByUN(username);
@@ -198,8 +201,11 @@ public class AdminController {
     @GetMapping("/get_parent_reservations/{username}")
     public ResponseEntity<PagingResponse<List<ParentReservation>>> getParentReservations(
         @PathVariable String username,
-        @RequestBody PageRequest req
+        @RequestParam(defaultValue = "1") int pageSize,
+        @RequestParam(defaultValue = "1") int pageNumber
     ){
+
+        PageRequest req = new PageRequest(pageNumber, pageSize);
 
         Parent parent = parentService.getParentByUN(username);
         if(parent == null)return ResponseEntity.badRequest().header("error", "no parent with username " + username).body(null);
@@ -223,8 +229,11 @@ public class AdminController {
     @GetMapping("/get_seller_activities/{username}")
     public ResponseEntity<PagingResponse<List<SellerActivity>>> getSellerActivities(
         @PathVariable String username,
-        @RequestBody PageRequest req
+        @RequestParam(defaultValue = "1") int pageSize,
+        @RequestParam(defaultValue = "1") int pageNumber
     ){
+
+        PageRequest req = new PageRequest(pageNumber, pageSize);
 
         Seller seller = sellerService.getSellerByUN(username);
         if(seller == null)return ResponseEntity.badRequest().header("error", "no seller with username " + username).body(null);
