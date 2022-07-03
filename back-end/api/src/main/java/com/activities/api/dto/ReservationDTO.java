@@ -18,7 +18,7 @@ public class ReservationDTO implements Comparable<ReservationDTO>{
     private LocalDate activityDate;
     private String activityTime;
     private String sellerName;
-    private int rating;
+    private Double rating;
     private int cost;
     private int number;
 

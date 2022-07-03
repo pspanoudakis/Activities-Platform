@@ -15,7 +15,7 @@ public class ActivityCompact {
     
     private int activity_id;
     private String name;
-    private int rating;
+    private Double rating;
     private String address;
     private int price;
     private LocalDate date;

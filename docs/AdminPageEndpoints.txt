@@ -33,12 +33,8 @@ UserCompact{
     "status": "blocked"     //status = ["active", "blocked"]
 }
 
-+ {Get("/admin/get_users/?username=parent1")
++ {Get("/admin/get_users/?username=parent1&pageNumer=1&pageSize=10")
     αν το username δεν δίνεται ή είναι κενό String (/admin/get_users/?username=) επιστρέφονται όλοι οι χρήστες
-    RequestBody{
-        "pageNumber": 1,
-        "pageSize": 10
-    }
     RequestBody{
         "page":[
             <UserCompact>,
@@ -59,11 +55,7 @@ ReservationDTO{
     LocalDate reservation_time,
     int amount
 }
-+{Get("/admin/get_parent_reservations/{username})
-    RequestBody{
-        "pageNumber": 1,
-        "pageSize": 10
-    }
++{Get("/admin/get_parent_reservations/{username}?pageNumer=1&pageSize=10)
     ResponseBody{
         "page": [
             <ReservationDTO>,
@@ -84,11 +76,7 @@ ActivityDTO{
     LocalDate end_date,
     int price
 }
-+{Get("/admin/get_seller_activities/{username})
-    RequestBody{
-        "pageNumber": 1,
-        "pageSize": 10
-    }
++{Get("/admin/get_seller_activities/{username}?pageNumer=1&pageSize=10)
     ResponseBody{
         "page": [
             <ActivityDTO>,

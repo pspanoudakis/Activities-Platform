@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
@@ -149,6 +150,7 @@ public class ParentController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error", ex.getMessage()).build();
         }
     }
+   
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request){
         try {
@@ -309,7 +311,12 @@ public class ParentController {
     }
 
     @GetMapping("/upcoming")
-    public ResponseEntity<PagingResponse<List<PlannedActivity>>> getUpcoming(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody PageRequest req){
+    public ResponseEntity<PagingResponse<List<PlannedActivity>>> getUpcoming(
+        @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+        @RequestParam(defaultValue = "1") int pageNumber,
+        @RequestParam(defaultValue = "1") int pageSize){
+
+        PageRequest req = new PageRequest(pageNumber, pageSize);
         Parent parent;
         try {
             parent = getParentFromToken(token);
@@ -334,7 +341,13 @@ public class ParentController {
     }
 
     @GetMapping("/history")
-    public ResponseEntity<PagingResponse<List<ReservationDTO>>> getHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody PageRequest req){
+    public ResponseEntity<PagingResponse<List<ReservationDTO>>> getHistory(
+        @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+        @RequestParam(defaultValue = "1") int pageNumber,
+        @RequestParam(defaultValue = "1") int pageSize
+    ){
+
+        PageRequest req = new PageRequest(pageNumber, pageSize);
         
         //get reservations of parent
         Parent parent;
