@@ -72,12 +72,39 @@ export function fetchActivityResults(homePosition, options, requestedPage, pageS
 }
 
 export async function fetchCategories(needImgs) {
-    /* return await fetchAsyncWrapper({
+    const response = await fetchAsyncWrapper({
         endpoint: `search/all_categories`,
         method: "GET"
-    }) */
+    })
 
-    // Placeholder
+    let reshapedData = response.data
+
+    if (response.ok) {
+        reshapedData = {}
+        for (const category of response.data) {
+            reshapedData[category.name] = needImgs ? {
+                children: category.children.reduce((stored, child) => {
+                    return {
+                        ...stored,
+                        [child.name]: child.image
+                    }
+                }, {}),
+                img: category.image
+            }
+            :
+            category.children.map(child => child.name)
+        }
+    }
+
+    console.log(reshapedData);
+    return {
+        ok: response.ok,
+        data: reshapedData
+    }
+
+
+
+    /* // Placeholder
     const imgPath = 'https://www.timeoutriyadh.com/cloud/timeoutriyadh/2021/09/30/lcJcmAZT-shutterstock_400441870-1200x760.jpg'
     const idxs = [...Array(6).keys()]
     const categories = {}
@@ -106,12 +133,10 @@ export async function fetchCategories(needImgs) {
     :
     []
 
-    await delay(1000)
-
     return {
         ok: true,
         data: categories
-    }
+    } */
 }
 
 export async function fetchDistrictNames() {
