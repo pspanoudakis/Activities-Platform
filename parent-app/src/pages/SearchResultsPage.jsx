@@ -181,13 +181,13 @@ export function SearchResultsPage() {
                 initialHomePosition={
                     context.state.userInfo ?
                     {
-                        "lat": context.state.userInfo.latitude,
-                        "lng": context.state.userInfo.longitude
+                        "lat": context.state.userInfo.latitude ?? defaultHomePosition.lat,
+                        "lng": context.state.userInfo.longitude ?? defaultHomePosition.lng
                     }
                     :
                     defaultHomePosition
                 }
-                initialAddress={context.state.userInfo ? context.state.userInfo.address : ''}
+                initialAddress={context.state.userInfo ? (context.state.userInfo.address ?? '') : ''}
             />
         </div>
     )

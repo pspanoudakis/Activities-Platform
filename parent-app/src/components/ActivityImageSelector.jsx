@@ -6,6 +6,7 @@ import { SwitchPageSideButton } from "./SwitchPageSideButton";
 export function ActivityImageSelector({
     images
 }) {
+    const [imgPaths, setImgPaths] = useState(images)
     const [nextImageIdx, setNextImageIdx] = useState(0)
     const [{loading, currentImageIdx, cachedImages}, setState] = useState({
         loading: true,
@@ -45,6 +46,18 @@ export function ActivityImageSelector({
         if (loading && images.length > 0) {
             const imgObj = new Image()
             imgObj.src = images[nextImageIdx]
+
+            imgObj.onerror = () => {
+                const newImgPaths = Array.from(images)
+                newImgPaths[nextImageIdx] = PLACEHOLDER_ACTIVITY_IMG
+                setImgPaths(newImgPaths)
+                setState({
+                    cachedImages: cachedImages,
+                    loading: false,
+                    currentImageIdx: nextImageIdx,
+                })
+            }
+
             imgObj.onload = () => {
                 setState({
                     cachedImages: cachedImages.map((c, i) => {
@@ -56,7 +69,7 @@ export function ActivityImageSelector({
                     loading: false,
                     currentImageIdx: nextImageIdx,
                 })
-            }
+            }            
         }
     }, [loading, images])
 
@@ -69,7 +82,7 @@ export function ActivityImageSelector({
             />
             {
                 currentImageIdx >= 0 ?
-                <img src={images[currentImageIdx] ?? PLACEHOLDER_ACTIVITY_IMG} alt="" className="rounded-2xl max-w-xs sm:max-w-sm"/>
+                <img src={imgPaths[currentImageIdx] ?? PLACEHOLDER_ACTIVITY_IMG} alt="" className="rounded-2xl max-w-xs sm:max-w-sm"/>
                 :
                 null
             }

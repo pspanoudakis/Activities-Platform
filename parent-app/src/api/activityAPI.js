@@ -1,4 +1,3 @@
-import { runWithDelay } from "./delay"
 import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI"
 
 // This is what `ActivityContent` expects
@@ -56,8 +55,18 @@ const activity = {
 }
 
 function getDateFromResponseSlot(slot) {
-    //const [year, month, day] = slot.day.split('-').map(s => parseInt(s))
-    const [year, month, day] = slot.day
+    let year, month, day;
+    
+    if (slot.day instanceof Array) {
+        [year, month, day] = slot.day
+    }
+    else if (typeof slot.day === 'string') {
+        [year, month, day] = slot.day.split('-').map(s => parseInt(s))
+    }
+    else {
+        throw new Error('Unexpected Slot Date instance type')
+    }
+
     const [hours, minutes] = slot.time.split(':').map(s => parseInt(s))
 
     return new Date(year, month - 1, day, hours, minutes, 0)
@@ -177,10 +186,10 @@ export function fetchBookReservations(reservations, callback) {
         needAuth: false,
         callback: (response) => {
             if (response.ok) {
-                callback(new APIResponse(null, true, RESPONSE_STATUS.OK))
+                callback(new APIResponse(response.data, true, RESPONSE_STATUS.OK))
             }
             else {
-                callback(new APIResponse(null, false, -1))
+                callback(new APIResponse(response.data, false, -1))
             }
         }
     })

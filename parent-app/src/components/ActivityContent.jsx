@@ -189,12 +189,14 @@ export function ActivityContent({
         fetchBookReservations(reservations, (response) => {
             context.setState({
                 ...context.state,
+                userInfo: response.ok ? response.data : context.state.userInfo,
                 showModal: true,
                 modalProps: {
                     content: <ModalResultMessage
                                 success={response.ok}
                                 onVerify={bookReservations}
-                                text={ response.ok?
+                                text={
+                                    response.ok?
                                     "Οι κρατήσεις σας καταχωρήθηκαν επιτυχώς."
                                     :
                                     "Υπήρξε κάποιο πρόβλημα με την καταχώρηση των κρατήσεών σας. Προσπαθήστε ξανά."
