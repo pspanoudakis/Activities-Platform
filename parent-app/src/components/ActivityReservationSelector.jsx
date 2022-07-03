@@ -3,6 +3,8 @@ import DatePicker from 'react-date-picker';
 import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../utils/dates";
 import { ActionButton } from "../shared/ActionButton";
 import { Checklist } from "../shared/Checklist";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function ReservationItem({
     data,
@@ -17,6 +19,45 @@ function ReservationItem({
             <span>
                 {`Άτομα: ${data.quantity}`}
             </span>
+        </div>
+    )
+}
+
+const MAX_QUANTITY = 10
+export function QuantitySelector({
+    quantity,
+    setQuantity
+}) {
+    return (
+        <div className="flex flex-row gap-2">
+            <span className="font-semibold">Αριθμός Ατόμων:</span>
+            <div className="flex flex-row justify-around w-28">
+                <button
+                    className="
+                        px-2 rounded-xl 
+                        disabled:bg-dark-cyan disabled:hover:bg-dark-cyan
+                        bg-navbar-cyan hover:bg-navbar-dark-cyan
+                        disabled:text-gray-500
+                    "
+                    disabled={quantity === 1}
+                    onClick={() => setQuantity(quantity - 1)}
+                >
+                    <FontAwesomeIcon icon={faMinus}/>
+                </button>
+                <span className="font-semibold">{quantity}</span>
+                <button
+                    className="
+                        px-2 rounded-xl 
+                        disabled:bg-dark-cyan disabled:hover:bg-dark-cyan
+                        bg-navbar-cyan hover:bg-navbar-dark-cyan
+                        disabled:text-gray-500
+                    "
+                    disabled={quantity === MAX_QUANTITY}
+                    onClick={() => setQuantity(quantity + 1)}
+                >
+                    <FontAwesomeIcon icon={faPlus}/>
+                </button>
+            </div>
         </div>
     )
 }
@@ -90,6 +131,7 @@ export function ActivityReservationSelector({
                 }
             `}
             </style>
+            <QuantitySelector quantity={quantity} setQuantity={setQuantity}/>
             <div className="flex flex-row gap-3">
                 <div className="flex flex-col gap-1">
                     <span className="font-semibold">Επιλέξτε Ημερομηνία:</span>

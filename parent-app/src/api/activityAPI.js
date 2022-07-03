@@ -81,8 +81,8 @@ function reshapeActivityContent(activityResponse) {
         images: activityResponse.images,
 
         // Backend needs to send these too
-        rating: 3.8,
-        repeated: true,
+        rating: Math.round(activityResponse.rating * 10) / 10,
+        repeated: activityResponse.periodic,
 
         location: {
             address: activityResponse.address,

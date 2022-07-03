@@ -25,7 +25,7 @@ export function ActivityRatingIndicator({
                 }
             </div>
             <span className={`${textSize ?? `text-sm`}`}>
-                {ratingScore} / 5
+                {Math.round(ratingScore * 10) / 10} / 5
             </span>
         </div>
     )
