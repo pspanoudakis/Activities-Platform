@@ -1,7 +1,25 @@
-import { delay } from "./delay"
 import { fetchAsyncWrapper, fetchWrapper } from "./fetchAPI"
 
-const parameterValueGetters = {
+const filterValueGetters = {
+    'categoriesList': ({categories}) => {
+        console.log(categories)
+        const names = []
+
+        for (const [mainCategoryName, mainCategory] of Object.entries(categories)) {
+            if (mainCategory.isSelected) {
+                names.push(mainCategoryName)
+            }
+            else {
+                for (const [subcategoryName, isSelected] of Object.entries(mainCategory.subcategories)) {
+                    if (isSelected) {
+                        names.push(subcategoryName)
+                    }
+                }
+            }
+        }
+
+        return names.join(',')
+    },
     'age_category': ({ageCategories}) => {
         for (const c of ageCategories) {
             if (c.isSelected) {
@@ -37,27 +55,28 @@ const parameterValueGetters = {
     'max_distance': ({maxDistance}) => maxDistance
 }
 function buildSearchParams(options, requestedPage, pageSize) {
+    //console.log('options', options);
     let paramStr = `page_number=${requestedPage + 1}&page_size=${pageSize}`
 
-    for (const [paramName, getter] of Object.entries(parameterValueGetters)) {
+    for (const [paramName, getter] of Object.entries(filterValueGetters)) {
         const paramValue = getter(options.filters)
         if (paramValue) {
             paramStr = `${paramStr}&${paramName}=${paramValue}`
         }
     }
+    if (options.filters.maxDistance) {
+        const latParam = options.homePosition.lat ?? ''
+        const lngParam = options.homePosition.lng ?? ''
+        paramStr = `${paramStr}&latitude=${latParam}&longitude=${lngParam}`
+    }
 
     return paramStr
 }
 
-/* function buildSearchRequestBody(options) {
-    return {}
-} */
-
-export function fetchActivityResults(homePosition, options, requestedPage, pageSize, callback) {
+export function fetchActivityResults(options, requestedPage, pageSize, callback) {
     fetchWrapper({
         endpoint: `search/activities?${buildSearchParams(options, requestedPage, pageSize)}`,
         method: 'GET',
-        //body: buildSearchRequestBody(options),
         omitAuthHeader: true,
         needAuth: false,
         callback: (response) => {

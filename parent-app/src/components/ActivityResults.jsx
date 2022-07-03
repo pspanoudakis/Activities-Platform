@@ -93,7 +93,7 @@ export function ActivityResults({
     const [totalPages, setTotalPages] = useState(-1)
     
     const activityClicked = (idx) => {
-        console.log(activities[idx].coordinates);
+        //console.log(activities[idx].coordinates);
         setSecondaryPositions([{
             lat: activities[idx].coordinates.latitude,
             lng: activities[idx].coordinates.longitude
@@ -125,7 +125,7 @@ export function ActivityResults({
         }
         setSelectedActivity(-1)
         setSecondaryPositions([])
-        fetchActivityResults(homePosition, options, page, PAGE_SIZE, (response) => {
+        fetchActivityResults({...options, homePosition}, page, PAGE_SIZE, (response) => {
             if (response.ok) {
                 setTotalPages(response.totalPages)
                 setActivities(response.data)
