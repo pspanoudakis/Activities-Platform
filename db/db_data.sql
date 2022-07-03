@@ -47,7 +47,7 @@ SET row_security = off;
 -- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
-CREATE SCHEMA public;
+-- CREATE SCHEMA public;
 
 
 ALTER SCHEMA public OWNER TO postgres;
