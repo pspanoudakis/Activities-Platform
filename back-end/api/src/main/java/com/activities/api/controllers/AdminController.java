@@ -123,7 +123,7 @@ public class AdminController {
     public ResponseEntity<?> createUser(@RequestBody UserCreationRequest req){
         
         if(userService.getUserByUN(req.getUsername()) != null)
-        return ResponseEntity.badRequest().header("error", "username already exists").body(null);
+            return ResponseEntity.badRequest().header("error", "username already exists").body(null);
 
         User user = new User();
         user.setEmail(req.getEmail());
