@@ -3,7 +3,7 @@ import AddAccount from './AddAccount.js';
 import { BsArrowRight } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import { sendProfileData, onRedeem } from '../api.js';
-import { fetchProfilePageData, sendWatermarkData, sendRemovedAccountIdx } from '../api.js';
+import { fetchProfilePageData, sendWatermarkData, sendAddedAccount, sendSelectedAccount, sendRemovedAccountIdx } from '../api.js';
 import { Modal } from '../shared/Modal.js';
 import Prompt from './Prompt.js';
 
@@ -71,12 +71,18 @@ export default function ProfilePage() {
 
   function switchBankAccount(idx){
     setSelectedAccount(idx)
+    sendSelectedAccount(idx)
   }
 
   function redeem(){
     onRedeem({
       redeemPoints:redeemPoints
     })
+  }
+
+  function addBankAccount(data){
+    setAccounts(accounts => [...accounts, data])
+    sendAddedAccount(data)
   }
 
   function removeBankAccount(){
@@ -139,8 +145,8 @@ export default function ProfilePage() {
             <button onClick={() => sendWatermark()} className='bg-cyan hover:bg-hover w-1/3 h-8 mx-auto text-lg rounded-full shadow'>Προσθήκη</button>
           </div>
           <div className='text-2xl mt-12 text-center'>Οι Πόντοι Μου</div>
-          <div className='bg-white rounded-full w-96 p-1 mx-auto text-center text-3xl'>{data.totalPoints} / 3000$</div>
-          <div className='text-2xl mt-12 text-center'>Εξαργύρωση Πόντων</div>
+          <div className='bg-white rounded-full w-96 p-1 mt-1 mx-auto text-center text-3xl'>{data.totalPoints} / {parseInt(data.totalPoints)/5}$</div>
+          <div className='text-2xl mt-16 text-center'>Εξαργύρωση Πόντων</div>
           <div className='flex justify-between mt-8'>
             <div className='flex justify-center w-2/5'>
               <input type='text' className='w-full px-4 rounded-full shadow' placeholder='Αριθμός Πόντων'
@@ -157,8 +163,8 @@ export default function ProfilePage() {
             </div>
           </div>
           <button onClick={() => redeem()} className='bg-cyan hover:bg-hover w-full h-8 mt-4 mx-auto text-lg rounded-full shadow'>Εξαργύρωση</button>
-          <div className='text-2xl mt-12 text-center'>Οι Λογαριασμοί Μου</div>
-          <div className='h-52 overflow-y-scroll overflow-hidden'>
+          <div className='text-2xl mt-16 text-center'>Οι Λογαριασμοί Μου</div>
+          <div className='h-52 mt-2 overflow-y-scroll overflow-hidden'>
             {
               accounts.map((account, i) => <ListItemBankAccount key={i} clicked={() => switchBankAccount(i)} isSelected={i === selectedAccount} data={account} remove={() => {setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό;', () => removeBankAccount()); setAccountToRemove(i)}} />)
             }
@@ -166,7 +172,7 @@ export default function ProfilePage() {
           <div className='text-center mt-4'>
             <button onClick={() => setShowAddAccountPanel(true)} className='bg-white hover:bg-hover hover:text-white border-4 border-cyan w-16 h-16 pb-1 pl-1 text-5xl text-cyan rounded-full shadow'>+</button>
           </div>
-          <Modal show={showAddAccountPanel} children={<AddAccount/>} color='bg-background' closeCallback={() => setShowAddAccountPanel(false)}/>
+          <Modal show={showAddAccountPanel} children={<AddAccount addAccountCallback={addBankAccount} close={() => setShowAddAccountPanel(false)}/>} color='bg-background' closeCallback={() => setShowAddAccountPanel(false)}/>
           <Modal show={showPrompt} children={<Prompt text={promptText} handleConfirm={() => promptConfirmCallback} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
         </>
       }

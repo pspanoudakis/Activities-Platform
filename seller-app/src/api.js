@@ -190,6 +190,17 @@ export function sendFacilityData(data) {
     console.log('Sent data: '+ data.location);
 }
 
+
+export function sendAddedAccount(data) {
+    console.log('Sent data: '+ data.iban);
+    console.log('Sent data: '+ data.number);
+    console.log('Sent data: '+ data.cardNumber);
+}
+
+export function sendSelectedAccount(idx) {
+    console.log('Sent data: '+ idx);
+}
+
 export function sendRemovedAccountIdx(idx) {
     console.log('Removed bank account with id = '+ idx)
 }
