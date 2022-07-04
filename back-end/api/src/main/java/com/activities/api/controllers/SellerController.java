@@ -1,19 +1,17 @@
 package com.activities.api.controllers;
 
 
-
+import com.activities.api.dto.ActivityCreation;
 import com.activities.api.dto.AuthCredentialsRequest;
+import com.activities.api.dto.FacilityDTO;
 import com.activities.api.dto.UserCreationRequest;
-import com.activities.api.entities.Authority;
-import com.activities.api.entities.Parent;
-import com.activities.api.entities.Seller;
+import com.activities.api.entities.*;
+import com.activities.api.services.*;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import lombok.Data;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 
-import com.activities.api.entities.User;
-import com.activities.api.services.AuthorityService;
-import com.activities.api.services.SellerService;
-import com.activities.api.services.UserService;
 import com.activities.api.utils.CustomPasswordEncoder;
 import com.activities.api.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import com.activities.api.entities.Facility;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/seller")
@@ -45,6 +46,13 @@ public class SellerController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private FacilityService facilityService;
+
+    @Autowired
+    private  ActivityService activityService;
+
 
     @PostMapping("/signup")
     public ResponseEntity<Seller> createNewSeller(@RequestBody UserCreationRequest request){
@@ -124,6 +132,121 @@ public class SellerController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error", ex.getMessage()).build();
         }
     }
+
+    @PostMapping("/new_facility")
+    public ResponseEntity<FacilityDTO> createNewFacility(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody Facility newFacility){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        newFacility.setSeller(seller);
+        FacilityDTO resp = facilityService.saveOrUpdateFacility(newFacility);
+        return ResponseEntity.ok().body(resp);
+    }
+
+    @GetMapping("/facilities")
+    public ResponseEntity<List<FacilityDTO>> getAllFacilities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+            List<FacilityDTO> facilities = facilityService.getFacilitiesBySeller(seller);
+            return ResponseEntity.ok().body(facilities);
+
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+    }
+
+    @PutMapping("facility/{facility_id}")
+    public ResponseEntity<FacilityDTO> editFacility(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int facility_id, @RequestBody Facility updatedFacility){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!facilityService.exists(facility_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no facility with such id").body(null);
+
+        if(!facilityService.isOwnedBySeller(seller,facility_id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the ower of the requested facility").body(null);
+        updatedFacility.setId(facility_id);
+        updatedFacility.setSeller(seller);
+        return ResponseEntity.ok().body(facilityService.saveOrUpdateFacility(updatedFacility));
+        
+    }
+
+
+    @GetMapping("/total_facilities")
+    public ResponseEntity<?> getTotalFacilities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        Object responseBody = new Object() {
+            public final int total_facilities = facilityService.getFacilitiesBySeller(seller).size();
+        };
+        return new ResponseEntity<>(responseBody,HttpStatus.OK);
+
+    }
+
+    @PostMapping("/new_activity")
+    public ResponseEntity<ActivityCreation> createNewActivity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody ActivityCreation newActivity){
+        return ResponseEntity.ok().body(activityService.createNewActivity(newActivity));
+    }
+
+//    @GetMapping("/activities")
+//    public ResponseEntity<List<>> getAllActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+//        Seller seller;
+//        try{
+//            seller = sellerService.getSellerFromToken(token);
+//        }catch (Exception e) {
+//            return ResponseEntity.badRequest().header(
+//                    "error",e.getMessage()
+//            ).body(null);
+//        }
+//
+//
+//
+//    }
+
+//    @GetMapping("/activity/{activity_id}")
+//    public ResponseEntity<> getAllActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id){
+//        Seller seller;
+//        try{
+//            seller = sellerService.getSellerFromToken(token);
+//        }catch (Exception e) {
+//            return ResponseEntity.badRequest().header(
+//                    "error",e.getMessage()
+//            ).body(null);
+//        }
+//
+//
+//
+//    }
+
+//    @GetMapping("/total_activities")
+//    public ResponseEntity<?> getTotalActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+//
+//
+//    }
+
+
+
 
 
 
