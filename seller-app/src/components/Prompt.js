@@ -1,5 +1,4 @@
 const Prompt = ({text, handleConfirm, cancel}) => {
-
   return (
     <div className='bg-background px-4 pb-4 w-80 rounded-3xl font-normal'>
       <div className='text-xl text-center'>{text}</div>

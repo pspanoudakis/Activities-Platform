@@ -45,7 +45,7 @@ export default function ProfilePage() {
     })
   }, [])
   
-  function sendNewProfileInfo(){
+  function sendNewProfileInfo() {
     sendProfileData({
       username: username,
       email: email,
@@ -63,29 +63,29 @@ export default function ProfilePage() {
     }
   }
 
-  function sendWatermark(){
+  function sendWatermark() {
     sendWatermarkData({
       watermark: watermark
     })
   }
 
-  function switchBankAccount(idx){
+  function switchBankAccount(idx) {
     setSelectedAccount(idx)
     sendSelectedAccount(idx)
   }
 
-  function redeem(){
+  function redeem() {
     onRedeem({
       redeemPoints:redeemPoints
     })
   }
 
-  function addBankAccount(data){
+  function addBankAccount(data) {
     setAccounts(accounts => [...accounts, data])
     sendAddedAccount(data)
   }
 
-  function removeBankAccount(){
+  function removeBankAccount() {
     setAccounts([
       ...accounts.slice(0, accountToRemove),
       ...accounts.slice(accountToRemove+1, accounts.length)
@@ -166,14 +166,14 @@ export default function ProfilePage() {
           <div className='text-2xl mt-16 text-center'>Οι Λογαριασμοί Μου</div>
           <div className='h-52 mt-2 overflow-y-scroll overflow-hidden'>
             {
-              accounts.map((account, i) => <ListItemBankAccount key={i} clicked={() => switchBankAccount(i)} isSelected={i === selectedAccount} data={account} remove={() => {setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό;', () => removeBankAccount()); setAccountToRemove(i)}} />)
+              accounts.map((account, i) => <ListItemBankAccount key={i} clicked={() => switchBankAccount(i)} isSelected={i === selectedAccount} data={account} remove={() => {setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό;', () => removeBankAccount); setAccountToRemove(i)}} />)
             }
           </div>
           <div className='text-center mt-4'>
             <button onClick={() => setShowAddAccountPanel(true)} className='bg-white hover:bg-hover hover:text-white border-4 border-cyan w-16 h-16 pb-1 pl-1 text-5xl text-cyan rounded-full shadow'>+</button>
           </div>
           <Modal show={showAddAccountPanel} children={<AddAccount addAccountCallback={addBankAccount} close={() => setShowAddAccountPanel(false)}/>} color='bg-background' closeCallback={() => setShowAddAccountPanel(false)}/>
-          <Modal show={showPrompt} children={<Prompt text={promptText} handleConfirm={() => promptConfirmCallback} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
+          <Modal show={showPrompt} children={<Prompt text={promptText} handleConfirm={() => removeBankAccount()} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
         </>
       }
     </div>
