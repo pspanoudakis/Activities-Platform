@@ -61,16 +61,16 @@ ActivityCompactDTO{
     LocalDate date //earliest or reservation date depending on use
 }
 
-+ {GET(/search/activities/popular)
++ {GET(/search/activities/popular?number=5)
     Περιγραφή:
-    Επιστροφή των 5 δραστηριοτήτων με τις περισσότερες κρατήσεις
+    Επιστροφή των number δραστηριοτήτων με τις περισσότερες κρατήσεις, 
     ResponseBody{
         [
-            {<ActivityCompactDTO>, reservations}
+            {<ActivityCompactDTO>}
             .
             .
             .,
-            {<ActivityCompactDTO>, reservations}
+            {<ActivityCompactDTO>}
         ]
     }
 }
@@ -87,9 +87,9 @@ plannedActivity{
     String time;
 }
 
-+ {GET(/parent/{parent_id}//upcoming?pageNumber=1&pageSize=10)
++ {GET(/parent/{parent_id}/upcoming?pageNumber=1&pageSize=10)
     Περιγραφή:
-    Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των 5 πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
+    Επιστροφή των κρατήσεων, του parent με parent.id = parent_id, των πιο πρόσφατων (που πραγματοποιούνται συντομότερα) δραστηριοτήτων.
     ResponseBody{
         "page": [
             <plannedActivity>
@@ -103,9 +103,9 @@ plannedActivity{
     }
 }
 
-+ {GET(/parent/{parent_id}//recently_booked/)
++ {GET(/parent/{parent_id}//recently_booked?number=5)
     Περιγραφή:
-    Επιστροφή 5 κρατήσεων, του parent με parent.id = parent_id, σε δραστηριοτήτες που έχουν ολοκληρωθεί.
+    Επιστροφή number κρατήσεων, του parent με parent.id = parent_id, σε δραστηριοτήτες που έχουν ολοκληρωθεί.
     ResponseBody{
         [
             <ActivityCompactDTO>
@@ -142,7 +142,7 @@ plannedActivity{
     }
 }
 
-+ {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10&longitude=10.1&latitude=10.2&categoriesList=category1_level1, category2_level3)
++ {GET(/search/activities/?age_category=1&min_price=100&max_price=200&start_date=2022-01-01&end_date=2022-02-01&rating=3&district=Athens&max_distance=20&page_number=1&page_size=10&longitude=10.1&latitude=10.2&categoriesList=category1_level1, category2_level3&text=activity1)
     Περιγραφή:
     Προβολή της 1ης σελίδας μεγέθους 10 συνοπτικών πληροφοριών για τις οποίες ισχύουν συνδιαστικά τα φίλτρα:
     Ηληκιακή Κατηγορία: Προσχολική (1 - age_category.id)
@@ -151,6 +151,12 @@ plannedActivity{
     Βαθμολογία: >3 αστέρια
     Περιοχή: Athens
     Μέγιστη απόσταση: 20 km
+    Κείμενο: text
+    Λίστα με κατηγορίες: categoriesList
+    Γεωγραφικό πλάτος 'αρχής': latitude
+    Γεωγραφικό μήκος 'αρχής': longitude
+    Αριθμός σελίδας: pageNumber
+    Μέγεθος σελίδας: pageSize
     ResponseBody{
         [
             <ActivityCompactDTO>
