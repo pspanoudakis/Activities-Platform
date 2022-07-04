@@ -13,7 +13,7 @@ export default function ActionBar() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showPrompt, setShowPrompt] = useState(false);
-  //93ABB2
+  
   useEffect(() => {
     for (var obj of document.getElementById('actionBar').getElementsByTagName('button')){
       obj.style.color = '#798a94';
