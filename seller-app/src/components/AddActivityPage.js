@@ -2,11 +2,11 @@ import ListItemDate from "./ListItemDate.js";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import { sendActivityData } from '../api.js'
 
 
 export default function AddActivityPage() {
+  const [images, setImages] = useState([])
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
@@ -18,6 +18,7 @@ export default function AddActivityPage() {
   function sendNewActivityInfo(){
     sendActivityData(
     {
+      images: images,
       name: name,
       category: category,
       price: price,
@@ -28,12 +29,17 @@ export default function AddActivityPage() {
     })
   }
 
+  function onImageChange(e){
+    setImages([...e.target.files])
+  }
+
   return (
     <div className='font-light'>
       <div className='text-3xl text-center'>Νέα Δραστηριότητα</div>
-      <div className='relative w-full mt-8'>
+      <div className='relative mt-8'>
         <img className='w-full h-48 rounded-3xl' src='' alt=''/>
-        <button className='absolute bg-cyan hover:bg-hover rounded-full p-1 w-1/2 top-20 left-1/4 shadow'>Ανεβάστε μία Eικόνα</button>
+        <label className='absolute bg-cyan hover:bg-hover rounded-full p-1 w-1/2 top-20 left-1/4 text-center shadow' for='upload'>Ανεβάστε αρχεία...</label>
+        <input type='file' id='upload' className='opacity-0 absolute' multiple accept='image/*' onChange={onImageChange}/>
       </div>
       <div className='flex mt-6 mx-auto justify-between font-normal'>
         <div className='w-full'>
