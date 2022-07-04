@@ -4,12 +4,14 @@ import AllReviews from "./AllReviews.js";
 import { useState, useEffect } from "react"
 import { fetchActivityPageData } from '../api.js'
 import { Modal } from '../shared/Modal.js';
+import Prompt from './Prompt.js';
 
 export default function ActivityPage() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [dateData, setDateData] = useState([])
   const [showReviews, setShowReviews] = useState(false)
+  const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
     fetchActivityPageData(1, (response) => {
@@ -23,6 +25,10 @@ export default function ActivityPage() {
       setLoading(false)
     })
   }, [])
+
+  function deleteActivity(){
+
+  }
 
   return (
     <div className=''>
@@ -44,10 +50,6 @@ export default function ActivityPage() {
                 <div className=''>Ηλικιακή Κατηγορία:</div>
                 <div className='font-light ml-1'>{data.age}</div>
               </div>
-              <div className='flex'>
-                <div className=''>Αριθμός Κρατήσεων:</div>
-                <div className='font-light ml-1'>{data.bookCount}</div>
-              </div>
             </div>
             <div>
               <div className='flex'>
@@ -55,22 +57,14 @@ export default function ActivityPage() {
                 <div className='font-light ml-1'>{data.price}</div>
               </div>
               <div className='flex'>
-                <div className=''>Ποσοστό Ακυρώσεων:</div>
-                <div className='font-light ml-1'>{data.cancelRate}</div>
-              </div>
-              <div className='flex'>
-                <div className=''>Διαθέσιμες Θέσεις:</div>
-                <div className='font-light ml-1'>{data.seats}</div>
+                <div className=''>Αριθμός Κρατήσεων:</div>
+                <div className='font-light ml-1'>{data.bookCount}</div>
               </div>
             </div>
             <div>
              <div className='flex'>
                 <div className=''>Υποδομή:</div>
                 <div className='font-light ml-1'>{data.facility}</div>
-              </div>
-              <div className='flex'>
-                <div className=''>Αριθμός Ακυρώσεων:</div>
-                <div className='font-light ml-1'>{data.cancelCount}</div>
               </div>
               <div className='flex'>
                 <div className=''>Μέση Αξιολόγηση:</div>
@@ -107,9 +101,10 @@ export default function ActivityPage() {
           </div>
           <div className='mt-20 text-center text-2xl'>
             <button className='bg-cyan hover:bg-hover rounded-full w-full font-light shadow'>Επεξεργασία Δραστηριότητας</button>
-            <button className='bg-white hover:bg-red-400 hover:text-white w-full border-2 border-red-400 my-4 rounded-full font-light shadow'>Ακύρωση Δραστηριότητας</button>
+            <button onClick={() => setShowPrompt(true)} className='bg-white hover:bg-red-400 hover:text-white w-full border-2 border-red-400 my-4 rounded-full font-light shadow'>Ακύρωση Δραστηριότητας</button>
           </div>
           <Modal show={showReviews} children={<AllReviews data={data.reviews} />} color='bg-background' closeCallback={() => setShowReviews(false)} />
+          <Modal show={showPrompt} children={<Prompt text='Είστε σίγουροι οτι θέλετε να διαγράψετε αυτή την δραστηριότητα;' handleConfirm={() => deleteActivity()} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
         </>
       }
     </div>

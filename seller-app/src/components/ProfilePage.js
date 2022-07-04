@@ -137,13 +137,6 @@ export default function ProfilePage() {
               <button onClick={() => setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό σας στο ParentApp;')} className='bg-white hover:bg-red-400 hover:text-white w-11/12 mt-8 border-2 border-red-400 rounded-full font-light text-lg shadow'>Διαγραφή Λογαριασμού</button>
             </div>
           </div>
-          <div className='text-2xl mt-12 text-center'>Υδατογράφημα</div>
-          <div className='flex justify-between mt-6'>
-            <input type='text' className='px-4 w-1/2 p-1 rounded-full shadow' placeholder='Μέχρι 30 χαρακτήρες'
-                value={watermark} onChange={(e) => setWatermark(e.target.value)}
-            />
-            <button onClick={() => sendWatermark()} className='bg-cyan hover:bg-hover w-1/3 h-8 mx-auto text-lg rounded-full shadow'>Προσθήκη</button>
-          </div>
           <div className='text-2xl mt-12 text-center'>Οι Πόντοι Μου</div>
           <div className='bg-white rounded-full w-96 p-1 mt-1 mx-auto text-center text-3xl'>{data.totalPoints} / {parseInt(data.totalPoints)/5}$</div>
           <div className='text-2xl mt-16 text-center'>Εξαργύρωση Πόντων</div>

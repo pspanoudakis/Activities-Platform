@@ -31,7 +31,7 @@ export function fetchHomePageData(callback) {
                     cost: '1000'
                 }
             }),
-            reviews: [...Array(5).keys()].map(i => {
+            reviews: [...Array(3).keys()].map(i => {
                 return {
                     activity: 'Δραστηριότητα',
                     user: 'Χρήστης',

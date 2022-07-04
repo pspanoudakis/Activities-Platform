@@ -35,20 +35,6 @@ export default function AddFacilityPage() {
             value={street} onChange={(e) => setStreet(e.target.value)}
         />
       </div>
-      <div className='flex mt-8 mx-auto justify-between'>
-        <div className='w-full'>
-          <div className=''>Αριθμός*</div>
-          <input type='text' class='bg-white w-10/12 h-8 px-4 rounded-full shadow'
-            value={number} onChange={(e) => setNumber(e.target.value)}
-          />
-        </div>
-        <div className='w-full'>
-          <div className=''>Τ.Κ.*</div>
-          <input type='text' className='bg-white w-full h-8 px-4 rounded-full shadow'
-            value={postalCode} onChange={(e) => setPostalCode(e.target.value)}
-          />
-        </div>
-      </div>
       <div className='mt-8 '>
           <div className=''>Περιοχή*</div>
           <input type='text' className='bg-white w-full h-8 px-4 rounded-full shadow'

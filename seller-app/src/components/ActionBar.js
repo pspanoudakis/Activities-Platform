@@ -10,8 +10,6 @@ import { fetchActionBarData } from '../api.js'
 
 export default function ActionBar() {
   const navigate = useNavigate();
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
   const [showPrompt, setShowPrompt] = useState(false);
   
   useEffect(() => {
@@ -22,16 +20,6 @@ export default function ActionBar() {
     id = (window.location.pathname === '/facility') ? '/facilities' : id;
     var el = document.getElementById(id);
     el.style.color = '';
-
-    fetchActionBarData( (response) => {
-      if(response.ok){
-        setData(response.data)
-      }
-      else{
-        console.log('failed to fetch data');
-      }
-      setLoading(false)
-    })
   }, [])
 
   function go(path){
@@ -48,17 +36,8 @@ export default function ActionBar() {
   }
 
   return (
-    <div id='actionBar' className='bg-cyan text-center w-44 px-2 mt-2 px-2 py-10 rounded-r-3xl shadow-lg'>
-      <button onClick={() => go('/profile')} className='w-full'>
-        {
-          loading ? 
-          <div className='w-36 h-36 pt-14 mx-auto rounded-full'>Φορτώνει...</div>
-          :
-          <img className='w-36 h-36 mx-auto rounded-full' src={data.imgUrl} alt=''/>
-        }
-      </button>
-      <div className='mt-2'>Όνομα Παρόχου</div>
-      <button id='/' onClick={() => go('/')} className='mt-10 w-full hover:bg-hover pt-2'>
+    <div id='actionBar' className='bg-cyan text-center w-44 px-2 mt-2 rounded-r-3xl shadow-lg'>
+      <button id='/' onClick={() => go('/')} className='mt-8 w-full hover:bg-hover pt-2'>
         <AiOutlineHome className='w-12 h-12 mx-auto'/>
         <div className='w-full border-gray-300 border-b-2 mt-2 text-gray-700'>Αρχική</div>
       </button>
@@ -77,10 +56,6 @@ export default function ActionBar() {
       <button id='/add-facility' onClick={() => go('/add-facility')} className='mt-6 w-full hover:bg-hover pt-2'>
         <BiBookAdd class='w-12 h-12 mx-auto'/>
         <div className='border-gray-300 border-b-2 mt-2 text-gray-700'>Νέα Υποδομή</div>
-      </button>
-      <button id='/statistics' onClick={() => go('/statistics')} className='mt-6 w-full hover:bg-hover pt-2'>
-        <BiStats className='w-12 h-12 mx-auto'/>
-        <div className='border-gray-300 border-b-2 px-10 mt-2 text-gray-700'>Στατιστικά</div>
       </button>
       <button id='/profile' onClick={() => go('/profile')} className='mt-6 w-full hover:bg-hover pt-2'>
         <FaUserCircle className='w-12 h-12 mx-auto'/>

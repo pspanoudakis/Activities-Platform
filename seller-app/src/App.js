@@ -10,7 +10,6 @@ import FacilitiesPage from './components/FacilitiesPage.js';
 import FacilityPage from './components/FacilityPage.js';
 import ProfilePage from './components/ProfilePage';
 import AddActivityPage from './components/AddActivityPage.js';
-import StatisticsPage from "./components/StatisticsPage";
 import HomePage from "./components/HomePage";
 import AddFacilityPage from "./components/AddFacilityPage.js"
 
@@ -30,7 +29,6 @@ function App() {
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/add-activity" element={<AddActivityPage/>}/>
             <Route path="/add-facility" element={<AddFacilityPage/>}/>
-            <Route path="/statistics" element={<StatisticsPage/>}/>
           </Routes>
           </div>
         </BrowserRouter>
