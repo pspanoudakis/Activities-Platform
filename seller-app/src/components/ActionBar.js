@@ -13,12 +13,15 @@ export default function ActionBar() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showPrompt, setShowPrompt] = useState(false);
-  
+  //93ABB2
   useEffect(() => {
+    for (var obj of document.getElementById('actionBar').getElementsByTagName('button')){
+      obj.style.color = '#798a94';
+    }
     var id = (window.location.pathname === '/activity') ? '/activities' : window.location.pathname;
     id = (window.location.pathname === '/facility') ? '/facilities' : id;
     var el = document.getElementById(id);
-    el.style.color = '#93ABB2';
+    el.style.color = '';
 
     fetchActionBarData( (response) => {
       if(response.ok){
@@ -28,17 +31,20 @@ export default function ActionBar() {
         console.log('failed to fetch data');
       }
       setLoading(false)
-  })
+    })
   }, [])
 
   function go(path){
     navigate(path);
     for (var obj of document.getElementById('actionBar').getElementsByTagName('button')){
-      obj.style.color = '';
+      obj.style.color = '#798a94';
     }
+    var el = document.getElementById(path);
+    el.style.color = '';
   }
 
   function logout(){
+    alert('Logged out')
   }
 
   return (
