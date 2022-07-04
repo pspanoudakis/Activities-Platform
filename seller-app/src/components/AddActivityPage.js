@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api.js'
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 export default function AddActivityPage() {
+  const navigate = useNavigate();
   const [images, setImages] = useState([])
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
@@ -82,7 +84,7 @@ export default function AddActivityPage() {
             value={facility} onChange={(e) => setFacility(e.target.value)}
           />
         </div>
-        <button className='bg-cyan hover:bg-hover w-1/2 h-12 rounded-full shadow'>Νέα Υποδομή</button>
+        <button onClick={() => navigate('/add-facility')} className='bg-cyan hover:bg-hover w-1/2 h-12 rounded-full shadow'>Νέα Υποδομή</button>
       </div>
       <div className='mt-10 font-normal'>
         <div className=''>Περιγραφή*</div>
