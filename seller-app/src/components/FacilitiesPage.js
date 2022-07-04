@@ -1,16 +1,18 @@
 import ListItemFacility from "./ListItemFacility";
 import { fetchFacilitiesPageData } from '../api.js'
 import { useState, useEffect } from "react"
+import FacilityPage from './FacilityPage.js';
+import { Modal } from '../shared/Modal.js';
 
 export default function FacilitiesPage() {
-  const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [facilities, setFacilities] = useState([])
+  const [showFacility, setShowFacility] = useState(false)
+  const [facilityData, setFacilityData] = useState(null)
   
   useEffect(() => {
     fetchFacilitiesPageData( (response) => {
       if(response.ok){
-        setData(response.data)
         setFacilities(response.data.facilities)
       }
       else{
@@ -19,6 +21,11 @@ export default function FacilitiesPage() {
       setLoading(false)
     })
   }, [])
+
+  function facilityClicked(data){
+    setFacilityData(data)
+    setShowFacility(true)
+  }
 
   return (
     <div className='font-light'>
@@ -33,8 +40,9 @@ export default function FacilitiesPage() {
             <option value="location">Περιοχή</option>
           </select>
           {
-            facilities.map((activity, i) => <ListItemFacility key={i} data={activity} />)
+            facilities.map((activity, i) => <ListItemFacility key={i} clicked={() => facilityClicked(activity)} data={activity} />)
           }
+          <Modal show={showFacility} children={<FacilityPage data={facilityData} cancel={() => setShowFacility(false)}/>} color='bg-background' closeCallback={() => setShowFacility(false)}/>
         </>
       }
     </div>
