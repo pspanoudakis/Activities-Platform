@@ -149,15 +149,15 @@ export function ActivityContent({
     }, [reservations, activityInfo.price])
 
     useEffect(() => {
-        if (loading) {
-            fetchActivity(activityId, (response) => {
-                if (response.ok) {
-                    setActivityInfo(response.data)
-                }
-                setLoading(false)
-            })
-        }
-    }, [loading, activityId])
+        setLoading(true)
+        window.scrollTo(0, 0)
+        fetchActivity(activityId, (response) => {
+            if (response.ok) {
+                setActivityInfo(response.data)
+            }
+            setLoading(false)
+        })
+    }, [activityId])
 
     const verifyPrompt = () => {
         if (context.state.userInfo) {

@@ -65,7 +65,7 @@ function CategoryFamilyChecklist({
                         return (
                             <div key={i} className="w-32 flex flex-row gap-1 items-center text-sm">
                                 <input type="checkbox" checked={selections.subcategories[sname]} onChange={() => toggleSub(sname)}/>
-                                <span>This is {sname}</span>
+                                <span>{sname}</span>
                             </div>
                         )
                     })

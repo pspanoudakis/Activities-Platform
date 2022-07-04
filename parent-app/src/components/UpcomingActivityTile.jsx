@@ -1,35 +1,27 @@
 import React from "react";
-import { Link } from 'react-router-dom'
-import { ContentTile } from "../shared/ContentTile";
 import { ActivityDateIndicator } from "./ActivityDateIndicator";
 import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
+import { ActivityTile } from "./ActivityTile";
 
 export function UpcomingActivityTile({
     activityInfo: {
+        activityId,
         imgSrc,
         name,
         locationName,
         nextDate
-        // needed for url
-        //activityId
     }
 }) {
+
     return (
-        <Link to="/">
-            <ContentTile
-                padding="p-4"
-                bgColor="bg-white"
-                stretch={false}
-                dimensions="max-w-xs"
-                classExtra="hover:bg-xlight-cyan shadow-md hover:shadow-lg duration-200"
-            >
-                <div className="flex flex-col gap-3 items-center text-center">
-                    <img src={imgSrc} alt={imgSrc} className="rounded-3xl"/>
-                    <span className="text-lg font-medium">{name}</span>
-                    <ActivityLocationIndicator locationName={locationName} />
-                    <ActivityDateIndicator date={nextDate} />
-                </div>
-            </ContentTile>
-        </Link>
+        <ActivityTile
+            activityId={activityId}
+            activityName={name}
+            locationName={locationName}
+            imgSrc={imgSrc}
+        >
+            <ActivityLocationIndicator locationName={locationName} />
+            <ActivityDateIndicator date={nextDate} />
+        </ActivityTile>
     )
 }

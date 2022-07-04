@@ -15,6 +15,7 @@ function LandingHomeContent() {
             <ActivitiesSection
                 showBg={true}
                 title="Δημοφιλείς Δραστηριότητες"
+                placeholderText="Δεν βρέθηκαν Δραστηριότητες."
                 fetchData={(n, callback) => fetchPopularActivities(n, callback)}
                 TileRenderer={RecommendedActivityTile}
             />
@@ -29,13 +30,15 @@ function UserHomeContent() {
             <ActivitiesSection
                 showBg={true}
                 title="Κλείστε Ξανά"
-                fetchData={(n, callback) => fetchRebookActivities(-1, n, callback)}
+                placeholderText="Οι Δραστηριότητες που έχετε κλείσει στο παρελθόν, θα εμφανίζονται εδώ."
+                fetchData={(n, callback) => fetchRebookActivities(n, callback)}
                 TileRenderer={RecommendedActivityTile}
             />
             <ActivitiesSection
                 showBg={false}
                 title="Επερχόμενες Δραστηριότητες"
-                fetchData={(n, callback) => fetchUpcomingActivities(-1, n, callback)}
+                placeholderText="Δεν έχετε κλείσει κάποια επερχόμενη Δραστηριότητα."
+                fetchData={(n, callback) => fetchUpcomingActivities(n, callback)}
                 TileRenderer={UpcomingActivityTile}
             />
         </>
@@ -46,7 +49,8 @@ export function Index() {
 
     const context = useContext(AppContext)
     return (
-        <div className="w-full flex flex-col gap-3 items-center px-3 pt-4">
+        // not sure if px in needed here
+        <div className="w-full flex flex-col gap-3 items-center pt-4">
             <ActivityCategoryPicker/>
         {
             context.state.userInfo ?

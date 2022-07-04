@@ -1,6 +1,7 @@
 import React from "react"
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { roundRating } from "../utils/ratings"
 
 // incomplete
 export function ActivityRatingIndicator({
@@ -25,7 +26,7 @@ export function ActivityRatingIndicator({
                 }
             </div>
             <span className={`${textSize ?? `text-sm`}`}>
-                {Math.round(ratingScore * 10) / 10} / 5
+                {roundRating(ratingScore)} / 5
             </span>
         </div>
     )

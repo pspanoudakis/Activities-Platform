@@ -15,6 +15,7 @@ export function ActivitiesSection({
     showBg,
     title,
     fetchData,
+    placeholderText,
     TileRenderer
 }) {
 
@@ -58,35 +59,40 @@ export function ActivitiesSection({
             <div
                 className={`flex flex-row justify-center gap-4 w-full rounded-xl ${showBg ? 'bg-cyan' : ''} p-4 items-center relative`}
                 style={{
-                    //minHeight: '24rem'
+                    minHeight: '15rem'
                 }}
             >
                 {
                     loading ?
                     <LoadingIndicator stretchParent={false}/>
                     :
-                    <>
-                        <SwitchPageSideButton
-                            direction="left"
-                            disabled={page === 0}
-                            switchPage={() => setPageInfo({page: page - 1, pageSize})}
-                        />
-                        {
-                            activities.slice(page*pageSize, Math.min(page*pageSize + pageSize, activities.length))
-                                    .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
-                        }
-                        <SwitchPageSideButton
-                            direction="right"
-                            disabled={page === (TOTAL_ACTIVITIES / pageSize) - 1}
-                            switchPage={() => setPageInfo({page: page + 1, pageSize})}
-                        />
-                        {/* {
-                            loading ?
-                            <LoadingIndicator stretchParent={true}/>
-                            :
-                            null
-                        } */}
-                    </>
+                    (
+                        !loading && activities.length === 0 ?
+                        <span className="text-center font-light text-lg max-w-screen-md">{placeholderText}</span>
+                        : 
+                        <>
+                            <SwitchPageSideButton
+                                direction="left"
+                                disabled={page === 0}
+                                switchPage={() => setPageInfo({page: page - 1, pageSize})}
+                            />
+                            {
+                                activities.slice(page*pageSize, Math.min(page*pageSize + pageSize, activities.length))
+                                        .map((a, i) => <TileRenderer activityInfo={a} key={i}/>)
+                            }
+                            <SwitchPageSideButton
+                                direction="right"
+                                disabled={page === (TOTAL_ACTIVITIES / pageSize) - 1}
+                                switchPage={() => setPageInfo({page: page + 1, pageSize})}
+                            />
+                            {/* {
+                                loading ?
+                                <LoadingIndicator stretchParent={true}/>
+                                :
+                                null
+                            } */}
+                        </>                        
+                    )
                 }
             </div>
         </div>

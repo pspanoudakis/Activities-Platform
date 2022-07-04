@@ -14,12 +14,14 @@ export function ActivityPage() {
             <ActivityContent activityId={activityId}/>
             <ActivitiesSection
                 title="Δραστηριότητες στο ίδιο μέρος"
+                placeholderText="Δεν βρέθηκαν άλλες Δραστηριότητες στο ίδιο μέρος."
                 TileRenderer={RecommendedActivityTile}
                 showBg={false}
                 fetchData={(n, callback) => fetchSamePlaceActivities(activityId, n, callback)}
             />
             <ActivitiesSection
                 title="Δραστηριότητες από τον ίδιο πάροχο"
+                placeholderText="Δεν βρέθηκαν άλλες Δραστηριότητες από τον ίδιο πάροχο."
                 TileRenderer={RecommendedActivityTile}
                 showBg={true}
                 fetchData={(n, callback) => fetchSameProviderActivities(activityId, n, callback)}

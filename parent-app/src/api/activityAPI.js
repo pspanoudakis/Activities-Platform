@@ -1,3 +1,4 @@
+import { roundRating } from "../utils/ratings"
 import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI"
 
 // This is what `ActivityContent` expects
@@ -79,11 +80,8 @@ function reshapeActivityContent(activityResponse) {
         description: activityResponse.description,
         price: activityResponse.cost,
         images: activityResponse.images,
-
-        // Backend needs to send these too
-        rating: Math.round(activityResponse.rating * 10) / 10,
+        rating: roundRating(activityResponse.rating),
         repeated: activityResponse.periodic,
-
         location: {
             address: activityResponse.address,
             latitude: activityResponse.latitude,
