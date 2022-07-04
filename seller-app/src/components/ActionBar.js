@@ -90,7 +90,7 @@ export default function ActionBar() {
         <BiLogOut className='w-12 h-12 mx-auto'/>
         <div className='mt-2 text-gray-700'>Αποσύνδεση</div>
       </button>
-      <Modal show={showPrompt} children={<Prompt text='Είστε σίγουρος οτι θέλετε να αποσυνδεθείτε;'callback={() => logout} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
+      <Modal show={showPrompt} children={<Prompt text='Είστε σίγουρος οτι θέλετε να αποσυνδεθείτε;' handleConfirm={() => logout()} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
     </div>
   );
 }
