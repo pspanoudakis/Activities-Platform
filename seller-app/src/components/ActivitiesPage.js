@@ -3,14 +3,12 @@ import { fetchActivitiesPageData } from '../api.js'
 import { useState, useEffect } from "react"
 
 export default function ActivitiesPage() {
-  const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [activities, setActivities] = useState([])
   
   useEffect(() => {
     fetchActivitiesPageData( (response) => {
       if(response.ok){
-        setData(response.data)
         setActivities(response.data.activities)
       }
       else{

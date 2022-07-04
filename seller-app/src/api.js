@@ -73,7 +73,7 @@ export function fetchActivitiesPageData(callback) {
             activities: [...Array(6).keys()].map(i => {
                 return {
                     imgUrl: '',
-                    title: `Δραστηριότητα ${i}`,
+                    name: `Δραστηριότητα ${i}`,
                     date: '10/05/2022',
                     state: 'διαθέσιμη',
                     facility: 'ΟΑΚΑ',
@@ -91,15 +91,12 @@ export function fetchActivityPageData(activityId, callback) {
         ok:true,
         data:{
             imgUrl: '',
-            title: 'Δραστηριότητα',
+            name: 'Δραστηριότητα',
             category: 'Άθληση',
             price: '1000',
             facility: 'ΟΑΚΑ',
             age: '10+',
-            cancelRate: '5%',
-            cancelCount: '1',
             bookCount: '12',
-            seats: '20',
             avgScore: '4.5',
             description: 'Αυτή είναι μία περιγραφή.',
             reviews: [...Array(10).keys()].map(i => {
@@ -130,28 +127,10 @@ export function fetchFacilitiesPageData(callback) {
         data:{
             facilities: [...Array(6).keys()].map(i => {
                 return {
-                    title: `Υποδομή ${i}`,
-                    street: '10/05/2022',
-                    postalCode: 'Διαθέσιμη',
+                    name: `Υποδομή ${i}`,
+                    street: '10',
                     location: 'Μαρούσι',
                     activityCount: '2'
-                }
-            })
-        }
-        })
-    )
-}
-
-export function fetchStatisticsPageData(callback) {
-    delay(100).then(() => 
-        callback({
-        ok:true,
-        data:{
-            popular: [...Array(6).keys()].map(i => {
-                return {
-                    title: `Δραστηριότητα ${i}`,
-                    bookCount: '10',
-                    earnings: '1000',
                 }
             })
         }
@@ -164,10 +143,6 @@ export function sendProfileData(data) {
     console.log('Sent data: '+ data.email);
 }
 
-export function sendWatermarkData(data) {
-    console.log('Sent data: '+ data.watermark);
-}
-
 export function onRedeem(data) {
     console.log('Sent data: '+ data.redeemPoints)
 }
@@ -177,7 +152,6 @@ export function sendActivityData(data) {
     console.log('Sent data: '+ data.category);
     console.log('Sent data: '+ data.price);
     console.log('Sent data: '+ data.age);
-    console.log('Sent data: '+ data.seats);
     console.log('Sent data: '+ data.facility);
     console.log('Sent data: '+ data.description);
 }
@@ -185,11 +159,8 @@ export function sendActivityData(data) {
 export function sendFacilityData(data) {
     console.log('Sent data: '+ data.name);
     console.log('Sent data: '+ data.street);
-    console.log('Sent data: '+ data.number);
-    console.log('Sent data: '+ data.postalCode);
     console.log('Sent data: '+ data.location);
 }
-
 
 export function sendAddedAccount(data) {
     console.log('Sent data: '+ data.iban);

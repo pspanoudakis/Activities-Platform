@@ -38,7 +38,7 @@ export default function ActivityPage() {
         :
         <>
           <GoBackButton/>
-          <div className='text-3xl mt-10 text-center'>{data.title}</div>
+          <div className='text-3xl mt-10 text-center'>{data.name}</div>
           <img className='w-full h-64 rounded-3xl mx-auto mt-10 shadow' src={data.imgUrl} alt=''/>
           <div className='flex mt-10 justify-between font-normal'>
             <div>
@@ -101,7 +101,7 @@ export default function ActivityPage() {
           </div>
           <div className='mt-20 text-center text-2xl'>
             <button className='bg-cyan hover:bg-hover rounded-full w-full font-light shadow'>Επεξεργασία Δραστηριότητας</button>
-            <button onClick={() => setShowPrompt(true)} className='bg-white hover:bg-red-400 hover:text-white w-full border-2 border-red-400 my-4 rounded-full font-light shadow'>Ακύρωση Δραστηριότητας</button>
+            <button onClick={() => setShowPrompt(true)} className='bg-red-200 hover:bg-red-400 hover:text-white w-full border-2 border-red-400 my-4 rounded-full font-light shadow'>Ακύρωση Δραστηριότητας</button>
           </div>
           <Modal show={showReviews} children={<AllReviews data={data.reviews} />} color='bg-background' closeCallback={() => setShowReviews(false)} />
           <Modal show={showPrompt} children={<Prompt text='Είστε σίγουροι οτι θέλετε να διαγράψετε αυτή την δραστηριότητα;' handleConfirm={() => deleteActivity()} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>

@@ -3,7 +3,7 @@ import AddAccount from './AddAccount.js';
 import { BsArrowRight } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import { sendProfileData, onRedeem } from '../api.js';
-import { fetchProfilePageData, sendWatermarkData, sendAddedAccount, sendSelectedAccount, sendRemovedAccountIdx } from '../api.js';
+import { fetchProfilePageData, sendAddedAccount, sendSelectedAccount, sendRemovedAccountIdx } from '../api.js';
 import { Modal } from '../shared/Modal.js';
 import Prompt from './Prompt.js';
 
@@ -13,7 +13,6 @@ export default function ProfilePage() {
   const [canEdit, setCanEdit] = useState(false)
   const [username, setUsername] = useState('')
   const [pwd, setPwd] = useState('')
-  const [watermark, setWatermark] = useState('')
   const [redeemPoints, setRedeemPoints] = useState('')
   const [email, setEmail] = useState('')
   const [accounts, setAccounts] = useState([])
@@ -61,12 +60,6 @@ export default function ProfilePage() {
     else {
       setCanEdit(true)
     }
-  }
-
-  function sendWatermark() {
-    sendWatermarkData({
-      watermark: watermark
-    })
   }
 
   function switchBankAccount(idx) {
@@ -134,7 +127,7 @@ export default function ProfilePage() {
                   'Επεξεργασία'
                 }
               </button>
-              <button onClick={() => setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό σας στο ParentApp;')} className='bg-white hover:bg-red-400 hover:text-white w-11/12 mt-8 border-2 border-red-400 rounded-full font-light text-lg shadow'>Διαγραφή Λογαριασμού</button>
+              <button onClick={() => setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό σας στο ParentApp;')} className='bg-red-200 hover:bg-red-400 hover:text-white w-11/12 mt-8 border-2 border-red-400 rounded-full font-light text-lg shadow'>Διαγραφή Λογαριασμού</button>
             </div>
           </div>
           <div className='text-2xl mt-12 text-center'>Οι Πόντοι Μου</div>

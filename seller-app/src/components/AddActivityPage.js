@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api.js'
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function AddActivityPage() {
@@ -13,7 +13,6 @@ export default function AddActivityPage() {
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
   const [age, setAge] = useState('')
-  const [seats, setSeats] = useState('')
   const [facility, setFacility] = useState('')
   const [description, setDescription] = useState('')
 
@@ -25,7 +24,6 @@ export default function AddActivityPage() {
       category: category,
       price: price,
       age: age,
-      seats: seats,
       facility: facility,
       description: description
     })
@@ -58,7 +56,7 @@ export default function AddActivityPage() {
         </div>
         <div className='w-full'>
           <div className=''>Τιμή*</div>
-          <input type='text' className='bg-white w-9/12 px-4 rounded-full shadow'
+          <input type='number' className='bg-white w-9/12 px-4 rounded-full shadow'
             value={price} onChange={(e) => setPrice(e.target.value)}
           />
         </div>
@@ -68,12 +66,6 @@ export default function AddActivityPage() {
           <div className=''>Ηλικιακή Κατηγορία</div>
           <input type='text' className='bg-white w-11/12 px-4 rounded-full shadow'
             value={age} onChange={(e) => setAge(e.target.value)}
-          />
-        </div>
-        <div className='w-1/3'>
-          <div className=''>Αριθμός Θέσεων*</div>
-          <input type='text' className='bg-white w-10/12 px-4 rounded-full shadow'
-            value={seats} onChange={(e) => setSeats(e.target.value)}
           />
         </div>
       </div>

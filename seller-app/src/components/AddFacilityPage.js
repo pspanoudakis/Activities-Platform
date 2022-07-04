@@ -5,8 +5,6 @@ import { sendFacilityData } from '../api.js'
 export default function AddFacilityPage() {
   const [name, setName] = useState('')
   const [street, setStreet] = useState('')
-  const [number, setNumber] = useState('')
-  const [postalCode, setPostalCode] = useState('')
   const [location, setLocation] = useState('')
 
   function sendNewFacilityInfo(){
@@ -14,8 +12,6 @@ export default function AddFacilityPage() {
     {
       name: name,
       street: street,
-      number: number,
-      postalCode: postalCode,
       location: location,
     })
   }

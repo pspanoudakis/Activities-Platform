@@ -1,12 +1,11 @@
 import { FaUserCircle, FaRegBuilding } from 'react-icons/fa';
 import { AiOutlineHome } from 'react-icons/ai';
-import { BiBookAdd, BiStats, BiLogOut } from 'react-icons/bi';
+import { BiBookAdd, BiLogOut } from 'react-icons/bi';
 import { FiActivity } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Modal } from '../shared/Modal.js';
 import Prompt from './Prompt.js';
-import { fetchActionBarData } from '../api.js'
 
 export default function ActionBar() {
   const navigate = useNavigate();

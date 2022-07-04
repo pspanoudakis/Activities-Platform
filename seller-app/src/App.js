@@ -7,7 +7,6 @@ import ActionBar from './components/ActionBar.js';
 import ActivityPage from './components/ActivityPage.js';
 import ActivitiesPage from './components/ActivitiesPage.js';
 import FacilitiesPage from './components/FacilitiesPage.js';
-import FacilityPage from './components/FacilityPage.js';
 import ProfilePage from './components/ProfilePage';
 import AddActivityPage from './components/AddActivityPage.js';
 import HomePage from "./components/HomePage";
@@ -25,7 +24,6 @@ function App() {
             <Route path="/activities" element={<ActivitiesPage/>}/>
             <Route path="/activity" element={<ActivityPage/>}/>
             <Route path="/facilities" element={<FacilitiesPage/>}/>
-            <Route path="/facility" element={<FacilityPage/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/add-activity" element={<AddActivityPage/>}/>
             <Route path="/add-facility" element={<AddFacilityPage/>}/>
