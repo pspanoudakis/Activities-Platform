@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sendFacilityData } from '../api.js'
+import { sendFacilityData } from '../api/api.js'
 
 
 export default function AddFacilityPage() {

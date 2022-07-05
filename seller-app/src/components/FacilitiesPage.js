@@ -1,5 +1,5 @@
 import ListItemFacility from "./ListItemFacility";
-import { fetchFacilitiesPageData } from '../api.js'
+import { fetchFacilitiesPageData } from '../api/api.js'
 import { useState, useEffect } from "react"
 import FacilityPage from './FacilityPage.js';
 import { Modal } from '../shared/Modal.js';

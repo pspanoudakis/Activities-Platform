@@ -1,7 +1,7 @@
 import ListItemBooking from "./ListItemBooking.js";
 import ListItemReview from "./ListItemReview.js";
 import { useState, useEffect } from "react";
-import { fetchHomePageData } from '../api.js'
+import { fetchHomePageData } from '../api/api.js'
 
 export default function HomePage() {
   const [data, setData] = useState(null)

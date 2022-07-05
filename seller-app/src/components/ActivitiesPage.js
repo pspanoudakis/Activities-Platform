@@ -1,5 +1,5 @@
 import ListItemActivity from "./ListItemActivity.js";
-import { fetchActivitiesPageData } from '../api.js'
+import { fetchActivitiesPageData } from '../api/api.js'
 import { useState, useEffect } from "react"
 
 export default function ActivitiesPage() {

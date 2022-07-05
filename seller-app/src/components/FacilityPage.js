@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { sendFacilityData } from '../api.js'
+import { sendFacilityData } from '../api/api.js'
 
 const FacilityPage = ({data, cancel}) => {
   const [name, setName] = useState('')
