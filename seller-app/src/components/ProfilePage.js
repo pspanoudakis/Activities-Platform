@@ -2,8 +2,8 @@ import ListItemBankAccount from './ListItemBankAccount.js';
 import AddAccount from './AddAccount.js';
 import { BsArrowRight } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { sendProfileData, onRedeem } from '../api.js';
-import { fetchProfilePageData, sendAddedAccount, sendSelectedAccount, sendRemovedAccountIdx } from '../api.js';
+import { sendProfileData, onRedeem } from '../api/api.js';
+import { fetchProfilePageData, sendAddedAccount, sendSelectedAccount, sendRemovedAccountIdx } from '../api/api.js';
 import { Modal } from '../shared/Modal.js';
 import Prompt from './Prompt.js';
 

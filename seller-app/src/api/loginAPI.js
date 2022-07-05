@@ -1,5 +1,4 @@
 import { updateJwt } from "./jwt"
-import { runWithDelay } from "./delay";
 import { APIResponse, fetchWrapper } from "./fetchAPI";
 
 export function flattenUserInfo(userInfo) {

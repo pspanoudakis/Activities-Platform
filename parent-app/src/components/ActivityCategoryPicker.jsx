@@ -51,7 +51,7 @@ export function ActivityCategoryPicker() {
     useEffect(() => {
         fetchCategories(true).then(response => {
             if (response.ok) {
-                console.log(response.data)
+                //console.log(response.data)
                 setCategories(response.data)
                 setLoading(false)
             }

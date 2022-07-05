@@ -2,7 +2,7 @@ import ListItemDate from "./ListItemDate.js";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { sendActivityData } from '../api.js'
+import { sendActivityData } from '../api/api.js'
 import { useNavigate } from 'react-router-dom';
 
 

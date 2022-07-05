@@ -2,7 +2,7 @@ import ListItemDate from "./ListItemDate.js";
 import GoBackButton from "./GoBackButton.js";
 import AllReviews from "./AllReviews.js";
 import { useState, useEffect } from "react"
-import { fetchActivityPageData } from '../api.js'
+import { fetchActivityPageData } from '../api/api.js'
 import { Modal } from '../shared/Modal.js';
 import Prompt from './Prompt.js';
 

@@ -1,16 +1,12 @@
-import { runWithDelay } from "./delay"
-import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI"
-import { flattenUserInfo } from "./loginAPI"
+import { fetchWrapper } from "./fetchAPI"
 
 export function fetchUserCards(callback) {
-    runWithDelay(() => {
-        fetchWrapper({
-            endpoint: 'parent/cards',
-            method: 'GET',
-            omitAuthHeader: false,
-            needAuth: false,
-            callback
-        })
+    fetchWrapper({
+        endpoint: 'parent/cards',
+        method: 'GET',
+        omitAuthHeader: false,
+        needAuth: false,
+        callback
     })
 }
 

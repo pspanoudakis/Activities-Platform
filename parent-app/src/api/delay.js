@@ -1,5 +1,5 @@
 const ADD_DELAY = true
-const DELAY_MILISECS = 1000
+const DELAY_MILISECS = 750
 
 export function delay(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
