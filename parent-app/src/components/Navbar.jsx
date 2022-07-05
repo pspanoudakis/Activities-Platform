@@ -4,7 +4,6 @@ import { Link, useNavigate, useSearchParams, createSearchParams } from "react-ro
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket, faBars, faCreditCard, faPersonSwimming, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../AppContext";
-import { NavbarUserOption } from "./NavbarUserOption";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
 import { MD_PXLIMIT } from "../utils/deviceConstants";
 import { SignUpForm } from "./SignUpForm";
@@ -23,10 +22,42 @@ function NavbarButton({
     )
 }
 
+function NavbarUserOption({
+    isLink,
+    url,
+    callback,
+    hoverColor,
+    padding,
+    children
+}) {
+
+    if (isLink) {
+        return (
+            <Link to={url} className="flex-1">
+                <div
+                    onClick={callback}
+                    className={`w-full flex flex-row gap-2 items-center rounded-2xl px-4 ${hoverColor} duration-200 ${padding}`}
+                >
+                    {children}
+                </div>
+            </Link>
+        )
+    }
+    return (
+        <button
+            className={`flex flex-row gap-2 items-center rounded-2xl px-4 ${hoverColor} duration-200 ${padding}`}
+            onClick={callback}
+        >
+            {children}
+        </button>
+    )
+}
+
 function NavbarUserOptionsMenu({
     userInfo,
     showBalance,
-    showIcons
+    showIcons,
+    closeMenu
 }) {
 
     const context = useContext(AppContext)
@@ -48,6 +79,7 @@ function NavbarUserOptionsMenu({
                 padding="py-2"
                 isLink={true}
                 url="/profile"
+                callback={closeMenu}
             >
                 <span className="font-medium text-lg">{context.state.userInfo.username}</span>
                 {showIcons && <FontAwesomeIcon icon={faUser} size="lg"/>}
@@ -59,6 +91,7 @@ function NavbarUserOptionsMenu({
                     padding="py-2"
                     isLink={true}
                     url="/profile/wallet"
+                    callback={closeMenu}
                 >
                     <span className="w-max">Υπόλοιπο Πόντων:</span>
                     <span className="text-lg font-medium">{userInfo.balance}</span>
@@ -72,6 +105,7 @@ function NavbarUserOptionsMenu({
                 padding="py-2"
                 isLink={true}
                 url="/profile/upcoming"
+                callback={closeMenu}
             >
                 <span>Οι Δραστηριότητές μου</span>
                 {showIcons && <FontAwesomeIcon icon={faPersonSwimming} size="lg"/>}
@@ -198,12 +232,14 @@ export function Navbar() {
                         userInfo={context.state.userInfo}
                         showBalance={true}
                         showIcons={true}
+                        closeMenu={() => setShowOptionsMenu(false)}
                     />
                     :
                     <NavbarUserOptionsMenu
                         userInfo={context.state.userInfo}
                         showBalance={false}
                         showIcons={false}
+                        closeMenu={() => setShowOptionsMenu(false)}
                     />
                 ) : (
                     <>
