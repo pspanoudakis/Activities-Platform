@@ -1,3 +1,4 @@
+import { delay, runWithDelay } from "./delay"
 import { getJwt } from "./jwt"
 
 //const REST_API_DOMAIN = 'https://localhost:8070'
@@ -22,46 +23,49 @@ export const RESPONSE_STATUS = {
 }
 
 export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, callback}) {
-    fetch(
-        createEndpoint(endpoint),
-        {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': omitAuthHeader ? '' : `Bearer ${getJwt()}`
-            },
-            body: method === 'POST' ? JSON.stringify(body) : undefined
-        }
+    runWithDelay(() => 
+        fetch(
+            createEndpoint(endpoint),
+            {
+                method: method,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': omitAuthHeader ? '' : `Bearer ${getJwt()}`
+                },
+                body: method === 'POST' ? JSON.stringify(body) : undefined
+            }
+        )
+        .then(response => {
+            //console.log(response);
+            if (response.ok) {
+                response.json().then(rjson => {
+                    callback({
+                        data: rjson,
+                        ok: true,
+                        auth: needAuth ? response.headers.get('Authorization') : {}
+                    })
+                }).catch((e) => {
+                    console.log(e)
+                    callback({
+                        data: null,
+                        ok: true,
+                        auth: needAuth ? response.headers.get('Authorization') : {}
+                    })
+                })
+            }
+            else {
+                callback({
+                    ok: false,
+                    status: response.status
+                })
+            }
+        })
     )
-    .then(response => {
-        console.log(response);
-        if (response.ok) {
-            response.json().then(rjson => {
-                callback({
-                    data: rjson,
-                    ok: true,
-                    auth: needAuth ? response.headers.get('Authorization') : {}
-                })
-            }).catch((e) => {
-                console.log(e)
-                callback({
-                    data: null,
-                    ok: true,
-                    auth: needAuth ? response.headers.get('Authorization') : {}
-                })
-            })
-        }
-        else {
-            callback({
-                ok: false,
-                status: response.status
-            })
-        }
-    })
 }
 
 export async function fetchAsyncWrapper({endpoint, method, body}) {
+    await delay(750)
     return await fetch(
         createEndpoint(endpoint),
         {

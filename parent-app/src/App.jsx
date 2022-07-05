@@ -79,7 +79,7 @@ function App() {
                 >
                     <Navbar/>
                     {/* Test maxWidth */}
-                    <div style={{ maxWidth: "70rem", minWidth: "20rem"}} className='w-full h-full flex flex-col gap-2 items-center justify-start'>
+                    <div style={{ maxWidth: "70rem", minWidth: "20rem"}} className='w-full h-full flex flex-col gap-2 items-center justify-start px-2'>
                     {
                         pendingLogin ?
                         <LoadingIndicator stretchParent={false}/>

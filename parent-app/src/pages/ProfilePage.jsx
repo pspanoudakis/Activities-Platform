@@ -108,7 +108,7 @@ export function ProfilePage() {
                 Το Προφίλ μου
             </SectionTitle>
             <div
-                className="flex flex-row flex-wrap justify-evenly gap-8 w-full rounded-xl bg-cyan p-8 items-start relative"
+                className="flex flex-row flex-wrap justify-evenly gap-8 w-full rounded-xl p-8 items-start relative"
                 style={{
                     minHeight: '15rem'
                 }}
@@ -139,7 +139,7 @@ export function ProfilePage() {
                         <div className="w-full flex flex-row justify-between gap-3">
                             <div className="flex-1 flex flex-col gap-1">
                                 <FormInputField
-                                    classExtra="w-full"
+                                    classExtra="w-full border"
                                     labelFor="name"
                                     labelText="Όνομα"
                                     placeholder="Όνομα"
@@ -149,7 +149,7 @@ export function ProfilePage() {
                             </div>
                             <div className="flex-1 flex flex-col gap-1">
                                 <FormInputField
-                                    classExtra="w-full"
+                                    classExtra="w-full border"
                                     labelFor="surname"
                                     labelText="Επίθετο"
                                     placeholder="Επίθετο"
@@ -160,7 +160,7 @@ export function ProfilePage() {
                         </div>
                         <div className="w-full flex flex-col gap-1">
                             <FormInputField
-                                classExtra="w-full"
+                                classExtra="w-full border"
                                 labelFor="email"
                                 labelText="Email"
                                 placeholder="Διεύθυνση Email"
@@ -170,7 +170,7 @@ export function ProfilePage() {
                         </div>
                         <div className="w-full flex flex-col gap-1">
                             <FormInputField
-                                classExtra="w-full"
+                                classExtra="w-full border"
                                 labelFor="address"
                                 labelText="Διεύθυνση"
                                 placeholder="Επιλέξτε μια διεύθυνση..."
@@ -199,6 +199,8 @@ export function ProfilePage() {
                                 py-2 px-5
                                 text-red-800 bg-white hover:bg-red-800 hover:text-white
                                 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:text-gray-500
+                                border
+                                border-red-800
                             "
                             onClick={resetValues}
                         >
@@ -214,7 +216,7 @@ export function ProfilePage() {
                     </div>
                     {
                         loading ?
-                        <LoadingIndicator stretchParent={true} text="Ενημερώνουμε τα στοιχεία σας..." customColor="bg-light-cyan/80 rounded-xl"/>
+                        <LoadingIndicator stretchParent={true} text="Ενημερώνουμε τα στοιχεία σας..." customColor="bg-xlight-cyan/80 rounded-xl"/>
                         :
                         null
                     }

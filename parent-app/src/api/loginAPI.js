@@ -27,46 +27,40 @@ function loginCallback(callback, renewJwt) {
 }
 
 export function loginWithCredentials(username, password, callback) {
-    runWithDelay(() => 
-        fetchWrapper({
-            endpoint: 'parent/login',
-            method: 'POST',
-            body: {
-                username, password
-            },
-            omitAuthHeader: true,
-            needAuth: true,
-            callback: loginCallback(callback, true)
-        })
-    )    
+    fetchWrapper({
+        endpoint: 'parent/login',
+        method: 'POST',
+        body: {
+            username, password
+        },
+        omitAuthHeader: true,
+        needAuth: true,
+        callback: loginCallback(callback, true)
+    })
 }
 
 export function loginWithJwt(callback) {
-    runWithDelay(() => {
-        fetchWrapper({
-            endpoint: 'parent/quick_login',
-            method: 'POST',
-            body: { },
-            omitAuthHeader: false,
-            needAuth: false,
-            callback: loginCallback(callback, false)
-        })
+    fetchWrapper({
+        endpoint: 'parent/quick_login',
+        method: 'POST',
+        body: { },
+        omitAuthHeader: false,
+        needAuth: false,
+        callback: loginCallback(callback, false)
     })
 }
 
 export function signUp(username, email, password, callback) {
-    runWithDelay(() => {
-        fetchWrapper({
-            endpoint: 'parent/signup',
-            method: 'POST',
-            body: {
-                username,
-                email,
-                password
-            },
-            omitAuthHeader: true,
-            needAuth: true,
-            callback: loginCallback(callback, true)
-        })
+    fetchWrapper({
+        endpoint: 'parent/signup',
+        method: 'POST',
+        body: {
+            username,
+            email,
+            password
+        },
+        omitAuthHeader: true,
+        needAuth: true,
+        callback: loginCallback(callback, true)
     })
 }

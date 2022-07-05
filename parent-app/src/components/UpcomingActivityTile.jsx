@@ -20,7 +20,6 @@ export function UpcomingActivityTile({
             locationName={locationName}
             imgSrc={imgSrc}
         >
-            <ActivityLocationIndicator locationName={locationName} />
             <ActivityDateIndicator date={nextDate} />
         </ActivityTile>
     )
