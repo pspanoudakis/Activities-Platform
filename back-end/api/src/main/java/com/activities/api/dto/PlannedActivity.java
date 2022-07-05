@@ -1,6 +1,8 @@
 package com.activities.api.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
@@ -21,11 +23,13 @@ public class PlannedActivity implements Comparable<PlannedActivity>{
     private String description;
     private LocalDate day;
     private String time;
+    private List<String> images = new ArrayList<>();
 
-    public PlannedActivity(ActivityAtDay aad){
+    public PlannedActivity(ActivityAtDay aad, List<String> images){
         Activity activity = aad.getActivity();
         Facility facility = activity.getFacility();
         
+        this.images = images;
         this.id = activity.getId();
         this.name = activity.getName();
         this.ageCategory = activity.getAgeCategory().getName();
