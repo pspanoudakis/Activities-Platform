@@ -1,5 +1,6 @@
 import { runWithDelay } from "./delay"
-import { fetchWrapper } from "./fetchAPI"
+import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI"
+import { flattenUserInfo } from "./loginAPI"
 
 export function fetchUserCards(callback) {
     runWithDelay(() => {
@@ -25,7 +26,14 @@ export function updateUserCard(newInfo, cardId, callback) {
         body,
         omitAuthHeader: false,
         needAuth: false,
-        callback
+        callback: (response) => {
+            if (response.ok) {
+                callback(new APIResponse(flattenUserInfo(response.data), true, RESPONSE_STATUS.OK))
+            }
+            else {
+                callback(new APIResponse(null, false, response.status))
+            }
+        }
     })
 }
 
@@ -44,5 +52,16 @@ export function addPoints(amount, callback) {
                 callback(response)
             }
         }
+    })
+}
+
+export function updateUser(newInfo, callback) {
+    fetchWrapper({
+        endpoint: `parent/edit_profile`,
+        method: 'POST',
+        body: newInfo,
+        omitAuthHeader: false,
+        needAuth: false,
+        callback
     })
 }

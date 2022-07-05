@@ -7,6 +7,7 @@ import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
 import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { MD_PXLIMIT } from "../utils/deviceConstants";
+import { defaultHomePosition } from "../utils/placeholders";
 
 /**
  * @typedef {object} FilterOptions
@@ -19,10 +20,6 @@ import { MD_PXLIMIT } from "../utils/deviceConstants";
  * @property {string} maxDistance
  */
 
-const defaultHomePosition = {
-    "lat": 38.11987459663194,
-    "lng": 23.866071050478975
-}
 export function SearchResultsPage() {
 
     const context = useContext(AppContext)

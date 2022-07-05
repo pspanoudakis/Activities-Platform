@@ -82,7 +82,7 @@ export function ActivitiesSection({
                             }
                             <SwitchPageSideButton
                                 direction="right"
-                                disabled={page === (TOTAL_ACTIVITIES / pageSize) - 1}
+                                disabled={page >= (activities.length / pageSize) - 1}
                                 switchPage={() => setPageInfo({page: page + 1, pageSize})}
                             />
                             {/* {

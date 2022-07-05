@@ -5,7 +5,10 @@ import { Marker } from '@react-google-maps/api';
 
 export function SingleMarkerMap({
     style,
-    position
+    position,
+    onClick,
+    hideMarker,
+    initialZoom
 }) {
 
     const { isLoaded } = useJsApiLoader({
@@ -15,11 +18,23 @@ export function SingleMarkerMap({
 
     return isLoaded ? (
         <GoogleMap
+            options={{
+                maxZoom: 18,
+                draggableCursor: onClick ? "pointer" : null
+            }}
             mapContainerStyle={style}
             center={position}
-            zoom={16}
+            zoom={initialZoom ?? 16}
+            onClick={(e) => {
+                if (onClick) {
+                    onClick({
+                        "lat": e.latLng.lat(),
+                        "lng": e.latLng.lng()
+                    })
+                }
+            }}
         >
-            <Marker position={position} visible={true}/>
+            <Marker position={position} visible={!hideMarker}/>
         </GoogleMap>
     ) : <></>
 }
@@ -77,7 +92,7 @@ export function MultiMarkerMap({
             }}
             onUnmount={onUnmount}
         >
-            
+
             <Marker position={mainMarkerPosition} visible={true} icon="https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"/>
             {
                 restMarkersPositions.map((p, i) => <Marker key={i} position={p} visible={true}/>)
