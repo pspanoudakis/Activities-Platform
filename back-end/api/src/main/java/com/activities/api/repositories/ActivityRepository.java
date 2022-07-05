@@ -1,6 +1,5 @@
 package com.activities.api.repositories;
 
-import com.activities.api.dto.ActivityPopularity;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.Category;
@@ -30,8 +29,8 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     public Page<Activity> findAllByApprovedFalse(Pageable page);
     public Page<Activity> findAllByApprovedTrue(Pageable page);
     
-    @Query("SELECT new com.activities.api.dto.ActivityPopularity(act, SUM(res.number)) FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act WHERE act.approved = true GROUP BY act.id ORDER BY SUM(res.number) DESC")
-    public List<ActivityPopularity> getActivitiesSortedByReservations();
+    @Query("SELECT act FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act WHERE act.approved = true GROUP BY act.id ORDER BY SUM(res.number) DESC")
+    public List<Activity> getActivitiesSortedByReservations();
 
     @Query("SELECT act FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act INNER JOIN res.parent par WHERE act.approved = true AND par.id = ?2 AND ?1 > aad.day  ORDER BY res.date ASC")
     public List<Activity> getRecentlyBookedActivities(LocalDate today, int pid);

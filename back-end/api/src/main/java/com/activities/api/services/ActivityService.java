@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.activities.api.dto.ActivityCreation;
-import com.activities.api.dto.ActivityPopularity;
 import com.activities.api.dto.SimpleDay;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
@@ -66,7 +65,7 @@ public class ActivityService {
         return activityRepository.findAllByApprovedFalse(page);
     }
 
-    public List<ActivityPopularity> getActivitiesSortedByReservations(){
+    public List<Activity> getActivitiesSortedByReservations(){
         return activityRepository.getActivitiesSortedByReservations();
     }
 

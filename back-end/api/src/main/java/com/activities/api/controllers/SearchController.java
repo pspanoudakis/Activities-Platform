@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.ActivityExtended;
-import com.activities.api.dto.ActivityPopularityCompact;
 import com.activities.api.dto.CatCoordRequest;
 import com.activities.api.dto.CategoryWithChildren;
 import com.activities.api.dto.Coordinates;
@@ -69,11 +68,11 @@ public class SearchController {
     }
 
     @GetMapping("/activities/popular")
-    public ResponseEntity<List<ActivityPopularityCompact>> getPopularActivities(
+    public ResponseEntity<List<ActivityCompact>> getPopularActivities(
         @RequestParam(required = false, defaultValue = "5") int number
     ){
         return ResponseEntity.ok().body(activityService.getActivitiesSortedByReservations().stream().map(
-            ac -> new ActivityPopularityCompact(ac, activityService)
+            ac -> new ActivityCompact(ac, activityService, LocalDate.now())
         ).limit(number).collect(Collectors.toList()));
     }
     
