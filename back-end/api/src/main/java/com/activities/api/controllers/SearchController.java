@@ -69,10 +69,12 @@ public class SearchController {
     }
 
     @GetMapping("/activities/popular")
-    public ResponseEntity<List<ActivityPopularityCompact>> getPopularActivities(){
+    public ResponseEntity<List<ActivityPopularityCompact>> getPopularActivities(
+        @RequestParam(required = false, defaultValue = "5") int number
+    ){
         return ResponseEntity.ok().body(activityService.getActivitiesSortedByReservations().stream().map(
             ac -> new ActivityPopularityCompact(ac, activityService)
-        ).limit(5).collect(Collectors.toList()));
+        ).limit(number).collect(Collectors.toList()));
     }
     
     @GetMapping("/all_categories")

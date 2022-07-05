@@ -278,7 +278,10 @@ public class ParentController {
     }
 
     @GetMapping("/recently_booked")
-    public ResponseEntity<List<ActivityCompact>> getMyTest(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    public ResponseEntity<List<ActivityCompact>> getMyTest(
+        @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+        @RequestParam(required = false, defaultValue = "5") int number
+    ){
 
         Parent parent;
         try {
@@ -290,7 +293,7 @@ public class ParentController {
         }
         int parent_id = parent.getId();
         
-        return ResponseEntity.ok().body(activityService.getRecentlyBooked(parent_id, 5).stream().map(
+        return ResponseEntity.ok().body(activityService.getRecentlyBooked(parent_id, number).stream().map(
             act -> new ActivityCompact(act, activityService, LocalDate.now())).collect(Collectors.toList())
         );
     }
