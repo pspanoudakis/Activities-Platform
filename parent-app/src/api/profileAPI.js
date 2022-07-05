@@ -54,3 +54,13 @@ export function updateUser(newInfo, callback) {
         callback
     })
 }
+
+export function fetchAllUpcomingActivities(currentPage, pageSize, callback) {
+    fetchWrapper({
+        endpoint: `parent/upcoming?pageNumber=${currentPage}&pageSize=${pageSize}`,
+        method: 'GET',
+        omitAuthHeader: false,
+        needAuth: false,
+        callback
+    })
+}
