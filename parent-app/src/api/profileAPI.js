@@ -26,14 +26,7 @@ export function updateUserCard(newInfo, cardId, callback) {
         body,
         omitAuthHeader: false,
         needAuth: false,
-        callback: (response) => {
-            if (response.ok) {
-                callback(new APIResponse(flattenUserInfo(response.data), true, RESPONSE_STATUS.OK))
-            }
-            else {
-                callback(new APIResponse(null, false, response.status))
-            }
-        }
+        callback
     })
 }
 

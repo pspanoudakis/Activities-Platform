@@ -135,20 +135,13 @@ export function ActivityContent({
     const [quantity, setQuantity] = useState(1)
     const [totalPrice, setTotalPrice] = useState(0)
 
-    function resetState() {
-        setReservations([])
-        setQuantity(1)
-        setTotalPrice(0)
-        setLoading(true)
-    }
-
     useEffect(() => {
         setTotalPrice(reservations.reduce((total, r) => {
             return total + (r.quantity)*activityInfo.price
         }, 0))
     }, [reservations, activityInfo.price])
 
-    useEffect(() => {
+    function fetchContent() {
         setLoading(true)
         window.scrollTo(0, 0)
         fetchActivity(activityId, (response) => {
@@ -157,6 +150,17 @@ export function ActivityContent({
             }
             setLoading(false)
         })
+    }
+
+    function resetState() {
+        setReservations([])
+        setQuantity(1)
+        setTotalPrice(0)
+        fetchContent()
+    }
+
+    useEffect(() => {
+        fetchContent()
     }, [activityId])
 
     const verifyPrompt = () => {
