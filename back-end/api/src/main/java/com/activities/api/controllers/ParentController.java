@@ -331,7 +331,13 @@ public class ParentController {
 
         List<PlannedActivity> activities = reservationService.getReservationsByParent(parent).stream().map(
             res ->{
-                PlannedActivity pa = new PlannedActivity(res.getActivityAtDay());
+                PlannedActivity pa = new PlannedActivity(
+                    res.getActivityAtDay(), 
+                    activityService.getActivityPhotos(res.getActivityAtDay().getActivity())
+                    .stream().map(
+                        ap -> ap.getUrl()
+                    ).collect(Collectors.toList())
+                );
                 return pa;
             }
         ).collect(Collectors.toList());
