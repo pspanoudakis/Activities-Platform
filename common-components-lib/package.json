@@ -3,7 +3,7 @@
   "files": [
     "./dist"
   ],
-  "version": "1.0.3",
+  "version": "1.0.4",
   "repository": "https://github.com/JohnVaiosDimopoulos/software-engineering-project-spring-2022-team1",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -30,18 +30,21 @@
     "@storybook/react": "^6.4.22",
     "@storybook/testing-library": "^0.0.11",
     "babel-loader": "^8.2.5",
+    "firebase": "^9.8.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "rollup": "^2.70.2",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-terser": "^7.0.2",
-    "firebase": "^9.8.3"
+    "rollup-plugin-terser": "^7.0.2"
   },
   "peerDependencies": {
+    "firebase": "^9.8.3",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "firebase": "^9.8.3"
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "spinners-react": "^1.0.7"
   }
 }
