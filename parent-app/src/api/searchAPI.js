@@ -2,7 +2,7 @@ import { fetchAsyncWrapper, fetchWrapper } from "./fetchAPI"
 
 const filterValueGetters = {
     'categoriesList': ({categories}) => {
-        console.log(categories)
+        //console.log(categories)
         const names = []
 
         for (const [mainCategoryName, mainCategory] of Object.entries(categories)) {
@@ -115,7 +115,7 @@ export async function fetchCategories(needImgs) {
         }
     }
 
-    console.log(reshapedData);
+    //console.log(reshapedData);
     return {
         ok: response.ok,
         data: reshapedData

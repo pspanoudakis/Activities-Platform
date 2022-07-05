@@ -35,7 +35,7 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
         }
     )
     .then(response => {
-        console.log(response);
+        //console.log(response);
         if (response.ok) {
             response.json().then(rjson => {
                 callback({

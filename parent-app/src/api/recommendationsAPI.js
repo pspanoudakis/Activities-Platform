@@ -14,17 +14,18 @@ function reshapeActivityTileData(responseData) {
             nextDate: `11/4/22 14:00`
         }
     }) */
-    
+    //console.log('data', responseData);
     if (!responseData) return []
     return responseData.map(activityRaw => {
         return {
             activityId: activityRaw.activity_id,
-            imgSrc: activityRaw.images[0] ?? PLACEHOLDER_ACTIVITY_IMG,
+            //imgSrc: activityRaw.images.length ? activityRaw.images[0] : PLACEHOLDER_ACTIVITY_IMG,
+            imgSrc: activityRaw.images ? (activityRaw.images.length ? activityRaw.images[0] : PLACEHOLDER_ACTIVITY_IMG) : PLACEHOLDER_ACTIVITY_IMG,
             name: activityRaw.name,
             rating: roundRating(activityRaw.rating),
             locationName: activityRaw.address,
             price: activityRaw.price,
-            nextDate: activityRaw.date
+            nextDate: activityRaw.date ?? `${activityRaw.day}, ${activityRaw.time}`
         }
     })
 }
@@ -41,7 +42,7 @@ function fetchRecommendedActivities(endpoint, n, callback) {
     })
 }
 
-function fetchUserBasedActivities(endpoint, callback) {
+function fetchUserBasedActivities(endpoint, callback, isPaginated) {
     fetchWrapper({
         endpoint: endpoint,
         method: 'GET',
@@ -49,13 +50,13 @@ function fetchUserBasedActivities(endpoint, callback) {
         needAuth: false,
         callback: (response) => {
             console.log(response);
-            callback(new APIResponse(reshapeActivityTileData(response.data), true, RESPONSE_STATUS.OK))
+            callback(new APIResponse(reshapeActivityTileData(isPaginated ? response.data.page : response.data), true, RESPONSE_STATUS.OK))
         }
     })
 }
 
 export function fetchUpcomingActivities(n, callback) {
-    fetchUserBasedActivities(`parent/upcoming`, callback)
+    fetchUserBasedActivities(`parent/upcoming?pageNumber=1&pageSize=${n}`, callback, true)
 }
 
 export function fetchSameProviderActivities(activityId, n, callback) {
@@ -67,7 +68,7 @@ export function fetchSamePlaceActivities(activityId, n, callback) {
 }
 
 export function fetchRebookActivities(n, callback) {
-    fetchUserBasedActivities(`parent/recently_booked`, callback)
+    fetchUserBasedActivities(`parent/recently_booked`, callback, false)
 }
 
 export function fetchPopularActivities(n, callback) {
