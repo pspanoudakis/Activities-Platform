@@ -214,7 +214,7 @@ export function ActivityContent({
     
     return (
         <div
-            className="w-full flex flex-col gap-2 rounded-2xl bg-cyan relative justify-center py-6 px-6 md:px-10 flex-wrap"
+            className="w-full flex flex-col gap-2 rounded-2xl bg-cyan relative justify-center py-6 px-2 md:px-10 flex-wrap"
             style={{minHeight: '25rem'}}
         >
             {

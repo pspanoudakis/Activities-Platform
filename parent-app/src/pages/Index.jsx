@@ -28,14 +28,14 @@ function UserHomeContent() {
     return (
         <>
             <ActivitiesSection
-                showBg={true}
+                showBg={false}
                 title="Κλείστε Ξανά"
                 placeholderText="Οι Δραστηριότητες που έχετε κλείσει στο παρελθόν, θα εμφανίζονται εδώ."
                 fetchData={(n, callback) => fetchRebookActivities(n, callback)}
                 TileRenderer={RecommendedActivityTile}
             />
             <ActivitiesSection
-                showBg={false}
+                showBg={true}
                 title="Επερχόμενες Δραστηριότητες"
                 placeholderText="Δεν έχετε κλείσει κάποια επερχόμενη Δραστηριότητα."
                 fetchData={(n, callback) => fetchUpcomingActivities(n, callback)}
