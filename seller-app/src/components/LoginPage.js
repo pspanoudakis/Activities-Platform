@@ -1,49 +1,36 @@
 import React, { useState, useMemo, useContext } from "react";
 import { FormInputField } from "../shared/FormUtils";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
+import { RESPONSE_STATUS } from "../api/fetchAPI";
+import { loginWithCredentials } from "../api/loginAPI";
 
 
-export default function LoginPage() {
+export default function LoginPage({
+  loginCallback
+}) {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState('')
   const [canLogin, setCanLogin] = useState('')
 
-  function submitForm(e){}
-  /*function submitForm(e) {
+  function submitForm(e) {
     e.preventDefault()
     setLoading(true)
     loginWithCredentials(username, password, (response) => {
         if (response.ok) {
-            context.setState({
-                ...context.state,
-                userInfo: response.data,
-
-                // Should we display a "Connection Successful" msg?
-                showModal: false,
-                modalProps: {
-                    content: null
-                }
-            })
+          loginCallback(response.data)
         }
         else {
             let msg = 'Άγνωστο σφάλμα σύνδεσης. Παρακαλούμε δοκιμάστε ξανά αργότερα.'
             if (response.status === RESPONSE_STATUS.BAD_REQUEST) {
                 msg = "Το Όνομα χρήστη ή ο Κωδικός Πρόσβασης είναι λάθος."
             }
-            context.setState({
-                ...context.state,
-                showModal: true,
-                modalProps: {
-                    content: <ModalResultMessage success={false} text={msg}/>
-                }
-            })
         }
         console.log(response);
         setLoading(false)
     })
-  }*/
+  }
 
   return (
     <div className="w-max h-full flex flex-col gap-8 justify-center items-center px-6 py-3 relative">

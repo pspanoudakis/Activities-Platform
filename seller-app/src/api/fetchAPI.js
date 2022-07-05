@@ -1,4 +1,3 @@
-import { delay, runWithDelay } from "./delay"
 import { getJwt } from "./jwt"
 
 //const REST_API_DOMAIN = 'https://localhost:8070'
@@ -23,7 +22,6 @@ export const RESPONSE_STATUS = {
 }
 
 export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, callback}) {
-    runWithDelay(() => 
         fetch(
             createEndpoint(endpoint),
             {
@@ -61,11 +59,9 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
                 })
             }
         })
-    )
 }
 
 export async function fetchAsyncWrapper({endpoint, method, body}) {
-    await delay(750)
     return await fetch(
         createEndpoint(endpoint),
         {

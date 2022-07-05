@@ -27,7 +27,7 @@ function loginCallback(callback, renewJwt) {
 
 export function loginWithCredentials(username, password, callback) {
     fetchWrapper({
-        endpoint: 'parent/login',
+        endpoint: 'seller/login',
         method: 'POST',
         body: {
             username, password
@@ -40,7 +40,7 @@ export function loginWithCredentials(username, password, callback) {
 
 export function loginWithJwt(callback) {
     fetchWrapper({
-        endpoint: 'parent/quick_login',
+        endpoint: 'seller/quick_login',
         method: 'POST',
         body: { },
         omitAuthHeader: false,
@@ -51,7 +51,7 @@ export function loginWithJwt(callback) {
 
 export function signUp(username, email, password, callback) {
     fetchWrapper({
-        endpoint: 'parent/signup',
+        endpoint: 'seller/signup',
         method: 'POST',
         body: {
             username,

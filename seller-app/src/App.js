@@ -1,35 +1,48 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import './App.css';
+import { Outlet } from "react-router-dom";
 import ActionBar from './components/ActionBar.js';
-import ActivityPage from './components/ActivityPage.js';
-import ActivitiesPage from './components/ActivitiesPage.js';
-import FacilitiesPage from './components/FacilitiesPage.js';
-import ProfilePage from './components/ProfilePage';
-import AddActivityPage from './components/AddActivityPage.js';
-import HomePage from "./components/HomePage";
-import AddFacilityPage from "./components/AddFacilityPage.js"
-import LoginPage from "./components/LoginPage.js"
+import LoginPage from './components/LoginPage';
+import { useState, useEffect } from 'react'
+import { jwtIsStored } from './api/jwt';
+import { loginWithJwt } from './api/loginAPI';
 
 function App() {
+  const [userInfo, setUserInfo] = useState(true);
+  const [pendingLogin, setPendingLogin] = useState(true)
+
+  useEffect(() => {
+    if (!userInfo && jwtIsStored()) {
+      //setPendingLogin(true)
+      loginWithJwt((response) => {
+          console.log(response)
+          if (response.ok) {
+              setUserInfo(response.data)
+          }
+          else {
+              console.log('jwt expired or not found')
+          }
+          setPendingLogin(false)
+      })
+    }
+    else {
+      setPendingLogin(false)
+    }
+  }, [userInfo])
+
   return (
     <div className='flex text-gray-700'>
-      <BrowserRouter>
-        <ActionBar/>
-        <div className='mx-auto p-10 w-9/12 max-w-4xl'>
-        <Routes>
-          <Route exact path="/" element={<LoginPage/>}/>
-          <Route path="/activities" element={<ActivitiesPage/>}/>
-          <Route path="/activity" element={<ActivityPage/>}/>
-          <Route path="/facilities" element={<FacilitiesPage/>}/>
-          <Route path="/profile" element={<ProfilePage/>}/>
-          <Route path="/add-activity" element={<AddActivityPage/>}/>
-          <Route path="/add-facility" element={<AddFacilityPage/>}/>
-        </Routes>
-        </div>
-      </BrowserRouter>
+      {
+        userInfo ? 
+        <>
+          <ActionBar/>
+          <div className='mx-auto p-10 w-9/12 max-w-4xl'>
+            <Outlet/>
+          </div>
+        </>
+        :
+        <LoginPage loginCallback={setUserInfo}/>
+      }
     </div>
   )
 }
