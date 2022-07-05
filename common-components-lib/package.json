@@ -3,7 +3,7 @@
   "files": [
     "./dist"
   ],
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": "https://github.com/JohnVaiosDimopoulos/software-engineering-project-spring-2022-team1",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
