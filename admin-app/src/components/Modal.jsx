@@ -1,37 +1,34 @@
-// author: spyrosk
-import React from 'react'
+import React from "react";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useToggleBodyScroll } from "../hooks/useToggleBodyScroll";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-var height = document.body.style.height;
-var overflow = document.body.style.overflow;
-
-function Scroll(scrollable) {
-  if(!scrollable) {
-    document.body.style.height = "100%";
-    document.body.style.overflow = "hidden";
-  }
-  else {
-    document.body.style.height = height;
-    document.body.style.overflow = overflow;
-  }
+function CloseModalButton(props) {
+    return (
+        <button onClick={() => props.onClick()}>
+            <FontAwesomeIcon icon={faXmark} size="lg"/>
+        </button>
+    )
 }
 
-const Modal = props => {
-  if(!props.show) {
-    return null
-  }
-  function close() {
-    Scroll(true);
-    props.onClose()
-  }
-  return (
-    <>
-      {Scroll(false)}
-      <div onClick={close} class='bg-black bg-opacity-25 fixed top-0 bottom-0 right-0 left-0 z-40'></div>
-      <div class='bg-red-500 fixed top-20 left-0 right-0 w-96 mx-auto z-50'>
-        {React.cloneElement(props.children, { onClose: close })}
-      </div>
-    </>
-  )
-}
+export function Modal(props) {
+    useToggleBodyScroll(!props.show)
 
-export default Modal
+    const color = 'bg-white'
+    return (
+        props.show ?
+        <>
+            <div onClick={() => props.closeCallback()} className='bg-black bg-opacity-25 fixed top-0 bottom-0 right-0 left-0 z-40'/>
+            <div className={`flex flex-col gap-4 py-4 px-5 ${color} rounded-xl fixed top-20 left-0 right-0 max-w-full w-max mx-auto z-50`}>
+                <div className="flex justify-end">
+                    <CloseModalButton onClick={() => props.closeCallback()}/>
+                </div>
+                <div className={`w-fit flex justify-center`}>
+                    { props.children }
+                </div>
+            </div>
+        </>
+        :
+        null
+    )
+}

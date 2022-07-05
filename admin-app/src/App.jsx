@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import { AppContext } from './AppContext';
-import { AdminModal } from './components/AdminModal';
+import { Modal } from './components/Modal';
 import { Navbar } from './components/Navbar';
 
 function App() { 
@@ -20,7 +20,7 @@ function App() {
         state: appContext,
         setState: setAppContext
       }}>
-        <AdminModal
+        <Modal
           show={appContext.showModal}
           closeCallback={() => setAppContext({
             ...appContext,
@@ -28,7 +28,7 @@ function App() {
             modalContent: null
         })}>
           { appContext.modalContent }
-        </AdminModal>
+        </Modal>
         <div className='w-full, flex justify-center h-full'>
           <div
             className='w-full h-max flex flex-col gap-2 items-center'
