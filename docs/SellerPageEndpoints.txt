@@ -1,0 +1,272 @@
+SIGNUP
+{POST(/seller/signup)
+    Request {
+        RequestBody{
+        "username": "user123",
+        "email": "test@mail.com",
+        "password": "12345"
+        }
+    }
+
+    Response {
+        ResponseHeaders.authorization = JWT
+        ResponseBody{
+            "id": 8,
+            "watermark": null,
+            "user": {
+                "username": "myseller",
+                "email": "email",
+                "image": null,
+                "name": null,
+                "surname": null,
+                "balance": 0,
+                "authorities": [
+                    {
+                        "id": 2,
+                        "authority": "ROLE_SELLER"
+                    }
+                ],
+                "active": true,
+                "enabled": true,
+                "admin": false,
+                "accountNonExpired": true,
+                "accountNonLocked": true,
+                "credentialsNonExpired": true
+            }
+
+        }
+    }
+}
+
+QUICK_LOGIN: Use this to relogin the user if jwt present
+#NEEDS JWT
+{GET(/seller/quick_login)
+    Request {
+        RequestHeader{ "authorization": JWT}
+    }    
+
+    Response {
+        ResponseHeader{ "authorization": same JWT}
+    }
+}
+
+LOGIN
+{POST(/seller/login) {
+    Request {
+        RequestBody{
+            "username": "parent1",
+            "password": "parent1"
+        }
+    }
+
+    Response {
+         ResponseHeaders{
+            "authorization": JWT
+        }
+
+        ResponseBody {
+            "id": 8,
+            "watermark": null,
+            "user": {
+                "username": "myseller",
+                "email": "email",
+                "image": null,
+                "name": null,
+                "surname": null,
+                "balance": 0,
+                "authorities": [
+                    {
+                        "id": 2,
+                        "authority": "ROLE_SELLER"
+                    }
+                ],
+                "active": true,
+                "enabled": true,
+                "admin": false,
+                "accountNonExpired": true,
+                "accountNonLocked": true,
+                "credentialsNonExpired": true
+            }
+        }
+    }   
+}
+
+
+CREATE A NEW FACILITY
+#NEEDS JWT 
+{POST(/seller/new_facility)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            "name" : "fac_1",
+            "address: "new_address",
+            "district":"new_dis",
+            "longitude": 11.1121212
+            "latitude": 12121212.12121
+        }
+    }
+
+    Response {
+        ResponseBody {
+            "id": 11,
+            "name": "new_fac223333",
+            "address": "new_add 111",
+            "district": "new_dist",
+            "longitude": 11.2,
+            "latitude": 11.1
+        }
+    }
+}
+
+UPDATE A FACILITY
+#NEEDS JWT 
+{PUT(/seller/facility/{id})} {
+
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            "name" : "new_name",
+            "address: "new_address",
+            "district":"new_dis",
+            "longitude": 11.1121212
+            "latitude": 12121212.12121
+        }
+    }
+
+    Response {
+        ResponseBody {
+            "id": 11,
+            "name": "new_name",
+            "address": "new_add 111",
+            "district": "new_dist",
+            "longitude": 11.2,
+            "latitude": 11.1
+        }
+    }
+}
+
+GET ALL FACILITIES OF THE LOGGED IN SELLER 
+#NEEDS JWT 
+{GET(/seller/facilities)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            [
+                {
+                    "id": 8,
+                    "name": "new_fac",
+                    "address": "new_add 111",
+                    "district": "new_dist",
+                    "longitude": 11.2,
+                    "latitude": 11.1
+                },
+                {
+                    ...
+                },
+                ....
+            ]
+        }
+    }
+}
+
+GET THE NUMBER OF ALL THE FACILITIES 
+#NEEDS JWT 
+{GET(/seller/total_facilities)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            "total_facilities": 4
+        }
+    }
+
+}
+
+CREATE A NEW ACTIVITY
+#NEEDS JWT 
+{POST(/seller/new_activity)} {
+
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+
+            "name":"my_new_activity",
+            "category_id":1,
+            "age_category_id":2,
+            "price":2000,
+            "facility_id":8 ,
+            "description":"This is a description",
+            "images":[
+                "url_1",
+                "url_1"
+            ],
+            "days": [
+                {
+                    "time":"12:40",
+                    "day":"1998-12-04",
+                    "capacity":"20"
+                },
+                {
+                    "time":"12:45",
+                    "day": "1998-12-04",
+                    "capacity":"20"
+
+                }
+            ],
+            "is_recursive":true
+        }
+    }
+
+    Response {
+        "id": 10,
+        "name": "my_new_activity",
+        "category_id": 1,
+        "age_category_id": 2,
+        "price": 2000,
+        "facility_id": 8,
+        "description": "This is a description",
+        "images": [
+            "url_1",
+            "url_1"
+        ],
+        "days": [
+            {
+                "id": 0,
+                "time": "12:40",
+                "day": "1998-12-04",
+                "activity_id": 0,
+                "capacity": 20
+            },
+            {
+                "id": 0,
+                "time": "12:45",
+                "day": "1998-12-04",
+                "activity_id": 0,
+                "capacity": 20
+            }
+        ],
+        "_recursive": false
+    }
+
+}
+============ NOT DONE YET ===========
+DELETES CERTAIN FACILITY
+#NEEDS JWT 
+{DELETE(seller/facility/{id})} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+
+    }
+
+}
