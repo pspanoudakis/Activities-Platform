@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class ReservationDTO implements Comparable<ReservationDTO>{
     private String name;
+    private int activity_id;
     private LocalDate reservationDate;
     private LocalDate activityDate;
     private String activityTime;
@@ -26,6 +27,7 @@ public class ReservationDTO implements Comparable<ReservationDTO>{
         ActivityAtDay aad = reservation.getActivityAtDay();
         Activity activity = aad.getActivity();
 
+        this.activity_id = activity.getId();
         this.name = activity.getName();
         this.reservationDate = reservation.getDate();
         this.activityDate = aad.getDay();
