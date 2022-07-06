@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PaginatedTable } from '../shared/PaginatedTable';
+import { roleText, statusText } from '../utils/userInfo';
 
 function UserHeaders(headerGroup) {
     return (
@@ -25,17 +26,6 @@ function UserRow({
 }) {
 
     const navigate = useNavigate()
-
-    const roleText = {
-        'ROLE_PARENT': <div>Γονέας</div>,
-        'ROLE_SELLER': <div>Πάροχος</div>,
-        'ROLE_ADMIN': <div className='text-blue-700 font-semibold'>Διαχειριστής</div>
-    }
-
-    const statusText = {
-        'active': <div className='text-green-700 font-semibold'>Ενεργός</div>,
-        'blocked': <div className='text-red-700 font-semibold'>Ανεσταλμένος</div>
-    }
 
     return (
         <tr
