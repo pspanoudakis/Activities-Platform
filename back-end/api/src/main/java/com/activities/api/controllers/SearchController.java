@@ -255,7 +255,7 @@ public class SearchController {
         if(activity == null){
             return ResponseEntity.badRequest().body(null);
         }
-        List<ActivityCompact> compacts = activityService.getActivitiesBySeller(activity).stream()
+        List<ActivityCompact> compacts = activityService.getApprovedActivitiesBySeller(activity).stream()
             .map(ac -> new ActivityCompact(ac, activityService, LocalDate.now())).collect(Collectors.toList());
         compacts.removeIf(ac -> ac.getActivity_id() == activity_id || ac.getDate().equals(LocalDate.parse("3000-01-02")));
         

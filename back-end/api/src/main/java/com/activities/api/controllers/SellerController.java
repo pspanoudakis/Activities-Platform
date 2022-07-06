@@ -1,14 +1,9 @@
 package com.activities.api.controllers;
 
 
-import com.activities.api.dto.ActivityCreation;
-import com.activities.api.dto.AuthCredentialsRequest;
-import com.activities.api.dto.FacilityDTO;
-import com.activities.api.dto.UserCreationRequest;
+import com.activities.api.dto.*;
 import com.activities.api.entities.*;
 import com.activities.api.services.*;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import lombok.Data;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 
@@ -24,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import com.activities.api.entities.Facility;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/seller")
@@ -52,6 +48,8 @@ public class SellerController {
 
     @Autowired
     private  ActivityService activityService;
+
+
 
 
     @PostMapping("/signup")
@@ -148,6 +146,7 @@ public class SellerController {
         return ResponseEntity.ok().body(resp);
     }
 
+    //TODO: Add paging and sorting
     @GetMapping("/facilities")
     public ResponseEntity<List<FacilityDTO>> getAllFacilities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         Seller seller;
@@ -209,8 +208,36 @@ public class SellerController {
         return ResponseEntity.ok().body(activityService.createNewActivity(newActivity));
     }
 
-//    @GetMapping("/activities")
-//    public ResponseEntity<List<>> getAllActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    //TODO: Add paging and sorting
+    @GetMapping("/activities")
+    public ResponseEntity<List<ActivitySellerPreview>> getAllActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        List<Activity> activities = activityService.getAllActivitiesOfSeller(seller);
+        List<ActivitySellerPreview> activitiesPreview = activities.stream().map(
+            activity -> {
+                ActivitySellerPreview preview = new ActivitySellerPreview();
+                preview.setActivity_name(activity.getName());
+                preview.setFacility_name(activity.getFacility().getName());
+                preview.setIs_approved(activity.getApproved());
+                preview.setNext_occurrence(activityService.getNextOccurrence(activity));
+                preview.setTotal_reservations(activityService.getTotalReservations(activity));
+                preview.setImage_urls(activityService.getActivityImages(activity));
+                return preview;
+            }
+        ).collect(Collectors.toList());
+        return ResponseEntity.ok().body(activitiesPreview);
+    }
+
+//    @GetMapping("/activity_details/{activity_id}")
+//    public ResponseEntity<> getActivityDetails(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id){
 //        Seller seller;
 //        try{
 //            seller = sellerService.getSellerFromToken(token);
@@ -220,30 +247,25 @@ public class SellerController {
 //            ).body(null);
 //        }
 //
-//
-//
 //    }
 
-//    @GetMapping("/activity/{activity_id}")
-//    public ResponseEntity<> getAllActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id){
-//        Seller seller;
-//        try{
-//            seller = sellerService.getSellerFromToken(token);
-//        }catch (Exception e) {
-//            return ResponseEntity.badRequest().header(
-//                    "error",e.getMessage()
-//            ).body(null);
-//        }
-//
-//
-//
-//    }
+    @GetMapping("/total_activities")
+    public ResponseEntity<?> getTotalActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
 
-//    @GetMapping("/total_activities")
-//    public ResponseEntity<?> getTotalActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
-//
-//
-//    }
+        Object responseBody = new Object() {
+            public final int total_activities = activityService.getAllActivitiesOfSeller(seller).size();
+        };
+        return new ResponseEntity<>(responseBody,HttpStatus.OK);
+
+    }
 
 
 

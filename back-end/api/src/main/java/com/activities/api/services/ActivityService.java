@@ -1,6 +1,7 @@
 package com.activities.api.services;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,8 @@ public class ActivityService {
     ){
         return activityCriteriaRepository.findAllWithFilters(activityPage, activitySearchCriteria);
     }
+    @Autowired private ReservationRepository reservationRepository;
+
 
     public Activity saveOrUpdateActivity(Activity activity){
         return activityRepository.save(activity);
@@ -95,17 +98,40 @@ public class ActivityService {
         return activityRepository.findByFacilityAndApprovedTrue(facility);
     }
 
-    public List<Activity> getActivitiesOfSeller(Seller seller){
+    public List<Activity> getApprovedActivitiesOfSeller(Seller seller){
         return activityRepository.findByFacilityInAndApprovedTrue(facilityRepository.findBySeller(seller));
     }
 
-    public List<Activity> getActivitiesBySeller(Activity activity){
+    public List<Activity> getAllActivitiesOfSeller(Seller seller){
+        return  activityRepository.findByFacilityIn(facilityRepository.findBySeller(seller));
+    }
+
+    public List<Activity> getApprovedActivitiesBySeller(Activity activity){
         return activityRepository.findByFacilityInAndApprovedTrue(facilityRepository.findBySeller(activity.getFacility().getSeller()));
     }
 
     public List<ActivityAtDay> getDaysOfActivity(Activity activity){
         return activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, LocalDate.now());
     }
+
+    public LocalDate getNextOccurrence(Activity activity){
+        List<ActivityAtDay> activityAtDays = activityAtDayRepository.findByActivity(activity);
+        List<LocalDate> occurrences = activityAtDays.stream().map(ActivityAtDay::getDay).sorted().collect(Collectors.toList());
+        for(LocalDate day: occurrences) {
+            if(day.isBefore(LocalDate.now()))
+                continue;
+            // This is the next occurrence
+            return day;
+        }
+        //All the days in the list were before the current date so there is no upcomming date for the activity
+        return null;
+    }
+
+    public int getTotalReservations(Activity activity){
+        return reservationRepository.getTotalReservationsByActivity(activity.getId());
+    }
+
+
 
     public List<Activity> getRecentlyBooked(int parent_id, int limit){
         return activityRepository.getRecentlyBookedActivities(
