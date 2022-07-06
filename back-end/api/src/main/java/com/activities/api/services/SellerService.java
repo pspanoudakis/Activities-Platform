@@ -28,6 +28,8 @@ public class SellerService {
 
     @Autowired private UserService userService;
 
+
+
     public List<Seller> getSellers(){
         return sellerRepository.findAll();
     }
@@ -75,6 +77,23 @@ public class SellerService {
         account = bankAccountRepository.save(account);
         new_account.setId(account.getId());
         return new_account;
+    }
+
+    public int getPoints(Seller seller){
+        return seller.getUser().getBalance();
+    }
+
+    @Transactional
+    public boolean redeemPoints(Seller seller,int points){
+        System.out.println(points);
+        User user = seller.getUser();
+        if(user.getBalance() < points)
+            return false;
+        int newBalance = seller.getUser().getBalance() - points;
+        user.setBalance(newBalance);
+        seller.setUser(userService.saveOrUpdate(user));
+        sellerRepository.save(seller);
+        return true;
     }
 
 

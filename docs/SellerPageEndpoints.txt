@@ -432,6 +432,8 @@ Get all the bank accounts of the seller
     }
 }
 
+Add a new bank Account for seller
+#NEEDS JWT 
 {POST(seller/new_bank_account)} {
     Request {
         RequestHeader {RequestHeader{ "authorization": JWT}
@@ -457,6 +459,8 @@ Get all the bank accounts of the seller
     }
 }
 
+Delete a bank account
+#NEEDS JWT 
 {DELETE(seller/delete_bank_account/{id})} {
     Request {
         RequestHeader {RequestHeader{ "authorization": JWT}
@@ -477,19 +481,27 @@ Get all the bank accounts of the seller
     }
 }
 
-
-
-
-============ NOT DONE YET ===========
-DELETES CERTAIN FACILITY
+Get the current balance of the seller
 #NEEDS JWT 
-{DELETE(seller/facility/{id})} {
+{GET(/seller/points)}{
     Request {
         RequestHeader {RequestHeader{ "authorization": JWT}
     }
 
     Response {
+        ResponseBody {
+            "points":400
+        }
+    }
+}
 
+Redeed an amount of points equal or less than the current point that the seller has 
+{POST(seller/redeed_points?points={amount})} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
     }
 
+    Response {
+     
+    }
 }

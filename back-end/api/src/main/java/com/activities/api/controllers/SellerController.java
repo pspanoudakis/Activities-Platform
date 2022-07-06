@@ -338,6 +338,40 @@ public class SellerController {
 
     }
 
+    @GetMapping("/points")
+    public ResponseEntity<?> getPoints(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        Object responseBody = new Object() {
+            public final int points = sellerService.getPoints(seller);
+        };
+        return new ResponseEntity<>(responseBody,HttpStatus.OK);
+
+    }
+
+    @PostMapping("/redeem_points")
+    public ResponseEntity<?> redeemPoints(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam int points) {
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        if(sellerService.redeemPoints(seller,points))
+            return ResponseEntity.ok().body(null);
+        else
+            return ResponseEntity.badRequest().header("error","Not enough points to redeem").body(null);
+    }
+
 
 
 }

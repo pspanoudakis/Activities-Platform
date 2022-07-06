@@ -112,4 +112,6 @@ public class UserService {
         }
         return user;
     }
+
+    public User saveOrUpdate(User user){return userRepo.save(user);}
 }
