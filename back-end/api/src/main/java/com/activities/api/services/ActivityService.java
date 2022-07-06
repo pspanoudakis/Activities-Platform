@@ -1,11 +1,12 @@
 package com.activities.api.services;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.activities.api.dto.ActivityCreation;
+import com.activities.api.dto.ActivitySellerDetails;
+import com.activities.api.dto.ActivitySellerPreview;
 import com.activities.api.dto.SimpleDay;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
@@ -53,10 +54,14 @@ public class ActivityService {
         return activityRepository.findById(id).orElse(null);
     }
 
-    public Activity getActivity(int id){
+    public Activity getActivityIfApproved(int id){
         Activity a = activityRepository.findByIdAndApprovedTrue(id).orElse(null);
         // System.out.println(a.toString());
         return a;
+    }
+
+    public Activity getActivity(int id){
+        return activityRepository.findById(id).get();
     }
 
     public void deleteActivity(Activity activity){
@@ -81,10 +86,6 @@ public class ActivityService {
         return activityRepository.count();
     }
 
-    public List<ActivityPhoto> getActivityPhotos(Activity activity){
-        return activityPhotoRepository.findByActivity(activity);
-    }
-
     public List<Activity> getActivitiesByFacility(Facility facility){
         return activityRepository.findByFacilityAndApprovedTrue(facility);
     }
@@ -101,8 +102,8 @@ public class ActivityService {
         return activityRepository.findByFacilityInAndApprovedTrue(facilityRepository.findBySeller(activity.getFacility().getSeller()));
     }
 
-    public List<ActivityAtDay> getDaysOfActivity(Activity activity){
-        return activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, LocalDate.now());
+    public List<SimpleDay> getDaysOfActivity(Activity activity){
+        return activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, LocalDate.now()).stream().map(SimpleDay::new).collect(Collectors.toList());
     }
 
     public LocalDate getNextOccurrence(Activity activity){
@@ -122,7 +123,61 @@ public class ActivityService {
         return reservationRepository.getTotalReservationsByActivity(activity.getId());
     }
 
+    public boolean exists(int activity_id){
+        return activityRepository.findById(activity_id).isPresent();
+    }
 
+    public boolean isOwnedBySeller(Seller seller,int activity_id){
+        Activity activity = activityRepository.findById(activity_id).get();
+        return seller.getId() == activity.getFacility().getSeller().getId();
+
+    }
+
+    public List<ActivitySellerPreview> getActivitySellerPreviewList(Seller seller){
+
+        return getAllActivitiesOfSeller(seller).stream().map(
+                activity -> {
+                    ActivitySellerPreview preview = new ActivitySellerPreview();
+                    preview.setId(activity.getId());
+                    preview.setActivity_name(activity.getName());
+                    preview.setFacility_name(activity.getFacility().getName());
+                    preview.setIs_approved(activity.getApproved());
+                    preview.setNext_occurrence(getNextOccurrence(activity));
+                    preview.setTotal_reservations(getTotalReservations(activity));
+                    preview.setImage_urls(getActivityImages(activity));
+                    return preview;
+                }
+        ).collect(Collectors.toList());
+    }
+
+    public ActivitySellerDetails getActivitySellerDetails(int activity_id){
+        Activity activity = getActivity(activity_id);
+        ActivitySellerDetails activityDetails = new ActivitySellerDetails();
+
+        activityDetails.setName(activity.getName());
+        activityDetails.setDescription(activity.getDescription());
+        activityDetails.setTotal_reservations(getTotalReservations(activity));
+        activityDetails.set_recursive(activity.getPeriodic());
+        activityDetails.setAge_category_name(activity.getAgeCategory().getName());
+        activityDetails.setCategory_name(activity.getCategory().getName());
+        activityDetails.setFacility_name(activity.getFacility().getName());
+        activityDetails.setTotal_earnings(getTotalEarnings(activity));
+        if(activity.getApproved())
+            activityDetails.setAverage_rating(getActivityRating(activity));
+        else
+            activityDetails.setAverage_rating(0);
+
+        activityDetails.setImages(getActivityImages(activity));
+        activityDetails.setOccurrences(getDaysOfActivity(activity));
+
+        return activityDetails;
+
+    }
+
+    public int getTotalEarnings(Activity activity){
+        int total_reservations = getTotalReservations(activity);
+        return total_reservations * activity.getPrice();
+    }
 
     public List<Activity> getRecentlyBooked(int parent_id, int limit){
         return activityRepository.getRecentlyBookedActivities(
@@ -145,7 +200,7 @@ public class ActivityService {
     public List<String> getActivityImages(Activity activity){
         return activityPhotoRepository.findByActivity(activity)
             .stream().map(
-                act -> act.getUrl()
+                        ActivityPhoto::getUrl
             ).collect(Collectors.toList());
     }
 

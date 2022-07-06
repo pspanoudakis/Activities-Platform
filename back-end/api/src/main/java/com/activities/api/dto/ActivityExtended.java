@@ -35,11 +35,7 @@ public class ActivityExtended {
         this.latitude = activity.getFacility().getLatitude();
         this.description = activity.getDescription();
         this.rating = activityService.getActivityRating(activity);
-        this.days = activityService.getDaysOfActivity(activity).stream().map(
-            day -> new SimpleDay(day)
-        ).collect(Collectors.toList());
-        this.images = activityService.getActivityPhotos(activity).stream().map(
-            photo -> photo.getUrl()
-        ).collect(Collectors.toList());
+        this.days = activityService.getDaysOfActivity(activity);
+        this.images = activityService.getActivityImages(activity);
     }
 }

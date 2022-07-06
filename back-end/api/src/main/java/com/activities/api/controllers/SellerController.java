@@ -4,8 +4,7 @@ package com.activities.api.controllers;
 import com.activities.api.dto.*;
 import com.activities.api.entities.*;
 import com.activities.api.services.*;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
+import org.springframework.data.util.Pair;
 
 import com.activities.api.utils.CustomPasswordEncoder;
 import com.activities.api.utils.JwtUtil;
@@ -14,12 +13,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import com.activities.api.entities.Facility;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/seller")
@@ -40,8 +37,6 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     private FacilityService facilityService;
@@ -79,28 +74,16 @@ public class SellerController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request){
         try {
-            Authentication authenticate = authenticationManager
-                    .authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    request.getUsername(), request.getPassword()
-                            )
-                    );
+            Pair<String, User> pair = userService.login(request, "ROLE_SELLER");
+            User user = pair.getSecond();
 
-            User user = (User) authenticate.getPrincipal();
             Seller seller = sellerService.getByUser(user);
 
-            Authority parent_role = authorityService.getAuthority("ROLE_SELLER");
-            if(!user.getAuthorities().contains(parent_role))
-                throw new BadCredentialsException("user is not a seller");
-
-            String token = jwtUtil.generateToken(user);
-
-            user.setPassword(null);
             if(seller != null)seller.setUser(user);
             return ResponseEntity.ok()
                     .header(
                             HttpHeaders.AUTHORIZATION,
-                            token
+                            pair.getFirst()
                     )
                     .body(seller);
         } catch (BadCredentialsException ex) {
@@ -113,13 +96,12 @@ public class SellerController {
 
         try {
             String token = full_token.split(" ")[1];
-            User user = userService.getUserByUN(jwtUtil.getUsernameFromToken(token));
+            Pair<String, User> pair = userService.quick_login(token, "ROLE_SELLER");
+
+            User user = pair.getSecond();
             Seller seller = sellerService.getByUser(user);
-            if(jwtUtil.validateToken(token, user) == false)throw new BadCredentialsException("Token not valid");
-            Authority seller_role = authorityService.getAuthority("ROLE_SELLER");
-            if(!user.getAuthorities().contains(seller_role))
-                throw new BadCredentialsException("user is not a seller");
-            if(seller != null)seller.setUser(user);
+            if(seller != null) seller.setUser(user);
+
             return ResponseEntity.ok()
                     .header(
                             HttpHeaders.AUTHORIZATION,
@@ -177,13 +159,12 @@ public class SellerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no facility with such id").body(null);
 
         if(!facilityService.isOwnedBySeller(seller,facility_id))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the ower of the requested facility").body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested facility").body(null);
         updatedFacility.setId(facility_id);
         updatedFacility.setSeller(seller);
         return ResponseEntity.ok().body(facilityService.saveOrUpdateFacility(updatedFacility));
         
     }
-
 
     @GetMapping("/total_facilities")
     public ResponseEntity<?> getTotalFacilities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
@@ -219,35 +200,29 @@ public class SellerController {
                     "error",e.getMessage()
             ).body(null);
         }
-
-        List<Activity> activities = activityService.getAllActivitiesOfSeller(seller);
-        List<ActivitySellerPreview> activitiesPreview = activities.stream().map(
-            activity -> {
-                ActivitySellerPreview preview = new ActivitySellerPreview();
-                preview.setActivity_name(activity.getName());
-                preview.setFacility_name(activity.getFacility().getName());
-                preview.setIs_approved(activity.getApproved());
-                preview.setNext_occurrence(activityService.getNextOccurrence(activity));
-                preview.setTotal_reservations(activityService.getTotalReservations(activity));
-                preview.setImage_urls(activityService.getActivityImages(activity));
-                return preview;
-            }
-        ).collect(Collectors.toList());
-        return ResponseEntity.ok().body(activitiesPreview);
+        return ResponseEntity.ok().body(activityService.getActivitySellerPreviewList(seller));
     }
 
-//    @GetMapping("/activity_details/{activity_id}")
-//    public ResponseEntity<> getActivityDetails(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id){
-//        Seller seller;
-//        try{
-//            seller = sellerService.getSellerFromToken(token);
-//        }catch (Exception e) {
-//            return ResponseEntity.badRequest().header(
-//                    "error",e.getMessage()
-//            ).body(null);
-//        }
-//
-//    }
+    @GetMapping("/activity_details/{activity_id}")
+    public ResponseEntity<ActivitySellerDetails> getActivityDetails(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!activityService.exists(activity_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no activity with such id").body(null);
+
+        if(!activityService.isOwnedBySeller(seller,activity_id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested activity").body(null);
+
+        return ResponseEntity.ok().body(activityService.getActivitySellerDetails(activity_id));
+
+    }
 
     @GetMapping("/total_activities")
     public ResponseEntity<?> getTotalActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){

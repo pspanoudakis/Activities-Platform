@@ -53,10 +53,9 @@ public class FacilityService {
     }
 
     public boolean isOwnedBySeller(Seller seller,int facility_id){
-        List<FacilityDTO> sellerFacilities = getFacilitiesBySeller(seller);
-        FacilityDTO facilityToEdit = sellerFacilities.stream().filter(facilityDTO -> facility_id == facilityDTO.getId()).findAny().orElse(null);
+        Facility facility = facilityRepository.getById(facility_id);
+        return seller.getId() == facility.getSeller().getId();
 
-        return facilityToEdit != null;
     }
 
     public List<Facility> getFacilitiesByDistrict(String district){
