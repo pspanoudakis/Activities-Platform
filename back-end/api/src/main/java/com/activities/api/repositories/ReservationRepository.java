@@ -15,4 +15,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     @Query("SELECT DISTINCT(act.id) FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act INNER JOIN res.parent par WHERE par.id = ?1")
     List<Long> getParentReservedActivityIds(int parent_id);
+
+    @Query("SELECT COALESCE(SUM(res.number),0) FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act WHERE act.id = ?1")
+    int getTotalReservationsByActivity(int activity_id);
 }

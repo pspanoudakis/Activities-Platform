@@ -281,7 +281,7 @@ public class AdminController {
         Seller seller = sellerService.getSellerByUN(username);
         if(seller == null)return ResponseEntity.badRequest().header("error", "no seller with username " + username).body(null);
 
-        List<SellerActivity> list = activityService.getActivitiesOfSeller(seller)
+        List<SellerActivity> list = activityService.getApprovedActivitiesOfSeller(seller)
             .stream().map(
                 act -> activityAtDayService.getSellerActivity(act.getId())
             ).collect(Collectors.toList());

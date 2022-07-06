@@ -22,6 +22,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     public List<Activity> findByPriceLessThanEqualAndPriceGreaterThanEqualAndAgeCategoryInAndFacilityInAndCategoryInAndApprovedTrue(
         int max, int min, List<AgeCategory> ageCategories, List<Facility> facilities, List<Category> categories);
     public List<Activity> findByFacilityAndApprovedTrue(Facility facility);
+    public List<Activity> findByFacilityIn(Collection<Facility> facilities);
     public List<Activity> findByFacilityInAndApprovedTrue(Collection<Facility> facilities);
 
     public List<Activity> findByApprovedTrue();
