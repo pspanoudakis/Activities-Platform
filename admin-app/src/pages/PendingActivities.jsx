@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { fetchPendingActivitiesPage } from '../api'
+import React, { useState, useEffect } from 'react'
+import { fetchPendingActivities } from '../api/activitiesAPI'
 import { ActivityResultsTable } from '../components/ActivityResultsTable'
 import { PageTitle } from '../components/PageTitle'
 
@@ -14,10 +14,8 @@ export function PendingActivities() {
     const [paginationState, setPaginationState] = useState(defaultPaginationState)
     const [loading, setLoading] = useState(false)
     const [results, setResults] = useState([])
-    const fetchIdRef = useRef(0)
 
     const updateResults = (newPage, newPageSize) => {
-        //console.log('table requests update')
         setPaginationState({
             ...paginationState,
             currentPage: newPage,
@@ -26,17 +24,18 @@ export function PendingActivities() {
     }
 
     const fetchPageAndRerender = () => {
-        const fetchId = ++fetchIdRef.current
 
-        fetchPendingActivitiesPage(paginationState.currentPage, paginationState.pageSize, (response) => {
-            if (fetchId === fetchIdRef.current) {
-                setResults(response.results)
+        fetchPendingActivities(paginationState.currentPage + 1, paginationState.pageSize, (response) => {
+
+            if (response.ok) {
+                console.log(response.data)
+                setResults(response.data.page)
                 setPaginationState({
                     ...paginationState,
-                    totalPages: response.totalPages
+                    totalPages: response.data.total_pages
                 })
-                setLoading(false)
             }
+            setLoading(false)
         })
     }
 

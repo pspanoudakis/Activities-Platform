@@ -4,7 +4,7 @@ import { jwtIsStored } from './api/jwt';
 import { loginWithJwt } from './api/loginAPI';
 
 import { AppContext } from './AppContext';
-import { LoadingIndicator } from './components/LoadingIndicator';
+import { LoadingIndicator } from './shared/LoadingIndicator';
 import { Modal } from './components/Modal';
 import { Navbar } from './components/Navbar';
 import { SignInForm } from './components/SignInForm';

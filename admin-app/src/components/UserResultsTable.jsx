@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react'
-import { PaginatedTable } from './PageableTable';
+import { PaginatedTable } from '../shared/PaginatedTable';
 import { AppContext } from '../AppContext'
 
 function UserHeaders(headerGroup) {
@@ -28,9 +28,9 @@ function UserRow(row, navigate) {
         'admin': <div className='text-blue-700 font-semibold'>Διαχειριστής</div>
     }
 
-    const isLockedText = {
-        false: <div className='text-green-700 font-semibold'>Ενεργός</div>,
-        true: <div className='text-red-700 font-semibold'>Ανεσταλμένος</div>
+    const statusText = {
+        'active': <div className='text-green-700 font-semibold'>Ενεργός</div>,
+        'blocked': <div className='text-red-700 font-semibold'>Ανεσταλμένος</div>
     }
 
     return (
@@ -49,7 +49,7 @@ function UserRow(row, navigate) {
                 {roleText[row.original.role]}
             </td>
             <td>
-                {isLockedText[row.original.isLocked]}
+                {statusText[row.original.status]}
             </td>
         </tr>
     )
@@ -79,7 +79,7 @@ export function UserResultsTable(
         },
         {
             Header: 'Κατάσταση',
-            accessor: 'isLocked'
+            accessor: 'status'
         }
     ], [])
 

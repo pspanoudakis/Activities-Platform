@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { PaginatedTable } from './PageableTable';
+import { PaginatedTable } from '../shared/PaginatedTable';
 
 function ActivityHeaders(headerGroup) {
     return (
@@ -73,7 +73,7 @@ export function ActivityResultsTable(
             initialPageSize={pageSize}
             totalPages={totalPages}
             initialPage={currentPage}
-            renderRow={(row) => <ActivityRow row={row}/>}
+            renderRow={(row, key) => <ActivityRow row={row} key={key}/>}
             renderHeaders={ActivityHeaders}
             availablePageSizes={[8, 12, 24]}
             loading={loading}

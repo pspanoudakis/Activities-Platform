@@ -5,7 +5,7 @@ import { AppContext } from "../AppContext";
 import { FormInputField } from "../shared/FormUtils";
 import { SectionTitle } from "../shared/SectionTitle";
 import { ModalResultMessage } from '../shared/ModalResultMessage'
-import { LoadingIndicator } from "./LoadingIndicator";
+import { LoadingIndicator } from "../shared/LoadingIndicator";
 
 export function SignInForm() {
     const context = useContext(AppContext)
@@ -99,7 +99,7 @@ export function SignInForm() {
             </form>
             {
                 loading ?
-                <LoadingIndicator stretchParent={true} customColor="bg-cyan/75"/>
+                <LoadingIndicator stretchParent={true}/>
                 :
                 null
             }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchPlatformStats } from "../api";
 import { ContentTile } from "../components/ContentTile";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { PageTitle } from "../components/PageTitle";
 
 export function PlatformStats() {

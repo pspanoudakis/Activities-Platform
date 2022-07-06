@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addNewUser } from "../api";
 import { AppContext } from '../AppContext';
 import { FormFieldHint, FormInputField } from "../components/FormUtils";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { PageTitle } from "../components/PageTitle";
 
 export function NewUser() {
