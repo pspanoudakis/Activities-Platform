@@ -90,6 +90,17 @@ ActivityDTO{
     }
 }
 
+Post("admin/login")
+RequestBody{
+    "username": "admin",
+    "password": "admin"
+}
+Response Header ("authorization", JWT)
+
+Post("admin/quick_login)
+Request Header ("authorization", "Bearer " + JWT)
+Response Header ("authorization", JWT)
+
 +{Get("/admin/user/{username}")
     ResponseBody{
         "username": "parent1",
