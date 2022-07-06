@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +62,6 @@ public class ParentController {
     @Autowired private ReservationService reservationService;
     @Autowired private BankCardService bankCardService;
     @Autowired private EvaluationService evaluationService;
-    @Autowired private AuthenticationManager authenticationManager;
     @Autowired private JwtUtil jwtUtil;
 
     @PostMapping("/add_card")
@@ -133,13 +130,12 @@ public class ParentController {
 
         try {
             String token = full_token.split(" ")[1];
-            User user = userService.getUserByUN(jwtUtil.getUsernameFromToken(token));
+            Pair<String, User> pair = userService.quick_login(token, "ROLE_PARENT");
+            
+            User user = pair.getSecond();
             Parent parent = parentService.getByUser(user);
-            if(jwtUtil.validateToken(token, user) == false)throw new BadCredentialsException("Token not valid");
-            Authority parent_role = authorityService.getAuthority("ROLE_PARENT");
-            if(!user.getAuthorities().contains(parent_role))
-                throw new BadCredentialsException("user is not a parent");
-            if(parent != null)parent.setUser(user);
+            if(parent != null) parent.setUser(user);
+            
             return ResponseEntity.ok()
                 .header(
                     HttpHeaders.AUTHORIZATION,
@@ -154,28 +150,17 @@ public class ParentController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthCredentialsRequest request){
         try {
-            Authentication authenticate = authenticationManager
-                .authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                        request.getUsername(), request.getPassword()
-                    )
-                );
-
-            User user = (User) authenticate.getPrincipal();
-            Parent parent = parentService.getByUser(user);
-
-            Authority parent_role = authorityService.getAuthority("ROLE_PARENT");
-            if(!user.getAuthorities().contains(parent_role))
-                throw new BadCredentialsException("user is not a parent");
-
-            String token = jwtUtil.generateToken(user);
             
-            user.setPassword(null);
+            Pair<String, User> pair = userService.login(request, "ROLE_PARENT");
+            User user = pair.getSecond();
+
+            Parent parent = parentService.getByUser(user);
             if(parent != null)parent.setUser(user);
+
             return ResponseEntity.ok()
                 .header(
                     HttpHeaders.AUTHORIZATION,
-                    token
+                    pair.getFirst()
                 )
                 .body(parent);
         } catch (BadCredentialsException ex) {
