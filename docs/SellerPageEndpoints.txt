@@ -255,8 +255,94 @@ CREATE A NEW ACTIVITY
         ],
         "_recursive": false
     }
-
 }
+
+RETURNS ALL THE ACTIVITIES OF THE SELLER
+Notes: next next_occurrence is the next date that te activity will take place. if there are no future dates it will be null
+#NEEDS JWT 
+{GET(/seller/activities)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            [
+                {
+                    "id": 10,
+                    "activity_name": "my_new_activity",
+                    "facility_name": "new_fac",
+                    "is_approved": false,
+                    "total_reservations": 0,
+                    "next_occurrence": "2022-12-03" (yyy-mm-dd)
+                    "image_urls": [
+                        "url_1",
+                        "url_1"
+                    ]
+                },
+                {...},
+                .
+                .
+                .
+                {....}
+            ]
+        }
+    }
+}
+
+RETURNS THE DETAILS OF CERTAIN ACTIVITY
+Note: occurrences will only return the future occurrences of the activity and not the past ones. If no occurrence is planned for a future data the array will be empty
+#NEEDS JWT 
+{GET(/seller/activity_details/{id})} {
+     Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            "name": "my_new_activity_newnew",
+            "category_name": "category1_level1",
+            "age_category_name": "Δημοτικού",
+            "facility_name": "new_fac",
+            "total_reservations": 2,
+            "average_rating": 0.0,
+            "description": "This is a description",
+            "total_earnings": 4000,
+            "occurrences": [
+                {
+                    "id": 49,
+                    "time": "12:45",
+                    "day": "2022-12-03",
+                    "activity_id": 16,
+                    "capacity": 20
+                },
+                {
+                    "id": 47,
+                    "time": "12:45",
+                    "day": "2022-12-04",
+                    "activity_id": 16,
+                    "capacity": 20
+                },
+                {
+                    "id": 50,
+                    "time": "12:45",
+                    "day": "2022-12-05",
+                    "activity_id": 16,
+                    "capacity": 20
+                }
+            ],
+            "images": [
+                "url_1",
+                "url_1"
+            ],
+            "_recursive": false
+    
+        }
+    }
+}
+
+
+
 ============ NOT DONE YET ===========
 DELETES CERTAIN FACILITY
 #NEEDS JWT 

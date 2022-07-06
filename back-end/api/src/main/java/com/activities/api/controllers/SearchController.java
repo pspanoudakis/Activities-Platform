@@ -238,7 +238,7 @@ public class SearchController {
 
     @GetMapping("activity/{activity_id}/same_place")
     public ResponseEntity<List<ActivityCompact>> getActivitiesSamePlace(@PathVariable int activity_id){
-        Activity activity = activityService.getActivity(activity_id);
+        Activity activity = activityService.getActivityIfApproved(activity_id);
         if(activity == null){
             return ResponseEntity.badRequest().body(null);
         }
@@ -251,7 +251,7 @@ public class SearchController {
 
     @GetMapping("activity/{activity_id}/same_seller")
     public ResponseEntity<List<ActivityCompact>> getActivitiesSameSeller(@PathVariable int activity_id){
-        Activity activity = activityService.getActivity(activity_id);
+        Activity activity = activityService.getActivityIfApproved(activity_id);
         if(activity == null){
             return ResponseEntity.badRequest().body(null);
         }
@@ -265,7 +265,7 @@ public class SearchController {
     @GetMapping("activity/{activity_id}")
     public ResponseEntity<ActivityExtended> getActivityPage(@PathVariable int activity_id) throws Exception{
         
-        Activity activity = activityService.getActivity(activity_id);
+        Activity activity = activityService.getActivityIfApproved(activity_id);
         if(activity == null)throw new Exception("Activity with id " + activity_id + " not found");
         return ResponseEntity.ok().body(
             new ActivityExtended(activity, activityService)

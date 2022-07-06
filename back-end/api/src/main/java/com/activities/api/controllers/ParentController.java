@@ -242,7 +242,7 @@ public class ParentController {
             ).body(null);
         }
 
-        Activity activity = activityService.getActivity(activity_id);
+        Activity activity = activityService.getActivityIfApproved(activity_id);
         if(activity == null)return ResponseEntity.badRequest().header("error", "no activity with activity.id = " + activity_id).body(null);
 
         int parent_id = parent.getId();
@@ -318,10 +318,7 @@ public class ParentController {
             res ->{
                 PlannedActivity pa = new PlannedActivity(
                     res.getActivityAtDay(), 
-                    activityService.getActivityPhotos(res.getActivityAtDay().getActivity())
-                    .stream().map(
-                        ap -> ap.getUrl()
-                    ).collect(Collectors.toList())
+                    activityService.getActivityImages(res.getActivityAtDay().getActivity())
                 );
                 return pa;
             }
