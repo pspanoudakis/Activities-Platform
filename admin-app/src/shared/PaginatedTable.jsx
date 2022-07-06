@@ -3,6 +3,7 @@ import { useTable, usePagination } from 'react-table'
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LoadingIndicator } from "./LoadingIndicator";
+import { useHasMaxWidth } from "./useHasMaxWidth";
 
 function PageSizeSelector({
     pageSize,
@@ -135,6 +136,8 @@ export function PaginatedTable({
         usePagination
     );
 
+    const likelyOverflow = useHasMaxWidth(800)
+
     useEffect(() => {
         fetchData(pageIndex, pageSize)
     }, [pageIndex, pageSize])
@@ -169,7 +172,7 @@ export function PaginatedTable({
                             {doublePageSelector ? pageSelector : null}
                         </div>
                     </div>
-                    <div className="flex justify-start overflow-x-auto whitespace-nowrap w-full"
+                    <div className={`flex ${likelyOverflow ? 'justify-start' : 'justify-center'} rounded-3xl overflow-x-auto whitespace-nowrap w-full`}
                         style={{
                             width: 'min(65rem, 70vw)'
                         }}

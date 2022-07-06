@@ -4,7 +4,7 @@ import { ContentTile } from "../shared/ContentTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
 import { PLACEHOLDER_ACTIVITY_IMG } from "../utils/placeholders";
-import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
+import { useHasMaxWidth } from "../shared/useHasMaxWidth";
 import { MD_PXLIMIT, SM_PXLIMIT } from "../utils/deviceConstants";
 
 export function ActivityTile({

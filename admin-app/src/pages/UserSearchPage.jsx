@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { fetchPendingActivities } from '../api/activitiesAPI'
-import { ActivityResultsTable } from '../components/ActivityResultsTable'
-import { PageTitle } from '../components/PageTitle'
+import React, { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { fetchUsers } from '../api/usersAPI';
+import { PageTitle } from '../components/PageTitle';
+import { UserResultsTable } from '../components/UserResultsTable';
 
 const defaultPaginationState = {
     currentPage: 0,
@@ -9,7 +10,10 @@ const defaultPaginationState = {
     totalPages: -1
 }
 
-export function PendingActivities() {
+export function UserSearchPage() {
+
+    const [searchParams] = useSearchParams();
+    const searchKey = searchParams.get('searchKey')
 
     const [paginationState, setPaginationState] = useState(defaultPaginationState)
     const [loading, setLoading] = useState(false)
@@ -25,7 +29,7 @@ export function PendingActivities() {
 
     const fetchPageAndRerender = () => {
 
-        fetchPendingActivities(paginationState.currentPage + 1, paginationState.pageSize, (response) => {
+        fetchUsers(searchKey, paginationState.currentPage + 1, paginationState.pageSize, (response) => {
 
             if (response.ok) {
                 console.log(response.data)
@@ -47,14 +51,14 @@ export function PendingActivities() {
 
     useEffect(() => {
         setLoading(true)
-    }, [paginationState.currentPage, paginationState.pageSize])
+    }, [searchParams, paginationState.currentPage, paginationState.pageSize])
 
     return (
         <div className="pt-6 w-full flex flex-col items-center gap-7 pb-7">
             <PageTitle>
-                Δραστηριότητες προς έγκριση
+                {`Αναζήτηση χρήστη: '${searchKey}'`}
             </PageTitle>
-            <ActivityResultsTable
+            <UserResultsTable
                 results={results}
                 updateResults={updateResults}
                 pageSize={paginationState.pageSize}
