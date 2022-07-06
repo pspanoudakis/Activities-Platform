@@ -16,10 +16,12 @@ export default function AddActivityPage() {
   const [age, setAge] = useState('')
   const [facility, setFacility] = useState('')
   const [description, setDescription] = useState('')
+  const [occurence, setOccurence] = useState('')
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
+  const [dateList, setDateList] = useState([])
 
-  function sendNewActivityInfo(){
+  function sendNewActivityInfo() {
     sendActivityData(
     {
       images: images,
@@ -28,12 +30,22 @@ export default function AddActivityPage() {
       price: price,
       age: age,
       facility: facility,
-      description: description
+      description: description,
+      occurence: occurence,
+      dateList: dateList
     })
   }
 
-  function onImageChange(e){
+  function onImageChange(e) {
     setImages([...e.target.files])
+  }
+
+  const handleChange = (e) => {
+    setOccurence(+e.currentTarget.value);
+  };
+
+  function AddDates() {
+
   }
 
   return (
@@ -93,12 +105,8 @@ export default function AddActivityPage() {
         <div className='flex space-x-4'>
           <div className='font-medium'>Ημέρες και Ώρες Διεξαγωγής:</div>
           <div>
-            <input type='radio' name='occurs'/>
-            <label>Περιοδικά</label>
-          </div>
-          <div>
-            <input type='radio' name='occurs'/>
-            <label>Επιλεκτικά</label>
+            <input type='radio' value='periodically' name='occurs' onChange={(e) => setOccurence(e.currentTarget.value)}/>Περιοδικά
+            <input type='radio' value='selectively' className='ml-4' name='occurs' onChange={(e) => setOccurence(e.currentTarget.value)}/>Επιλεκτικά
           </div>
         </div>
         <div className='bg-white w-full mt-4 px-8 py-4 rounded-3xl'>
@@ -106,24 +114,24 @@ export default function AddActivityPage() {
           <div className='flex mt-2 justify-between'>
             <div className='font-medium'>Ημέρα:</div>
             <div>
-              <input type='radio' id='mon' className=''/>
-              <label for='monday'>ΔΕΥ</label>
+              <input type='radio' className=''/>
+              <label>ΔΕΥ</label>
             </div>
             <div>
-              <input type='radio' id='tue' className=''/>
-              <label for='monday'>ΤΡΙ</label>
+              <input type='radio' className=''/>
+              <label>ΤΡΙ</label>
             </div>
             <div>
-              <input type='radio' id='wed' className=''/>
-              <label for='monday'>ΤΕΤ</label>
+              <input type='radio' className=''/>
+              <label>ΤΕΤ</label>
             </div>
             <div>
-              <input type='radio' id='thu' className=''/>
-              <label for='monday'>ΠΕΜ</label>
+              <input type='radio' className=''/>
+              <label>ΠΕΜ</label>
             </div>
             <div>
-              <input type='radio' id='fri' className=''/>
-              <label for='monday'>ΠΑΡ</label>
+              <input type='radio' className=''/>
+              <label>ΠΑΡ</label>
             </div>
             <div className='flex w-3/12 space-x-2'>
               <div className='font-medium'>Ώρα</div>
@@ -151,7 +159,7 @@ export default function AddActivityPage() {
             </div>
           </div>
           <div className='text-center mt-4'>
-            <button className='bg-cyan hover:bg-hover w-1/3 h-8  rounded-full shadow'>Προσθήκη</button>
+            <button onClick={() => AddDates()} className='bg-cyan hover:bg-hover w-1/3 h-8 rounded-full shadow'>Προσθήκη</button>
           </div>
         </div>
       </div>

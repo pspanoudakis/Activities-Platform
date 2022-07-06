@@ -154,6 +154,7 @@ export function sendActivityData(data) {
     console.log('Sent data: '+ data.age);
     console.log('Sent data: '+ data.facility);
     console.log('Sent data: '+ data.description);
+    console.log('Sent data: '+ data.occurence);
 }
 
 export function sendFacilityData(data) {
