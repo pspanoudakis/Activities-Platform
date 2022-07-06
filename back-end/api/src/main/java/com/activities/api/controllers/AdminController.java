@@ -30,10 +30,12 @@ import com.activities.api.dto.PagingResponse;
 import com.activities.api.dto.ParentReservation;
 import com.activities.api.dto.SellerActivity;
 import com.activities.api.dto.StatsResponse;
-import com.activities.api.dto.PasswordChangeRequest;
 import com.activities.api.dto.UserCompact;
+import com.activities.api.dto.PasswordChangeRequest;
 import com.activities.api.dto.UserCreationRequest;
 import com.activities.api.dto.UserDTO;
+import com.activities.api.dto.UserPage;
+import com.activities.api.dto.UserSearchCriteria;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.Parent;
@@ -213,31 +215,28 @@ public class AdminController {
         @RequestParam(required = false, defaultValue = "") String username,
         @RequestParam(defaultValue = "1") int pageSize,
         @RequestParam(defaultValue = "1") int pageNumber
-    ){
+    ){        
+        UserSearchCriteria criteria = new UserSearchCriteria();
+        if (username.equals("") || username == null || username.length() == 0)
+            criteria.setUsername(null);
+        else
+            criteria.setUsername(username);
 
-        PageRequest req = new PageRequest(pageNumber, pageSize);
+        UserPage page = new UserPage();
+        page.setPageNumber(pageNumber - 1);
+        page.setPageSize(pageSize);
 
-        if(!username.equals("")){
-            User user = userService.getUserByUN(username);
-            if(user == null)return ResponseEntity.ok().body(null);
-            return ResponseEntity.ok().body(
-                new UserCompact(user)
-            );
-        }
-        
-        List<UserCompact> list = userService.getAllUsers()
-            .stream().map(
+        Page<User> pageRes = userService.getUsersByUN(page, criteria);            
+        PagingResponse<List<UserCompact>> res = new PagingResponse<List<UserCompact>>(
+            pageRes.getContent().stream().map(
                 user -> new UserCompact(user)
-            ).collect(Collectors.toList());
+            ).collect(Collectors.toList()), 
+            pageRes.getTotalPages(), 
+            pageNumber
+        );
 
-        // MyUtil.getPage(list, req.getPageNumber(), req.getPageSize());
-        int total_pages = (int) Math.ceil((double) list.size() / (double) req.getPageSize());
         return ResponseEntity.ok().body(
-            new PagingResponse<List<UserCompact>>(
-                MyUtil.getPage(list, req.getPageNumber(), req.getPageSize()),
-                total_pages,
-                req.getPageNumber()
-            ) 
+            res
         );
     }
 

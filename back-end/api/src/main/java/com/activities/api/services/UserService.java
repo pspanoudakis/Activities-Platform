@@ -3,13 +3,18 @@ package com.activities.api.services;
 import java.util.List;
 
 import com.activities.api.dto.AuthCredentialsRequest;
+import com.activities.api.dto.UserPage;
+import com.activities.api.dto.UserSearchCriteria;
 import com.activities.api.entities.Authority;
 import com.activities.api.entities.User;
+import com.activities.api.repositories.UserCriteriaRepository;
 import com.activities.api.repositories.UserRepository;
 import com.activities.api.utils.JwtUtil;
 
 import org.hibernate.procedure.ParameterMisuseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +30,11 @@ public class UserService {
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private AuthorityService authorityService;
     @Autowired private JwtUtil jwtUtil;
+    @Autowired private UserCriteriaRepository userCriteriaRepository;
+
+    public Page<User> getUsersByUN(UserPage userPage, UserSearchCriteria userSearchCriteria){
+        return userCriteriaRepository.findAllWithFilters(userPage, userSearchCriteria);
+    }
 
     public Pair<String, User> login(AuthCredentialsRequest request, String role) throws BadCredentialsException, ParameterMisuseException{
         Authentication authenticate = authenticationManager
