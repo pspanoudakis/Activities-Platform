@@ -5,14 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import HomePage from './components/HomePage';
 import './App.css';
-import ActionBar from './components/ActionBar.js';
 import ActivityPage from './components/ActivityPage.js';
 import ActivitiesPage from './components/ActivitiesPage.js';
 import FacilitiesPage from './components/FacilitiesPage.js';
 import ProfilePage from './components/ProfilePage';
 import AddActivityPage from './components/AddActivityPage.js';
 import AddFacilityPage from "./components/AddFacilityPage.js"
-import LoginPage from "./components/LoginPage.js"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
