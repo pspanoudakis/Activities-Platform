@@ -72,7 +72,7 @@ export default function AddActivityPage() {
         </div>
         <div className='w-full'>
           <div className=''>Τιμή*</div>
-          <input type='number' className='bg-white w-9/12 px-4 rounded-full shadow'
+          <input className='bg-white w-9/12 px-4 rounded-full shadow'
             value={price} onChange={(e) => IsNumberKey(e, setPrice)}
           />
         </div>
