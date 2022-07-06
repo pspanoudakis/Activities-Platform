@@ -51,3 +51,21 @@ export function changeUserPassword(username, newPassword, callback) {
         callback
     })
 }
+
+export function blockUser(username, callback) {
+    fetchWrapper({
+        endpoint: `admin/set_blocked/${username}`,
+        method: 'POST',
+        body: { },
+        callback
+    })
+}
+
+export function enableUser(username, callback) {
+    fetchWrapper({
+        endpoint: `admin/set_active/${username}`,
+        method: 'POST',
+        body: { },
+        callback
+    })
+}
