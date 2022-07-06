@@ -44,6 +44,9 @@ public class SellerController {
     @Autowired
     private  ActivityService activityService;
 
+    @Autowired
+    private BankAccountService bankAccountService;
+
 
 
 
@@ -283,8 +286,57 @@ public class SellerController {
         return ResponseEntity.ok().body(activityService.getReviews(activity_id));
     }
 
+    @GetMapping("/bank_accounts")
+    public ResponseEntity<List<BankAccountDTO>> getBankAccounts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        return ResponseEntity.ok().body(sellerService.getBankAccounts(seller));
+
+    }
+
+    @PostMapping("/new_bank_account")
+    public  ResponseEntity<BankAccountDTO>  addNewBankAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@RequestBody BankAccountDTO new_account){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        return ResponseEntity.ok().body(sellerService.addBankAccount(new_account,seller));
 
 
+
+    }
+
+    @DeleteMapping("/delete_bank_account/{account_id}")
+    public ResponseEntity<?> deleteBankAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int account_id){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!bankAccountService.exists(account_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no bank account with such id").body(null);
+
+        if(!bankAccountService.IsOwnedBySeller(account_id,seller))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested bank accout").body(null);
+
+        bankAccountService.deleteAccount(account_id);
+        return ResponseEntity.ok().body(null);
+
+    }
 
 
 

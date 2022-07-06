@@ -405,6 +405,80 @@ GET RATINGS FOR A CERTAIN ACTIVITY
 
 }
 
+Get all the bank accounts of the seller
+#NEEDS JWT 
+{GET(/seller/bank_accounts} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            [
+                {
+                    "id": 5,
+                    "iban": "test_iban",
+                    "account_number": "12345566",
+                    "owner_name": null
+                },
+                {
+                    "id": 6,
+                    "iban": "test_iban_2",
+                    "account_number": "123455667",
+                    "owner_name": null
+                }
+            ]
+        }
+    }
+}
+
+{POST(seller/new_bank_account)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            {
+                "iban":"test_iban_2",
+                "owner_name":"me mario",
+                "account_number":"123455667"
+            }
+        }
+    }
+
+    Response {
+        ResponseBody {
+            {
+                "id": 6,
+                "iban": "test_iban_2",
+                "account_number": "123455667",
+                "owner_name": "me mario"
+            }
+        }
+    }
+}
+
+{DELETE(seller/delete_bank_account/{id})} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            {
+                "iban":"test_iban_2",
+                "owner_name":"me mario",
+                "account_number":"123455667"
+            }
+        }
+    }
+
+    Response {
+        ResponseBody {
+            
+        }
+    }
+}
+
+
+
 
 ============ NOT DONE YET ===========
 DELETES CERTAIN FACILITY
