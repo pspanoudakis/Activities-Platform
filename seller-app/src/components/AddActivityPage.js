@@ -1,6 +1,7 @@
 import ListItemDate from "./ListItemDate.js";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../shared/dates.js";
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api/api.js'
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,8 @@ export default function AddActivityPage() {
   const [age, setAge] = useState('')
   const [facility, setFacility] = useState('')
   const [description, setDescription] = useState('')
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
 
   function sendNewActivityInfo(){
     sendActivityData(
@@ -130,11 +133,21 @@ export default function AddActivityPage() {
           <div className='flex mt-4 w-full justify-center space-x-6'>
             <div className='flex'>
               <div className='font-medium'>Από</div>
-              <DatePicker className='bg-gray-200 w-16  ml-1 rounded-full shadow'/>
+              <DatePicker
+                className='bg-gray-200 w-28 ml-1 rounded-full text-center shadow'
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                placeholderText='επιλογή'
+              />
             </div>
             <div className='flex'>
               <div class='font-medium'>Έως</div>
-              <DatePicker className='bg-gray-200 w-16 ml-1 rounded-full shadow'/>
+              <DatePicker
+                className='bg-gray-200 w-28 ml-1 rounded-full text-center shadow'
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                placeholderText='επιλογή'
+              />
             </div>
           </div>
           <div className='text-center mt-4'>

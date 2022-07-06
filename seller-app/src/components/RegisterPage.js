@@ -3,6 +3,7 @@ import { signUp } from "../api/loginAPI";
 import { FormFieldWithHint } from "../shared/FormUtils";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 
+
 export default function RegisterPage({registerCallback, goToForm}) {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -138,11 +139,11 @@ export default function RegisterPage({registerCallback, goToForm}) {
             </button>
           </div>
         </div>
+        <div>
+          Έχετε ήδη λογαριασμό;
+          <button onClick={() => goToForm()} className='text-blue-500 ml-1'>Συνδεθείτε τώρα</button>
+        </div>
       </form>
-      <div>
-        Έχετε ήδη λογαριασμό;
-        <button onClick={() => goToForm()} className='text-blue-500 ml-1'>Συνδεθείτε τώρα</button>
-      </div>
       {
         loading ?
         <LoadingIndicator stretchParent={true} customColor="bg-cyan opacity-70 rounded-3xl"/>

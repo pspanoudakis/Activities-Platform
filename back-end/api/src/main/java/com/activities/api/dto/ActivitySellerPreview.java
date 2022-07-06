@@ -10,6 +10,7 @@ import java.util.List;
 @Data @NoArgsConstructor
 public class ActivitySellerPreview {
 
+    int id;
     String activity_name;
     String facility_name;
     Boolean is_approved;

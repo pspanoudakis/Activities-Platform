@@ -6,7 +6,7 @@ const ListItemActivity = ({data}) => {
   return (
     <button onClick={() => navigate('/activity')} className='bg-white hover:bg-gray-50 w-full px-8 py-3 rounded-3xl mt-4 font-normal shadow-lg'>
       <div className='flex'>
-        <img class='w-2/5 h-32 border-2 border-gray-300 rounded-3xl' src={data.imgUrl} alt=''/>
+        <img class='w-2/5 h-32 rounded-3xl' src={data.imgUrl} alt=''/>
         <div className='mx-auto ml-4 w-8/12'>
           <div className='text-2xl mb-3'>{data.name}</div>
           <div className='float-left'>Ημερομηνία:</div>

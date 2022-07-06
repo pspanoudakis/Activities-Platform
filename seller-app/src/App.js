@@ -9,7 +9,7 @@ import { loginWithJwt } from './api/loginAPI';
 import { LoadingIndicator } from './shared/LoadingIndicator';
 
 function App() {
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(true);
   const [pendingLogin, setPendingLogin] = useState(true)
   const [form, setForm] = useState(0)
 
