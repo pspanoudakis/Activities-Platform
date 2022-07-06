@@ -5,10 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.activities.api.dto.ActivityCreation;
-import com.activities.api.dto.ActivitySellerDetails;
-import com.activities.api.dto.ActivitySellerPreview;
-import com.activities.api.dto.SimpleDay;
+import com.activities.api.dto.*;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
