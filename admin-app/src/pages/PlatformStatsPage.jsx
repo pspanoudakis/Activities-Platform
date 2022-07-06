@@ -4,7 +4,7 @@ import { ContentTile } from "../components/ContentTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { PageTitle } from "../components/PageTitle";
 
-export function PlatformStats() {
+export function PlatformStatsPage() {
 
     const [loading, setLoading] = useState(true)
     const [stats, setStats] = useState(null)

@@ -23,9 +23,9 @@ function UserHeaders(headerGroup) {
 function UserRow(row, navigate) {
 
     const roleText = {
-        'parent': <div>Γονέας</div>,
-        'provider': <div>Πάροχος</div>,
-        'admin': <div className='text-blue-700 font-semibold'>Διαχειριστής</div>
+        'ROLE_PARENT': <div>Γονέας</div>,
+        'ROLE_SELLER': <div>Πάροχος</div>,
+        'ROLE_ADMIN': <div className='text-blue-700 font-semibold'>Διαχειριστής</div>
     }
 
     const statusText = {

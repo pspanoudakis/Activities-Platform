@@ -62,7 +62,7 @@ export function App() {
             <div className='w-full, flex justify-center min-h-screen'>
                 <div
                     className='w-full h-full flex flex-col gap-2 justify-start items-center'
-                    style={{ maxWidth: "60rem", minWidth: "20rem"}}
+                    style={{ maxWidth: "70rem", minWidth: "20rem"}}
                 >
                 {
                     pendingLogin ?

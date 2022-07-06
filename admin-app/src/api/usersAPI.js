@@ -7,3 +7,17 @@ export function fetchUsers(searchKey, pageNumber, pageSize, callback) {
         callback
     })
 }
+
+export function createUser({username, email, password, role}, callback) {
+    fetchWrapper({
+        endpoint: `admin/create_user`,
+        method: 'POST',
+        body: {
+            username,
+            email,
+            password,
+            role 
+        },
+        callback
+    })
+}
