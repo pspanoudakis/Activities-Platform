@@ -61,7 +61,7 @@ export function App() {
             </Modal>
             <div className='w-full, flex justify-center min-h-screen'>
                 <div
-                    className='w-full h-full flex flex-col gap-2 justify-start items-center'
+                    className='w-full h-full flex flex-col gap-2 justify-start items-center px-3 pb-4'
                     style={{ maxWidth: "70rem", minWidth: "20rem"}}
                 >
                 {
