@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -58,27 +59,85 @@ public class ActivityCriteriaRepository {
         ActivitySearchCriteria activitySearchCriteria,
         Root<Activity> activityRoot
     ) {
-        List<Predicate> predicates = new ArrayList<>();
+        List<Predicate> textPredicates = new ArrayList<>();
+        List<Predicate> capPredicates = new ArrayList<>();
         
-        if(Objects.nonNull(activitySearchCriteria.getName())){
-            predicates.add(
-                criteriaBuilder.like(
-                    activityRoot.get("name"),
-                    "%" + activitySearchCriteria.getName()
-                )
-            );
-        }
-        
-        if(Objects.nonNull(activitySearchCriteria.getDescription())){
-            predicates.add(
-                criteriaBuilder.like(
-                    activityRoot.get("description"),
-                    "%" + activitySearchCriteria.getDescription()
-                )
+        //max price
+        if(
+            Objects.nonNull(activitySearchCriteria.getMax_price()) &&
+            activitySearchCriteria.getMax_price() != 0
+        ){
+            capPredicates.add(
+              criteriaBuilder.le(
+                activityRoot.get("price"),
+                activitySearchCriteria.getMax_price())  
             );
         }
 
-        return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        //min price
+        if(
+            Objects.nonNull(activitySearchCriteria.getMin_price()) &&
+            activitySearchCriteria.getMin_price() != 0
+        ){
+            capPredicates.add(
+              criteriaBuilder.ge(
+                activityRoot.get("price"),
+                activitySearchCriteria.getMin_price())  
+            );
+        }
+
+        //in date range
+        // if(
+        //     Objects.nonNull(activitySearchCriteria.getStart_date()) &&
+        //     Objects.nonNull(activitySearchCriteria.getEnd_date())
+        // ){
+        //     capPredicates.add(
+        //         criteriaBuilder.between(
+        //             activityRoot.get("")
+        //         )
+        //     )
+        // }
+
+        //text in name
+        if(Objects.nonNull(activitySearchCriteria.getName())){
+            textPredicates.add(
+                criteriaBuilder.like(
+                    activityRoot.get("name"),
+                    "%" + activitySearchCriteria.getName() + "%"
+                )
+            );
+        }
+        
+        //text in description
+        if(Objects.nonNull(activitySearchCriteria.getDescription())){
+            textPredicates.add(
+                criteriaBuilder.like(
+                    activityRoot.get("description"),
+                    "%" + activitySearchCriteria.getDescription() + "%"
+                )
+            );
+        }
+        
+        //if no filters are given return everything
+        if(capPredicates.size() == 0 && textPredicates.size() == 0)
+            return criteriaBuilder.ge(
+                activityRoot.get("id"),
+                0
+            );
+
+        //if no cap predicates defined return result of text search
+        if(capPredicates.size() == 0)
+            return criteriaBuilder.or(textPredicates.toArray(new Predicate[0]));
+
+        //if no text predicates defined return result of cap predicates
+        if(textPredicates.size() == 0)
+            return criteriaBuilder.and(capPredicates.toArray(new Predicate[0]));
+
+        //else combine everything
+        return criteriaBuilder.and(
+            criteriaBuilder.and(capPredicates.toArray(new Predicate[0])),
+            criteriaBuilder.or(textPredicates.toArray(new Predicate[0]))
+        );
     }
 
     private void setOrder(ActivityPage activityPage, CriteriaQuery<Activity> criteriaQuery,

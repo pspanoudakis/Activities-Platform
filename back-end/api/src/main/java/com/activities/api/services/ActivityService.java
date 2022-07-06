@@ -1,6 +1,7 @@
 package com.activities.api.services;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,14 @@ public class ActivityService {
     @Autowired private  CategoryRepository categoryRepository;
 
     @Autowired private AgeCategoryRepository ageCategoryRepository;
+    @Autowired private ActivityCriteriaRepository activityCriteriaRepository;
 
+    public Page<Activity> getActivities(
+        ActivityPage activityPage,
+        ActivitySearchCriteria activitySearchCriteria
+    ){
+        return activityCriteriaRepository.findAllWithFilters(activityPage, activitySearchCriteria);
+    }
     @Autowired private ReservationRepository reservationRepository;
 
 
