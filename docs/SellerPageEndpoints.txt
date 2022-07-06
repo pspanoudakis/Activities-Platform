@@ -294,7 +294,7 @@ RETURNS THE DETAILS OF CERTAIN ACTIVITY
 Note: occurrences will only return the future occurrences of the activity and not the past ones. If no occurrence is planned for a future data the array will be empty
 #NEEDS JWT 
 {GET(/seller/activity_details/{id})} {
-     Request {
+    Request {
         RequestHeader {RequestHeader{ "authorization": JWT}
     }
 
@@ -378,6 +378,32 @@ Note: You cannot update the dates and the price
     }
 }
 
+
+GET RATINGS FOR A CERTAIN ACTIVITY
+#NEEDS JWT 
+{GET(/seller/activity_reviews/16)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            [
+                {
+                    "rating": 5.0,
+                    "username": "parent1",
+                    "review_text": "great"
+                },
+                {
+                    "rating": 5.0,
+                    "username": "parent2",
+                    "review_text": "super great"
+                }
+            ]
+        }
+    }
+
+}
 
 
 ============ NOT DONE YET ===========

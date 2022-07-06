@@ -31,11 +31,10 @@ public class ActivityService {
     @Autowired private ActivityAtDayRepository activityAtDayRepository;
     @Autowired private ActivityPhotoRepository activityPhotoRepository;
     @Autowired private FacilityRepository facilityRepository;
-
     @Autowired private  CategoryRepository categoryRepository;
-
     @Autowired private AgeCategoryRepository ageCategoryRepository;
     @Autowired private ActivityCriteriaRepository activityCriteriaRepository;
+
 
     public Page<Activity> getActivities(
         ActivityPage activityPage,
@@ -281,6 +280,18 @@ public class ActivityService {
         }
 
         return updatedActivity;
+
+    }
+
+    public List<ActivityReview> getReviews(int activity_id) {
+        List<Evaluation> eval = evaluationRepository.findByActivity(getActivity(activity_id));
+        return eval.stream().map( review -> {
+           ActivityReview activity_review = new ActivityReview();
+           activity_review.setReview_text(review.getComment());
+           activity_review.setRating(review.getRating());
+           activity_review.setUsername(review.getParent().getUser().getUsername());
+           return activity_review;
+        }).collect(Collectors.toList());
 
     }
 
