@@ -5,6 +5,7 @@ import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { RESPONSE_STATUS } from "../api/fetchAPI";
 import { loginWithCredentials } from "../api/loginAPI";
 
+
 export default function LoginPage({loginCallback, goToForm}) {
   const navigate = useNavigate();
   const [username, setUsername] = useState('')
