@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Entity @Table(name = "bank_accounts")
 @Data @AllArgsConstructor @NoArgsConstructor
-public class BanckAccount {
+public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
