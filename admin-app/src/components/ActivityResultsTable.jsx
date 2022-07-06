@@ -1,7 +1,6 @@
-import React, { useContext, useMemo } from 'react'
-import { AppContext } from '../AppContext';
-import { PaginatedTable } from './PageableTable';
-
+import React, { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { PaginatedTable } from '../shared/PaginatedTable';
 
 function ActivityHeaders(headerGroup) {
     return (
@@ -18,7 +17,11 @@ function ActivityHeaders(headerGroup) {
     )
 }
 
-function ActivityRow(row, navigate) {
+function ActivityRow({
+    row
+}) {
+
+    const navigate = useNavigate()
 
     return (
         <tr
@@ -51,8 +54,6 @@ export function ActivityResultsTable(
     }
 ) {
 
-    const context = useContext(AppContext)
-
     const columns = useMemo(() => [
         {
             Header: 'Όνομα',
@@ -72,7 +73,7 @@ export function ActivityResultsTable(
             initialPageSize={pageSize}
             totalPages={totalPages}
             initialPage={currentPage}
-            renderRow={(row) => ActivityRow(row, context.state.navigate)}
+            renderRow={(row, key) => <ActivityRow row={row} key={key}/>}
             renderHeaders={ActivityHeaders}
             availablePageSizes={[8, 12, 24]}
             loading={loading}

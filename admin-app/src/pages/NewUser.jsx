@@ -1,15 +1,17 @@
+import React, { useContext, useMemo, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useMemo, useState } from "react";
 import { addNewUser } from "../api";
 import { AppContext } from '../AppContext';
 import { FormFieldHint, FormInputField } from "../components/FormUtils";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { PageTitle } from "../components/PageTitle";
 
 export function NewUser() {
 
     const context = useContext(AppContext)
+    const navigate = useNavigate()
 
     const [uname, setUname] = useState('')
     const [email, setEmail] = useState('')
@@ -37,7 +39,7 @@ export function NewUser() {
             },
             response => {
                 // Maybe navigate to New User page here
-                context.state.navigate("/")
+                navigate("/")
                 context.setState({
                     ...context.state,
                     showModal: true,
@@ -79,16 +81,7 @@ export function NewUser() {
     }, [usernameOk, emailOk, pwdOk, verifyPwdOk])
 
     const fieldClassExtra = "shadow-md p-4"
-
-    /* useEffect(() => {
-        console.log({
-            usernameOk,
-            emailOk,
-            pwdOk,
-            canSubmitForm
-        })
-    })
- */
+    
     return (
         <div className="pt-6 w-full flex flex-col items-center gap-7 text-lg">
             <PageTitle>

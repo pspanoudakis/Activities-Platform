@@ -103,7 +103,7 @@ export function fetchActivityPageData(activityId, callback) {
                 return {
                     activity: '05/02/2022',
                     user: `Χρήστης ${i}`,
-                    rating: '3/5',
+                    rating: '3',
                     comment: 'Αυτή είναι μία κριτική.'
                 }
             }),
@@ -154,6 +154,7 @@ export function sendActivityData(data) {
     console.log('Sent data: '+ data.age);
     console.log('Sent data: '+ data.facility);
     console.log('Sent data: '+ data.description);
+    console.log('Sent data: '+ data.occurence);
 }
 
 export function sendFacilityData(data) {

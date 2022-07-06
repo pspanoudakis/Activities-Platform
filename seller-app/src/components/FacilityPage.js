@@ -43,7 +43,7 @@ const FacilityPage = ({data, cancel}) => {
           />
       </div>
       <div className='flex justify-between mt-16'>
-        <button onClick={() => cancel()} className="bg-gray-200 border-2 hover:bg-gray-400 hover:text-white w-5/12 h-10 rounded-full">Ακύρωση</button>
+        <button onClick={() => cancel()} className="bg-gray-200 border-2 hover:bg-gray-300 hover:text-white w-5/12 h-10 rounded-full">Ακύρωση</button>
         <button onClick={() => sendNewFacilityInfo()} className="bg-cyan w-5/12 h-8 hover:bg-hover h-10 rounded-full">Αποθήκευση</button>
       </div>
     </div>
