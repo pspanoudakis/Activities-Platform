@@ -1,7 +1,6 @@
 package com.activities.api.services;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -256,6 +255,33 @@ public class ActivityService {
             activityAtDayRepository.save(new_day);
         }
         return newActivity;
+    }
+
+    @Transactional
+    public ActivityUpdate updateActivity(ActivityUpdate updatedActivity,int activity_id){
+        Activity activity = getActivity(activity_id);
+        Category category = categoryRepository.findById(updatedActivity.getCategory_id()).get();
+        Facility facility = facilityRepository.findById(updatedActivity.getFacility_id()).get();
+        AgeCategory ageCategory = ageCategoryRepository.findById(updatedActivity.getAge_category_id()).get();
+
+        activity.setAgeCategory(ageCategory);
+        activity.setFacility(facility);
+        activity.setCategory(category);
+
+        activity.setName(updatedActivity.getName());
+        activity.setDescription(updatedActivity.getDescription());
+        activity = saveOrUpdateActivity(activity);
+
+        activityPhotoRepository.deleteActivityPhotoByActivity(activity);
+        for (String image_url:updatedActivity.getImages()) {
+            ActivityPhoto image = new ActivityPhoto();
+            image.setActivity(activity);
+            image.setUrl(image_url);
+            activityPhotoRepository.save(image);
+        }
+
+        return updatedActivity;
+
     }
 
 

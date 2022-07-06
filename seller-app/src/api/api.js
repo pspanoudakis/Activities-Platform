@@ -103,7 +103,7 @@ export function fetchActivityPageData(activityId, callback) {
                 return {
                     activity: '05/02/2022',
                     user: `Χρήστης ${i}`,
-                    rating: '3/5',
+                    rating: '3',
                     comment: 'Αυτή είναι μία κριτική.'
                 }
             }),

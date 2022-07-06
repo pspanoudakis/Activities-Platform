@@ -341,6 +341,43 @@ Note: occurrences will only return the future occurrences of the activity and no
     }
 }
 
+UPDATE AN ACTIVITY
+Note: You cannot update the dates and the price
+#NEEDS JWT 
+{PUT(/seller/activity_update/{id})} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            "name":"my_new_activity_updated",
+            "description":"updated desc",
+            "category_id":1,
+            "age_category":2,
+            "facility_id":8,
+            "images":[
+                "url_1",
+                "url_2",
+                "url_3"
+            ]
+        }
+    }
+
+    Response {
+        Response Body {
+            "name":"my_new_activity_updated",
+            "description":"updated desc",
+            "category_id":1,
+            "age_category":2,
+            "facility_id":8,
+            "images":[
+                "url_1",
+                "url_2",
+                "url_3"
+            ]
+        }
+    }
+}
+
 
 
 ============ NOT DONE YET ===========

@@ -11,4 +11,5 @@ import com.activities.api.entities.ActivityPhoto;
 @Repository
 public interface ActivityPhotoRepository extends JpaRepository<ActivityPhoto, Integer>{
     List<ActivityPhoto> findByActivity(Activity activity);
+    void deleteActivityPhotoByActivity(Activity activity);
 }

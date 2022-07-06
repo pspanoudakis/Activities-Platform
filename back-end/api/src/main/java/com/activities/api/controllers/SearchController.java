@@ -47,24 +47,24 @@ public class SearchController {
     @Autowired private FacilityService facilityService;
     @Autowired private CategoryService categoryService;
 
-    @GetMapping("test")
+    @GetMapping("text_search")
     public ResponseEntity<?> getTest(
         @RequestParam(required = false, defaultValue = "") String text,
         @RequestParam(required = false, defaultValue = "1") Integer page_number, 
-        @RequestParam(required = false, defaultValue = "1") Integer page_size,
-        @RequestParam(required = false, defaultValue = "0") Integer min_price,
-        @RequestParam(required = false, defaultValue = "0") Integer max_price,
-        @RequestParam(required = false, defaultValue = "0") Integer age_category,
-        @RequestParam(required = false, defaultValue = "2000-01-01")
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start_date,
-        @RequestParam(required = false, defaultValue = "3000-01-01")
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end_date,
-        @RequestParam(required = false, defaultValue = "getAnyDistrict") String district,
-        @RequestParam(required = false, defaultValue = "0") Integer rating,
-        @RequestParam(required = false, defaultValue = "0") Integer max_distance,
-        @RequestParam(required = false, defaultValue = "") Double latitude,
-        @RequestParam(required = false, defaultValue = "") Double longitude,
-        @RequestParam(required = false, defaultValue = "") List<String> categoriesList
+        @RequestParam(required = false, defaultValue = "1") Integer page_size
+        // @RequestParam(required = false, defaultValue = "0") Integer min_price,
+        // @RequestParam(required = false, defaultValue = "0") Integer max_price,
+        // @RequestParam(required = false, defaultValue = "0") Integer age_category,
+        // @RequestParam(required = false, defaultValue = "2000-01-01")
+        // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start_date,
+        // @RequestParam(required = false, defaultValue = "3000-01-01")
+        // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end_date,
+        // @RequestParam(required = false, defaultValue = "getAnyDistrict") String district,
+        // @RequestParam(required = false, defaultValue = "0") Integer rating,
+        // @RequestParam(required = false, defaultValue = "0") Integer max_distance,
+        // @RequestParam(required = false, defaultValue = "") Double latitude,
+        // @RequestParam(required = false, defaultValue = "") Double longitude,
+        // @RequestParam(required = false, defaultValue = "") List<String> categoriesList
     ){
         ActivityPage page = new ActivityPage();
         page.setPageNumber(page_number - 1);
@@ -79,21 +79,21 @@ public class SearchController {
             criteria.setDescription(null);
             criteria.setName(null);   
         }
-        criteria.setMin_price(min_price);
-        criteria.setMax_price(max_price);
-        criteria.setStart_date(start_date);
-        criteria.setEnd_date(end_date);
+        // criteria.setMin_price(min_price);
+        // criteria.setMax_price(max_price);
+        // criteria.setStart_date(start_date);
+        // criteria.setEnd_date(end_date);
 
         Page<Activity> pageRes = activityService.getActivities(page, criteria);
 
-        Object res = new Object(){
-            public final List<ActivityCompact> list = pageRes.getContent()
+        PagingResponse<List<ActivityCompact>> res = new PagingResponse<List<ActivityCompact>>(
+            pageRes.getContent()
                 .stream().map(
                     act -> new ActivityCompact(act, activityService, LocalDate.now())
-                ).collect(Collectors.toList());
-            public final int total_pages = pageRes.getTotalPages();
-            public final int current_page = 1;
-        };
+                ).collect(Collectors.toList()),
+            pageRes.getTotalPages(),
+            page_number
+        );
 
         return ResponseEntity.ok().body(
             res
@@ -160,8 +160,7 @@ public class SearchController {
         @RequestParam(required = false, defaultValue = "0") Integer max_distance,
         @RequestParam(required = false, defaultValue = "") Double latitude,
         @RequestParam(required = false, defaultValue = "") Double longitude,
-        @RequestParam(required = false, defaultValue = "") List<String> categoriesList,
-        @RequestBody Optional<CatCoordRequest> request
+        @RequestParam(required = false, defaultValue = "") List<String> categoriesList
         ){
             
         CatCoordRequest req = new CatCoordRequest();
