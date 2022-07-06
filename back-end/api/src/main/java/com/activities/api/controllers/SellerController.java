@@ -263,6 +263,26 @@ public class SellerController {
 
     }
 
+    @GetMapping("/activity_reviews/{activity_id}")
+    public ResponseEntity<List<ActivityReview>> getReviewsofActivity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!activityService.exists(activity_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no activity with such id").body(null);
+
+        if(!activityService.isOwnedBySeller(seller,activity_id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested activity").body(null);
+
+        return ResponseEntity.ok().body(activityService.getReviews(activity_id));
+    }
+
 
 
 
