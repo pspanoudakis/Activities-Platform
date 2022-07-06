@@ -1,5 +1,5 @@
 import React from "react";
-import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
+import { useHasMaxWidth } from "../shared/useHasMaxWidth";
 import { MD_PXLIMIT } from "../utils/deviceConstants";
 
 export function PlatformShowcase() {
