@@ -18,7 +18,7 @@ function PageSizeSelector({
             >
             {availablePageSizes.map(pageSize => (
                 <option key={pageSize} value={pageSize}>
-                    Show {pageSize}
+                    Εμφάνιση {pageSize}
                 </option>
             ))}
         </select>
@@ -169,18 +169,27 @@ export function PaginatedTable({
                             {doublePageSelector ? pageSelector : null}
                         </div>
                     </div>
-                    <table {...getTableProps()} className='md:w-9/12 sm:w-11/12'>
-                        { renderHeaders(headerGroups[0]) }
-                        <tbody {...getTableBodyProps()}>
-                            {
-                                page.map(row => {
-                                    prepareRow(row)
-                                    return renderRow(row)
-                                })
-                            }
-                        </tbody>
-                    </table>
-                    
+                    <div className="flex justify-start overflow-x-auto whitespace-nowrap w-full"
+                        style={{
+                            width: 'min(65rem, 70vw)'
+                        }}
+                    >
+                        <table {...getTableProps()}
+                            style={{
+                                width: 'max(50rem, 55vw)'
+                            }}
+                        >
+                            { renderHeaders(headerGroups[0]) }
+                            <tbody {...getTableBodyProps()} className='w-full'>
+                                {
+                                    page.map((row, i) => {
+                                        prepareRow(row)
+                                        return renderRow(row, i)
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {/* <div>
                         Showing {page.length} of ~{totalPages * pageSize}{' '}
                         results

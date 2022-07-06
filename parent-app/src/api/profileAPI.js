@@ -64,3 +64,13 @@ export function fetchAllUpcomingActivities(currentPage, pageSize, callback) {
         callback
     })
 }
+
+export function fetchReservationHistory(currentPage, pageSize, callback) {
+    fetchWrapper({
+        endpoint: `parent/history?pageNumber=${currentPage}&pageSize=${pageSize}`,
+        method: 'GET',
+        omitAuthHeader: false,
+        needAuth: false,
+        callback
+    })
+}
