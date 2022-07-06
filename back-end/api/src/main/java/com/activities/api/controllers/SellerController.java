@@ -224,6 +224,27 @@ public class SellerController {
 
     }
 
+    @PutMapping("/activity_update/{activity_id}")
+    public ResponseEntity<ActivityUpdate> updateActivity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id,@RequestBody ActivityUpdate updated){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!activityService.exists(activity_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no activity with such id").body(null);
+
+        if(!activityService.isOwnedBySeller(seller,activity_id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested activity").body(null);
+
+
+        return ResponseEntity.ok().body(activityService.updateActivity(updated,activity_id));
+    }
+
     @GetMapping("/total_activities")
     public ResponseEntity<?> getTotalActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         Seller seller;
