@@ -85,6 +85,31 @@ export function fetchActivitiesPageData(callback) {
     )
 }
 
+export function fetchAddActivityPageData(callback) {
+    delay(100).then(() => 
+        callback({
+        ok:true,
+        data:{
+            categories: [
+                { label: 'cat1', value: 'fruit' },
+                { label: 'cat2', value: 'vegetable' },
+                { label: 'cat3', value: 'meat' },
+            ],
+            ageCategories: [
+                { label: 'agecat1', value: 'fruit' },
+                { label: 'agecat2', value: 'vegetable' },
+                { label: 'agecat3', value: 'meat' },
+            ],
+            facilities: [
+                { label: 'fac1', value: 'fruit' },
+                { label: 'fac2', value: 'vegetable' },
+                { label: 'fac3', value: 'meat' },
+            ]
+        }
+        })
+    )
+}
+
 export function fetchActivityPageData(activityId, callback) {
     delay(100).then(() => 
         callback({
