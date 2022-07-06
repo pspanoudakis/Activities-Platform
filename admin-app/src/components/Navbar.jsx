@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
 import { faHouse, faArrowRightFromBracket, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-
-//import { Link, } from 'react-router-dom';
 import { AppContext } from '../AppContext';
 import { AdminNavbarButton } from './AdminNavbarButton'
 import { FindUserForm } from './FindUserForm';
+import { deleteJwt } from '../api/jwt';
 
 export function Navbar() {
 
@@ -25,7 +24,17 @@ export function Navbar() {
                         showModal: true,
                         modalContent: <FindUserForm />
                 })}/>
-                <AdminNavbarButton icon={exitIcon} isLink={true} path="/logout" />
+                <AdminNavbarButton
+                    icon={exitIcon}
+                    isLink={false}
+                    callback={() => {
+                        deleteJwt()
+                        context.setState({
+                            ...context.state,
+                            user: null
+                        })
+                    }}
+                />
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import './index.css';
 
-import App from './App';
+import { App } from './App';
 import { Index } from './pages/Index';
 import { UserSearch } from './pages/UserSearch';
 import { UserPage } from './pages/UserPage';
