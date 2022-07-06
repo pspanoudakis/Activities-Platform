@@ -2,10 +2,12 @@
 
 !!! 2) Ανέβασμα εικόνων στο AddActivityPage.
 
-!!! 2) Login Register έχουν ηλοποιηθεί αλλά θέλουν testing.
+!!! 3) Login Register έχουν ηλοποιηθεί αλλά θέλουν testing.
 
-3) AddActivityPage χρειάζεται την λειτουργία προσθήκης ημερομηνίας
+4) AddActivityPage χρειάζεται την λειτουργία προσθήκης ημερομηνίας
    στη λίστα (με το κουμπί ΄Προσθήκη΄).
 
-4) AddActivityPage στα πεδία Κατηγορία, Ηλικιακή Κατηγορία, Υποδομή
+5) AddActivityPage στα πεδία Κατηγορία, Ηλικιακή Κατηγορία, Υποδομή
    χρειάζεται dropdown που θα παίρνει από backend.
+
+6) Pagination στα FacilitiesPage, ActivitiesPage.

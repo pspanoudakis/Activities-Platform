@@ -5,6 +5,7 @@ import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../shared/dates.j
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api/api.js'
 import { useNavigate } from 'react-router-dom';
+import IsNumberKey from '../shared/IsNumberKey.js';
 
 
 export default function AddActivityPage() {
@@ -72,7 +73,7 @@ export default function AddActivityPage() {
         <div className='w-full'>
           <div className=''>Τιμή*</div>
           <input type='number' className='bg-white w-9/12 px-4 rounded-full shadow'
-            value={price} onChange={(e) => setPrice(e.target.value)}
+            value={price} onChange={(e) => IsNumberKey(e, setPrice)}
           />
         </div>
       </div>
