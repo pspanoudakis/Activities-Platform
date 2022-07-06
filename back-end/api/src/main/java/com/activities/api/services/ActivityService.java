@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.activities.api.dto.ActivityCreation;
+import com.activities.api.dto.ActivityPage;
+import com.activities.api.dto.ActivitySearchCriteria;
 import com.activities.api.dto.SimpleDay;
 import com.activities.api.entities.Activity;
 import com.activities.api.entities.ActivityAtDay;
@@ -36,7 +38,14 @@ public class ActivityService {
     @Autowired private  CategoryRepository categoryRepository;
 
     @Autowired private AgeCategoryRepository ageCategoryRepository;
+    @Autowired private ActivityCriteriaRepository activityCriteriaRepository;
 
+    public Page<Activity> getActivities(
+        ActivityPage activityPage,
+        ActivitySearchCriteria activitySearchCriteria
+    ){
+        return activityCriteriaRepository.findAllWithFilters(activityPage, activitySearchCriteria);
+    }
 
     public Activity saveOrUpdateActivity(Activity activity){
         return activityRepository.save(activity);

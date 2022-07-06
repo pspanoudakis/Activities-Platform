@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
 import com.activities.api.dto.ActivityExtended;
+import com.activities.api.dto.ActivityPage;
+import com.activities.api.dto.ActivitySearchCriteria;
 import com.activities.api.dto.CatCoordRequest;
 import com.activities.api.dto.CategoryWithChildren;
 import com.activities.api.dto.Coordinates;
@@ -43,6 +46,59 @@ public class SearchController {
     @Autowired private AgeCategoryService ageCategoryService;
     @Autowired private FacilityService facilityService;
     @Autowired private CategoryService categoryService;
+
+    @GetMapping("test")
+    public ResponseEntity<?> getTest(
+        @RequestParam(required = false, defaultValue = "") String text,
+        @RequestParam(required = false, defaultValue = "1") Integer page_number, 
+        @RequestParam(required = false, defaultValue = "1") Integer page_size,
+        @RequestParam(required = false, defaultValue = "0") Integer min_price,
+        @RequestParam(required = false, defaultValue = "0") Integer max_price,
+        @RequestParam(required = false, defaultValue = "0") Integer age_category,
+        @RequestParam(required = false, defaultValue = "2000-01-01")
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start_date,
+        @RequestParam(required = false, defaultValue = "3000-01-01")
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end_date,
+        @RequestParam(required = false, defaultValue = "getAnyDistrict") String district,
+        @RequestParam(required = false, defaultValue = "0") Integer rating,
+        @RequestParam(required = false, defaultValue = "0") Integer max_distance,
+        @RequestParam(required = false, defaultValue = "") Double latitude,
+        @RequestParam(required = false, defaultValue = "") Double longitude,
+        @RequestParam(required = false, defaultValue = "") List<String> categoriesList
+    ){
+        ActivityPage page = new ActivityPage();
+        page.setPageNumber(page_number - 1);
+        page.setPageSize(page_size);
+        
+        ActivitySearchCriteria criteria = new ActivitySearchCriteria();
+        if(text != null && !text.equals("") && text.length() != 0){
+            criteria.setDescription(text);
+            criteria.setName(text);
+        }
+        else {
+            criteria.setDescription(null);
+            criteria.setName(null);   
+        }
+        criteria.setMin_price(min_price);
+        criteria.setMax_price(max_price);
+        criteria.setStart_date(start_date);
+        criteria.setEnd_date(end_date);
+
+        Page<Activity> pageRes = activityService.getActivities(page, criteria);
+
+        Object res = new Object(){
+            public final List<ActivityCompact> list = pageRes.getContent()
+                .stream().map(
+                    act -> new ActivityCompact(act, activityService, LocalDate.now())
+                ).collect(Collectors.toList());
+            public final int total_pages = pageRes.getTotalPages();
+            public final int current_page = 1;
+        };
+
+        return ResponseEntity.ok().body(
+            res
+        );
+    }
 
     @GetMapping("/districts")
     public ResponseEntity<List<String>> getDistricts(){
