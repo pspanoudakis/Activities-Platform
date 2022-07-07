@@ -20,3 +20,14 @@ export function fetchFacilitiesNumber(callback) {
         callback
     })
 }
+
+export function createNewFacility(newInfo, callback) {
+    fetchWrapper({
+        endpoint: `seller/new_facility`,
+        method: 'POST',
+        body: newInfo,
+        omitAuthHeader: false,
+        needAuth: true,
+        callback
+    })
+}

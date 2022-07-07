@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { sendFacilityData } from '../api/api.js'
-import GoogleMapReact from 'google-map-react'
+import React, { useState, useEffect } from "react";
+import { createNewFacility } from '../api/facilitiesAPI.js'
+import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+import { defaultHomePosition } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 
 
 export default function AddFacilityPage() {
@@ -8,10 +9,8 @@ export default function AddFacilityPage() {
   const [street, setStreet] = useState('')
   const [location, setLocation] = useState('')
   const [canSubmit, setCanSubmit] = useState(false)
-  const defaultMapProps = {
-    center: {lat: 40.73, lng: -73.93}, 
-    zoom: 12
- }
+  const [facilityPosition, setFacilityPosition] = useState(defaultHomePosition)
+
   useEffect(() => {
     if(name !== '' && street !== '' && location) {
       setCanSubmit(true)
@@ -22,11 +21,13 @@ export default function AddFacilityPage() {
   }, [name, street, location])
 
   function sendNewFacilityInfo(){
-    sendFacilityData(
+    createNewFacility(
     {
       name: name,
       street: street,
       location: location,
+      lat: facilityPosition.lat,
+      lng: facilityPosition.lng
     })
   }
 
@@ -52,16 +53,13 @@ export default function AddFacilityPage() {
           />
       </div>
       <div className='mt-4 text-sm text-gray-500'>*Τα πεδία με '*' είναι υποχρεωτικά</div>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
-        center={defaultMapProps.center}
-        zoom={defaultMapProps.zoom}
-        onClick={(e) => {
-          console.log("latitude = ", e.latLng.lat());
-          console.log("longtitude = ", e.latLng.lng());
-        }}
-        >
-      </GoogleMapReact>
+      <div className='mt-8'>Επιλέξτε στο χάρτη τη τοποθεσία της υποδομής σας:</div>
+      <SingleMarkerMap
+          position={facilityPosition}
+          style={{width: '100%', height: '20rem'}}
+          onClick={setFacilityPosition}
+          initialZoom={10}
+      />
       <button onClick={() => sendNewFacilityInfo()} className={`${canSubmit ? 'hover:bg-hover' : 'opacity-70 cursor-default' } bg-cyan w-full h-8 mt-12 h-12 rounded-full`}>Καταχώρηση Υποδομής</button>
       {
         canSubmit ? '' :

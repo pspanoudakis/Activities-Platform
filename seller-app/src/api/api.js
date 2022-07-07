@@ -177,6 +177,8 @@ export function sendFacilityData(data) {
     console.log('Sent data: '+ data.name);
     console.log('Sent data: '+ data.street);
     console.log('Sent data: '+ data.location);
+    console.log('Sent data: '+ data.lat);
+    console.log('Sent data: '+ data.lng);
 }
 
 export function sendAddedAccount(data) {
