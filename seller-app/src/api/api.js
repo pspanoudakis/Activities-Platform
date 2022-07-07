@@ -1,17 +1,8 @@
 
+import { fetchWrapper } from './fetchAPI.js'
+
 export function delay(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
-}
-
-export function fetchActionBarData(callback) {
-    delay(100).then(() => 
-        callback({
-        ok:true,
-        data:{
-            imgUrl: ''
-        }
-        })
-    )
 }
 
 export function fetchHomePageData(callback) {

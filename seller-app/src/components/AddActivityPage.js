@@ -44,7 +44,12 @@ export default function AddActivityPage() {
   }, [])
 
   useEffect(() => {
-    checkCanSubmit()
+    if(name !== '' && category !== '' && price !== '' && facility !== '') {
+      setCanSubmit(true)
+    }
+    else {
+      setCanSubmit(false)
+    }
   }, [name, category, price, facility])
 
   function sendNewActivityInfo() {
@@ -64,15 +69,6 @@ export default function AddActivityPage() {
 
   function onImageChange(e) {
     setImages([...e.target.files])
-  }
-
-  function checkCanSubmit(){
-    if(name !== '' && category !== '' && price !== '' && facility !== '') {
-      setCanSubmit(true)
-    }
-    else {
-      setCanSubmit(false)
-    }
   }
 
   function AddDates() {

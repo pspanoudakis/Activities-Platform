@@ -9,7 +9,12 @@ export default function AddFacilityPage() {
   const [canSubmit, setCanSubmit] = useState(false)
 
   useEffect(() => {
-    checkCanSubmit()
+    if(name !== '' && street !== '' && location) {
+      setCanSubmit(true)
+    }
+    else {
+      setCanSubmit(false)
+    }
   }, [name, street, location])
 
   function sendNewFacilityInfo(){
@@ -19,15 +24,6 @@ export default function AddFacilityPage() {
       street: street,
       location: location,
     })
-  }
-
-  function checkCanSubmit(){
-    if(name !== '' && street !== '' && location) {
-      setCanSubmit(true)
-    }
-    else {
-      setCanSubmit(false)
-    }
   }
 
   return (
