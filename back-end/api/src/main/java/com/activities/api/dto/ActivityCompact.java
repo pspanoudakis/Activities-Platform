@@ -22,8 +22,10 @@ public class ActivityCompact {
     private Coordinates coordinates;
     private List<String> images;
     private Boolean periodic;
+    private String sellerName;
 
     public ActivityCompact(Activity activity, ActivityService activityService, LocalDate start_date){
+        this.sellerName = activity.getFacility().getSeller().getUser().getName();
         this.activity_id = activity.getId();
         this.name = activity.getName();
         this.periodic = activity.getPeriodic();
