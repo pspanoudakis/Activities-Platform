@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { fetchUsers } from '../api/usersAPI';
-import { PageTitle } from '../components/PageTitle';
-import { UserResultsTable } from '../components/UserResultsTable';
+import React, { useState, useEffect } from 'react'
+import { fetchPendingActivities } from '../api/activitiesAPI'
+import { ActivityResultsTable } from '../components/ActivityResultsTable'
+import { PageTitle } from '../components/PageTitle'
 
 const defaultPaginationState = {
     currentPage: 0,
@@ -10,10 +9,7 @@ const defaultPaginationState = {
     totalPages: -1
 }
 
-export function UserSearch() {
-
-    const [searchParams] = useSearchParams();
-    const searchKey = searchParams.get('searchKey')
+export function PendingActivitiesPage() {
 
     const [paginationState, setPaginationState] = useState(defaultPaginationState)
     const [loading, setLoading] = useState(false)
@@ -29,7 +25,7 @@ export function UserSearch() {
 
     const fetchPageAndRerender = () => {
 
-        fetchUsers(searchKey, paginationState.currentPage + 1, paginationState.pageSize, (response) => {
+        fetchPendingActivities(paginationState.currentPage + 1, paginationState.pageSize, (response) => {
 
             if (response.ok) {
                 console.log(response.data)
@@ -51,14 +47,14 @@ export function UserSearch() {
 
     useEffect(() => {
         setLoading(true)
-    }, [searchParams, paginationState.currentPage, paginationState.pageSize])
+    }, [paginationState.currentPage, paginationState.pageSize])
 
     return (
         <div className="pt-6 w-full flex flex-col items-center gap-7 pb-7">
             <PageTitle>
-                {`Αναζήτηση χρήστη: '${searchKey}'`}
+                Δραστηριότητες προς έγκριση
             </PageTitle>
-            <UserResultsTable
+            <ActivityResultsTable
                 results={results}
                 updateResults={updateResults}
                 pageSize={paginationState.pageSize}

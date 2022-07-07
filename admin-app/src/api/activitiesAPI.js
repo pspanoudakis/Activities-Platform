@@ -1,9 +1,44 @@
-import { fetchWrapper } from "./fetchAPI";
+import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI";
 
 export function fetchPendingActivities(pageNumber, pageSize, callback) {
     fetchWrapper({
         endpoint: `admin/pending_activities?pageNumber=${pageNumber}&pageSize=${pageSize}`,
         method: 'GET',
         callback
+    })
+}
+
+function reshapeActivityContent(activityResponse) {
+    console.log(activityResponse)
+    const activity = {
+        name: activityResponse.name,
+        providerName: activityResponse.seller_name,
+        description: activityResponse.description,
+        price: activityResponse.cost,
+        images: activityResponse.images,
+        location: {
+            address: activityResponse.address,
+            latitude: activityResponse.latitude,
+            longitude: activityResponse.longitude
+        }
+    }
+    return activity
+}
+
+export function fetchActivity(activityId, callback) {
+    
+    fetchWrapper({
+        endpoint: `search/activity/${activityId}`,
+        method: 'GET',
+        omitAuthHeader: true,
+        needAuth: false,
+        callback: (response) => {
+            if (response.ok) {
+                callback(new APIResponse(reshapeActivityContent(response.data), true, RESPONSE_STATUS.OK))
+            }
+            else {
+                callback(new APIResponse(null, false, -1))
+            }
+        }
     })
 }

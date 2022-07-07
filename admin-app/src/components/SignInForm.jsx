@@ -86,8 +86,7 @@ export function SignInForm() {
                     type="submit"
                     className="
                         rounded-xl
-                        mt-5 px-3 py-1
-                        text-lg
+                        mt-5 px-5 py-2
                         border-2 border-dark-cyan
                         bg-cyan hover:bg-dark-cyan
                         disabled:bg-dark-cyan disabled:text-gray-500

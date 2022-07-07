@@ -1,9 +1,6 @@
 package com.activities.api.repositories;
 
-import com.activities.api.entities.Activity;
-import com.activities.api.entities.AgeCategory;
-import com.activities.api.entities.Category;
-import com.activities.api.entities.Facility;
+import com.activities.api.entities.*;
 
 import java.time.LocalDate;
 import java.util.Collection;

@@ -1,6 +1,7 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PaginatedTable } from '../shared/PaginatedTable';
-import { AppContext } from '../AppContext'
+import { roleText, statusText } from '../utils/userInfo';
 
 function UserHeaders(headerGroup) {
     return (
@@ -20,18 +21,11 @@ function UserHeaders(headerGroup) {
     )
 }
 
-function UserRow(row, navigate) {
+function UserRow({
+    row
+}) {
 
-    const roleText = {
-        'parent': <div>Γονέας</div>,
-        'provider': <div>Πάροχος</div>,
-        'admin': <div className='text-blue-700 font-semibold'>Διαχειριστής</div>
-    }
-
-    const statusText = {
-        'active': <div className='text-green-700 font-semibold'>Ενεργός</div>,
-        'blocked': <div className='text-red-700 font-semibold'>Ανεσταλμένος</div>
-    }
+    const navigate = useNavigate()
 
     return (
         <tr
@@ -66,8 +60,6 @@ export function UserResultsTable(
     }
 ) {
 
-    const context = useContext(AppContext)
-
     const columns = useMemo(() => [
         {
             Header: 'Όνομα',
@@ -91,7 +83,7 @@ export function UserResultsTable(
             initialPageSize={pageSize}
             totalPages={totalPages}
             initialPage={currentPage}
-            renderRow={(row) => UserRow(row, context.state.navigate)}
+            renderRow={(row, key) => <UserRow row={row} key={key}/>}
             renderHeaders={UserHeaders}
             availablePageSizes={[8, 12, 24]}
             loading={loading}

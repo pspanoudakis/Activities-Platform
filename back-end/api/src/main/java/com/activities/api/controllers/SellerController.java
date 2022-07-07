@@ -44,6 +44,9 @@ public class SellerController {
     @Autowired
     private  ActivityService activityService;
 
+    @Autowired
+    private BankAccountService bankAccountService;
+
 
 
 
@@ -224,6 +227,27 @@ public class SellerController {
 
     }
 
+    @PutMapping("/activity_update/{activity_id}")
+    public ResponseEntity<ActivityUpdate> updateActivity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id,@RequestBody ActivityUpdate updated){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!activityService.exists(activity_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no activity with such id").body(null);
+
+        if(!activityService.isOwnedBySeller(seller,activity_id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested activity").body(null);
+
+
+        return ResponseEntity.ok().body(activityService.updateActivity(updated,activity_id));
+    }
+
     @GetMapping("/total_activities")
     public ResponseEntity<?> getTotalActivities(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         Seller seller;
@@ -242,8 +266,111 @@ public class SellerController {
 
     }
 
+    @GetMapping("/activity_reviews/{activity_id}")
+    public ResponseEntity<List<ActivityReview>> getReviewsofActivity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int activity_id){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!activityService.exists(activity_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no activity with such id").body(null);
+
+        if(!activityService.isOwnedBySeller(seller,activity_id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested activity").body(null);
+
+        return ResponseEntity.ok().body(activityService.getReviews(activity_id));
+    }
+
+    @GetMapping("/bank_accounts")
+    public ResponseEntity<List<BankAccountDTO>> getBankAccounts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        return ResponseEntity.ok().body(sellerService.getBankAccounts(seller));
+
+    }
+
+    @PostMapping("/new_bank_account")
+    public  ResponseEntity<BankAccountDTO>  addNewBankAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@RequestBody BankAccountDTO new_account){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        return ResponseEntity.ok().body(sellerService.addBankAccount(new_account,seller));
 
 
+
+    }
+
+    @DeleteMapping("/delete_bank_account/{account_id}")
+    public ResponseEntity<?> deleteBankAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int account_id){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        if(!bankAccountService.exists(account_id))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).header("error","no bank account with such id").body(null);
+
+        if(!bankAccountService.IsOwnedBySeller(account_id,seller))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested bank accout").body(null);
+
+        bankAccountService.deleteAccount(account_id);
+        return ResponseEntity.ok().body(null);
+
+    }
+
+    @GetMapping("/points")
+    public ResponseEntity<?> getPoints(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        Object responseBody = new Object() {
+            public final int points = sellerService.getPoints(seller);
+        };
+        return new ResponseEntity<>(responseBody,HttpStatus.OK);
+
+    }
+
+    @PostMapping("/redeem_points")
+    public ResponseEntity<?> redeemPoints(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam int points) {
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        if(sellerService.redeemPoints(seller,points))
+            return ResponseEntity.ok().body(null);
+        else
+            return ResponseEntity.badRequest().header("error","Not enough points to redeem").body(null);
+    }
 
 
 

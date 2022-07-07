@@ -2,14 +2,14 @@ import React, { useContext, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { updateUser } from "../api/profileAPI";
 import { AppContext } from "../AppContext";
-import { SingleMarkerMap } from "../components/Maps";
+import { SingleMarkerMap } from "../shared/Maps";
 import { NeedSignIn } from "../components/NeedSignIn";
 import { FormInputField } from "../shared/FormUtils";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
 import { SectionTitle } from "../shared/SectionTitle";
-import { GoogleUtils } from "../utils/GoogleUtils";
-import { defaultHomePosition, PLACEHOLDER_USER_IMG } from "../utils/placeholders";
+import { GoogleUtils } from "../shared/GoogleUtils";
+import { defaultHomePosition, PLACEHOLDER_USER_IMG } from "../shared/placeholders";
 
 export function ProfilePage() {
 

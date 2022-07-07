@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { MD_PXLIMIT, SM_PXLIMIT } from "../utils/deviceConstants";
-import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
+import { useHasMaxWidth } from "../shared/useHasMaxWidth";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SectionTitle } from "../shared/SectionTitle";
-import { SwitchPageSideButton } from "./SwitchPageSideButton";
+import { SwitchPageSideButton } from "../shared/SwitchPageSideButton";
 
 const TOTAL_ACTIVITIES = 12
 const PAGE_SIZE = 3

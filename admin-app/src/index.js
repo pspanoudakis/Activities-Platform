@@ -6,14 +6,13 @@ import './index.css';
 
 import { App } from './App';
 import { Index } from './pages/Index';
-import { UserSearch } from './pages/UserSearch';
+import { UserSearchPage } from './pages/UserSearchPage';
 import { UserPage } from './pages/UserPage';
 import reportWebVitals from './reportWebVitals';
-import { PlatformStats } from './pages/PlatformStats';
-import { Logout } from './pages/Logout';
 import { ActivityPage } from './pages/ActivityPage';
-import { PendingActivities } from './pages/PendingActivities';
-import { NewUser } from './pages/NewUser';
+import { PendingActivitiesPage } from './pages/PendingActivitiesPage';
+import { NewUserPage } from './pages/NewUserPage';
+import { PlatformStatsPage } from './pages/PlatformStatsPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,16 +22,15 @@ root.render(
                 <Route path="/" element={<App />}>
                     <Route index element={<Index />}/>
                     <Route path="users">
-                        <Route index element={<UserSearch />}/>
+                        <Route index element={<UserSearchPage />}/>
                         <Route path=":username" element={<UserPage />}/>
                     </Route>
                     <Route path="pendingActivities">
-                        <Route index element={<PendingActivities />}/>
+                        <Route index element={<PendingActivitiesPage />}/>
                         <Route path=":activityId" element={<ActivityPage />}/>
                     </Route>
-                    <Route path="newUser" element={<NewUser />}/>
-                    <Route path="platformStats" element={<PlatformStats />}/>
-                    <Route path="logout" element={<Logout />}/>
+                    <Route path="newUser" element={<NewUserPage />}/>
+                    <Route path="platformStats" element={<PlatformStatsPage />}/>
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -294,7 +294,7 @@ RETURNS THE DETAILS OF CERTAIN ACTIVITY
 Note: occurrences will only return the future occurrences of the activity and not the past ones. If no occurrence is planned for a future data the array will be empty
 #NEEDS JWT 
 {GET(/seller/activity_details/{id})} {
-     Request {
+    Request {
         RequestHeader {RequestHeader{ "authorization": JWT}
     }
 
@@ -341,18 +341,167 @@ Note: occurrences will only return the future occurrences of the activity and no
     }
 }
 
-
-
-============ NOT DONE YET ===========
-DELETES CERTAIN FACILITY
+UPDATE AN ACTIVITY
+Note: You cannot update the dates and the price
 #NEEDS JWT 
-{DELETE(seller/facility/{id})} {
+{PUT(/seller/activity_update/{id})} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            "name":"my_new_activity_updated",
+            "description":"updated desc",
+            "category_id":1,
+            "age_category":2,
+            "facility_id":8,
+            "images":[
+                "url_1",
+                "url_2",
+                "url_3"
+            ]
+        }
+    }
+
+    Response {
+        Response Body {
+            "name":"my_new_activity_updated",
+            "description":"updated desc",
+            "category_id":1,
+            "age_category":2,
+            "facility_id":8,
+            "images":[
+                "url_1",
+                "url_2",
+                "url_3"
+            ]
+        }
+    }
+}
+
+
+GET RATINGS FOR A CERTAIN ACTIVITY
+#NEEDS JWT 
+{GET(/seller/activity_reviews/16)} {
     Request {
         RequestHeader {RequestHeader{ "authorization": JWT}
     }
 
     Response {
-
+        ResponseBody {
+            [
+                {
+                    "rating": 5.0,
+                    "username": "parent1",
+                    "review_text": "great"
+                },
+                {
+                    "rating": 5.0,
+                    "username": "parent2",
+                    "review_text": "super great"
+                }
+            ]
+        }
     }
 
+}
+
+Get all the bank accounts of the seller
+#NEEDS JWT 
+{GET(/seller/bank_accounts} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            [
+                {
+                    "id": 5,
+                    "iban": "test_iban",
+                    "account_number": "12345566",
+                    "owner_name": null
+                },
+                {
+                    "id": 6,
+                    "iban": "test_iban_2",
+                    "account_number": "123455667",
+                    "owner_name": null
+                }
+            ]
+        }
+    }
+}
+
+Add a new bank Account for seller
+#NEEDS JWT 
+{POST(seller/new_bank_account)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            {
+                "iban":"test_iban_2",
+                "owner_name":"me mario",
+                "account_number":"123455667"
+            }
+        }
+    }
+
+    Response {
+        ResponseBody {
+            {
+                "id": 6,
+                "iban": "test_iban_2",
+                "account_number": "123455667",
+                "owner_name": "me mario"
+            }
+        }
+    }
+}
+
+Delete a bank account
+#NEEDS JWT 
+{DELETE(seller/delete_bank_account/{id})} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+
+        RequestBody {
+            {
+                "iban":"test_iban_2",
+                "owner_name":"me mario",
+                "account_number":"123455667"
+            }
+        }
+    }
+
+    Response {
+        ResponseBody {
+            
+        }
+    }
+}
+
+Get the current balance of the seller
+#NEEDS JWT 
+{GET(/seller/points)}{
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            "points":400
+        }
+    }
+}
+
+Redeed an amount of points equal or less than the current point that the seller has 
+{POST(seller/redeed_points?points={amount})} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+     
+    }
 }

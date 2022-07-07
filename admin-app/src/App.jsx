@@ -5,7 +5,7 @@ import { loginWithJwt } from './api/loginAPI';
 
 import { AppContext } from './AppContext';
 import { LoadingIndicator } from './shared/LoadingIndicator';
-import { Modal } from './components/Modal';
+import { Modal } from './shared/Modal';
 import { Navbar } from './components/Navbar';
 import { SignInForm } from './components/SignInForm';
 
@@ -61,8 +61,8 @@ export function App() {
             </Modal>
             <div className='w-full, flex justify-center min-h-screen'>
                 <div
-                    className='w-full h-full flex flex-col gap-2 justify-start items-center'
-                    style={{ maxWidth: "60rem", minWidth: "20rem"}}
+                    className='w-full h-full flex flex-col gap-2 justify-start items-center px-3 pb-4'
+                    style={{ maxWidth: "70rem", minWidth: "20rem"}}
                 >
                 {
                     pendingLogin ?

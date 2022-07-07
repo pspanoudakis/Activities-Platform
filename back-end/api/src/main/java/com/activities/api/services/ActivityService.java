@@ -31,11 +31,10 @@ public class ActivityService {
     @Autowired private ActivityAtDayRepository activityAtDayRepository;
     @Autowired private ActivityPhotoRepository activityPhotoRepository;
     @Autowired private FacilityRepository facilityRepository;
-
     @Autowired private  CategoryRepository categoryRepository;
-
     @Autowired private AgeCategoryRepository ageCategoryRepository;
     @Autowired private ActivityCriteriaRepository activityCriteriaRepository;
+
 
     public Page<Activity> getActivities(
         ActivityPage activityPage,
@@ -259,6 +258,45 @@ public class ActivityService {
             activityAtDayRepository.save(new_day);
         }
         return newActivity;
+    }
+
+    @Transactional
+    public ActivityUpdate updateActivity(ActivityUpdate updatedActivity,int activity_id){
+        Activity activity = getActivity(activity_id);
+        Category category = categoryRepository.findById(updatedActivity.getCategory_id()).get();
+        Facility facility = facilityRepository.findById(updatedActivity.getFacility_id()).get();
+        AgeCategory ageCategory = ageCategoryRepository.findById(updatedActivity.getAge_category_id()).get();
+
+        activity.setAgeCategory(ageCategory);
+        activity.setFacility(facility);
+        activity.setCategory(category);
+
+        activity.setName(updatedActivity.getName());
+        activity.setDescription(updatedActivity.getDescription());
+        activity = saveOrUpdateActivity(activity);
+
+        activityPhotoRepository.deleteActivityPhotoByActivity(activity);
+        for (String image_url:updatedActivity.getImages()) {
+            ActivityPhoto image = new ActivityPhoto();
+            image.setActivity(activity);
+            image.setUrl(image_url);
+            activityPhotoRepository.save(image);
+        }
+
+        return updatedActivity;
+
+    }
+
+    public List<ActivityReview> getReviews(int activity_id) {
+        List<Evaluation> eval = evaluationRepository.findByActivity(getActivity(activity_id));
+        return eval.stream().map( review -> {
+           ActivityReview activity_review = new ActivityReview();
+           activity_review.setReview_text(review.getComment());
+           activity_review.setRating(review.getRating());
+           activity_review.setUsername(review.getParent().getUser().getUsername());
+           return activity_review;
+        }).collect(Collectors.toList());
+
     }
 
 

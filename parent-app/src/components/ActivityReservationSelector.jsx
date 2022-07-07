@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DatePicker from 'react-date-picker';
 import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../utils/dates";
-import { ActionButton } from "../shared/ActionButton";
-import { Checklist } from "../shared/Checklist";
+import { ActionButton } from "./ActionButton";
+import { Checklist } from "./Checklist";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 

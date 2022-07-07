@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { GoogleUtils } from "../utils/GoogleUtils";
+import { GoogleUtils } from "./GoogleUtils";
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { Marker } from '@react-google-maps/api';
 

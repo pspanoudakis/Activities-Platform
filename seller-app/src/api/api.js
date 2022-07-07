@@ -85,6 +85,31 @@ export function fetchActivitiesPageData(callback) {
     )
 }
 
+export function fetchAddActivityPageData(callback) {
+    delay(100).then(() => 
+        callback({
+        ok:true,
+        data:{
+            categories: [
+                { label: 'cat1', value: 'cat1' },
+                { label: 'cat2', value: 'cat2' },
+                { label: 'cat3', value: 'cat3' },
+            ],
+            ageCategories: [
+                { label: 'agecat1', value: 'agecat1' },
+                { label: 'agecat2', value: 'agecat2' },
+                { label: 'agecat3', value: 'agecat3' },
+            ],
+            facilities: [
+                { label: 'fac1', value: 'fac1' },
+                { label: 'fac2', value: 'fac2' },
+                { label: 'fac3', value: 'fac3' },
+            ]
+        }
+        })
+    )
+}
+
 export function fetchActivityPageData(activityId, callback) {
     delay(100).then(() => 
         callback({
@@ -103,7 +128,7 @@ export function fetchActivityPageData(activityId, callback) {
                 return {
                     activity: '05/02/2022',
                     user: `Χρήστης ${i}`,
-                    rating: '3/5',
+                    rating: '3',
                     comment: 'Αυτή είναι μία κριτική.'
                 }
             }),

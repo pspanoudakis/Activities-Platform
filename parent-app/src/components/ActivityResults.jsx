@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { faArrowRotateRight, faHouse, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchActivityResults } from "../api/searchAPI";
-import { MultiMarkerMap } from "./Maps";
+import { MultiMarkerMap } from "../shared/Maps";
 import { SearchResultTile } from "./SearchResultTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { PageSelector } from "../shared/PaginatedTable";
-import { GoogleUtils } from "../utils/GoogleUtils";
+import { GoogleUtils } from "../shared/GoogleUtils";
 
 function HomeAddressIndicator({
     address,

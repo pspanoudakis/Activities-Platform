@@ -9,7 +9,7 @@ import com.activities.api.entities.ActivityAtDay;
 import com.activities.api.entities.ActivityPhoto;
 import com.activities.api.entities.AgeCategory;
 import com.activities.api.entities.Authority;
-import com.activities.api.entities.BanckAccount;
+import com.activities.api.entities.BankAccount;
 import com.activities.api.entities.BankCard;
 import com.activities.api.entities.Category;
 import com.activities.api.entities.Evaluation;
@@ -101,7 +101,7 @@ public class TestController {
     }
 
     @GetMapping("/bankaccs")
-    public ResponseEntity<List<BanckAccount>> getBankAccounts(){
+    public ResponseEntity<List<BankAccount>> getBankAccounts(){
         return ResponseEntity.ok().body(bankAccountService.getBankAccounts());
     }
 

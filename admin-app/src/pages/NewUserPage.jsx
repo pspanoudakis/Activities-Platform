@@ -2,13 +2,18 @@ import React, { useContext, useMemo, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { addNewUser } from "../api";
 import { AppContext } from '../AppContext';
 import { FormFieldHint, FormInputField } from "../components/FormUtils";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { PageTitle } from "../components/PageTitle";
+import { createUser } from "../api/usersAPI";
 
-export function NewUser() {
+const USER_ROLES = {
+    'ROLE_PARENT': 'Γονέας',
+    'ROLE_SELLER': 'Πάροχος',
+    'ROLE_ADMIN': 'Διαχειριστής',
+}
+export function NewUserPage() {
 
     const context = useContext(AppContext)
     const navigate = useNavigate()
@@ -17,7 +22,7 @@ export function NewUser() {
     const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const [verifyPwd, setVerifyPwd] = useState('')
-    const [role, setRole] = useState('parent')
+    const [role, setRole] = useState(Object.keys(USER_ROLES)[0])
 
     const [loading, setLoading] = useState(false)
 
@@ -32,14 +37,16 @@ export function NewUser() {
             role: role
         })
 
-        addNewUser(
+        createUser(
             {
                 username: uname,
+                email: email,
+                password: pwd,
                 role: role
             },
             response => {
                 // Maybe navigate to New User page here
-                navigate("/")
+                response.ok && navigate(`/users/${uname}`)
                 context.setState({
                     ...context.state,
                     showModal: true,
@@ -145,24 +152,16 @@ export function NewUser() {
                         <div className="md:col-span-2 sm:col-span-1 flex flex-col gap-1 md:items-center sm:items-start">
                             <span>Επιλογή Ρόλου</span>
                             <div className="flex flex-col gap-1 items-start">
-                                <div className="flex flex-row gap-2 items-center">
-                                    <input type="radio" name="parent" checked={role === 'parent'} onChange={() => setRole('parent')}/>
-                                    <label htmlFor="parent" onClick={() => setRole('parent')}>
-                                        Γονέας
-                                    </label>
-                                </div>
-                                <div className="flex flex-row gap-2 items-center">
-                                    <input type="radio" name="provider" checked={role === 'provider'} onChange={() => setRole('provider')}/>
-                                    <label htmlFor="provider" onClick={() => setRole('provider')}>
-                                        Πάροχος
-                                    </label>
-                                </div>
-                                <div className="flex flex-row gap-2 items-center">
-                                    <input type="radio" name="admin" checked={role === 'admin'} onChange={() => setRole('admin')}/>
-                                    <label htmlFor="admin"  onClick={() => setRole('admin')}>
-                                        Διαχειριστής
-                                    </label>
-                                </div>
+                            {
+                                Object.entries(USER_ROLES).map(([roleName, roleDesc], i) => 
+                                    <div className="flex flex-row gap-2 items-center" key={i}>
+                                        <input type="radio" name={roleName} checked={role === roleName} onChange={() => setRole(roleName)}/>
+                                        <label htmlFor={roleName} onClick={() => setRole(roleName)}>
+                                            {roleDesc}
+                                        </label>
+                                    </div>
+                                )
+                            }
                             </div>
                         </div>
                         <div className="flex justify-center md:col-span-2 sm:col-span-1">

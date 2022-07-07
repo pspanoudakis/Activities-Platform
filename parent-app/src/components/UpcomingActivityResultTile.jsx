@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ContentTile } from "../shared/ContentTile";
-import { PLACEHOLDER_ACTIVITY_IMG } from "../utils/placeholders";
+import { ContentTile } from "./ContentTile";
+import { PLACEHOLDER_ACTIVITY_IMG } from "../shared/placeholders";
 import { ActivityDateIndicator } from "./ActivityDateIndicator";
-import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
+import { ActivityLocationIndicator } from "../shared/ActivityLocationIndicator";
 
 export function UpcomingActivityResultTile({
     activityInfo: {

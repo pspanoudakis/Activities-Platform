@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { LoadingIndicator } from "../shared/LoadingIndicator";
-import { PLACEHOLDER_ACTIVITY_IMG } from "../utils/placeholders";
+import { LoadingIndicator } from "./LoadingIndicator";
+import { PLACEHOLDER_ACTIVITY_IMG } from "./placeholders";
 import { SwitchPageSideButton } from "./SwitchPageSideButton";
 
 export function ActivityImageSelector({
@@ -43,12 +43,12 @@ export function ActivityImageSelector({
     }, [nextImageIdx, images.length])
 
     useEffect(() => {
-        if (loading && images.length > 0) {
+        if (loading && imgPaths.length > 0) {
             const imgObj = new Image()
-            imgObj.src = images[nextImageIdx]
+            imgObj.src = imgPaths[nextImageIdx]
 
             imgObj.onerror = () => {
-                const newImgPaths = Array.from(images)
+                const newImgPaths = Array.from(imgPaths)
                 newImgPaths[nextImageIdx] = PLACEHOLDER_ACTIVITY_IMG
                 setImgPaths(newImgPaths)
                 setState({

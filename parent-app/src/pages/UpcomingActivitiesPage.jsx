@@ -6,7 +6,6 @@ import { SectionTitle } from "../shared/SectionTitle";
 import { PageSelector } from "../shared/PaginatedTable";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { UpcomingActivityResultTile } from "../components/UpcomingActivityResultTile";
-import { PLACEHOLDER_ACTIVITY_IMG } from "../utils/placeholders";
 
 const PAGE_SIZE = 4
 export function UpcomingActivitiesPage() {
@@ -68,7 +67,7 @@ export function UpcomingActivitiesPage() {
                                     name: a.name,
                                     address: a.address,
                                     date: `${a.day}, ${a.time}`,
-                                    images: [i % 2 ? PLACEHOLDER_ACTIVITY_IMG : 'https://secure.toolkitfiles.co.uk/clients/40147/siteimages/hires/c700x420.jpg']
+                                    images: a.images
                                 }}
                             />
                         )

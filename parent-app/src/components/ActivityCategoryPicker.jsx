@@ -3,7 +3,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { fetchCategories } from "../api/searchAPI";
-import { useHasMaxWidth } from "../hooks/useHasMaxWidth";
+import { useHasMaxWidth } from "../shared/useHasMaxWidth";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SectionTitle } from "../shared/SectionTitle"
 
