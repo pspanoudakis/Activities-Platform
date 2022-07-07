@@ -71,7 +71,7 @@ export default function AddActivityPage() {
   }
 
   function AddDates() {
-    if(time === '') return;
+    if(time === '' || startDate === '' || endDate === '') return;
     const days = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
     setDateList([...Array(days).keys()].map(i => {
       return {
