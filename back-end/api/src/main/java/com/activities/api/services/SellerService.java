@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.activities.api.dto.BankAccountDTO;
+import com.activities.api.dto.ReservationSellerPreview;
 import com.activities.api.dto.SellerInfoUpdate;
+import com.activities.api.entities.Reservation;
 import com.activities.api.entities.Seller;
 import com.activities.api.entities.User;
 import com.activities.api.entities.BankAccount;
 import com.activities.api.repositories.BankAccountRepository;
+import com.activities.api.repositories.ReservationRepository;
 import com.activities.api.repositories.SellerRepository;
 
 import com.activities.api.utils.CustomPasswordEncoder;
@@ -32,6 +35,9 @@ public class SellerService {
 
     @Autowired
     private CustomPasswordEncoder encoder;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
 
 
@@ -115,4 +121,19 @@ public class SellerService {
         return seller;
     }
 
+    public List<ReservationSellerPreview> getResentReservations(Seller seller){
+        List<Reservation> reservations = reservationRepository.findBySeller(seller.getId());
+        return reservations.stream().map(
+                reservation -> {
+                    ReservationSellerPreview res = new ReservationSellerPreview();
+                    res.setActivity_name(reservation.getActivityAtDay().getActivity().getName());
+                    res.setReservation_date(reservation.getDate());
+                    res.setParent_username(reservation.getParent().getUser().getUsername());
+                    res.setActivity_date(reservation.getActivityAtDay().getDay());
+                    res.setNumber_of_people_in_reservation(reservation.getNumber());
+                    res.setTotal_cost((res.getNumber_of_people_in_reservation())*(reservation.getActivityAtDay().getActivity().getPrice()));
+                    return res;
+                }
+        ).limit(10).collect(Collectors.toList());
+    }
 }

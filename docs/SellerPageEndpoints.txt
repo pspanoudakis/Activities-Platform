@@ -60,7 +60,7 @@ LOGIN
     }
 
     Response {
-         ResponseHeaders{
+        ResponseHeaders{
             "authorization": JWT
         }
 
@@ -539,6 +539,4 @@ NOTE: new_password field is the only one that can be null
     Response {
         ResponseHeader {"authorization": newJWT}
     }
-
 }
-

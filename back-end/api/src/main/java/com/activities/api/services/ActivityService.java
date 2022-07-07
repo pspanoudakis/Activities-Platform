@@ -201,7 +201,7 @@ public class ActivityService {
         int size = evaluations.size();
         int total = 0;
         for(int i = 0; i < size; i++) total += evaluations.get(i).getRating();
-        return ((double) total/size + 0.5);
+        return ((double) total/size);
     }
 
     public List<String> getActivityImages(Activity activity){

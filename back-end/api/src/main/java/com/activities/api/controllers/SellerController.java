@@ -406,4 +406,20 @@ public class SellerController {
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, newJWT).body(null);
     }
 
+    @GetMapping("/recent_reservations")
+    public ResponseEntity<List<ReservationSellerPreview>> getRecentReservations(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+
+        return ResponseEntity.ok().body(sellerService.getResentReservations(seller));
+
+
+    }
+
 }
