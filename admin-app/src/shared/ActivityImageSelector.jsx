@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingIndicator } from "./LoadingIndicator";
-import { PLACEHOLDER_ACTIVITY_IMG } from "./placeholders";
+import { PLACEHOLDER_ACTIVITY_IMG } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { SwitchPageSideButton } from "./SwitchPageSideButton";
 
 export function ActivityImageSelector({

@@ -28,10 +28,8 @@ function reshapeActivityContent(activityResponse) {
 export function fetchActivity(activityId, callback) {
     
     fetchWrapper({
-        endpoint: `search/activity/${activityId}`,
+        endpoint: `admin/activity/${activityId}`,
         method: 'GET',
-        omitAuthHeader: true,
-        needAuth: false,
         callback: (response) => {
             if (response.ok) {
                 callback(new APIResponse(reshapeActivityContent(response.data), true, RESPONSE_STATUS.OK))
