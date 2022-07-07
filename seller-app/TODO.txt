@@ -7,7 +7,6 @@
 4) AddActivityPage χρειάζεται την λειτουργία προσθήκης ημερομηνίας
    στη λίστα (με το κουμπί ΄Προσθήκη΄).
 
-5) AddActivityPage στα πεδία Κατηγορία, Ηλικιακή Κατηγορία, Υποδομή
-   χρειάζεται dropdown που θα παίρνει από backend.
+5) Pagination στα FacilitiesPage, ActivitiesPage.
 
-6) Pagination στα FacilitiesPage, ActivitiesPage.
+6) Έλεγχος αν έχουν συμπληρωθεί τα υποχρεωτικά πεδία
