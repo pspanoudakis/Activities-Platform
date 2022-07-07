@@ -37,6 +37,7 @@ export default function AddFacilityPage() {
             value={location} onChange={(e) => setLocation(e.target.value)}
           />
       </div>
+      <div className='mt-4 text-gray-500'>Τα πεδία με '*' είναι υποχρεωτικά</div>
       <button onClick={() => sendNewFacilityInfo()} className="bg-cyan w-full h-8 mt-12 hover:bg-hover h-12 rounded-full">Καταχώρηση Υποδομής</button>
     </div>
   );

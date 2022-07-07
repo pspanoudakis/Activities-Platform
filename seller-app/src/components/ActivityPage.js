@@ -72,15 +72,15 @@ export default function ActivityPage() {
               </div>
             </div>
           </div>
+          <div className='flex justify-center mt-10 text-lg'>
+            <div className='font-normal'>Σύνολο Κερδών:</div>
+            <div className='ml-1 font-light'>{data.earnings}</div>
+          </div>
           <div className='mt-10'>
             <div className='font-normal'>Περιγραφή:</div>
             <div className='bg-white w-full h-32 px-4 py-2 mt-2 shadow rounded-xl font-light'>
               {data.description}
             </div>
-          </div>
-          <div className='flex justify-center mt-10 text-lg'>
-            <div className='font-normal'>Σύνολο Κερδών:</div>
-            <div className='ml-1 font-light'>{data.earnings}</div>
           </div>
           <button onClick={() => setShowReviews(true)} className='bg-cyan hover:bg-hover rounded-full w-full mt-10 font-light text-2xl shadow'>Εμφάνιση Κριτικών</button>
           <div className='flex justify-center mt-10 text-lg'>

@@ -6,7 +6,7 @@ export function isNumberKey(e, setState) {
 }
 
 export function isTimeKey(e, setState) {
-    const re = /^\d{0,2}\:?\d{0,2}$/;
+    const re = /^\d{0,2}:?\d{0,2}$/;
     if (e.target.value === '' || re.test(e.target.value)) {
        setState(e.target.value)
     }

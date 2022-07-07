@@ -5,7 +5,7 @@ import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../shared/dates.j
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api/api.js'
 import { useNavigate } from 'react-router-dom';
-import { isNumberKey, isTimeKey, isDateKey } from '../shared/IsNumberKey.js';
+import { isNumberKey, isTimeKey, isDateKey } from '../shared/ValidInput.js';
 import Dropdown from '../shared/Dropdown.js';
 import { fetchAddActivityPageData } from '../api/api.js'
 
@@ -26,6 +26,7 @@ export default function AddActivityPage() {
   const [dateList, setDateList] = useState([])
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState(null)
+  const [canSubmit, setCanSubmit] = useState(false)
   
   useEffect(() => {
     fetchAddActivityPageData( (response) => {
@@ -61,6 +62,15 @@ export default function AddActivityPage() {
     setImages([...e.target.files])
   }
 
+  function checkCanSubmit(){
+    if(name !== '' && category !== '' && price !== '' && facility !== '') {
+      setCanSubmit(true)
+    }
+    else {
+      setCanSubmit(false)
+    }
+  }
+
   function AddDates() {
   }
   
@@ -81,7 +91,7 @@ export default function AddActivityPage() {
             <div className='w-full'>
               <div className=''>Όνομα Υπηρεσίας*</div>
               <input type='text' className='bg-white w-11/12 px-4 rounded-full shadow'
-                value={name} onChange={(e) => setName(e.target.value)}
+                value={name} onChange={(e) => {setName(e.target.value); checkCanSubmit()}}
               />
             </div>
             <div className='w-full'>
@@ -90,13 +100,13 @@ export default function AddActivityPage() {
                 className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.categories}
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => {setCategory(e.target.value); checkCanSubmit()}}
               />
             </div>
             <div className='w-full'>
               <div className=''>Τιμή*</div>
               <input className='bg-white w-9/12 px-4 rounded-full shadow'
-                value={price} onChange={(e) => isNumberKey(e, setPrice)}
+                value={price} onChange={(e) => {isNumberKey(e, setPrice); checkCanSubmit()}}
               />
             </div>
           </div>
@@ -118,7 +128,7 @@ export default function AddActivityPage() {
                 className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.facilities}
                 value={facility}
-                onChange={(e) => setFacility(e.target.value)}
+                onChange={(e) => {setFacility(e.target.value); checkCanSubmit()}}
               />
             </div>
             <button onClick={() => navigate('/add-facility')} className='bg-cyan hover:bg-hover w-1/2 h-12 rounded-full shadow'>Νέα Υποδομή</button>
@@ -131,6 +141,7 @@ export default function AddActivityPage() {
               />
             </form>
           </div>
+          <div className='mt-2 text-gray-500'>Τα πεδία με '*' είναι υποχρεωτικά</div>
           <div className='mt-10'>
             <div className='flex space-x-4'>
               <div className='font-medium'>Ημέρες και Ώρες Διεξαγωγής:</div>
@@ -175,16 +186,16 @@ export default function AddActivityPage() {
                 <div className='flex'>
                   <div className='font-medium'>Από</div>
                   <DatePicker
-                    className='bg-gray-200 w-28 ml-1 rounded-full text-center shadow'
+                    className='bg-gray-200 w-28 ml-1 rounded-full text-center caret-transparent	shadow'
                     selected={startDate}
-                    onChange={(date) => setStartDate(date)}
+                    onChange={(e, date) => {setStartDate(date); isDateKey(e, setStartDate)}}
                     placeholderText='επιλογή'
                   />
                 </div>
                 <div className='flex'>
                   <div class='font-medium'>Έως</div>
                   <DatePicker
-                    className='bg-gray-200 w-28 ml-1 rounded-full text-center shadow'
+                    className='bg-gray-200 w-28 ml-1 rounded-full text-center caret-transparent shadow'
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
                     placeholderText='επιλογή'
@@ -204,7 +215,7 @@ export default function AddActivityPage() {
             <div className='h-52 mt-2 overflow-y-scroll'>
             </div>
           </div>
-          <button onClick={() => sendNewActivityInfo()} className='bg-cyan w-full my-10 rounded-full h-14 hover:bg-hover text-lg shadow'>Καταχώρηση Δραστηριότητας</button>
+          <button onClick={() => sendNewActivityInfo()} className={`${canSubmit ? 'hover:bg-hover' : 'opacity-70 cursor-default'} bg-cyan w-full my-10 rounded-full h-14 text-lg shadow`}>Καταχώρηση Δραστηριότητας</button>
         </>
       }
     </div>
