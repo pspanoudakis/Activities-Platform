@@ -90,6 +90,14 @@ ActivityDTO{
     }
 }
 
++ {GET(/admin/activity/{activity_id})
+    Περιγραφή:
+    Εκτεταμένη περιγραφή δραστηριότητας με activity.id = activity_id που δεν εχει εγκριθεί
+    ResponseBody{
+        <ActivityExtendedDTO>
+    }
+}
+
 Post("admin/login")
 RequestBody{
     "username": "admin",

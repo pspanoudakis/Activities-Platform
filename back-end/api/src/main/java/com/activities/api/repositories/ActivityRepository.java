@@ -27,6 +27,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>{
 
     public List<Activity> findByApprovedTrue();
     public Optional<Activity> findByIdAndApprovedTrue(int id);
+    public Optional<Activity> findByIdAndApprovedFalse(int id);
     public Page<Activity> findAllByApprovedFalse(Pageable page);
     public Page<Activity> findAllByApprovedTrue(Pageable page);
     
