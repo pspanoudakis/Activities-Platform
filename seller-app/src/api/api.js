@@ -91,19 +91,19 @@ export function fetchAddActivityPageData(callback) {
         ok:true,
         data:{
             categories: [
-                { label: 'cat1', value: 'fruit' },
-                { label: 'cat2', value: 'vegetable' },
-                { label: 'cat3', value: 'meat' },
+                { label: 'cat1', value: 'cat1' },
+                { label: 'cat2', value: 'cat2' },
+                { label: 'cat3', value: 'cat3' },
             ],
             ageCategories: [
-                { label: 'agecat1', value: 'fruit' },
-                { label: 'agecat2', value: 'vegetable' },
-                { label: 'agecat3', value: 'meat' },
+                { label: 'agecat1', value: 'agecat1' },
+                { label: 'agecat2', value: 'agecat2' },
+                { label: 'agecat3', value: 'agecat3' },
             ],
             facilities: [
-                { label: 'fac1', value: 'fruit' },
-                { label: 'fac2', value: 'vegetable' },
-                { label: 'fac3', value: 'meat' },
+                { label: 'fac1', value: 'fac1' },
+                { label: 'fac2', value: 'fac2' },
+                { label: 'fac3', value: 'fac3' },
             ]
         }
         })

@@ -23,17 +23,15 @@ export default function AddActivityPage() {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [dateList, setDateList] = useState([])
-  const [value, setValue] = useState('fruit');
   const [loading, setLoading] = useState(true)
-  const [activities, setActivities] = useState([])
   const [data, setData] = useState(null)
-  const [valueCategories, setValueCategories] = useState(null)
-  const [valueAgeCategories, setValueAgeCategories] = useState(null)
-  const [valueFacilities, setValueFacilities] = useState(null)
   
   useEffect(() => {
     fetchAddActivityPageData( (response) => {
       if(response.ok){
+        response.data.categories = [{ label: 'Επιλέξτε', value: '' }, ...response.data.categories]
+        response.data.ageCategories = [{ label: 'Επιλέξτε', value: '' }, ...response.data.ageCategories]
+        response.data.facilities = [{ label: 'Επιλέξτε', value: '' }, ...response.data.facilities]
         setData(response.data)
       }
       else{
@@ -62,12 +60,7 @@ export default function AddActivityPage() {
     setImages([...e.target.files])
   }
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
   function AddDates() {
-
   }
   
   return (
@@ -95,8 +88,8 @@ export default function AddActivityPage() {
               <Dropdown
                 className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.categories}
-                value={valueCategories}
-                onChange={handleChange}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
               />
             </div>
             <div className='w-full'>
@@ -112,8 +105,8 @@ export default function AddActivityPage() {
               <Dropdown
                 className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.ageCategories}
-                value={valueAgeCategories}
-                onChange={handleChange}
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
               />
             </div>
           </div>
@@ -123,8 +116,8 @@ export default function AddActivityPage() {
               <Dropdown
                 className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.facilities}
-                value={valueFacilities}
-                onChange={handleChange}
+                value={facility}
+                onChange={(e) => setFacility(e.target.value)}
               />
             </div>
             <button onClick={() => navigate('/add-facility')} className='bg-cyan hover:bg-hover w-1/2 h-12 rounded-full shadow'>Νέα Υποδομή</button>
