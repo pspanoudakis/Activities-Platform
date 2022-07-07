@@ -96,7 +96,6 @@ export default function AddActivityPage() {
             <div className='w-full'>
               <div className=''>Κατηγορία*</div>
               <Dropdown
-                className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.categories}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -113,7 +112,6 @@ export default function AddActivityPage() {
             <div className='w-1/2'>
               <div className=''>Ηλικιακή Κατηγορία</div>
               <Dropdown
-                className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.ageCategories}
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
@@ -124,7 +122,6 @@ export default function AddActivityPage() {
             <div className='w-full'>
               <div className=''>Υποδομή*</div>
               <Dropdown
-                className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.facilities}
                 value={facility}
                 onChange={(e) => setFacility(e.target.value)}

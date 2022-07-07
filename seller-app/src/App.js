@@ -21,7 +21,7 @@ function App() {
           setUserInfo(response.data)
         }
         else {
-          console.log('jwt expired or not found')
+          console.log('JWT expired or not found')
         }
         setPendingLogin(false)
       })
