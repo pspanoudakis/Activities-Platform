@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendFacilityData } from '../api/api.js'
 
 
@@ -6,6 +6,11 @@ export default function AddFacilityPage() {
   const [name, setName] = useState('')
   const [street, setStreet] = useState('')
   const [location, setLocation] = useState('')
+  const [canSubmit, setCanSubmit] = useState(false)
+
+  useEffect(() => {
+    checkCanSubmit()
+  }, [name, street, location])
 
   function sendNewFacilityInfo(){
     sendFacilityData(
@@ -14,6 +19,15 @@ export default function AddFacilityPage() {
       street: street,
       location: location,
     })
+  }
+
+  function checkCanSubmit(){
+    if(name !== '' && street !== '' && location) {
+      setCanSubmit(true)
+    }
+    else {
+      setCanSubmit(false)
+    }
   }
 
   return (
@@ -37,8 +51,12 @@ export default function AddFacilityPage() {
             value={location} onChange={(e) => setLocation(e.target.value)}
           />
       </div>
-      <div className='mt-4 text-gray-500'>Τα πεδία με '*' είναι υποχρεωτικά</div>
-      <button onClick={() => sendNewFacilityInfo()} className="bg-cyan w-full h-8 mt-12 hover:bg-hover h-12 rounded-full">Καταχώρηση Υποδομής</button>
+      <div className='mt-4 text-sm text-gray-500'>Τα πεδία με '*' είναι υποχρεωτικά</div>
+      <button onClick={() => sendNewFacilityInfo()} className={`${canSubmit ? 'hover:bg-hover' : 'opacity-70 cursor-default' } bg-cyan w-full h-8 mt-12 h-12 rounded-full`}>Καταχώρηση Υποδομής</button>
+      {
+        canSubmit ? '' :
+        <div className='mt-2 text-center text-sm text-red-400'>Τα πεδία με '*' είναι υποχρεωτικά</div>
+      }
     </div>
   );
 }

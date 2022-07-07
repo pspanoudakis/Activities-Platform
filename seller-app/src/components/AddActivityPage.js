@@ -43,6 +43,10 @@ export default function AddActivityPage() {
     })
   }, [])
 
+  useEffect(() => {
+    checkCanSubmit()
+  }, [name, category, price, facility])
+
   function sendNewActivityInfo() {
     sendActivityData(
     {
@@ -91,7 +95,7 @@ export default function AddActivityPage() {
             <div className='w-full'>
               <div className=''>Όνομα Υπηρεσίας*</div>
               <input type='text' className='bg-white w-11/12 px-4 rounded-full shadow'
-                value={name} onChange={(e) => {setName(e.target.value); checkCanSubmit()}}
+                value={name} onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className='w-full'>
@@ -100,13 +104,13 @@ export default function AddActivityPage() {
                 className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.categories}
                 value={category}
-                onChange={(e) => {setCategory(e.target.value); checkCanSubmit()}}
+                onChange={(e) => setCategory(e.target.value)}
               />
             </div>
             <div className='w-full'>
               <div className=''>Τιμή*</div>
               <input className='bg-white w-9/12 px-4 rounded-full shadow'
-                value={price} onChange={(e) => {isNumberKey(e, setPrice); checkCanSubmit()}}
+                value={price} onChange={(e) => isNumberKey(e, setPrice)}
               />
             </div>
           </div>
@@ -128,7 +132,7 @@ export default function AddActivityPage() {
                 className='bg-white w-10/12 px-4 rounded-full shadow'
                 options={data.facilities}
                 value={facility}
-                onChange={(e) => {setFacility(e.target.value); checkCanSubmit()}}
+                onChange={(e) => setFacility(e.target.value)}
               />
             </div>
             <button onClick={() => navigate('/add-facility')} className='bg-cyan hover:bg-hover w-1/2 h-12 rounded-full shadow'>Νέα Υποδομή</button>
@@ -141,7 +145,7 @@ export default function AddActivityPage() {
               />
             </form>
           </div>
-          <div className='mt-2 text-gray-500'>Τα πεδία με '*' είναι υποχρεωτικά</div>
+          <div className='mt-2 text-sm text-gray-500'>Τα πεδία με '*' είναι υποχρεωτικά</div>
           <div className='mt-10'>
             <div className='flex space-x-4'>
               <div className='font-medium'>Ημέρες και Ώρες Διεξαγωγής:</div>
@@ -188,7 +192,7 @@ export default function AddActivityPage() {
                   <DatePicker
                     className='bg-gray-200 w-28 ml-1 rounded-full text-center caret-transparent	shadow'
                     selected={startDate}
-                    onChange={(e, date) => {setStartDate(date); isDateKey(e, setStartDate)}}
+                    onChange={(date) => setStartDate(date)}
                     placeholderText='επιλογή'
                   />
                 </div>
@@ -215,7 +219,11 @@ export default function AddActivityPage() {
             <div className='h-52 mt-2 overflow-y-scroll'>
             </div>
           </div>
-          <button onClick={() => sendNewActivityInfo()} className={`${canSubmit ? 'hover:bg-hover' : 'opacity-70 cursor-default'} bg-cyan w-full my-10 rounded-full h-14 text-lg shadow`}>Καταχώρηση Δραστηριότητας</button>
+          <button onClick={() => sendNewActivityInfo()} className={`${canSubmit ? 'hover:bg-hover' : 'opacity-70 cursor-default'} bg-cyan w-full mt-10 rounded-full h-14 text-lg shadow`}>Καταχώρηση Δραστηριότητας</button>
+          {
+            canSubmit ? '' :
+              <div className='mt-2 text-center text-sm text-red-400'>Τα πεδία με '*' είναι υποχρεωτικά</div>
+          }
         </>
       }
     </div>
