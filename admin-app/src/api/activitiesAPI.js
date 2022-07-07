@@ -25,8 +25,7 @@ function reshapeActivityContent(activityResponse) {
     return activity
 }
 
-export function fetchActivity(activityId, callback) {
-    
+export function fetchActivity(activityId, callback) {    
     fetchWrapper({
         endpoint: `admin/activity/${activityId}`,
         method: 'GET',
@@ -38,5 +37,21 @@ export function fetchActivity(activityId, callback) {
                 callback(new APIResponse(null, false, -1))
             }
         }
+    })
+}
+
+export function approveActivity(activityId, callback) {
+    fetchWrapper({
+        endpoint: `admin/activity/${activityId}/approve`,
+        method: 'POST',
+        callback
+    })
+}
+
+export function rejectActivity(activityId, callback) {
+    fetchWrapper({
+        endpoint: `admin/activity/${activityId}`,
+        method: 'DELETE',
+        callback
     })
 }
