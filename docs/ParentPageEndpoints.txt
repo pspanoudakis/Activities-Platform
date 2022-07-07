@@ -169,6 +169,19 @@ plannedActivity{
     }
 }
 
++{Get("/search/text_search?text=ity1&page_number=1&page_size=10)
+    ResponseBody{
+    [
+        <ActivityCompactDTO>
+        .
+        .
+        .,
+        <ActivityCompactDTO>,
+        "totalPages": 3
+    ]
+    }
+}
+
 ActivityExtendedDTO{
     String name,
     String image_url,

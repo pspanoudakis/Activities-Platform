@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activities.api.dto.ActivityCompact;
+import com.activities.api.dto.ActivityExtended;
 import com.activities.api.dto.AuthCredentialsRequest;
 import com.activities.api.dto.ChangeRoleRequest;
 import com.activities.api.dto.PageRequest;
@@ -339,7 +340,6 @@ public class AdminController {
         );
     }
 
-
     @DeleteMapping("/activity/{activity_id}")
     public ResponseEntity<Activity> deleteActivity(@PathVariable int activity_id){
 
@@ -351,4 +351,15 @@ public class AdminController {
         activityService.deleteActivity(activity);
         return ResponseEntity.ok().body(activity);
     }
+
+    @GetMapping("activity/{activity_id}")
+    public ResponseEntity<ActivityExtended> getActivityPage(@PathVariable int activity_id) throws Exception{
+        
+        Activity activity = activityService.getPendingActivity(activity_id);
+        if(activity == null)throw new Exception("Pending activity with id " + activity_id + " not found");
+        return ResponseEntity.ok().body(
+            new ActivityExtended(activity, activityService)
+        );
+    }
+
 }

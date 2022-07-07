@@ -53,6 +53,10 @@ public class ActivityService {
         return activityRepository.findByApprovedTrue();
     }
 
+    public Activity getPendingActivity(int id){
+        return activityRepository.findByIdAndApprovedFalse(id).orElse(null);
+    }
+
     public Activity getById(int id){
         return activityRepository.findById(id).orElse(null);
     }
