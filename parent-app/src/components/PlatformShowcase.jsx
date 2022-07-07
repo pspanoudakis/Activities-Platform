@@ -1,5 +1,5 @@
 import React from "react";
-import { useHasMaxWidth } from "../shared/useHasMaxWidth";
+import { useHasMaxWidth } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { MD_PXLIMIT } from "../utils/deviceConstants";
 
 export function PlatformShowcase() {

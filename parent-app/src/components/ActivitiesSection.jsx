@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MD_PXLIMIT, SM_PXLIMIT } from "../utils/deviceConstants";
-import { useHasMaxWidth } from "../shared/useHasMaxWidth";
+import { useHasMaxWidth } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SectionTitle } from "../shared/SectionTitle";

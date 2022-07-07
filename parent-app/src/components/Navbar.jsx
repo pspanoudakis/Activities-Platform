@@ -4,7 +4,7 @@ import { Link, useNavigate, useSearchParams, createSearchParams } from "react-ro
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket, faBars, faCreditCard, faPersonSwimming, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../AppContext";
-import { useHasMaxWidth } from "../shared/useHasMaxWidth";
+import { useHasMaxWidth } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { MD_PXLIMIT } from "../utils/deviceConstants";
 import { SignUpForm } from "./SignUpForm";
 import { SignInForm } from "./SignInForm";
