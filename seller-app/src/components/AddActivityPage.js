@@ -5,7 +5,7 @@ import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../shared/dates.j
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api/api.js'
 import { useNavigate } from 'react-router-dom';
-import IsNumberKey from '../shared/IsNumberKey.js';
+import { isNumberKey, isTimeKey, isDateKey } from '../shared/IsNumberKey.js';
 import Dropdown from '../shared/Dropdown.js';
 import { fetchAddActivityPageData } from '../api/api.js'
 
@@ -20,6 +20,7 @@ export default function AddActivityPage() {
   const [facility, setFacility] = useState('')
   const [description, setDescription] = useState('')
   const [occurence, setOccurence] = useState('')
+  const [time, setTime] = useState('')
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [dateList, setDateList] = useState([])
@@ -95,7 +96,7 @@ export default function AddActivityPage() {
             <div className='w-full'>
               <div className=''>Τιμή*</div>
               <input className='bg-white w-9/12 px-4 rounded-full shadow'
-                value={price} onChange={(e) => IsNumberKey(e, setPrice)}
+                value={price} onChange={(e) => isNumberKey(e, setPrice)}
               />
             </div>
           </div>
@@ -138,7 +139,7 @@ export default function AddActivityPage() {
                 <input type='radio' value='selectively' className='ml-4' name='occurs' onChange={(e) => setOccurence(e.currentTarget.value)}/>Επιλεκτικά
               </div>
             </div>
-            <div className='bg-white w-full mt-4 px-8 py-4 rounded-3xl'>
+            <div className='bg-white w-full mt-4 px-8 py-4 rounded-3xl overflow-hidden'>
               <div className='font-medium text-center'>Εισαγωγή Ημερομηνίας</div>
               <div className='flex mt-2 justify-between'>
                 <div className='font-medium'>Ημέρα:</div>
@@ -164,7 +165,10 @@ export default function AddActivityPage() {
                 </div>
                 <div className='flex w-3/12 space-x-2'>
                   <div className='font-medium'>Ώρα</div>
-                  <input type='text' className='bg-gray-200 w-1/2 px-4 rounded-full shadow'/>
+                  <input type='text' className='bg-gray-200 w-24 px-4 rounded-full text-center shadow'
+                  value={time} onChange={(e) => isTimeKey(e, setTime)}
+                  placeholder='hh:mm'
+                  />
                 </div>
               </div>
               <div className='flex mt-4 w-full justify-center space-x-6'>

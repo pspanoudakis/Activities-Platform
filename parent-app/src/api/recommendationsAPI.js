@@ -1,4 +1,4 @@
-import { PLACEHOLDER_ACTIVITY_IMG } from "../shared/placeholders"
+import { PLACEHOLDER_ACTIVITY_IMG } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1"
 import { roundRating } from "../utils/ratings"
 import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI"
 

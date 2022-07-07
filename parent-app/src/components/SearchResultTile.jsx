@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ContentTile } from "./ContentTile";
-import { PLACEHOLDER_ACTIVITY_IMG } from "../shared/placeholders";
+import { PLACEHOLDER_ACTIVITY_IMG } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { ActivityDateIndicator } from "./ActivityDateIndicator";
 import { ActivityLocationIndicator } from "../shared/ActivityLocationIndicator";
 import { ActivityRatingIndicator } from "./ActivityRatingIndicator";

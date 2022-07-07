@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { ContentTile } from "./ContentTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ActivityLocationIndicator } from "../shared/ActivityLocationIndicator";
-import { PLACEHOLDER_ACTIVITY_IMG } from "../shared/placeholders";
-import { useHasMaxWidth } from "../shared/useHasMaxWidth";
+import { PLACEHOLDER_ACTIVITY_IMG } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+import { useHasMaxWidth } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { MD_PXLIMIT, SM_PXLIMIT } from "../utils/deviceConstants";
 
 export function ActivityTile({

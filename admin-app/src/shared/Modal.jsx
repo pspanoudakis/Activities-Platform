@@ -1,6 +1,6 @@
 import React from "react";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useToggleBodyScroll } from "./useToggleBodyScroll";
+import { useToggleBodyScroll } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function CloseModalButton(props) {

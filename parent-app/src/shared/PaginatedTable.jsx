@@ -3,7 +3,7 @@ import { useTable, usePagination } from 'react-table'
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LoadingIndicator } from "./LoadingIndicator";
-import { useHasMaxWidth } from "./useHasMaxWidth";
+import { useHasMaxWidth } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 
 function PageSizeSelector({
     pageSize,
