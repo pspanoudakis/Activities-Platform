@@ -10,7 +10,7 @@ const FacilityPage = ({data, cancel}) => {
     setName(data.name)
     setStreet(data.street)
     setLocation(data.location)
-  }, [])
+  }, [data.name, data.street, data.location])
 
   function sendNewFacilityInfo(){
     sendFacilityData(

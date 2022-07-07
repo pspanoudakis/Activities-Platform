@@ -131,6 +131,7 @@ export default function RegisterPage({registerCallback, goToForm}) {
                 bg-cyan
                 hover:bg-blue-200
                 disabled:opacity-70
+                shadow
               "
               disabled={!canSubmitForm}
             >

@@ -72,6 +72,7 @@ export default function LoginPage({loginCallback, goToForm}) {
               text-lg
               bg-cyan
               hover:bg-blue-200
+              shadow
             "
             disabled={!canLogin}
           >

@@ -137,7 +137,7 @@ export default function AddActivityPage() {
               />
             </form>
           </div>
-          <div className='mt-2 text-sm text-gray-500'>Τα πεδία με '*' είναι υποχρεωτικά</div>
+          <div className='mt-2 text-sm text-gray-500'>*Τα πεδία με '*' είναι υποχρεωτικά</div>
           <div className='mt-10'>
             <div className='flex space-x-4'>
               <div className='font-medium'>Ημέρες και Ώρες Διεξαγωγής:</div>
