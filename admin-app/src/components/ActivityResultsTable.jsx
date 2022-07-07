@@ -37,7 +37,7 @@ function ActivityRow({
             </td>
             <td>
                 <div>
-                    {row.original.providerName}
+                    {row.original.sellerName}
                 </div>
             </td>
         </tr>
