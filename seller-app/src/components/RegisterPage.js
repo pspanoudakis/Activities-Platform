@@ -64,7 +64,7 @@ export default function RegisterPage({registerCallback, goToForm}) {
   }
 
   return (
-    <div className="w-8/12 max-w-3xl mb-96 bg-hover rounded-3xl mx-auto mt-20 flex flex-col gap-8 justify-center items-center p-6 relative">
+    <div className="w-8/12 max-w-3xl mb-96 bg-hover rounded-3xl mx-auto mt-20 flex flex-col gap-8 justify-center items-center p-6 relative shadow-md">
       <div className='text-xl'>Εγγραφή</div>
       <form
         method="POST"

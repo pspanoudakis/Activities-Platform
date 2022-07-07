@@ -20,7 +20,7 @@ export function FormInputField({
             }
             <input
                 type={type ? type : "text"}
-                className={`rounded-lg px-5 py-2 ${classExtra}`}
+                className={`rounded-lg px-5 py-2 shadow-md ${classExtra}`}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder={placeholder ? placeholder : ""}

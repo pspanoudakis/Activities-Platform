@@ -2,7 +2,7 @@ import ListItemBankAccount from './ListItemBankAccount.js';
 import AddAccount from './AddAccount.js';
 import { BsArrowRight } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { sendProfileData, onRedeem } from '../api/api.js';
+import { fetchSellerInfo, updateSellerProfile, redeemSellerPoints } from '../api/profileAPI.js';
 import { fetchProfilePageData, sendAddedAccount, sendSelectedAccount, sendRemovedAccountIdx } from '../api/api.js';
 import { Modal } from '../shared/Modal.js';
 import Prompt from './Prompt.js';
@@ -21,22 +21,22 @@ export default function ProfilePage() {
   const [showAddAccountPanel, setShowAddAccountPanel] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [promptText, setPromptText] = useState('');
-  const [promptConfirmCallback, setPromptConfirmCallback] = useState(null);
+  //const [promptConfirmCallback, setPromptConfirmCallback] = useState(null);
   const [accountToRemove, setAccountToRemove] = useState(null);
 
   useEffect(() => {
-    fetchProfilePageData( (response) => {
+    fetchSellerInfo( (response) => {
       if(response.ok){
         setData(response.data)
-        setUsername(response.data.username)
-        setEmail(response.data.email)
-        setAccounts(response.data.bankAccounts)
-        for (const i in response.data.bankAccounts) {
+        setUsername(response.ResponseBody.username)
+        setEmail(response.ResponseBody.email)
+        /*setAccounts(response.ResponseBody.bankAccounts)
+        for (const i in response.ResponseBody.bankAccounts) {
           if (response.data.bankAccounts[i].isSelected) {
             setSelectedAccount(i)
             break
           }
-        }
+        }*/
       }
       else{
         console.log('failed to fetch data');
@@ -45,18 +45,14 @@ export default function ProfilePage() {
     })
   }, [])
   
-  function sendNewProfileInfo() {
-    sendProfileData({
-      username: username,
-      email: email,
-      password: pwd
-    })
-    setCanEdit(false)
-  }
-
   function handleEditOrSave() {
     if (canEdit) {
-      sendNewProfileInfo()
+      updateSellerProfile({
+        username: username,
+        email: email,
+        password: pwd
+      })
+      setCanEdit(false)
     }
     else {
       setCanEdit(true)
@@ -69,9 +65,13 @@ export default function ProfilePage() {
   }
 
   function redeem() {
-    onRedeem({
+    redeemSellerPoints({
       redeemPoints:redeemPoints
-    })
+    }, onRedeem)
+  }
+
+  function onRedeem() {
+    alert('Η συναλλαγή ολοκληρώθηκε με επιτυχία')
   }
 
   function addBankAccount(data) {
@@ -89,7 +89,7 @@ export default function ProfilePage() {
 
   function setPrompt(text, onConfirm) {
     setPromptText(text)
-    setPromptConfirmCallback(onConfirm)
+    //setPromptConfirmCallback(onConfirm)
     setShowPrompt(true);
   }
 

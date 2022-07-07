@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api/api.js'
 import { useNavigate } from 'react-router-dom';
-import { isNumberKey, isTimeKey, isDateKey } from '../shared/ValidInput.js';
+import { isNumberKey, isTimeKey } from '../shared/ValidInput.js';
 import Dropdown from '../shared/Dropdown.js';
 import { fetchAddActivityPageData } from '../api/api.js'
 

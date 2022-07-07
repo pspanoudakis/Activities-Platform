@@ -30,7 +30,8 @@ export function loginWithCredentials(username, password, callback) {
         endpoint: 'seller/login',
         method: 'POST',
         body: {
-            username, password
+            username,
+            password
         },
         omitAuthHeader: true,
         needAuth: true,
