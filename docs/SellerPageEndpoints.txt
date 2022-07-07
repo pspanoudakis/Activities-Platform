@@ -505,3 +505,40 @@ Redeed an amount of points equal or less than the current point that the seller 
      
     }
 }
+
+Get Seller account information 
+#NEEDS JWT 
+{GET(seller/profile_ingo)} {
+     Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+    }
+
+    Response {
+        ResponseBody {
+            "username": "seller_name",
+            "email":"seller_email"
+        }
+    }
+}
+
+
+update sellers information
+#NEEDS JWT
+IMPORTANT: JWT WILL CHANGE AFTER THE REQUEST SO MAKE SURE TO GRAB IT FROM THE AUTHORIZATION HEADER
+NOTE: new_password field is the only one that can be null
+{PUT(seller/update_profile)} {
+    Request {
+        RequestHeader {RequestHeader{ "authorization": JWT}
+        RequestBody {
+            "username":"name",
+            "email":"email",
+            "new_password":"11212121"/null(if password is not changed)
+        }
+    }
+
+    Response {
+        ResponseHeader {"authorization": newJWT}
+    }
+
+}
+

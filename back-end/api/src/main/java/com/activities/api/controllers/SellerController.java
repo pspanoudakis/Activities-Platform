@@ -372,6 +372,38 @@ public class SellerController {
             return ResponseEntity.badRequest().header("error","Not enough points to redeem").body(null);
     }
 
+    @GetMapping("/profile_info")
+    public ResponseEntity<?> getProfileInfo(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
 
+        Object resoponseBody = new Object(){
+          public final String username = seller.getUser().getUsername();
+          public final String email = seller.getUser().getEmail();
+        };
+
+        return new ResponseEntity<>(resoponseBody,HttpStatus.OK);
+    }
+
+    @PutMapping("/update_info")
+    public ResponseEntity<?> updateProfileInfo(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@RequestBody SellerInfoUpdate newInfo){
+        Seller seller;
+        try{
+            seller = sellerService.getSellerFromToken(token);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().header(
+                    "error",e.getMessage()
+            ).body(null);
+        }
+        seller = sellerService.updateSellerInfo(seller,newInfo);
+        String newJWT = jwtUtil.generateToken(seller.getUser());
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, newJWT).body(null);
+    }
 
 }

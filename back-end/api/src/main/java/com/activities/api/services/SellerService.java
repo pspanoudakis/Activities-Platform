@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.activities.api.dto.BankAccountDTO;
+import com.activities.api.dto.SellerInfoUpdate;
 import com.activities.api.entities.Seller;
 import com.activities.api.entities.User;
 import com.activities.api.entities.BankAccount;
 import com.activities.api.repositories.BankAccountRepository;
 import com.activities.api.repositories.SellerRepository;
 
+import com.activities.api.utils.CustomPasswordEncoder;
 import com.activities.api.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,6 +29,10 @@ public class SellerService {
     @Autowired private JwtUtil jwtUtil;
 
     @Autowired private UserService userService;
+
+    @Autowired
+    private CustomPasswordEncoder encoder;
+
 
 
 
@@ -96,5 +102,17 @@ public class SellerService {
         return true;
     }
 
+    @Transactional
+    public Seller updateSellerInfo(Seller seller, SellerInfoUpdate newInfo){
+        User user = seller.getUser();
+        user.setEmail(newInfo.getEmail());
+        user.setUsername(newInfo.getUsername());
+        if(newInfo.getNew_password() != null)
+            user.setPassword(encoder.getPasswordEncoder().encode(newInfo.getNew_password()));
+        user = userService.saveOrUpdate(user);
+        seller.setUser(user);
+        saveOrUpdateSeller(seller);
+        return seller;
+    }
 
 }
