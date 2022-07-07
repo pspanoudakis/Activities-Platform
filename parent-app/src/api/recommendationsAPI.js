@@ -3,22 +3,11 @@ import { roundRating } from "../utils/ratings"
 import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI"
 
 function reshapeActivityTileData(responseData) {
-    /* const results = [...Array(n).keys()].map((_, i) => {
-
-        return {
-            imgSrc: `https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/a4/9b/77/legacy-hotel-at-img-academy.jpg?w=1000&h=-1&s=1`,
-            name: `Activity${i}`,
-            rating: 3.9,
-            locationName: `Κυκλαμίνων 48, Άνοιξη Αττικής`,
-            price: 100
-            nextDate: `11/4/22 14:00`
-        }
-    }) */
-    //console.log('data', responseData);
     if (!responseData) return []
+
     return responseData.map(activityRaw => {
         return {
-            activityId: activityRaw.activity_id,
+            activityId: activityRaw.activity_id ?? activityRaw.id,
             //imgSrc: activityRaw.images.length ? activityRaw.images[0] : PLACEHOLDER_ACTIVITY_IMG,
             imgSrc: activityRaw.images ? (activityRaw.images.length ? activityRaw.images[0] : PLACEHOLDER_ACTIVITY_IMG) : PLACEHOLDER_ACTIVITY_IMG,
             name: activityRaw.name,
@@ -29,6 +18,7 @@ function reshapeActivityTileData(responseData) {
         }
     })
 }
+
 function fetchRecommendedActivities(endpoint, n, callback) {
     fetchWrapper({
         endpoint: endpoint,

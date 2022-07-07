@@ -12,6 +12,7 @@ function PageSizeSelector({
 }) {
     return (
         <select
+            className="font-light bg-transparent outline-none"
             value={pageSize}
             onChange={e => {
                 setPageSize(Number(e.target.value))

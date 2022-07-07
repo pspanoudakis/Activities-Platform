@@ -68,7 +68,7 @@ export function UpcomingActivitiesPage() {
                                     name: a.name,
                                     address: a.address,
                                     date: `${a.day}, ${a.time}`,
-                                    images: [i % 2 ? PLACEHOLDER_ACTIVITY_IMG : 'https://secure.toolkitfiles.co.uk/clients/40147/siteimages/hires/c700x420.jpg']
+                                    images: a.images
                                 }}
                             />
                         )

@@ -14,7 +14,7 @@ function ReservationHeaders(headerGroup) {
                     Πάροχος
                 </th>
                 <th className='bg-cyan py-1 px-2'>
-                    Ημ. Διεξαγωγής
+                    Ημ. Κράτησης
                 </th>
                 <th className='bg-cyan py-1 px-2'>
                     Αρ. Θέσεων
@@ -37,7 +37,7 @@ function ReservationRow({row}) {
     return (
         <tr
             className='result-table-row hover:bg-light-cyan duration-200 cursor-pointer'
-            /* onClick={() => navigate(`/activities/${row.original.id}`)} */
+            onClick={() => navigate(`/activities/${row.original.activity_id}`)}
             {...row.getRowProps()}
         >
             <td>
@@ -95,7 +95,7 @@ export function ReservationResultsTable(
             accessor: 'sellerName'
         },
         {
-            Header: 'Ημ. Διεξαγωγής',
+            Header: 'Ημ. Κράτησης',
             accessor: 'reservationDate'
         },
         {

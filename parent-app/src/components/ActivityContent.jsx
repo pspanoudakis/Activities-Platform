@@ -87,6 +87,7 @@ function ActivityTimelineInfo({
 }
 
 const initialState = {
+    loaded: false,
     name: '',
     providerName: '',
     images: [],
@@ -146,7 +147,16 @@ export function ActivityContent({
         window.scrollTo(0, 0)
         fetchActivity(activityId, (response) => {
             if (response.ok) {
-                setActivityInfo(response.data)
+                setActivityInfo({
+                    ...response.data,
+                    loaded: true
+                })
+            }
+            else {
+                setActivityInfo({
+                    ...activityInfo.data,
+                    loaded: false
+                })
             }
             setLoading(false)
         })
@@ -220,103 +230,108 @@ export function ActivityContent({
             {
                 loading ?
                 <LoadingIndicator stretchParent={false}/>
-                :
-                <div className="flex flex-col gap-6 justify-center items-center">
-                    <div className="flex flex-col gap-2 items-center">
-                        <span className="font-semibold text-2xl tracking-tight">{activityInfo.name}</span>
-                        <div className="flex flex-row gap-3 flex-wrap justify-center items-center">
-                            <ActivityRatingIndicator
-                                ratingScore={activityInfo.rating}
-                                starSize="text-xl"
-                                textSize="text-md"
-                                starColor="text-yellow-500"
-                            />
-                            <button
-                                className="text-sm font-semibold bg-yellow-500 hover:bg-yellow-600 rounded-full px-4 py-1"
-                                onClick={() => {
-                                    if (context.state.userInfo) {
-                                        context.setState({
-                                            ...context.state,
-                                            showModal: true,
-                                            modalProps: {
-                                                content: <ActivityRateSelector activityId={activityId}/>
-                                            }
-                                        })
+                : (
+                    activityInfo.loaded ?
+                    <div className="flex flex-col gap-6 justify-center items-center">
+                        <div className="flex flex-col gap-2 items-center">
+                            <span className="font-semibold text-2xl tracking-tight">{activityInfo.name}</span>
+                            <div className="flex flex-row gap-3 flex-wrap justify-center items-center">
+                                <ActivityRatingIndicator
+                                    ratingScore={activityInfo.rating}
+                                    starSize="text-xl"
+                                    textSize="text-md"
+                                    starColor="text-yellow-500"
+                                />
+                                <button
+                                    className="text-sm font-semibold bg-yellow-500 hover:bg-yellow-600 rounded-full px-4 py-1"
+                                    onClick={() => {
+                                        if (context.state.userInfo) {
+                                            context.setState({
+                                                ...context.state,
+                                                showModal: true,
+                                                modalProps: {
+                                                    content: <ActivityRateSelector activityId={activityId}/>
+                                                }
+                                            })
+                                        }
+                                        else {
+                                            context.setState({
+                                                ...context.state,
+                                                showModal: true,
+                                                modalProps: {
+                                                    bgColor: 'bg-cyan',
+                                                    canScroll: true,
+                                                    content: <SignInForm/>
+                                                }
+                                            })
+                                        }
+                                    }}
+                                >
+                                    Αξιολόγησέ το
+                                </button>
+                            </div>
+                            <span className="tracking-tight">Πάροχος: {activityInfo.providerName}</span>
+                        </div>
+                        <div className="w-full flex flex-row gap-1 flex-wrap justify-center items-start">
+                            <div className="flex flex-col">
+                                <ActivityImageSelector images={activityInfo.images}/>
+                                <div className="flex flex-col flex-1 gap-2 px-7" style={{minWidth: '20rem'}}>
+                                    <span className="font-semibold">Περιγραφή/Σχόλια Παρόχου:</span>
+                                    <textarea className="rounded-xl px-4 pt-2 text-sm outline-none" rows="10" style={{resize: 'none'}} value={activityInfo.description} readOnly/>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-4 p-3">
+                                <ActivityTimelineInfo
+                                    repeated={activityInfo.repeated}
+                                    startDate={activityInfo.startDate}
+                                    endDate={activityInfo.endDate}
+                                    slots={activityInfo.slots}
+                                    dayTimes={dayTimes}
+                                />
+                                <div className="flex flex-col gap-2 justify-center items-center">
+                                    <span className="font-semibold text-lg">{activityInfo.price} πόντοι / φορά</span>
+                                    {
+                                        reservations.length > 0 ?
+                                        <button
+                                            onClick={verifyPrompt}
+                                            className="bg-green-600 text-white text-lg hover:bg-green-700 rounded-2xl py-2 px-8 whitespace-nowrap"
+                                        >
+                                            {`Αγορά για ${totalPrice} πόντους`}
+                                        </button>
+                                        :
+                                        <button
+                                            disabled
+                                            className="bg-green-600/70 text-white text-lg rounded-2xl py-2 px-8"
+                                        >
+                                            Αγορά
+                                        </button>
                                     }
-                                    else {
-                                        context.setState({
-                                            ...context.state,
-                                            showModal: true,
-                                            modalProps: {
-                                                bgColor: 'bg-cyan',
-                                                canScroll: true,
-                                                content: <SignInForm/>
-                                            }
-                                        })
-                                    }
+                                </div>
+                                <ActivityReservationSelector
+                                    id="reservation-selector"
+                                    activityInfo={activityInfo}
+                                    reservations={reservations}
+                                    updateReservations={setReservations}
+                                    quantity={quantity}
+                                    setQuantity={setQuantity}
+                                />
+                            </div>
+                        </div>
+                        <div className="w-full flex flex-col flex-1 gap-3 justify-center items-center">
+                            <ActivityLocationIndicator locationName={activityInfo.location.address} textAlign="text-start"/>
+                            <SingleMarkerMap
+                                position={{
+                                    "lat": activityInfo.location.latitude,
+                                    "lng": activityInfo.location.longitude
                                 }}
-                            >
-                                Αξιολόγησέ το
-                            </button>
-                        </div>
-                        <span className="tracking-tight">Πάροχος: {activityInfo.providerName}</span>
-                    </div>
-                    <div className="w-full flex flex-row gap-1 flex-wrap justify-center items-start">
-                        <div className="flex flex-col">
-                            <ActivityImageSelector images={activityInfo.images}/>
-                            <div className="flex flex-col flex-1 gap-2 px-7" style={{minWidth: '20rem'}}>
-                                <span className="font-semibold">Περιγραφή/Σχόλια Παρόχου:</span>
-                                <textarea className="rounded-xl px-4 pt-2 text-sm outline-none" rows="10" style={{resize: 'none'}} value={activityInfo.description} readOnly/>
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-4 p-3">
-                            <ActivityTimelineInfo
-                                repeated={activityInfo.repeated}
-                                startDate={activityInfo.startDate}
-                                endDate={activityInfo.endDate}
-                                slots={activityInfo.slots}
-                                dayTimes={dayTimes}
-                            />
-                            <div className="flex flex-col gap-2 justify-center items-center">
-                                <span className="font-semibold text-lg">{activityInfo.price} πόντοι / φορά</span>
-                                {
-                                    reservations.length > 0 ?
-                                    <button
-                                        onClick={verifyPrompt}
-                                        className="bg-green-600 text-white text-lg hover:bg-green-700 rounded-2xl py-2 px-8 whitespace-nowrap"
-                                    >
-                                        {`Αγορά για ${totalPrice} πόντους`}
-                                    </button>
-                                    :
-                                    <button
-                                        disabled
-                                        className="bg-green-600/70 text-white text-lg rounded-2xl py-2 px-8"
-                                    >
-                                        Αγορά
-                                    </button>
-                                }
-                            </div>
-                            <ActivityReservationSelector
-                                id="reservation-selector"
-                                activityInfo={activityInfo}
-                                reservations={reservations}
-                                updateReservations={setReservations}
-                                quantity={quantity}
-                                setQuantity={setQuantity}
+                                style={{width: '100%', height: '20rem'}}
                             />
                         </div>
                     </div>
-                    <div className="w-full flex flex-col flex-1 gap-3 justify-center items-center">
-                        <ActivityLocationIndicator locationName={activityInfo.location.address} textAlign="text-start"/>
-                        <SingleMarkerMap
-                            position={{
-                                "lat": activityInfo.location.latitude,
-                                "lng": activityInfo.location.longitude
-                              }}
-                            style={{width: '100%', height: '20rem'}}
-                        />
-                    </div>
-                </div>
+                    :
+                    <span className="font-light text-lg text-center">Η δραστηριότητα δεν βρέθηκε.</span>
+                )
+
             }
         </div>
     )
