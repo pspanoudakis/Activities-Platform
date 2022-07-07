@@ -1,5 +1,6 @@
 import ListItemActivity from "./ListItemActivity.js";
 import { fetchActivitiesPageData } from '../api/api.js'
+import { fetchActivities } from '../api/activitiesAPI.js'
 import { useState, useEffect } from "react"
 
 export default function ActivitiesPage() {
@@ -7,7 +8,7 @@ export default function ActivitiesPage() {
   const [activities, setActivities] = useState([])
   
   useEffect(() => {
-    fetchActivitiesPageData( (response) => {
+    fetchActivities( (response) => {
       if(response.ok){
         setActivities(response.data.activities)
       }

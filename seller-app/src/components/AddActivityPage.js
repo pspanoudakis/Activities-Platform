@@ -71,12 +71,20 @@ export default function AddActivityPage() {
   }
 
   function AddDates() {
+    if(time === '') return;
+    const days = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
+    setDateList([...Array(days).keys()].map(i => {
+      return {
+          date: i,
+          time: time,
+      }
+    }))
   }
   
   return (
     <div className='font-light'>
       {
-        loading ? 
+        loading ?
         <span>Φορτώνει...</span>
         :
         <>
@@ -209,6 +217,9 @@ export default function AddActivityPage() {
               <div className=''>Ώρα</div>
             </div>
             <div className='h-52 mt-2 overflow-y-scroll'>
+              {
+                dateList.map((dateTime, i) => <ListItemDate key={i} data={dateTime} />)
+              }
             </div>
           </div>
           <button onClick={() => sendNewActivityInfo()} className={`${canSubmit ? 'hover:bg-hover' : 'opacity-70 cursor-default'} bg-cyan w-full mt-10 rounded-full h-14 text-lg shadow`}>Καταχώρηση Δραστηριότητας</button>
