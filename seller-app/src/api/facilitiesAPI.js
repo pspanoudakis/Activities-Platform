@@ -3,7 +3,7 @@ import { fetchWrapper } from './fetchAPI.js'
 
 export function fetchFacilities(callback) {
     fetchWrapper({
-        endpoint: '/seller/facilities',
+        endpoint: 'seller/facilities',
         method: 'GET',
         omitAuthHeader: false,
         needAuth: true,
@@ -13,7 +13,7 @@ export function fetchFacilities(callback) {
 
 export function fetchFacilitiesNumber(callback) {
     fetchWrapper({
-        endpoint: '/seller/total_facilities',
+        endpoint: 'seller/total_facilities',
         method: 'GET',
         omitAuthHeader: false,
         needAuth: true,

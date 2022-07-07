@@ -8,3 +8,5 @@
    στη λίστα (με το κουμπί ΄Προσθήκη΄).
 
 5) Pagination στα FacilitiesPage, ActivitiesPage.
+
+6) Προσθήκη χάρτη στο AddFacilityPage.

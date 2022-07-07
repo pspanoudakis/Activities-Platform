@@ -9,7 +9,6 @@ export default function RegisterPage({registerCallback, goToForm}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [verifyPwd, setVerifyPwd] = useState('')
-
   const [loading, setLoading] = useState(false)
 
   const usernameOk = useMemo(() => {

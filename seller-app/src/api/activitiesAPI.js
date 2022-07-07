@@ -2,7 +2,7 @@ import { fetchWrapper } from './fetchAPI.js'
 
 export function createNewActivity(newInfo, callback) {
     fetchWrapper({
-        endpoint: `/seller/new_activity`,
+        endpoint: `seller/new_activity`,
         method: 'POST',
         body: newInfo,
         omitAuthHeader: false,
@@ -13,7 +13,7 @@ export function createNewActivity(newInfo, callback) {
 
 export function fetchActivities(callback) {
     fetchWrapper({
-        endpoint: '/seller/activities',
+        endpoint: 'seller/activities',
         method: 'GET',
         omitAuthHeader: false,
         needAuth: true,
@@ -23,7 +23,7 @@ export function fetchActivities(callback) {
 
 export function fetchActivityInfo(id, callback) {
     fetchWrapper({
-        endpoint: `/seller/activity_details/${id}`,
+        endpoint: `seller/activity_details/${id}`,
         method: 'GET',
         omitAuthHeader: false,
         needAuth: true,

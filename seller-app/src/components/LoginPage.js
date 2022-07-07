@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FormInputField } from "../shared/FormUtils";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
@@ -11,6 +11,8 @@ export default function LoginPage({loginCallback, goToForm}) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState('')
+
+  const canLogin = useMemo(() => username.length > 0 && password.length > 0, [username, password])
 
   function submitForm(e) {
     e.preventDefault()
@@ -70,6 +72,7 @@ export default function LoginPage({loginCallback, goToForm}) {
               bg-cyan
               hover:bg-blue-200
             "
+            disabled={!canLogin}
           >
               Σύνδεση
           </button>

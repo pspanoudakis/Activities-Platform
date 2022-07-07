@@ -1,7 +1,6 @@
 import ListItemDate from "./ListItemDate.js";
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import { dateText, dateTimeText, DAY_NAMES, equalDates } from "../shared/dates.js";
 import "react-datepicker/dist/react-datepicker.css";
 import { sendActivityData } from '../api/api.js'
 import { useNavigate } from 'react-router-dom';
