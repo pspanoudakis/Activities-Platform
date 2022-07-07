@@ -1,4 +1,4 @@
-import { PLACEHOLDER_ACTIVITY_IMG } from "../utils/placeholders"
+import { PLACEHOLDER_ACTIVITY_IMG } from "../shared/placeholders"
 import { roundRating } from "../utils/ratings"
 import { APIResponse, fetchWrapper, RESPONSE_STATUS } from "./fetchAPI"
 

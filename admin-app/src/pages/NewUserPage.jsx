@@ -46,7 +46,7 @@ export function NewUserPage() {
             },
             response => {
                 // Maybe navigate to New User page here
-                response.ok && navigate("/")
+                response.ok && navigate(`/users/${uname}`)
                 context.setState({
                     ...context.state,
                     showModal: true,

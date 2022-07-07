@@ -7,7 +7,7 @@ import { Navbar } from './components/Navbar';
 import { useEffect } from 'react';
 import { jwtIsStored } from './api/jwt';
 import { LoadingIndicator } from './shared/LoadingIndicator';
-import { Footer } from './shared/Footer';
+import { Footer } from './components/Footer';
 import { loginWithJwt } from './api/loginAPI';
 
 function App() {

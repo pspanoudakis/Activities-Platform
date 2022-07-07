@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from 'react-router-dom'
-import { ContentTile } from "../shared/ContentTile";
+import { ContentTile } from "./ContentTile";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
-import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
-import { PLACEHOLDER_ACTIVITY_IMG } from "../utils/placeholders";
+import { ActivityLocationIndicator } from "../shared/ActivityLocationIndicator";
+import { PLACEHOLDER_ACTIVITY_IMG } from "../shared/placeholders";
 import { useHasMaxWidth } from "../shared/useHasMaxWidth";
 import { MD_PXLIMIT, SM_PXLIMIT } from "../utils/deviceConstants";
 

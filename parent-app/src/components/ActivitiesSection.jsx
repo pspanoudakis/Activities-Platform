@@ -4,7 +4,7 @@ import { useHasMaxWidth } from "../shared/useHasMaxWidth";
 
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { SectionTitle } from "../shared/SectionTitle";
-import { SwitchPageSideButton } from "./SwitchPageSideButton";
+import { SwitchPageSideButton } from "../shared/SwitchPageSideButton";
 
 const TOTAL_ACTIVITIES = 12
 const PAGE_SIZE = 3

@@ -5,7 +5,7 @@ import { loginWithJwt } from './api/loginAPI';
 
 import { AppContext } from './AppContext';
 import { LoadingIndicator } from './shared/LoadingIndicator';
-import { Modal } from './components/Modal';
+import { Modal } from './shared/Modal';
 import { Navbar } from './components/Navbar';
 import { SignInForm } from './components/SignInForm';
 

@@ -7,7 +7,7 @@ import { SearchFiltersWrapper } from "../components/SearchFiltersWrapper";
 import { useHasMaxWidth } from "../shared/useHasMaxWidth";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { MD_PXLIMIT } from "../utils/deviceConstants";
-import { defaultHomePosition } from "../utils/placeholders";
+import { defaultHomePosition } from "../shared/placeholders";
 
 /**
  * @typedef {object} FilterOptions

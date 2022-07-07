@@ -6,7 +6,6 @@ import { SectionTitle } from "../shared/SectionTitle";
 import { PageSelector } from "../shared/PaginatedTable";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { UpcomingActivityResultTile } from "../components/UpcomingActivityResultTile";
-import { PLACEHOLDER_ACTIVITY_IMG } from "../utils/placeholders";
 
 const PAGE_SIZE = 4
 export function UpcomingActivitiesPage() {

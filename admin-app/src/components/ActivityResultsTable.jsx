@@ -27,8 +27,9 @@ function ActivityRow({
         <tr
             className='result-table-row hover:bg-light-cyan duration-200'
             style={{cursor: 'pointer'}}
-            onClick={() => navigate(`/pendingActivities/${row.original.id}`)}
-            {...row.getRowProps()}>
+            onClick={() => navigate(`/pendingActivities/${row.original.activity_id}`)}
+            {...row.getRowProps()}
+        >
             <td>
                 <div className='font-medium'>
                     {row.original.name}

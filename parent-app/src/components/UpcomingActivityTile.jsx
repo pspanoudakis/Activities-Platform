@@ -1,6 +1,5 @@
 import React from "react";
 import { ActivityDateIndicator } from "./ActivityDateIndicator";
-import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
 import { ActivityTile } from "./ActivityTile";
 
 export function UpcomingActivityTile({

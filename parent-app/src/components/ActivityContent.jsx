@@ -3,14 +3,14 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from '../AppContext'
 import { dateText, dateTimeText, DAY_NAMES } from "../utils/dates";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
-import { ActivityLocationIndicator } from "./ActivityLocationIndicator";
+import { ActivityLocationIndicator } from "../shared/ActivityLocationIndicator";
 import { ActivityRatingIndicator } from "./ActivityRatingIndicator";
 import { ActivityReservationSelector } from "./ActivityReservationSelector";
 import { ActivityRateSelector } from "./ActivityRateSelector";
-import { ActivityImageSelector } from "./ActivityImageSelector";
+import { ActivityImageSelector } from "../shared/ActivityImageSelector";
 import { ModalVerifyPrompt } from "../shared/ModalVerifyPrompt";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
-import { SingleMarkerMap } from "./Maps";
+import { SingleMarkerMap } from "../shared/Maps";
 import { fetchActivity, fetchBookReservations } from "../api/activityAPI";
 import { SignInForm } from "./SignInForm";
 
