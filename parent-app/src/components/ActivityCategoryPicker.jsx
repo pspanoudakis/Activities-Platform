@@ -73,7 +73,8 @@ export function ActivityCategoryPicker() {
     }
 
     function categorySelected(categoryName) {
-        if (categories[categoryName] && categories[categoryName].children) {
+        if (categories[categoryName] && Object.keys(categories[categoryName].children).length) {
+            //console.log(categories[categoryName].children);
             setSelectedCategory(categoryName)
         }
         else {

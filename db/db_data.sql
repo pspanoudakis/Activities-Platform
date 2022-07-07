@@ -738,12 +738,15 @@ ALTER TABLE ONLY public.sellers ALTER COLUMN id SET DEFAULT nextval('public.sell
 -- Data for Name: activities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.activities VALUES (1, 'activity1', 1, 1, 1, 'This is the 1st activity', 10, true, false);
-INSERT INTO public.activities VALUES (3, 'activity3', 3, 3, 3, 'This is the 3rd activity', 10, true, false);
-INSERT INTO public.activities VALUES (2, 'activity2', 2, 2, 2, 'This is the 2nd activity', 50, true, false);
-INSERT INTO public.activities VALUES (4, 'activity4', 4, 1, 4, 'This is the 4th activity', 200, true, false);
-INSERT INTO public.activities VALUES (6, 'activity6', 6, 3, 2, 'This is the 6th activity', 500, true, false);
-INSERT INTO public.activities VALUES (5, 'activity5', 5, 2, 1, 'This is the 5th activity', 5, true, false);
+INSERT INTO public.activities VALUES (1, 'Μπάσκετ 3x3 (για Παιδιά)', 6, 1, 2, 'This is the 1st activity', 10, true, false);
+INSERT INTO public.activities VALUES (2, 'Μαθήματα Τένις', 7, 2, 2, 'This is the 2nd activity', 50, true, false);
+INSERT INTO public.activities VALUES (3, 'Ποδόσφαιρο 5x5', 5, 3, 1, 'This is the 3rd activity', 10, true, false);
+INSERT INTO public.activities VALUES (4, 'Ωδείο', 8, 3, 4, 'This is the 4th activity', 200, true, false);
+INSERT INTO public.activities VALUES (5, 'Μαθήματα Υποκριτικής', 9, 3, 4, 'This is the 5th activity', 5, true, false);
+INSERT INTO public.activities VALUES (6, 'Ρομποτική', 4, 2, 5, 'This is the 6th activity', 120, true, false);
+INSERT INTO public.activities VALUES (7, 'Εκδρομές στο Βουνό', 3, 2, 1, 'This is the 7th activity', 400, true, true);
+INSERT INTO public.activities VALUES (8, 'Προγραμματισμός για Εφήβους', 4, 3, 5, 'This is the 8th activity', 250, true, false);
+INSERT INTO public.activities VALUES (9, 'Μπάσκετ 3x3 (για Εφήβους)', 6, 3, 2, 'This is the 1st activity', 10, true, false);
 
 
 --
@@ -752,12 +755,22 @@ INSERT INTO public.activities VALUES (5, 'activity5', 5, 2, 1, 'This is the 5th 
 -- Data for Name: activity_at_day; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.activity_at_day VALUES (1, 1, '2022-07-01', '10:00', 93);
-INSERT INTO public.activity_at_day VALUES (4, 1, '2022-07-04', '10:00', 100);
-INSERT INTO public.activity_at_day VALUES (27, 5, '2022-07-08', '10:00', 100);
-INSERT INTO public.activity_at_day VALUES (14, 3, '2022-07-04', '10:00', 100);
-INSERT INTO public.activity_at_day VALUES (15, 3, '2022-07-05', '10:00', 100);
-INSERT INTO public.activity_at_day VALUES (16, 3, '2022-07-06', '10:00', 100);
+INSERT INTO public.activity_at_day VALUES (1, 1, '2022-07-11', '10:00', 93);
+INSERT INTO public.activity_at_day VALUES (2, 1, '2022-07-12', '10:00', 75);
+INSERT INTO public.activity_at_day VALUES (3, 1, '2022-07-13', '10:00', 94);
+INSERT INTO public.activity_at_day VALUES (4, 1, '2022-07-14', '10:00', 100);
+INSERT INTO public.activity_at_day VALUES (5, 1, '2022-07-15', '10:00', 98);
+INSERT INTO public.activity_at_day VALUES (6, 2, '2022-07-11', '10:00', 98);
+INSERT INTO public.activity_at_day VALUES (7, 2, '2022-07-13', '10:00', 98);
+INSERT INTO public.activity_at_day VALUES (8, 2, '2022-07-15', '10:00', 99);
+INSERT INTO public.activity_at_day VALUES (9, 2, '2022-07-17', '10:00', 99);
+INSERT INTO public.activity_at_day VALUES (10, 2, '2022-07-19', '10:00', 98);
+INSERT INTO public.activity_at_day VALUES (11, 3, '2022-07-11', '10:00', 99);
+INSERT INTO public.activity_at_day VALUES (12, 3, '2022-07-12', '10:00', 99);
+INSERT INTO public.activity_at_day VALUES (13, 3, '2022-07-13', '10:00', 90);
+INSERT INTO public.activity_at_day VALUES (14, 3, '2022-07-14', '10:00', 100);
+INSERT INTO public.activity_at_day VALUES (15, 3, '2022-07-15', '10:00', 100);
+INSERT INTO public.activity_at_day VALUES (16, 3, '2022-07-16', '10:00', 100);
 INSERT INTO public.activity_at_day VALUES (17, 4, '2022-07-10', '10:00', 100);
 INSERT INTO public.activity_at_day VALUES (18, 4, '2022-07-10', '11:00', 100);
 INSERT INTO public.activity_at_day VALUES (19, 4, '2022-07-10', '12:00', 100);
@@ -768,20 +781,22 @@ INSERT INTO public.activity_at_day VALUES (23, 4, '2022-07-11', '11:00', 100);
 INSERT INTO public.activity_at_day VALUES (24, 4, '2022-07-11', '12:00', 100);
 INSERT INTO public.activity_at_day VALUES (25, 4, '2022-07-11', '13:00', 100);
 INSERT INTO public.activity_at_day VALUES (26, 4, '2022-07-11', '14:00', 100);
-INSERT INTO public.activity_at_day VALUES (28, 6, '2022-07-05', '10:00', 100);
-INSERT INTO public.activity_at_day VALUES (29, 6, '2022-07-05', '11:00', 100);
-INSERT INTO public.activity_at_day VALUES (5, 1, '2022-07-05', '10:00', 98);
-INSERT INTO public.activity_at_day VALUES (6, 2, '2022-07-01', '10:00', 98);
-INSERT INTO public.activity_at_day VALUES (7, 2, '2022-07-03', '10:00', 98);
-INSERT INTO public.activity_at_day VALUES (8, 2, '2022-07-05', '10:00', 99);
-INSERT INTO public.activity_at_day VALUES (9, 2, '2022-07-07', '10:00', 99);
-INSERT INTO public.activity_at_day VALUES (10, 2, '2022-07-09', '10:00', 98);
-INSERT INTO public.activity_at_day VALUES (11, 3, '2022-07-01', '10:00', 99);
-INSERT INTO public.activity_at_day VALUES (12, 3, '2022-07-02', '10:00', 99);
-INSERT INTO public.activity_at_day VALUES (13, 3, '2022-07-03', '10:00', 90);
-INSERT INTO public.activity_at_day VALUES (3, 1, '2022-07-03', '10:00', 94);
-INSERT INTO public.activity_at_day VALUES (2, 1, '2022-07-02', '10:00', 75);
-INSERT INTO public.activity_at_day VALUES (30, 6, '2022-07-05', '12:00', 99);
+INSERT INTO public.activity_at_day VALUES (27, 5, '2022-08-08', '10:00', 100);
+INSERT INTO public.activity_at_day VALUES (28, 6, '2022-08-15', '10:00', 100);
+INSERT INTO public.activity_at_day VALUES (29, 6, '2022-08-15', '11:00', 100);
+INSERT INTO public.activity_at_day VALUES (30, 6, '2022-08-15', '12:00', 99);
+INSERT INTO public.activity_at_day VALUES (31, 6, '2022-08-01', '12:00', 99);
+INSERT INTO public.activity_at_day VALUES (32, 7, '2022-08-10', '12:00', 40);
+INSERT INTO public.activity_at_day VALUES (33, 7, '2022-08-17', '12:00', 40);
+INSERT INTO public.activity_at_day VALUES (34, 7, '2022-08-24', '12:00', 40);
+INSERT INTO public.activity_at_day VALUES (35, 8, '2022-08-10', '12:00', 40);
+INSERT INTO public.activity_at_day VALUES (36, 8, '2022-08-17', '12:00', 40);
+INSERT INTO public.activity_at_day VALUES (37, 8, '2022-08-24', '12:00', 40);
+INSERT INTO public.activity_at_day VALUES (38, 9, '2022-07-11', '10:00', 93);
+INSERT INTO public.activity_at_day VALUES (39, 9, '2022-07-12', '10:00', 75);
+INSERT INTO public.activity_at_day VALUES (40, 9, '2022-07-13', '10:00', 94);
+INSERT INTO public.activity_at_day VALUES (41, 9, '2022-07-14', '10:00', 100);
+INSERT INTO public.activity_at_day VALUES (42, 9, '2022-07-15', '10:00', 98);
 
 
 --
@@ -790,8 +805,21 @@ INSERT INTO public.activity_at_day VALUES (30, 6, '2022-07-05', '12:00', 99);
 -- Data for Name: activity_has_photo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.activity_has_photo VALUES (1, 'test.com', 1);
-INSERT INTO public.activity_has_photo VALUES (2, 'test2.com', 1);
+INSERT INTO public.activity_has_photo VALUES (1, 'https://media.istockphoto.com/photos/kids-in-bright-sportswear-playing-basketball-and-running-after-the-picture-id1271183777?k=20&m=1271183777&s=170667a&w=0&h=aTCdABFyVoZ8ROkHaQSXDD9giFjB4rQ5bAD-LaukgX4=', 1);
+INSERT INTO public.activity_has_photo VALUES (2, 'https://team.fastmodelsports.com/wp-content/uploads/2021/10/istockphoto-1029062064-170667a.jpeg', 1);
+INSERT INTO public.activity_has_photo VALUES (3, 'https://www.sbsun.com/wp-content/uploads/2019/06/SBS-L-HOOPSCAMP-0626-01JM1-1.jpg?w=519', 1);
+INSERT INTO public.activity_has_photo VALUES (4, 'https://images.squarespace-cdn.com/content/v1/542e007be4b08e60716458a7/1586087778278-KQ4TF2PPLCCGP1259VQ7/polmans+fh.jpeg?format=2500w', 2);
+INSERT INTO public.activity_has_photo VALUES (5, 'https://media.istockphoto.com/photos/senior-and-mature-adults-practising-tennis-picture-id141467773?k=20&m=141467773&s=612x612&w=0&h=AcWOx09vzwQtQ9460dEaK_ZV0wLFWJCfulR_pLqeRpA=', 2);
+INSERT INTO public.activity_has_photo VALUES (6, 'https://secure.toolkitfiles.co.uk/clients/40147/siteimages/hires/c700x420.jpg', 3);
+INSERT INTO public.activity_has_photo VALUES (7, 'https://cloudfront-us-east-1.images.arcpublishing.com/gray/LQS3TMAUGBI5BMF55NUDVXW66M.jpg', 3);
+INSERT INTO public.activity_has_photo VALUES (8, 'https://montessori150.org/sites/default/files/images/participate/singing.jpg', 4);
+INSERT INTO public.activity_has_photo VALUES (9, 'https://d26oc3sg82pgk3.cloudfront.net/files/media/edit/image/11436/article_full%403x.jpg', 5);
+INSERT INTO public.activity_has_photo VALUES (10, 'https://itsmybot.com/wp-content/uploads/2021/10/children-making-robot-1-1024x683.jpg', 6);
+INSERT INTO public.activity_has_photo VALUES (11, 'https://media.istockphoto.com/photos/boy-looking-at-mountains-picture-id606229312?k=20&m=606229312&s=612x612&w=0&h=yKl-TJ4v3Uyi_OTNKKTmFWATyEvIhwb7uRpebFIZtBI=', 7);
+INSERT INTO public.activity_has_photo VALUES (12, 'https://www.codingem.com/wp-content/uploads/2021/10/juanjo-jaramillo-mZnx9429i94-unsplash-scaled.jpg', 8);
+INSERT INTO public.activity_has_photo VALUES (13, 'https://media.istockphoto.com/photos/kids-in-bright-sportswear-playing-basketball-and-running-after-the-picture-id1271183777?k=20&m=1271183777&s=170667a&w=0&h=aTCdABFyVoZ8ROkHaQSXDD9giFjB4rQ5bAD-LaukgX4=', 9);
+INSERT INTO public.activity_has_photo VALUES (14, 'https://team.fastmodelsports.com/wp-content/uploads/2021/10/istockphoto-1029062064-170667a.jpeg', 9);
+INSERT INTO public.activity_has_photo VALUES (15, 'https://www.sbsun.com/wp-content/uploads/2019/06/SBS-L-HOOPSCAMP-0626-01JM1-1.jpg?w=519', 9);
 
 
 --
@@ -848,12 +876,15 @@ INSERT INTO public.bank_cards VALUES (8, 2, '0000111122223333', '01/25', '100', 
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.categories VALUES (3, 1, 'category1_level2', 'image3');
-INSERT INTO public.categories VALUES (4, 2, 'category2_level2', 'image4');
-INSERT INTO public.categories VALUES (1, NULL, 'category1_level1', 'image1');
-INSERT INTO public.categories VALUES (2, NULL, 'category2_level1', 'image2');
-INSERT INTO public.categories VALUES (5, 3, 'category1_level3', 'image5');
-INSERT INTO public.categories VALUES (6, 4, 'category2_level3', 'image6');
+INSERT INTO public.categories VALUES (1, NULL, 'Αθλήματα', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Football_iu_1996.jpg/1200px-Football_iu_1996.jpg');
+INSERT INTO public.categories VALUES (2, NULL, 'Τέχνες', 'https://media.istockphoto.com/photos/fine-art-school-artist-mix-acrylic-paint-palette-picture-id1159292218?k=20&m=1159292218&s=612x612&w=0&h=B1H7OUHFcewigd3U8nkMBzYUDmTdDPSoz3rQSsn-MBg=');
+INSERT INTO public.categories VALUES (3, NULL, 'Εκδρομές/Φύση', 'https://pbs.twimg.com/profile_images/610732952951984129/uHTVI8n4_400x400.jpg');
+INSERT INTO public.categories VALUES (4, NULL, 'Τεχνολογία', 'https://in2english.net/wp-content/uploads/2018/12/compute-programmer.jpg');
+INSERT INTO public.categories VALUES (5, 1, 'Ποδόσφαιρο', 'https://cdn.pixabay.com/photo/2016/05/16/21/07/football-1396740__340.jpg');
+INSERT INTO public.categories VALUES (6, 1, 'Μπάσκετ', 'https://i.pinimg.com/550x/1a/60/c4/1a60c4df16f16305e58a62316650849d.jpg');
+INSERT INTO public.categories VALUES (7, 1, 'Τένις', 'https://cdn.pixabay.com/photo/2020/11/27/18/59/tennis-5782695__340.jpg');
+INSERT INTO public.categories VALUES (8, 2, 'Μουσική', 'https://www.ibanez.com/common/product_artist_file/file/pm_thum_hb_ag_en.jpg');
+INSERT INTO public.categories VALUES (9, 2, 'Θέατρο', 'https://media.istockphoto.com/photos/empty-red-armchairs-of-a-theater-ready-for-a-show-picture-id1295114854?b=1&k=20&m=1295114854&s=170667a&w=0&h=W9ZbN674554Jsamxo5AfoO3DrSm_7qYS1EnANgusi9o=');
 
 
 --
@@ -862,11 +893,16 @@ INSERT INTO public.categories VALUES (6, 4, 'category2_level3', 'image6');
 -- Data for Name: evaluations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.evaluations VALUES (1, 1, 1, 1, 'Very Bad');
-INSERT INTO public.evaluations VALUES (2, 2, 1, 5, 'Perfect');
+INSERT INTO public.evaluations VALUES (1, 1, 1, 1, 'Βαρέθηκα...');
+INSERT INTO public.evaluations VALUES (2, 2, 1, 5, 'Τέλειο!!!');
 INSERT INTO public.evaluations VALUES (3, 3, 1, 5, NULL);
-INSERT INTO public.evaluations VALUES (4, 4, 4, 1, 'It was raining that day :(');
+INSERT INTO public.evaluations VALUES (4, 4, 4, 3, 'Καλό...');
 INSERT INTO public.evaluations VALUES (5, 2, 2, 2, NULL);
+INSERT INTO public.evaluations VALUES (6, 6, 4, 2, 'Μέτριο...');
+INSERT INTO public.evaluations VALUES (7, 7, 4, 4, 'Πολύ καλό!');
+INSERT INTO public.evaluations VALUES (8, 8, 4, 5, 'Εξαιρετικό!');
+INSERT INTO public.evaluations VALUES (9, 9, 4, 1, '...');
+INSERT INTO public.evaluations VALUES (10, 5, 4, 3, 'Αρκετά Καλό...');
 
 
 --
@@ -875,10 +911,11 @@ INSERT INTO public.evaluations VALUES (5, 2, 2, 2, NULL);
 -- Data for Name: facilities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.facilities VALUES (3, 3, 'facility3', 'address3', 'district3', 10.3, 10.3, false);
-INSERT INTO public.facilities VALUES (4, 4, 'facility4', 'address4', 'district4', 10.4, 10.4, false);
-INSERT INTO public.facilities VALUES (2, 1, 'facility2', 'address2', 'district2', 10.2, 10.2, false);
-INSERT INTO public.facilities VALUES (1, 1, 'facility1', 'address1', 'district1', 10.1, 10.1, false);
+INSERT INTO public.facilities VALUES (1, 1, 'facility1', 'Ανθέων 23-21, Άγιος Παύλος', 'Θεσσαλονίκη', 22.966280, 40.643985, false);
+INSERT INTO public.facilities VALUES (2, 1, 'facility2', 'Ζωοδόχου Πηγής 31, Βόλος', 'Βόλος', 22.965677, 39.360016, false);
+INSERT INTO public.facilities VALUES (3, 3, 'facility3', 'Δηλιγιάννης 77-71, Κηφισιά', 'Αθήνα', 23.823257, 38.075090, false);
+INSERT INTO public.facilities VALUES (4, 4, 'facility4', 'Κατσαντώνη 4, Λαμία', 'Λαμία', 22.437117, 38.897589, false);
+INSERT INTO public.facilities VALUES (5, 4, 'facility5', 'Δραγάτση 10, Πειραιάς', 'Πειραιάς', 23.646897, 37.942180, false);
 
 
 --

@@ -15,7 +15,7 @@ import { fetchActivity, fetchBookReservations } from "../api/activityAPI";
 import { SignInForm } from "./SignInForm";
 
 function sameDateTimes(d1, d2) {
-    return d1.getHours() === d2.getHours && d1.getMinutes() === d1.getMinutes
+    return d1.getHours() === d2.getHours() && d1.getMinutes() === d2.getMinutes()
 }
 
 function RepeatedActivityTimeline(dayTimes) {
