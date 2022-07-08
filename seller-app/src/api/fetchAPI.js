@@ -31,11 +31,11 @@ export function fetchWrapper({endpoint, method, body, needAuth, omitAuthHeader, 
                     'Content-Type': 'application/json',
                     'Authorization': omitAuthHeader ? '' : `Bearer ${getJwt()}`
                 },
-                body: method === 'POST' ? JSON.stringify(body) : undefined
+                body: (method === 'POST' || method === 'PUT') ? JSON.stringify(body) : undefined
             }
         )
         .then(response => {
-            //console.log(response);
+            console.log(response);
             if (response.ok) {
                 response.json().then(rjson => {
                     callback({

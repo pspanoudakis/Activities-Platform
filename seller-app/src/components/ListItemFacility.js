@@ -10,10 +10,10 @@ const ListItemFacility = ({clicked, data}) => {
       </div>
       <div className='mt-4'>
         <div className='float-left'>Οδός:</div>
-        <div className='float-left ml-1 font-light'>{data.street}</div><br/>
+        <div className='float-left ml-1 font-light'>{data.address}</div><br/>
         <div className='float-left'>Περιοχή:</div>
-        <div className='float-left ml-1 font-light'>{data.location}</div>
-        <div className='float-right ml-1 text-lg font-light'>{data.activityCount}</div>
+        <div className='float-left ml-1 font-light'>{data.district}</div>
+        <div className='float-right ml-1 text-lg font-light'>{data.activity_count}</div>
         <div className='float-right text-lg'>Δραστηριότητες:</div>
       </div>
     </button>

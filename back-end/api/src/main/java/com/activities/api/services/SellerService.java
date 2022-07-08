@@ -73,7 +73,7 @@ public class SellerService {
                     acc.setAccount_number(account.getAccountNumber());
                     acc.setId(account.getId());
                     acc.setIban(account.getIban());
-                    acc.setOwner_name(acc.getOwner_name());
+                    acc.setOwner_name(account.getOwnerName());
                     return acc;
                 }
         ).collect(Collectors.toList());

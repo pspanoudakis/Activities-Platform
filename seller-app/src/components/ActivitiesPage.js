@@ -1,22 +1,26 @@
 import ListItemActivity from "./ListItemActivity.js";
-import { fetchActivitiesPageData } from '../api/api.js'
 import { fetchActivities } from '../api/activitiesAPI.js'
 import { useState, useEffect } from "react"
 
 export default function ActivitiesPage() {
   const [loading, setLoading] = useState(true)
   const [activities, setActivities] = useState([])
-  
-  useEffect(() => {
+
+
+  function getActivities() {
     fetchActivities( (response) => {
       if(response.ok){
-        setActivities(response.data.activities)
+        setActivities(response.data)
       }
       else{
-        console.log('failed to fetch data');
+        alert('Αποτυχία κατα την εκτέλεση');
       }
       setLoading(false)
     })
+  }
+
+  useEffect(() => {
+    getActivities()
   }, [])
 
   return (

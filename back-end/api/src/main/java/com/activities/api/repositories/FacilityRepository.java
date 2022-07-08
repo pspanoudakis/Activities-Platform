@@ -14,7 +14,6 @@ public interface FacilityRepository extends JpaRepository<Facility, Integer>{
     List<Facility> findByDistrict(String district);
     List<Facility> findBySeller(Seller seller);
 
-
     @Query("SELECT DISTINCT(fac.district) FROM Facility fac")
     List<String> getDistricts();
 }

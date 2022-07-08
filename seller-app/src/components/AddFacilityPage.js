@@ -24,11 +24,11 @@ export default function AddFacilityPage() {
     createNewFacility(
     {
       name: name,
-      street: street,
-      location: location,
-      lat: facilityPosition.lat,
-      lng: facilityPosition.lng
-    })
+      address: street,
+      district: location,
+      longitude: facilityPosition.lng,
+      latitude: facilityPosition.lat
+    },null)
   }
 
   return (

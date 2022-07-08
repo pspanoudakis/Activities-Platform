@@ -31,3 +31,14 @@ export function createNewFacility(newInfo, callback) {
         callback
     })
 }
+
+export function updateFacility(updatedData,id,callback) {
+    fetchWrapper({
+        endpoint: `seller/facility/${id}`,
+        method: 'PUT',
+        body: updatedData,
+        omitAuthHeader: false,
+        needAuth: true,
+        callback
+    })
+}

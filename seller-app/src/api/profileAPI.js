@@ -43,11 +43,36 @@ export function updateSellerProfile(newInfo, callback) {
 
 export function redeemSellerPoints(amount, callback) {
     fetchWrapper({
-        endpoint: `seller/redeed_points?points=${amount}`,
+        endpoint: `seller/redeem_points?points=${amount}`,
         method: 'POST',
         body: '',
         omitAuthHeader: false,
         needAuth: true,
         callback
     })
+}
+
+export function addBankAccount(data,callback) {
+    fetchWrapper({
+        endpoint: "seller/new_bank_account",
+        method: 'POST',
+        body:data,
+        omitAuthHeader: false,
+        needAuth: true,
+        callback
+    })
+}
+
+export function removeAccount(id,callback) {
+    fetchWrapper(
+        {
+            endpoint: `seller/delete_bank_account/${id}`,
+            method: 'DELETE',
+            body:'',
+            omitAuthHeader: false,
+            needAuth: true,
+            callback
+        }
+
+    )
 }

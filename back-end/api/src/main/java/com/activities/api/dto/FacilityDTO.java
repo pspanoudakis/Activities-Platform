@@ -16,6 +16,8 @@ public class FacilityDTO {
     private Double longitude;
     private Double latitude;
 
+    private int activity_count;
+
 
     public void setFromEntity(Facility facility) {
         this.id = facility.getId();

@@ -31,7 +31,8 @@ export default function ActionBar() {
   }
 
   function logout(){
-    alert('Logged out')
+    localStorage.clear()
+    window.location.reload(false)
   }
 
   return (

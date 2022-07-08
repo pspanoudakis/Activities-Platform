@@ -148,7 +148,7 @@ public class SellerController {
     }
 
     @PutMapping("facility/{facility_id}")
-    public ResponseEntity<FacilityDTO> editFacility(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int facility_id, @RequestBody Facility updatedFacility){
+    public ResponseEntity<?> editFacility(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@PathVariable int facility_id, @RequestBody Facility updatedFacility){
         Seller seller;
         try{
             seller = sellerService.getSellerFromToken(token);
@@ -163,9 +163,9 @@ public class SellerController {
 
         if(!facilityService.isOwnedBySeller(seller,facility_id))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("error","this seller is not the owner of the requested facility").body(null);
-        updatedFacility.setId(facility_id);
-        updatedFacility.setSeller(seller);
-        return ResponseEntity.ok().body(facilityService.saveOrUpdateFacility(updatedFacility));
+
+        facilityService.update(updatedFacility,facility_id);
+        return ResponseEntity.ok().body(null);
         
     }
 

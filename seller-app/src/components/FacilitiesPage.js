@@ -1,30 +1,46 @@
 import ListItemFacility from "./ListItemFacility";
-import { fetchFacilitiesPageData } from '../api/api.js'
 import { useState, useEffect } from "react"
 import FacilityPage from './FacilityPage.js';
 import { Modal } from '../shared/Modal.js';
+import {fetchFacilities} from "../api/facilitiesAPI";
 
 export default function FacilitiesPage() {
   const [loading, setLoading] = useState(true)
   const [facilities, setFacilities] = useState([])
   const [showFacility, setShowFacility] = useState(false)
   const [facilityData, setFacilityData] = useState(null)
-  
-  useEffect(() => {
-    fetchFacilitiesPageData( (response) => {
+
+
+  function getFacilities() {
+    fetchFacilities( (response) => {
       if(response.ok){
-        setFacilities(response.data.facilities)
+        setFacilities(response.data)
       }
       else{
-        console.log('failed to fetch data');
+        alert('Αποτυχία κατα την εκτέλεση');
       }
       setLoading(false)
     })
+  }
+  useEffect(() => {
+    getFacilities()
   }, [])
 
   function facilityClicked(data){
     setFacilityData(data)
     setShowFacility(true)
+  }
+
+  function onUpdate(){
+    fetchFacilities( (response) => {
+      if(response.ok){
+        setFacilities(response.data)
+      }
+      else{
+        alert('Αποτυχία κατα την εκτέλεση');
+      }
+      setLoading(false)
+    })
   }
 
   return (
@@ -42,7 +58,7 @@ export default function FacilitiesPage() {
           {
             facilities.map((activity, i) => <ListItemFacility key={i} clicked={() => facilityClicked(activity)} data={activity} />)
           }
-          <Modal show={showFacility} children={<FacilityPage data={facilityData} cancel={() => setShowFacility(false)}/>} color='bg-background' closeCallback={() => setShowFacility(false)}/>
+          <Modal show={showFacility} children={<FacilityPage data={facilityData} cancel={() => setShowFacility(false)} update={onUpdate}/>} color='bg-background' closeCallback={() => setShowFacility(false)}/>
         </>
       }
     </div>

@@ -27,7 +27,9 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     public Optional<Activity> findByIdAndApprovedFalse(int id);
     public Page<Activity> findAllByApprovedFalse(Pageable page);
     public Page<Activity> findAllByApprovedTrue(Pageable page);
-    
+    @Query("SELECT COUNT(act) FROM Activity act INNER JOIN act.facility fac WHERE fac.id = ?1 ")
+    public int findTotalInFacility(int id);
+
     @Query("SELECT act FROM Reservation res INNER JOIN res.activityAtDay aad INNER JOIN aad.activity act WHERE act.approved = true GROUP BY act.id ORDER BY SUM(res.number) DESC")
     public List<Activity> getActivitiesSortedByReservations();
 

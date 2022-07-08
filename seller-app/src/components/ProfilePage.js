@@ -2,14 +2,12 @@ import ListItemBankAccount from './ListItemBankAccount.js';
 import AddAccount from './AddAccount.js';
 import { BsArrowRight } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
-import { fetchSellerInfo, updateSellerProfile, redeemSellerPoints } from '../api/profileAPI.js';
-import { fetchProfilePageData, sendAddedAccount, sendSelectedAccount, sendRemovedAccountIdx } from '../api/api.js';
+import { fetchSellerInfo, updateSellerProfile, redeemSellerPoints, fetchSellerBalance,fetchSellerBankAccounts,removeAccount} from '../api/profileAPI.js';
 import { Modal } from '../shared/Modal.js';
-import Prompt from './Prompt.js';
 import { isNumberKey } from '../shared/ValidInput.js';
 
 export default function ProfilePage() {
-  const [data, setData] = useState(null)
+  const [points, setPoints] = useState(null)
   const [loading, setLoading] = useState(true)
   const [canEdit, setCanEdit] = useState(false)
   const [username, setUsername] = useState('')
@@ -19,30 +17,47 @@ export default function ProfilePage() {
   const [accounts, setAccounts] = useState([])
   const [selectedAccount, setSelectedAccount] = useState(-1)
   const [showAddAccountPanel, setShowAddAccountPanel] = useState(false);
-  const [showPrompt, setShowPrompt] = useState(false);
-  const [promptText, setPromptText] = useState('');
-  //const [promptConfirmCallback, setPromptConfirmCallback] = useState(null);
-  const [accountToRemove, setAccountToRemove] = useState(null);
 
-  useEffect(() => {
+
+  function getAccounts() {
+    fetchSellerBankAccounts((response) =>{
+      console.log(response.data)
+      if(response.ok){
+        setAccounts(response.data)
+      } else {
+        alert('Αποτυχία κατα την εκτέλεση');
+      }
+    })
+  }
+
+  function  getBalance() {
+    fetchSellerBalance((response) => {
+      if(response.ok){
+        setPoints(response.data.points)
+      }else{
+        alert('Αποτυχία κατα την εκτέλεση');
+      }
+    })
+  }
+
+  function getProfileInfo() {
     fetchSellerInfo( (response) => {
       if(response.ok){
-        setData(response.data)
-        setUsername(response.ResponseBody.username)
-        setEmail(response.ResponseBody.email)
-        /*setAccounts(response.ResponseBody.bankAccounts)
-        for (const i in response.ResponseBody.bankAccounts) {
-          if (response.data.bankAccounts[i].isSelected) {
-            setSelectedAccount(i)
-            break
-          }
-        }*/
+        setUsername(response.data.username)
+        setEmail(response.data.email)
       }
       else{
-        console.log('failed to fetch data');
+        alert('Αποτυχία κατα την εκτέλεση');
       }
       setLoading(false)
     })
+  }
+
+  useEffect(() => {
+    getProfileInfo();
+    getBalance();
+    getAccounts();
+
   }, [])
   
   function handleEditOrSave() {
@@ -59,39 +74,26 @@ export default function ProfilePage() {
     }
   }
 
-  function switchBankAccount(idx) {
-    setSelectedAccount(idx)
-    sendSelectedAccount(idx)
-  }
-
   function redeem() {
-    redeemSellerPoints({
-      redeemPoints:redeemPoints
-    }, onRedeem)
+    redeemSellerPoints(redeemPoints,onRedeem)    
   }
 
   function onRedeem() {
+    getBalance();
     alert('Η συναλλαγή ολοκληρώθηκε με επιτυχία')
   }
 
-  function addBankAccount(data) {
-    setAccounts(accounts => [...accounts, data])
-    sendAddedAccount(data)
+  function removeBankAccount(id) {
+    removeAccount(id,(response)=>{
+      if(response.ok){
+        getAccounts();
+      } else {
+        alert('Αποτυχία κατα την εκτέλεση');
+      }
+    })
+
   }
 
-  function removeBankAccount() {
-    setAccounts([
-      ...accounts.slice(0, accountToRemove),
-      ...accounts.slice(accountToRemove+1, accounts.length)
-    ])
-    sendRemovedAccountIdx(accountToRemove)
-  }
-
-  function setPrompt(text, onConfirm) {
-    setPromptText(text)
-    //setPromptConfirmCallback(onConfirm)
-    setShowPrompt(true);
-  }
 
   return (
     <div className='font-light'>
@@ -128,11 +130,10 @@ export default function ProfilePage() {
                   'Επεξεργασία'
                 }
               </button>
-              <button onClick={() => setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό σας στο ParentApp;')} className='bg-red-200 hover:bg-red-400 hover:text-white w-11/12 mt-8 border-2 border-red-400 rounded-full font-light text-lg shadow'>Διαγραφή Λογαριασμού</button>
             </div>
           </div>
           <div className='text-2xl mt-12 text-center'>Οι Πόντοι Μου</div>
-          <div className='bg-white rounded-full w-96 p-1 mt-1 mx-auto text-center text-3xl'>{data.totalPoints} / {parseInt(data.totalPoints)/5}$</div>
+          <div className='bg-white rounded-full w-96 p-1 mt-1 mx-auto text-center text-3xl'>{points} / {parseInt(points)/5}$</div>
           <div className='text-2xl mt-16 text-center'>Εξαργύρωση Πόντων</div>
           <div className='flex justify-between mt-8'>
             <div className='flex justify-center w-2/5'>
@@ -153,14 +154,14 @@ export default function ProfilePage() {
           <div className='text-2xl mt-16 text-center'>Οι Λογαριασμοί Μου</div>
           <div className='h-52 mt-2 overflow-y-scroll overflow-hidden'>
             {
-              accounts.map((account, i) => <ListItemBankAccount key={i} clicked={() => switchBankAccount(i)} isSelected={i === selectedAccount} data={account} remove={() => {setPrompt('Είστε σίγουρος οτι θέλετε να διαγράψετε τον λογαριασμό;', () => removeBankAccount); setAccountToRemove(i)}} />)
+              accounts.map((account, i) => <ListItemBankAccount key={i} clicked={() => setSelectedAccount(i)} isSelected={i === selectedAccount} data={account} remove={() => {removeBankAccount(account.id)}} />)
             }
           </div>
           <div className='text-center mt-4'>
             <button onClick={() => setShowAddAccountPanel(true)} className='bg-white hover:bg-hover hover:text-white border-4 border-cyan w-16 h-16 pb-1 pl-1 text-5xl text-cyan rounded-full shadow'>+</button>
           </div>
-          <Modal show={showAddAccountPanel} children={<AddAccount addAccountCallback={addBankAccount} close={() => setShowAddAccountPanel(false)}/>} color='bg-background' closeCallback={() => setShowAddAccountPanel(false)}/>
-          <Modal show={showPrompt} children={<Prompt text={promptText} handleConfirm={() => removeBankAccount()} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
+          <Modal show={showAddAccountPanel} children={<AddAccount addAccountCallback={getAccounts} close={() => setShowAddAccountPanel(false)}/>} color='bg-background' closeCallback={() => setShowAddAccountPanel(false)}/>
+          {/*<Modal show={showPrompt} children={<Prompt text={promptText} handleConfirm={() => removeBankAccount()} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>*/}
         </>
       }
     </div>

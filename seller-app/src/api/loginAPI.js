@@ -13,7 +13,6 @@ export function flattenUserInfo(userInfo) {
 
 function loginCallback(callback, renewJwt) {
     return (response) => {
-        console.log(response)
         let responseData = response.data;
         if (response.ok) {
             if (renewJwt) {
