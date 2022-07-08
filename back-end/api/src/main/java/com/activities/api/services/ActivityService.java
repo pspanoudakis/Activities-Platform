@@ -164,11 +164,12 @@ public class ActivityService {
         activityDetails.setName(activity.getName());
         activityDetails.setDescription(activity.getDescription());
         activityDetails.setTotal_reservations(getTotalReservations(activity));
-        activityDetails.set_recursive(activity.getPeriodic());
+        activityDetails.setRecursive(activity.getPeriodic());
         activityDetails.setAge_category_name(activity.getAgeCategory().getName());
         activityDetails.setCategory_name(activity.getCategory().getName());
         activityDetails.setFacility_name(activity.getFacility().getName());
         activityDetails.setTotal_earnings(getTotalEarnings(activity));
+        activityDetails.setCost(activity.getPrice());
         if(activity.getApproved())
             activityDetails.setAverage_rating(getActivityRating(activity));
         else

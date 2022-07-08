@@ -18,8 +18,9 @@ public class ActivitySellerDetails {
     private int    total_reservations;
     private double average_rating;
     private String description;
-    private boolean is_recursive;
+    private boolean recursive;
     private int total_earnings;
+    private int cost;
     private List<SimpleDay> occurrences;
     private List<String>    images;
 
