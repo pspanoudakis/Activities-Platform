@@ -2,33 +2,31 @@ import ListItemDate from "./ListItemDate.js";
 import GoBackButton from "./GoBackButton.js";
 import AllReviews from "./AllReviews.js";
 import { useState, useEffect } from "react"
-import { fetchActivityPageData } from '../api/api.js'
 import { Modal } from '../shared/Modal.js';
-import Prompt from './Prompt.js';
+import {useSearchParams} from "react-router-dom";
+import {fetchActivityInfo} from "../api/activitiesAPI";
 
 export default function ActivityPage() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [dateData, setDateData] = useState([])
   const [showReviews, setShowReviews] = useState(false)
-  const [showPrompt, setShowPrompt] = useState(false);
+  const [searchParams,setSearchParams] = useSearchParams();
+  let id = searchParams.get("id");
 
   useEffect(() => {
-    fetchActivityPageData(1, (response) => {
+    fetchActivityInfo(id,(response)=>{
       if(response.ok){
         setData(response.data)
-        setDateData(response.data.dates)
+        setLoading(false);
+      } else {
+        alert('Αποτυχία κατα την εκτέλεση');
       }
-      else{
-        console.log('failed to fetch data');
-      }
-      setLoading(false)
     })
+
+
   }, [])
 
-  function deleteActivity(){
 
-  }
 
   return (
     <div className=''>
@@ -39,42 +37,42 @@ export default function ActivityPage() {
         <>
           <GoBackButton/>
           <div className='text-3xl mt-10 text-center'>{data.name}</div>
-          <img className='w-full h-64 rounded-3xl mx-auto mt-10 shadow' src={data.imgUrl} alt=''/>
+          <img className='w-full h-64 rounded-3xl mx-auto mt-10 shadow' src={data.images[0]} alt=''/>
           <div className='flex mt-10 justify-between font-normal'>
             <div>
               <div className='flex'>
                 <div className=''>Κατηγορία:</div>
-                <div className='font-light ml-1'>{data.category}</div>
+                <div className='font-light ml-1'>{data.category_name}</div>
               </div>
               <div className='flex'>
                 <div className=''>Ηλικιακή Κατηγορία:</div>
-                <div className='font-light ml-1'>{data.age}</div>
+                <div className='font-light ml-1'>{data.age_category_name}</div>
               </div>
             </div>
             <div>
               <div className='flex'>
                 <div className=''>Τιμή:</div>
-                <div className='font-light ml-1'>{data.price}</div>
+                <div className='font-light ml-1'>{data.cost}</div>
               </div>
               <div className='flex'>
                 <div className=''>Αριθμός Κρατήσεων:</div>
-                <div className='font-light ml-1'>{data.bookCount}</div>
+                <div className='font-light ml-1'>{data.total_reservations}</div>
               </div>
             </div>
             <div>
              <div className='flex'>
                 <div className=''>Υποδομή:</div>
-                <div className='font-light ml-1'>{data.facility}</div>
+                <div className='font-light ml-1'>{data.facility_name}</div>
               </div>
               <div className='flex'>
                 <div className=''>Μέση Αξιολόγηση:</div>
-                <div className='font-light ml-1'>{data.avgScore}</div>
+                <div className='font-light ml-1'>{data.average_rating}</div>
               </div>
             </div>
           </div>
           <div className='flex justify-center mt-10 text-lg'>
             <div className='font-normal'>Σύνολο Κερδών:</div>
-            <div className='ml-1 font-light'>{data.earnings}</div>
+            <div className='ml-1 font-light'>{data.total_earnings}</div>
           </div>
           <div className='mt-10'>
             <div className='font-normal'>Περιγραφή:</div>
@@ -85,7 +83,9 @@ export default function ActivityPage() {
           <button onClick={() => setShowReviews(true)} className='bg-cyan hover:bg-hover rounded-full w-full mt-10 font-light text-2xl shadow'>Εμφάνιση Κριτικών</button>
           <div className='flex justify-center mt-10 text-lg'>
             <div className='font-normal'>Συχνότητα Διεξαγωγής:</div>
-            <div className='ml-1 font-light'>{data.occurence}</div>
+            {
+              data.recursive ? <div className='ml-1 font-light'>Περιοδική</div> : <div className='ml-1 font-light'>Επιλεκτική Διεξαγωγή</div>
+            }
           </div>
           <div className='mt-10 text-lg text-center font-normal'>Ημερομηνίες Διεξαγωγής:</div>
           <div className='bg-white w-full h-52 p-2 mt-2 font-light rounded-xl overflow-hidden shadow'>
@@ -95,16 +95,11 @@ export default function ActivityPage() {
             </div>
             <div className='h-52 mt-2 overflow-y-scroll'>
               {
-                dateData.map((date, i) => <ListItemDate key={i} data={date} />)
+                data.occurrences.map((date, i) => <ListItemDate key={i} data={date} />)
               }
             </div>
           </div>
-          <div className='mt-20 text-center text-2xl'>
-            <button className='bg-cyan hover:bg-hover rounded-full w-full font-light shadow'>Επεξεργασία Δραστηριότητας</button>
-            <button onClick={() => setShowPrompt(true)} className='bg-red-200 hover:bg-red-400 hover:text-white w-full border-2 border-red-400 my-4 rounded-full font-light shadow'>Ακύρωση Δραστηριότητας</button>
-          </div>
-          <Modal show={showReviews} children={<AllReviews data={data.reviews} />} color='bg-background' closeCallback={() => setShowReviews(false)} />
-          <Modal show={showPrompt} children={<Prompt text='Είστε σίγουροι οτι θέλετε να διαγράψετε αυτή την δραστηριότητα;' handleConfirm={() => deleteActivity()} cancel={() => setShowPrompt(false)}/>} color='bg-background' closeCallback={() => setShowPrompt(false)}/>
+          <Modal show={showReviews} children={<AllReviews id={id}/>} color='bg-background' closeCallback={() => setShowReviews(false)} />
         </>
       }
     </div>

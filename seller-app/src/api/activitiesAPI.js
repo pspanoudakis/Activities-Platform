@@ -30,3 +30,19 @@ export function fetchActivityInfo(id, callback) {
         callback
     })
 }
+
+export function fetchActivityReviews(id,callback){
+    fetchWrapper({
+        endpoint: `seller/activity_reviews/${id}`,
+        method: 'GET',
+        omitAuthHeader: false,
+        needAuth: true,
+        callback
+    })
+}
+
+export function fetchCategories(callback){
+    fetchWrapper({
+
+    })
+}
