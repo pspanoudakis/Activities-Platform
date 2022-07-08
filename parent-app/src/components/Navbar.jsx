@@ -214,7 +214,7 @@ export function Navbar() {
                         </div>
                         :
                         <div className="flex flex-row gap-2 items-center">
-                            <a href="/" className="font-light hover:underline">Συνεργάτης</a>
+                            <a href="http://localhost:3002" className="font-light hover:underline">Συνεργάτης</a>
                             <NavbarButton bgColor="bg-white hover:bg-light-cyan" title="ΕΓΓΡΑΦΗ" callback={openSignUpModal} />
                             <NavbarButton bgColor="bg-white hover:bg-light-cyan" title="ΣΥΝΔΕΣΗ" callback={openSignInModal} />
                         </div>
