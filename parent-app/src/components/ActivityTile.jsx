@@ -22,6 +22,10 @@ export function ActivityTile({
     const smDevice = useHasMaxWidth(SM_PXLIMIT)
 
     useEffect(() => {
+        setUsedImgSrc(imgSrc)
+    }, [imgSrc])
+
+    useEffect(() => {
 
         if (usedImgSrc !== PLACEHOLDER_ACTIVITY_IMG) {
             const imgObj = new Image()

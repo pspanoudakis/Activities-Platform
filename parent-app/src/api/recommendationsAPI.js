@@ -58,7 +58,7 @@ export function fetchSamePlaceActivities(activityId, n, callback) {
 }
 
 export function fetchRebookActivities(n, callback) {
-    fetchUserBasedActivities(`parent/recently_booked`, callback, false)
+    fetchUserBasedActivities(`parent/recently_booked?number=${n}`, callback, false)
 }
 
 export function fetchPopularActivities(n, callback) {
