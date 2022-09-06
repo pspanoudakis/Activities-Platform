@@ -1,7 +1,8 @@
 module.exports = {
-  content: [],
-  theme: {
-    
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}"
+  ],
+  theme: {    
     fontFamily: {
       sans: ['sans', 'open-sans'],
     },
