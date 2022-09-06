@@ -15,6 +15,7 @@ import com.activities.api.entities.ActivityAtDay;
 public interface ActivityAtDayRepository extends JpaRepository<ActivityAtDay, Integer>{
 
     public List<ActivityAtDay> findByActivityAndDayAfterOrderByDayAsc(Activity activity, LocalDate strart_date);
+    public List<ActivityAtDay> findByActivityOrderByDayAsc(Activity activity);
     public List<ActivityAtDay> findByActivityAndDayAfterAndCapacityGreaterThanOrderByDayAsc(Activity activity, LocalDate start_date, int capacity);
     public List<ActivityAtDay> findByActivity(Activity activity);
 

@@ -110,7 +110,8 @@ public class ActivityService {
     }
 
     public List<SimpleDay> getDaysOfActivity(Activity activity){
-        return activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, LocalDate.now()).stream().map(SimpleDay::new).collect(Collectors.toList());
+        //return activityAtDayRepository.findByActivityAndDayAfterOrderByDayAsc(activity, LocalDate.now()).stream().map(SimpleDay::new).collect(Collectors.toList());
+        return activityAtDayRepository.findByActivityOrderByDayAsc(activity).stream().map(SimpleDay::new).collect(Collectors.toList());
     }
 
     public LocalDate getNextOccurrence(Activity activity){

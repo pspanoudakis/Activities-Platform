@@ -876,7 +876,7 @@ INSERT INTO public.bank_cards VALUES (8, 2, '0000111122223333', '01/25', '100', 
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.categories VALUES (1, NULL, 'Αθλήματα', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Football_iu_1996.jpg/1200px-Football_iu_1996.jpg');
+INSERT INTO public.categories VALUES (1, NULL, 'Αθλήματα', 'https://img.freepik.com/free-vector/soccer-volleyball-baseball-rugby-equipment_1441-4026.jpg');
 INSERT INTO public.categories VALUES (2, NULL, 'Τέχνες', 'https://media.istockphoto.com/photos/fine-art-school-artist-mix-acrylic-paint-palette-picture-id1159292218?k=20&m=1159292218&s=612x612&w=0&h=B1H7OUHFcewigd3U8nkMBzYUDmTdDPSoz3rQSsn-MBg=');
 INSERT INTO public.categories VALUES (3, NULL, 'Εκδρομές/Φύση', 'https://pbs.twimg.com/profile_images/610732952951984129/uHTVI8n4_400x400.jpg');
 INSERT INTO public.categories VALUES (4, NULL, 'Τεχνολογία', 'https://in2english.net/wp-content/uploads/2018/12/compute-programmer.jpg');

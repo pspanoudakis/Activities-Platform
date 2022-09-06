@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createNewFacility } from '../api/facilitiesAPI.js'
-import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+//import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+import { SingleMarkerMap } from "../shared/Maps";
 import { defaultHomePosition } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 
 

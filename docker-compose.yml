@@ -12,6 +12,8 @@ services:
       - /app/parent-app/node_modules
     ports:
       - '3000:3000'
+    env_file:
+      - ./google-project-key.env
 
   admin-app:
     build:
@@ -23,6 +25,8 @@ services:
       - /app/admin-app/node_modules
     ports:
       - '3001:3001'
+    env_file:
+      - ./google-project-key.env
 
   seller-app:
     build: 
@@ -34,6 +38,8 @@ services:
       - /app/seller-app/node_modules
     ports:
       - '3002:3002'
+  env_file:
+      - ./google-project-key.env
 
   database:
     image: postgres:14-alpine

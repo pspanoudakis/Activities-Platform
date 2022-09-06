@@ -92,7 +92,7 @@ export function WalletPage() {
         setLoading(true)
         updateUserCard({
                 cardNumber,
-                cvv: cvv,
+                cvv,
                 expirationDate,
                 ownerName
             },
@@ -100,14 +100,12 @@ export function WalletPage() {
             (response) => {
 
                 if (response.ok) {
-
-                    // Backend MUST return new card info (response.data)
                     setCardInfo({
                         cardNumber,
-                        cvv: cvv,
+                        cvv,
                         expirationDate,
                         ownerName,
-                        id: cardInfo.id
+                        id: cardInfo ? cardInfo.id : response.data.id
                     })
                     context.setState({
                         ...context.state,

@@ -10,7 +10,8 @@ import { ActivityRateSelector } from "./ActivityRateSelector";
 import { ActivityImageSelector } from "../shared/ActivityImageSelector";
 import { ModalVerifyPrompt } from "../shared/ModalVerifyPrompt";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
-import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+//import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+import { SingleMarkerMap } from "../shared/Maps";
 import { fetchActivity, fetchBookReservations } from "../api/activityAPI";
 import { SignInForm } from "./SignInForm";
 

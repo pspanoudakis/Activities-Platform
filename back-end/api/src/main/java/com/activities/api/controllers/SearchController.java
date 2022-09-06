@@ -243,7 +243,8 @@ public class SearchController {
         }
         List<ActivityCompact> compacts = activityService.getActivitiesByFacility(activity.getFacility()).stream()
             .map(ac -> new ActivityCompact(ac, activityService, LocalDate.now())).collect(Collectors.toList());
-        compacts.removeIf(ac -> ac.getActivity_id() == activity_id || ac.getDate().equals(LocalDate.parse("3000-01-02")));
+        //compacts.removeIf(ac -> ac.getActivity_id() == activity_id || ac.getDate().equals(LocalDate.parse("3000-01-02")));
+        compacts.removeIf(ac -> ac.getActivity_id() == activity_id);
         
         return ResponseEntity.ok().body(compacts);
     }
@@ -256,7 +257,8 @@ public class SearchController {
         }
         List<ActivityCompact> compacts = activityService.getApprovedActivitiesBySeller(activity).stream()
             .map(ac -> new ActivityCompact(ac, activityService, LocalDate.now())).collect(Collectors.toList());
-        compacts.removeIf(ac -> ac.getActivity_id() == activity_id || ac.getDate().equals(LocalDate.parse("3000-01-02")));
+        //compacts.removeIf(ac -> ac.getActivity_id() == activity_id || ac.getDate().equals(LocalDate.parse("3000-01-02")));
+        compacts.removeIf(ac -> ac.getActivity_id() == activity_id);
         
         return ResponseEntity.ok().body(compacts);
     }

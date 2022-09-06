@@ -4,7 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { approveActivity, fetchActivity, rejectActivity } from '../api/activitiesAPI'
 import { ActivityImageSelector } from '../shared/ActivityImageSelector'
 import { ActivityLocationIndicator } from '../shared/ActivityLocationIndicator'
-import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1"
+//import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1"
+import { SingleMarkerMap } from "../shared/Maps";
 import { ModalVerifyPrompt } from '../shared/ModalVerifyPrompt'
 import { AppContext } from "../AppContext"
 import { LoadingIndicator } from '../shared/LoadingIndicator'

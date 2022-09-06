@@ -2,14 +2,16 @@ import React, { useContext, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { updateUser } from "../api/profileAPI";
 import { AppContext } from "../AppContext";
-import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+//import { SingleMarkerMap } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+import { SingleMarkerMap } from "../shared/Maps";
 import { NeedSignIn } from "../components/NeedSignIn";
 import { FormInputField } from "../shared/FormUtils";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import { ModalResultMessage } from "../shared/ModalResultMessage";
 import { SectionTitle } from "../shared/SectionTitle";
-import { GoogleUtils } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
 import { defaultHomePosition, PLACEHOLDER_USER_IMG } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+//import { GoogleUtils } from "@johnvaiosdimopoulos/software-engineering-project-spring-2022-team1";
+import { GoogleUtils } from "../shared/GoogleUtils";
 
 export function ProfilePage() {
 
