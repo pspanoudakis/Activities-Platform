@@ -82,3 +82,11 @@ https://user-images.githubusercontent.com/52857036/188979881-5ae7df3c-90a4-493b-
 https://user-images.githubusercontent.com/52857036/188980025-a8fb8f02-9d81-466f-a767-32860a518d13.mov
 
 ## Admin App features
+
+- Add new users & activate/deactivate existing users
+
+https://user-images.githubusercontent.com/52857036/188990103-f05754c0-e1bc-4ec4-96c1-5e346c8c0eac.mov
+
+- View platform stats & Approve/Reject pending activities
+
+https://user-images.githubusercontent.com/52857036/188989769-91c71a2b-6655-4db0-9988-3171f644c451.mov
