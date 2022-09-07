@@ -1,6 +1,14 @@
 # Activities Platform
 Spring 2022 Semester project for the **Software Engineering** course in [DIT@UoA](https://www.di.uoa.gr/en)
 
+## Team members
+- [John-Vaios Dimopoulos](https://github.com/JohnVaiosDimopoulos)
+- [Spyros Kantas](https://github.com/spyroskantas)
+- [Loukas Mastoropoulos](https://github.com/Mastoropoulos-Loukas)
+- [Pavlos Spanoudakis](https://github.com/pspanoudakis)
+
+Instructor: [Kostas Saidis](https://github.com/saikos)
+
 ## About the project
 This was a team project focused around creating a platform where parents may explore & reserve activities for their children. There where various goals:
 - Co-operating as a group
@@ -10,6 +18,22 @@ This was a team project focused around creating a platform where parents may exp
 - Sharing code across the product parts in an automated way.
 
 You can see all the project demands & requirements in detail in `Software-Engineering-Project-Assignment.pdf`.
+
+## Deployment
+Docker is required.
+- Clone the repository locally.
+
+- **Before deploying**: In order for the front-end application Maps to be functional, go to `google-project-key.env` and replace `REPLACE_KEY_HERE` with a valid Google Maps API key for this project.
+You may skip this if you are not concerned about Google Maps interoperability.
+
+- Use `docker-compose up` to trigger the build & deployment process.
+This will create 5 containers:
+    - `api-container` listening to port 8070
+    - `database-container` listening to port 5432
+    - `parent-app-container` listening to port 3000
+    - `admin-app-container` listening to port 3001
+    - `seller-app-container` listening to port 3002
+- You may then explore the front-end applications in your browser, by visiting `localhost:XXXX` (in their respective ports).
 
 ## Technologies & Tools used
 - **React** & [Tailwind CSS](https://tailwindcss.com/) in front-end applications. The **Google Maps API** is also used for Maps interoperability.
@@ -32,27 +56,27 @@ You can see all the project demands & requirements in detail in `Software-Engine
 - Database schema & data (`db`)
 - Wireframes & User stories created during the initial phase (`docs`)
 
-## Deployment
-Docker is required.
-- Clone the repository locally.
+## Parent App features
+- Explore & choose between activity categories
 
-- **<u>Before deploying</u>**: In order for the front-end application Maps to be functional, go to `google-project-key.env` and replace `REPLACE_KEY_HERE` with a valid Google Maps API key for this project.
-You may skip this if you are not concerned about Google Maps interoperability.
+https://user-images.githubusercontent.com/52857036/188978168-b1827bd3-9e61-40d4-9c4b-5157579fa8e6.mp4
 
-- Use `docker-compose up` to trigger the build & deployment process.
-This will create 5 containers:
-    - `api-container` listening to port 8070
-    - `database-container` listening to port 5432
-    - `parent-app-container` listening to port 3000
-    - `admin-app-container` listening to port 3001
-    - `seller-app-container` listening to port 3002
-- You may then explore the front-end applications in your browser, by visiting `localhost:XXXX` (in their respective ports).
+- Search activities using various filters
 
-## Team members
-- [John-Vaios Dimopoulos](https://github.com/JohnVaiosDimopoulos)
-- [Spyros Kantas](https://github.com/spyroskantas)
-- [Loukas Mastoropoulos](https://github.com/Mastoropoulos-Loukas)
-- [Pavlos Spanoudakis](https://github.com/pspanoudakis)
+https://user-images.githubusercontent.com/52857036/188979113-cf1a6155-d0f0-41fd-9efb-ef5c2ffe79ab.mov
 
-Instructor: [Kostas Saidis](https://github.com/saikos)
+- Filter activities using home address
 
+https://user-images.githubusercontent.com/52857036/188979314-1f3a2250-50d2-4175-b258-1c3370d28a99.mov
+
+- Make an activity reservation
+
+https://user-images.githubusercontent.com/52857036/188979546-4871fbb8-40fe-4484-b580-6dbd3a5e9ede.mov
+
+- Edit profile & payment details
+
+https://user-images.githubusercontent.com/52857036/188979881-5ae7df3c-90a4-493b-896a-9fe0cbb6b5db.mov
+
+- Responsive design
+
+https://user-images.githubusercontent.com/52857036/188980025-a8fb8f02-9d81-466f-a767-32860a518d13.mov
