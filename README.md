@@ -19,7 +19,7 @@ You can see all the project demands & requirements in detail in `Software-Engine
 - **NPM package** for shared code, with automated publishing using **GitHub actions**
 
 ## Project phases
-- Designing the UI appearance using uizard wireframes
+- Designing the UI appearance using [Uizard](https://uizard.io/) wireframes
 - Designing the project architecture and structure
 - Developing the product
 
@@ -55,3 +55,4 @@ This will create 5 containers:
 - [Pavlos Spanoudakis](https://github.com/pspanoudakis)
 
 Instructor: [Kostas Saidis](https://github.com/saikos)
+
