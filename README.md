@@ -17,7 +17,28 @@ This was a team project focused around creating a platform where parents may exp
 - Building & Deploying the product portably & efficiently
 - Sharing code across the product parts in an automated way.
 
-You can see all the project demands & requirements in detail in `Software-Engineering-Project-Assignment.pdf`.
+All the project demands & requirements are described in detail in `Software-Engineering-Project-Assignment.pdf`.
+
+## Project phases
+- Designing the UI appearance using [Uizard](https://uizard.io/) wireframes
+- Designing the project architecture and structure
+- Developing the product
+
+## Technologies & Tools used
+- **React** & [Tailwind CSS](https://tailwindcss.com/) in front-end applications. The **Google Maps API** is also used for Maps interoperability.
+- **SpringBoot** for back-end & REST API. [Postman](https://www.postman.com/) & [Thunder Client](https://www.thunderclient.com/) where used for quick API calls.
+- **PostgreSQL** is the selected DBMS. The schema was created using [DBeaver](https://dbeaver.io/).
+- **Docker**
+- **NPM package** for shared code, with automated publishing using **GitHub actions**
+
+## Project parts
+- Main front-end application for parents (`parent-app`)
+- Front-end application designed for activity providers (`seller-app`)
+- Supportive front-end application to be used by the platform administrators (`admin-app`)
+- Back-end & REST API application (`back-end`)
+- Shared code NPM package (`common-components-lib`)
+- Database schema & data (`db`)
+- Wireframes & User stories created during the initial phase (`docs`)
 
 ## Deployment
 Docker is required.
@@ -34,27 +55,6 @@ This will create 5 containers:
     - `admin-app-container` listening to port 3001
     - `seller-app-container` listening to port 3002
 - You may then explore the front-end applications in your browser, by visiting `localhost:XXXX` (in their respective ports).
-
-## Technologies & Tools used
-- **React** & [Tailwind CSS](https://tailwindcss.com/) in front-end applications. The **Google Maps API** is also used for Maps interoperability.
-- **SpringBoot** for back-end & REST API. [Postman](https://www.postman.com/) & [Thunder Client](https://www.thunderclient.com/) where used for quick API calls.
-- **PostgreSQL** is the selected DBMS. The schema was created using [DBeaver](https://dbeaver.io/).
-- **Docker**
-- **NPM package** for shared code, with automated publishing using **GitHub actions**
-
-## Project phases
-- Designing the UI appearance using [Uizard](https://uizard.io/) wireframes
-- Designing the project architecture and structure
-- Developing the product
-
-## Project parts
-- Main front-end application for parents (`parent-app`)
-- Front-end application designed for activity providers (`seller-app`)
-- Supportive front-end application to be used by the platform administrators (`admin-app`)
-- Back-end & REST API application (`back-end`)
-- Shared code NPM package (`common-components-lib`)
-- Database schema & data (`db`)
-- Wireframes & User stories created during the initial phase (`docs`)
 
 ## Parent App features
 - Explore & choose between activity categories
@@ -80,3 +80,5 @@ https://user-images.githubusercontent.com/52857036/188979881-5ae7df3c-90a4-493b-
 - Responsive design
 
 https://user-images.githubusercontent.com/52857036/188980025-a8fb8f02-9d81-466f-a767-32860a518d13.mov
+
+## Admin App features
