@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { GoogleUtils } from "./GoogleUtils";
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { Marker } from '@react-google-maps/api';
+import { MarkerF } from '@react-google-maps/api';
 
 export function SingleMarkerMap({
     style,
@@ -34,7 +34,7 @@ export function SingleMarkerMap({
                 }
             }}
         >
-            <Marker position={position} visible={!hideMarker}/>
+            <MarkerF position={position} visible={!hideMarker}/>
         </GoogleMap>
     ) : <></>
 }
@@ -93,9 +93,9 @@ export function MultiMarkerMap({
             onUnmount={onUnmount}
         >
 
-            <Marker position={mainMarkerPosition} visible={true} icon="https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"/>
+            <MarkerF position={mainMarkerPosition} visible={true} icon="https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"/>
             {
-                restMarkersPositions.map((p, i) => <Marker key={i} position={p} visible={true}/>)
+                restMarkersPositions.map((p, i) => <MarkerF key={i} position={p} visible={true}/>)
             }
         </GoogleMap>
     ) : <></>
