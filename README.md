@@ -10,7 +10,8 @@ Spring 2022 Semester project for the **Software Engineering** course in [DIT@UoA
 Instructor: [Kostas Saidis](https://github.com/saikos)
 
 ## About the project
-This was a team project focused around creating a platform where parents may explore & reserve activities for their children. There where various goals:
+This was a team project focused around creating a platform where parents may explore & reserve activities for their children.
+There were various goals and best practices to follow:
 - Co-operating as a group
 - Designing, implementing & delivering the product in a **Scrum-like sprint** fashion
 - Familiarize with SPA and REST API design & development
